@@ -1,12 +1,12 @@
 # Fase 2 — Institucional
 
-A Fase 2 entrega a camada institucional completa do KZ Tech Site, com conteúdo próprio, navegação dedicada e catálogo completo do ecossistema.
+A Fase 2 entrega a camada institucional completa do KZ Tech Site, com conteúdo próprio, navegação dedicada e catálogo completo do KOS do ecossistema.
 
 ## Escopo concluído
 
 - Página inicial institucional com proposta de valor, chamadas para portfólio e empresa e apresentação do ecossistema.
 - Portfólio completo consumindo o catálogo central.
-- Catálogo completo dos 10 produtos registrados no backend, organizado por áreas.
+- catálogo completo do KOS dos 11 produtos registrados no backend, organizado por áreas.
 - Página individual para cada produto, com tipo, estágio, propósito, ação de orçamento e produtos relacionados.
 - Página institucional da empresa.
 - Página Sobre nós.
@@ -32,7 +32,7 @@ O catálogo atual inclui Korczak AI, MOROK, Korczak IDE, Korczak Workspace, KORC
 ## Critério de conclusão
 
 1. Todas as rotas institucionais possuem conteúdo próprio.
-2. O catálogo completo pode ser explorado.
+2. O catálogo completo do KOS pode ser explorado.
 3. Cada produto possui página individual.
 4. Contato e documentos legais estão acessíveis.
 5. A navegação continua funcionando no GitHub Pages.
