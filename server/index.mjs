@@ -197,13 +197,17 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
 });
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
-  const [conteudo,midias,admins,auditoria]=await Promise.all([
+  const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos]=await Promise.all([
     db.collection("conteudo").countDocuments(),
     db.collection("midias").countDocuments(),
     db.collection("usuarios_administradores").countDocuments(),
-    db.collection("auditoria").countDocuments()
+    db.collection("auditoria").countDocuments(),
+    db.collection("users").countDocuments(),
+    db.collection("contacts").countDocuments(),
+    db.collection("quotes").countDocuments(),
+    db.collection("orders").countDocuments()
   ]);
-  res.json({"Regras de conteúdo":conteudo,"Mídias":midias,"Administradores":admins,"Registros de auditoria":auditoria});
+  res.json({"Regras de conteúdo":conteudo,"Mídias":midias,"Administradores":admins,"Registros de auditoria":auditoria,"Usuários":usuarios,"Contatos":contatos,"Orçamentos":orcamentos,"Pedidos":pedidos});
 });
 app.get("/api/admin/conteudo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
