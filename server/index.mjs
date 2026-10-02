@@ -24,7 +24,6 @@ const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_
 const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
-const publicOrigin=checkoutBase;
 const commercialProducts=Object.fromEntries([
   ["korczak-ai",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_KORCZAK_AI||""}],
   ["morok",{"amount":4900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOROK||""}],
