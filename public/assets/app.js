@@ -376,6 +376,14 @@ function mentorshipPrices(){
   const techs=MENTOR_TECHS.map(t=>'<label class="mentor-tech-row"><span><b>'+esc(t[0])+'</b><small>'+esc(t[1])+'</small></span><strong>+ '+mentorMoney(t[2]).replace("/mês","")+'</strong><input type="checkbox" data-mentor-tech data-price="'+t[2]+'"><span class="mentor-toggle" aria-hidden="true"></span></label>').join("");
   return '<main id="main-content" class="mentor-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KORCZAK TECHNOLOGY · MENTORIA · INVESTIMENTO</span><h1>Quanto<br><span>custa?</span></h1><p>Escolha uma trilha pronta ou monte sua própria grade de estudos.</p></div><div class="mentor-monogram" aria-hidden="true">R$</div></section><section class="section shell"><span class="eyebrow">01 · TRILHAS</span><h2>Escolha seu caminho.</h2><p class="section-lead">Cada trilha possui uma formação diferente, com três níveis: iniciante, intermediário e profissional.</p><div class="mentor-track-grid">'+tracks+'</div></section><section class="section shell mentor-custom"><div class="mentor-custom-head"><div><span class="eyebrow">02 · MINHA PRÓPRIA GRADE</span><h2>Monte do seu jeito.</h2><p>Começa em R$ 100/mês e aumenta conforme as tecnologias escolhidas.</p></div><div class="mentor-total"><small>TOTAL MENSAL</small><strong data-mentor-total>R$ 100</strong><span data-mentor-count>0 tecnologias selecionadas</span></div></div><div class="mentor-tech-list">'+techs+'</div></section><section class="section shell split"><span class="eyebrow">03 · VALORES</span><div><h2>Formação técnica com preço acessível.</h2><p>Os valores exibidos são mensalidades da mentoria. A grade personalizada começa em R$ 100/mês e recebe os acréscimos correspondentes às tecnologias selecionadas.</p></div></section><section class="section shell mentor-cta"><span class="eyebrow">04 · INSCRIÇÃO</span><h2>Escolheu sua trilha?</h2><p>Fale diretamente com a Korczak Technology para confirmar sua formação.</p><div class="actions"><a class="btn" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Quero me inscrever '+icon("arrow")+'</a><a class="btn ghost" href="#/mentoria">Voltar para Mentoria</a></div></section></main>';
 }
+function updateMentorTotal(el){
+  const root=el.closest(".mentor-page"); if(!root)return;
+  let total=100,count=0;
+  root.querySelectorAll("[data-mentor-tech]:checked").forEach(x=>{total+=Number(x.dataset.price)||0;count++;});
+  const totalEl=root.querySelector("[data-mentor-total]"),countEl=root.querySelector("[data-mentor-count]");
+  if(totalEl)totalEl.textContent=total.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0,maximumFractionDigits:0});
+  if(countEl)countEl.textContent=count+" "+(count===1?"tecnologia selecionada":"tecnologias selecionadas");
+}
 function mentorshipDetail(id){
   let selected=null;
   for(const t of Object.values(MENTOR_TRACKS)){selected=t.levels.find(l=>l[0]===id);if(selected)break;}
@@ -584,6 +592,7 @@ function render(){
   const authForm=root.querySelector("#auth-form");
   if(authForm)authForm.addEventListener("submit",submitAuth);
   root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));
+  root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>updateMentorTotal(el)));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
   const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
