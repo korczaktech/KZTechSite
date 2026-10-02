@@ -1,6 +1,6 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
-const APP_VERSION="2026.10.02.17";
+const APP_VERSION="2026.10.02.18";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
   {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
