@@ -52,8 +52,8 @@
 - limites de payload
 - validação de entrada
 - índices MongoDB
-- endpoint administrativo
-- webhook Stripe a adicionar com assinatura
+- endpoints administrativos
+- webhook Stripe com assinatura
 - auditoria e recuperação de conta como próxima camada
 
 ## Fase 5 — Qualidade e operação
