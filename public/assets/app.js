@@ -345,12 +345,13 @@ function beginnerExplanation(o){
 function servicePage(id){
   const safeId=Object.prototype.hasOwnProperty.call(READY_SERVICES,id)?id:"site";
   const s=READY_SERVICES[safeId]||READY_SERVICES.site;
-  const prices=serviceOptionPrices(s);
-  const includedIds=SERVICE_INCLUDED[safeId]||[];
+  const serviceOptions=Array.isArray(s&&s[3])?s[3]:[];
+  const prices=serviceOptionPrices({...s,3:serviceOptions});
+  const includedIds=Array.isArray(SERVICE_INCLUDED[safeId])?SERVICE_INCLUDED[safeId]:[];
   const includedLabels={
     responsive:"Design responsivo",deployment:"Publicação do site",security:"Segurança básica",performance:"Desempenho otimizado",accessibility:"Acessibilidade",seo:"SEO inicial",sections:"Estrutura e seções necessárias",form:"Formulários básicos",analytics:"Métricas básicas",cookie:"Aviso e preferências de cookies",pages:"Páginas necessárias do site",blog:"Área de blog",forms:"Formulários",search:"Busca",filters:"Filtros",files:"Uploads e arquivos",auth:"Login e cadastro",roles:"Perfis e permissões básicas",faq:"FAQ / ajuda",reviews:"Avaliações",terms:"Termos de uso",privacy:"Política de privacidade",products:"Catálogo de produtos",dashboard:"Painel básico",payments:"Pagamentos",shipping:"Frete",inventory:"Estoque",orders:"Gestão de pedidos",customers:"Área do cliente",cart:"Carrinho",wishlist:"Lista de desejos",coupons:"Cupons",email:"Emails transacionais","shipping-tracking":"Acompanhamento de entrega",database:"Banco de dados",api:"API",notifications:"Notificações",audit:"Registro básico de ações",backup:"Backup",admin:"Painel administrativo",docs:"Documentação",webhooks:"Webhooks",storage:"Armazenamento","rate-limit":"Limite de requisições",mapping:"Mapeamento de dados",sync:"Sincronização",retry:"Tentativas automáticas",logs:"Logs básicos",workflow:"Workflow",n8n:"Base de automação n8n",conditions:"Condições",transform:"Transformação de dados",commands:"Comandos",buttons:"Menu interativo",handoff:"Atendimento humano",camera:"Câmera / mídia",store:"Publicação nas lojas"};
   const included=[...new Set(includedIds)].map(x=>'<li>'+esc(includedLabels[x]||x)+'</li>').join("");
-  const opts=s[3].map((o,i)=>{
+  const opts=serviceOptions.map((o,i)=>{
     const price=prices[i];
     return '<div class="service-table-row" role="row"><div class="service-cell service-select" role="cell"><label class="service-option-check"><input type="checkbox" data-service-option data-price="'+price+'" data-label="'+esc(o[1])+'"><span class="checkmark" aria-hidden="true"></span></label></div><div class="service-cell service-feature" role="cell"><strong>'+esc(o[1])+'</strong><small>'+esc(o[2])+'</small></div><div class="service-cell service-explain" role="cell"><details class="service-option-info"><summary>O que isso faz?</summary><p>'+esc(beginnerExplanation(o))+'</p></details></div><div class="service-cell service-price-cell" role="cell"><span>Preço</span><b>'+money(price)+'</b></div></div>';
   }).join("");
