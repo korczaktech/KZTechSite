@@ -289,25 +289,7 @@ async function sendContact(e){
   finally{button.disabled=false}
 }
 
-async function login(e){
-  e.preventDefault();
-  const form=e.currentTarget,msg=form.querySelector("#auth"),button=form.querySelector("button[type=submit]");
-  button.disabled=true;msg.textContent="Entrando…";
-  try{const d=await api("/api/auth/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});state.token=d.token;state.user=d.user;localStorage.setItem("kz_token",d.token);render();toast("Login realizado.");}
-  catch(x){msg.textContent=x.message}
-  finally{button.disabled=false}
-}
-
-async function register(){
-  const name=prompt("Nome:");
-  const email=prompt("Email:");
-  const password=prompt("Senha (8+ caracteres):");
-  if(!name||!email||!password)return;
-  try{const d=await api("/api/auth/register",{method:"POST",body:JSON.stringify({name,email,password})});state.token=d.token;state.user=d.user;localStorage.setItem("kz_token",d.token);render();toast("Conta criada.");}
-  catch(x){toast(x.message)}
-}
-
-async function checkout(id){
+async async function checkout(id){
   if(!state.token){location.hash="#/conta";toast("Entre na sua conta para continuar.");return}
   try{
     const d=await api("/api/checkout",{method:"POST",body:JSON.stringify({productId:id})});
