@@ -363,7 +363,6 @@ async function submitAuth(e){
 }
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
-  if(e.target.id==="auth-form"){e.preventDefault();submitAuth(e);}
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
