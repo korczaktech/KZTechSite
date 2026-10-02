@@ -70,17 +70,19 @@ function portfolio(){
 }
 
 function products(){
-  return '<main id="main-content" class="section shell"><span class="eyebrow">Produtos</span><h2>O ecossistema Korczak.</h2><p class="section-lead">Produtos próprios organizados em uma arquitetura modular.</p><div class="grid">'+state.products.map(card).join("")+'</div></main>';
+  const groups=[["Inteligência & assistência",state.products.filter(p=>["korczak-ai","morok","vision"].includes(p.id))],["Desenvolvimento & workspace",state.products.filter(p=>["ide","workspace","documents"].includes(p.id))],["Operações & conectividade",state.products.filter(p=>["flow","ops","connect","mobile"].includes(p.id))]];
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Produtos · Catálogo completo</span><h2>O ecossistema Korczak.</h2><p class="section-lead">Todos os produtos registrados no catálogo central, organizados por área de atuação e apresentados com seu estágio atual.</p></div>'+groups.map(g=>'<section class="section-group"><div class="split-head"><div><span class="eyebrow">'+esc(g[0])+'</span><h3>'+g[0]+'</h3></div><span class="muted">'+g[1].length+' produtos</span></div><div class="grid">'+g[1].map((p,i)=>card(p,i)).join('')+'</div></section>').join('')+'</main>';
 }
 
 function product(id){
   const p=state.products.find(x=>x.id===id);
-  if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>';
-  return '<main id="main-content" class="section shell"><span class="eyebrow">'+esc(p.type)+'</span><h2>'+esc(p.name)+'.</h2><div class="split"><div><p class="section-lead">'+esc(p.description)+'</p></div><div><span class="status">'+esc(p.status)+'</span><div class="actions"><button class="btn" type="button" data-action="quote" data-product="'+esc(p.id)+'">Solicitar orçamento '+icon("arrow")+'</button></div></div></div></main>';
+  if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>';
+  const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(p.description)+'</p><div class="actions"><button class="btn" type="button" data-action="quote" data-product="'+esc(p.id)+'">Solicitar orçamento '+icon("arrow")+'</button><a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="split"><section><span class="eyebrow">Propósito</span><h3>Uma peça do ecossistema.</h3><p class="muted">'+esc(p.name)+' faz parte da arquitetura de produtos da Korczak Technology e possui o estágio <strong>'+esc(p.status)+'</strong>.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Fale sobre sua necessidade.</h3><p class="muted">Envie uma solicitação com contexto, objetivo e requisitos. A equipe poderá avaliar o escopo.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>';
 }
 
 function company(){
-  return '<main id="main-content" class="section shell"><span class="eyebrow">Empresa</span><h2>Korczak Technology.</h2><div class="split"><div><h3>Nossa história</h3><p class="muted">Uma empresa orientada à construção de software, sistemas e produtos digitais próprios, desenvolvidos de forma modular.</p></div><div><h3>Visão</h3><p class="muted">Criar uma camada tecnológica integrada para trabalho, operações, desenvolvimento e inteligência digital.</p></div></div><div class="rule"></div><h3>Valores</h3><p class="muted">Clareza · Autonomia · Engenharia · Privacidade · Evolução contínua</p></main>';
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Empresa · Korczak Technology</span><h2>Construímos o ecossistema, não apenas páginas.</h2><p class="section-lead">A Korczak Technology desenvolve software, sistemas e produtos digitais próprios para transformar ideias em ferramentas utilizáveis, conectadas e evolutivas.</p><div class="actions"><a class="btn" href="#/produtos">Explorar produtos '+icon("arrow")+'</a><a class="btn ghost" href="#/contato">Falar com a equipe</a></div></div><div class="split"><section><span class="eyebrow">O que fazemos</span><h3>Produto + engenharia.</h3><p class="muted">Projetamos interfaces, aplicações, plataformas e infraestrutura digital com foco em clareza, modularidade, segurança e evolução contínua.</p></section><section><span class="eyebrow">Como pensamos</span><h3>Construção incremental.</h3><p class="muted">Cada produto pode começar pequeno e crescer por fases, preservando uma base técnica organizada e preparada para novas integrações.</p></section></div><div class="rule"></div><span class="eyebrow">Ecossistema</span><h3>De ferramentas a operações.</h3><p class="muted">O portfólio reúne produtos de inteligência, desenvolvimento, produtividade, documentos, operações, conectividade e experiências móveis.</p></main>';
 }
 
 function contact(){
@@ -93,8 +95,8 @@ function account(){
   return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Minha conta.</h2><div class="profile"><aside class="profile-aside"><div class="profile-avatar" aria-hidden="true">'+initial+'</div><h3>'+esc(u.name||"Usuário")+'</h3><p class="muted">'+esc(u.email||"")+'</p><span class="status">'+esc(u.role||"user")+'</span></aside><section class="profile-main"><div class="profile-row"><span class="muted">Nome</span><strong>'+esc(u.name||"—")+'</strong></div><div class="profile-row"><span class="muted">Email</span><strong>'+esc(u.email||"—")+'</strong></div><div class="profile-row"><span class="muted">Perfil</span><strong>'+esc(u.role||"user")+'</strong></div><div class="profile-row"><span class="muted">Verificação</span><strong>'+((u.verified)?"Verificado":"Pendente")+'</strong></div><div class="actions"><a class="btn ghost" href="#/contato">Falar com a equipe</a><button class="btn" type="button" data-action="logout">Sair</button></div></section></div></main>';
 }
 
-function infoPage(title,kicker,body){
-  return '<main id="main-content" class="section shell"><span class="eyebrow">'+kicker+'</span><h2>'+title+'.</h2><p class="section-lead">'+body+'</p></main>';
+function infoPage(title,kicker,body,sections=[]){
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(kicker)+'</span><h2>'+esc(title)+'.</h2><p class="section-lead">'+esc(body)+'</p></div>'+(sections.length?'<div class="split">'+sections.map(x=>'<section><span class="eyebrow">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p class="muted">'+esc(x[2])+'</p></section>').join('')+'</div>':'')+'</main>';
 }
 
 const legalPages={
@@ -114,12 +116,66 @@ function footer(){
 
 function render(){
   const h=location.hash.slice(2)||"/";
-  let c=h==="/"?home():h==="/portfolio"?portfolio():h==="/produtos"?products():h==="/empresa"?company():h==="/sobre"?infoPage("Sobre nós","Empresa","Tecnologia com propósito, engenharia enxuta e produtos próprios."):h==="/historia"?infoPage("Nossa história","Empresa","Uma trajetória construída por projetos, experimentação e evolução contínua."):h==="/visao"?infoPage("Nossa visão","Empresa","Conectar pessoas, software, operações e inteligência em uma arquitetura coerente."):h==="/valores"?infoPage("Nossos valores","Empresa","Clareza · Autonomia · Engenharia · Privacidade · Evolução contínua."):h==="/faq"?infoPage("Perguntas frequentes","Suporte","Informações sobre produtos, contas, orçamento, pagamentos e suporte."):h==="/carreiras"?infoPage("Carreiras","Empresa","Oportunidades serão publicadas conforme novos times e projetos forem abertos."):h==="/parcerias"?infoPage("Parcerias","Comercial","Integrações, projetos, distribuição e oportunidades comerciais."):h==="/contato"?contact():h==="/conta"?account():h==="/privacidade"?legal("privacidade"):h==="/uso"?legal("uso"):h==="/servico"?legal("servico"):h.startsWith("produto/")?product(decodeURIComponent(h.split("/")[1])):home();
+  const pages={
+    "/sobre":()=>infoPage("Sobre nós","Empresa","Tecnologia com propósito, engenharia enxuta e produtos próprios.",[
+      ["Identidade","Korczak Technology","Uma empresa orientada à construção de software, sistemas e produtos digitais próprios."],
+      ["Atuação","Ecossistema","Produtos independentes que também podem trabalhar em conjunto conforme a necessidade."],
+      ["Princípio","Clareza","Interfaces compreensíveis, responsabilidades bem definidas e evolução técnica documentada."]
+    ]),
+    "/historia":()=>infoPage("Nossa história","História","Uma trajetória construída por projetos, experimentação e evolução contínua.",[
+      ["Origem","Construir","A operação nasceu da vontade de criar tecnologia própria em vez de depender apenas de soluções prontas."],
+      ["Evolução","Projetar","Projetos foram sendo organizados em produtos e módulos com responsabilidades específicas."],
+      ["Hoje","Integrar","O ecossistema conecta desenvolvimento, produtividade, inteligência, operações e experiências digitais."]
+    ]),
+    "/visao":()=>infoPage("Nossa visão","Visão","Criar uma camada tecnológica integrada para trabalho, operações, desenvolvimento e inteligência digital.",[
+      ["Horizonte","Tecnologia acessível","Produtos devem ser claros para quem usa e sustentáveis para quem mantém."],
+      ["Arquitetura","Modularidade","Cada módulo deve poder evoluir sem exigir que todo o ecossistema seja reconstruído."],
+      ["Futuro","Integração","Conectar ferramentas e fluxos para reduzir fragmentação e ampliar autonomia."]
+    ]),
+    "/valores":()=>infoPage("Nossos valores","Valores","Princípios que orientam decisões de produto, engenharia e relacionamento.",[
+      ["01","Clareza","Comunicar o que um sistema faz, quais são seus limites e como utilizá-lo."],
+      ["02","Autonomia","Criar ferramentas que ampliem a capacidade das pessoas e equipes."],
+      ["03","Engenharia","Priorizar bases técnicas organizadas, testáveis e evolutivas."],
+      ["04","Privacidade","Tratar dados e acessos com responsabilidade e necessidade mínima."],
+      ["05","Evolução","Melhorar continuamente por fases, métricas, feedback e aprendizado."]
+    ]),
+    "/parcerias":()=>infoPage("Parcerias","Comercial","Integrações, projetos, distribuição e oportunidades comerciais.",[
+      ["Tecnologia","Integrações","Conecte serviços, APIs e ferramentas ao ecossistema quando houver uma necessidade técnica compatível."],
+      ["Projetos","Construção conjunta","Projetos específicos podem ser avaliados conforme escopo, prazo, capacidade e requisitos."],
+      ["Ecossistema","Cooperação","Buscamos relações que criem utilidade concreta para usuários, empresas e produtos."]
+    ]),
+    "/carreiras":()=>infoPage("Carreiras","Empresa","Oportunidades serão publicadas conforme novos times e projetos forem abertos.",[
+      ["Perfil","Construção","Interesse por software, produto, sistemas, design e resolução de problemas."],
+      ["Cultura","Responsabilidade","Autonomia vem acompanhada de documentação, comunicação e compromisso com a qualidade."],
+      ["Oportunidades","Em evolução","As posições e formatos de colaboração serão apresentados conforme forem oficialmente abertos."]
+    ]),
+    "/faq":()=>infoPage("Perguntas frequentes","Suporte","Informações gerais sobre produtos, contas, orçamento, pagamentos e suporte.",[
+      ["Produtos","O que existe?","O catálogo apresenta os produtos e projetos atualmente registrados no ecossistema, incluindo seus respectivos estágios."],
+      ["Orçamento","Como solicitar?","Entre em uma conta, abra a página de um produto e envie uma solicitação descrevendo sua necessidade."],
+      ["Contato","Como falar conosco?","Use o formulário de contato para enviar nome, email, telefone opcional e mensagem."],
+      ["Desenvolvimento","Tudo está pronto?","Não. Cada produto possui um estágio explícito para diferenciar evolução, desenvolvimento e planejamento."]
+    ])
+  };
+  let c;
+  if(h==="/")c=home();
+  else if(h==="/portfolio")c=portfolio();
+  else if(h==="/produtos")c=products();
+  else if(h==="/empresa")c=company();
+  else if(pages[h])c=pages[h]();
+  else if(h==="/contato")c=contact();
+  else if(h==="/conta")c=account();
+  else if(h==="/privacidade")c=legal("privacidade");
+  else if(h==="/uso")c=legal("uso");
+  else if(h==="/servico")c=legal("servico");
+  else if(h.startsWith("produto/"))c=product(decodeURIComponent(h.split("/")[1]));
+  else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
   root.innerHTML=nav()+c+footer();
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  document.title=(h==="/"?"KORCZAK TECHNOLOGY":"KORCZAK TECHNOLOGY · "+(h.split("/")[1]||""));
-  if(state.menu){document.querySelector(".sidebar")?.focus?.()}
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const detail=h.startsWith("produto/")?state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]))?.name:null;
+  document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
+  if(state.menu)document.querySelector(".sidebar")?.focus?.();
 }
 
 function toast(message){
