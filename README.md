@@ -4,7 +4,15 @@ Site institucional e comercial da **Korczak Technology**, com portfólio, catál
 
 ## Ecossistema
 
-A página inicial destaca **KORCZAK AI**, **Korczak Workspace** e **Korczak IDE**. O catálogo completo inclui MOROK, KORCZAK ERP, FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE.
+A página inicial destaca **KORCZAK AI**, **Korczak Workspace** e **Korczak IDE**.
+
+### Korczak Workspace
+É a suíte de produtividade e colaboração da Korczak Technology, cobrindo categorias equivalentes às suítes de produtividade modernas: Documents, Sheets, Slides, Drive, Mail, Calendar, Meet, Chat, Forms e Sites.
+
+### KOS — Korczak Operations System
+É a suíte voltada para empresas e operação: **KORCZAK ERP, FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE**.
+
+MOROK, KORCZAK AI e IDE são produtos próprios que podem se integrar aos ecossistemas.
 
 ## Preços
 
