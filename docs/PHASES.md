@@ -18,15 +18,19 @@
 - SVG e ícones
 - acessibilidade sem dependência de framework
 
-## Fase 2 — Institucional
-- início
-- produtos
-- produto individual
-- empresa
+## Fase 2 — Institucional — CONCLUÍDA
+- início institucional
+- portfólio e catálogo completo
+- produto individual com relacionados e orçamento
+- empresa e sobre nós
 - história
-- visão e valores
+- visão
+- valores
+- parcerias
+- carreiras
+- FAQ
 - contato
-- legal
+- privacidade, uso e serviço
 - catálogo completo do ecossistema
 
 ## Fase 3 — Comercial
