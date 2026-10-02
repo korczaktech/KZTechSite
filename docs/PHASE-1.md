@@ -11,7 +11,6 @@ A Fase 1 entrega a camada visual e de interação do KZ Tech Site sem dependênc
 - Sidebar direita com abertura/fechamento animado, backdrop, estado ativo e fechamento por Escape.
 - Botão de menu com microanimação e feedback de interação.
 - SVGs inline para ícones de interface, sem biblioteca externa.
-- Skip link para teclado.
 - Foco visível e labels acessíveis nos formulários.
 - Sidebar fechada marcada como inert para evitar foco em conteúdo oculto.
 - Suporte a prefers-reduced-motion.
