@@ -26,29 +26,31 @@ const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
 const commercialProducts=Object.fromEntries([
-  ["korczak-ai",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_KORCZAK_AI||""}],
-  ["morok",{"amount":4900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOROK||""}],
-  ["ide",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_IDE||""}],
-  ["workspace",{"amount":14900,"currency":"brl","priceId":process.env.STRIPE_PRICE_WORKSPACE||""}],
-  ["flow",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_FLOW||""}],
-  ["documents",{"amount":5900,"currency":"brl","priceId":process.env.STRIPE_PRICE_DOCUMENTS||""}],
-  ["vision",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_VISION||""}],
-  ["ops",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_OPS||""}],
-  ["connect",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_CONNECT||""}],
-  ["mobile",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOBILE||""}]
+  ["korczak-ai",{amount:4990,currency:"brl",priceId:process.env.STRIPE_PRICE_KORCZAK_AI||""}],
+  ["workspace",{amount:6990,currency:"brl",priceId:process.env.STRIPE_PRICE_WORKSPACE||""}],
+  ["ide",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_IDE||""}],
+  ["morok",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOROK||""}],
+  ["erp",{amount:9990,currency:"brl",priceId:process.env.STRIPE_PRICE_ERP||""}],
+  ["flow",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_FLOW||""}],
+  ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}],
+  ["vision",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_VISION||""}],
+  ["ops",{amount:4990,currency:"brl",priceId:process.env.STRIPE_PRICE_OPS||""}],
+  ["connect",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_CONNECT||""}],
+  ["mobile",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOBILE||""}]
 ]);
 
 const products=[
-["korczak-ai","Korczak AI","AI / Platform","Inteligência e automação para o ecossistema Korczak.","Em evolução"],
-["morok","MOROK","Assistente / Interface","Assistente pessoal e operacional multiplataforma.","Em desenvolvimento"],
-["ide","Korczak IDE","Developer Tool","Ambiente de desenvolvimento para construir e operar projetos.","Em desenvolvimento"],
-["workspace","Korczak Workspace","Workspace","Espaço unificado para FLOW, DOCUMENTS, VISION, OPS e outros módulos.","Em evolução"],
-["flow","KORCZAK FLOW","Operations","Fluxos e automações organizacionais.","Em evolução"],
-["documents","KORCZAK DOCUMENTS","Documents","Organização e gestão documental.","Em evolução"],
-["vision","KORCZAK VISION","Intelligence","Visão operacional e acompanhamento de informações.","Em evolução"],
-["ops","KORCZAK OPS","Operations","Operações, monitoramento e controle.","Em evolução"],
-["connect","KORCZAK CONNECT","Connectivity","Conectividade entre pessoas, serviços e produtos.","Planejado"],
-["mobile","KORCZAK MOBILE","Mobile","Experiências móveis do ecossistema.","Planejado"]
+["korczak-ai","KORCZAK AI","Inteligência","Camada de inteligência para assistência, análise e automação.","Em evolução"],
+["workspace","Korczak Workspace","Workspace","Ambiente unificado para reunir produtos, documentos, operações e fluxos.","Em evolução"],
+["ide","Korczak IDE","Desenvolvimento","Ambiente para criar, testar, organizar e evoluir software.","Em desenvolvimento"],
+["morok","MOROK","Assistente","Assistente pessoal e operacional com interface web, desktop e mobile.","Em desenvolvimento"],
+["erp","KORCZAK ERP","Gestão","Núcleo de gestão para organizar clientes, operações, financeiro e processos.","Em desenvolvimento"],
+["flow","KORCZAK FLOW","Automação","Criação e acompanhamento de fluxos, tarefas e automações.","Em evolução"],
+["documents","KORCZAK DOCUMENTS","Documentos","Criação, organização, consulta e gestão do ciclo de documentos.","Em evolução"],
+["vision","KORCZAK VISION","Inteligência operacional","Painéis e visão operacional para acompanhar informação e contexto.","Em evolução"],
+["ops","KORCZAK OPS","Operações","Controle técnico e operacional do ecossistema Korczak.","Em evolução"],
+["connect","KORCZAK CONNECT","Conectividade","Integração entre pessoas, produtos, serviços e canais.","Planejado"],
+["mobile","KORCZAK MOBILE","Mobile","Experiência móvel para acessar e operar o ecossistema.","Planejado"]
 ].map(x=>({id:x[0],name:x[1],type:x[2],description:x[3],status:x[4]}));
 
 app.disable("x-powered-by");
