@@ -1,4 +1,5 @@
 const API_URL="https://kztechsite.onrender.com";
+const APP_VERSION="2026.10.02.8";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
   {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
@@ -122,6 +123,8 @@ function footer(){
 
 function render(){
   const h=location.hash.slice(2)||"/";
+  if(!root)return;
+  try{
   const pages={
     "/sobre":()=>infoPage("Sobre nós","Empresa","Tecnologia com propósito, engenharia enxuta e produtos próprios.",[
       ["Identidade","Korczak Technology","Uma empresa orientada à construção de software, sistemas e produtos digitais próprios."],
@@ -191,6 +194,10 @@ function render(){
   }
   document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
   if(state.menu)document.querySelector(".sidebar")?.focus?.();
+  }catch(error){
+    console.error("Render error:",error);
+    root.innerHTML=nav()+`<main id="main-content" class="section shell"><span class="eyebrow">KZ Tech</span><h2>Não foi possível carregar esta página.</h2><p class="section-lead">O conteúdo encontrou um erro inesperado. Recarregue a página ou volte ao início.</p><div class="actions"><a class="btn" href="#/">Voltar ao início</a><button class="btn ghost" type="button" data-action="reload">Recarregar</button></div></main>`+footer();
+  }
 }
 
 function toast(message){
@@ -258,6 +265,7 @@ function handleAction(target){
   if(action==="close-menu"){closeMenu();return false}
   if(action==="logout"){logout();return true}
   if(action==="register"){register();return true}
+  if(action==="reload"){location.reload();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
   if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
   return false;
@@ -286,12 +294,11 @@ async function load(){
       state.user=await api("/api/me");
       state.quotes=await api("/api/quotes");
       state.orders=await api("/api/orders");
-    }catch{
-      localStorage.removeItem("kz_token");
-      state.token=null;
-      state.user=null;
-      state.quotes=[];
-      state.orders=[];
+    }catch(x){
+      if(x?.message==="Não autenticado"||x?.message==="Sessão inválida"||x?.message==="Usuário não encontrado"){
+        localStorage.removeItem("kz_token"); state.token=null; state.user=null;
+      }
+      state.quotes=[]; state.orders=[];
     }
   }
   render();
