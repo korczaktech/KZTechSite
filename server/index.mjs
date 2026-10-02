@@ -110,7 +110,7 @@ app.post("/api/stripe/webhook",express.raw({type:"application/json",limit:"256kb
     res.status(500).json({error:"Erro ao processar webhook"});
   }
 });
-app.use(express.json({limit:"100kb"}));
+app.use(express.json({limit:"10mb"}));
 app.use(express.urlencoded({extended:false,limit:"100kb"}));
 app.use("/admin",express.static("admin",{extensions:["html"]}));
 
@@ -172,9 +172,9 @@ app.put("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
   if(!id||!data)return res.status(400).json({error:"Regra de conteúdo inválida"});
   const agora=new Date();
   const r=await db.collection("conteudo").findOneAndUpdate({_id:id},{$set:{...data,atualizadoEm:agora,atualizadoPor:req.user.email}},{returnDocument:"after"});
-  if(!r.value)return res.status(404).json({error:"Regra não encontrada"});
+  if(!r)return res.status(404).json({error:"Regra não encontrada"});
   await registrarAuditoria(req,"editar_conteudo",`Regra ${id} atualizada`);
-  res.json({...r.value,_id:String(r.value._id)});
+  res.json({...r,_id:String(r._id)});
 });
 app.patch("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
