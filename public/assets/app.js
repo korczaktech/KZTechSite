@@ -12,7 +12,7 @@ const FALLBACK_PRODUCTS=[
   {id:"connect",name:"KORCZAK CONNECT",type:"Connectivity",status:"Em desenvolvimento",description:"Conectividade entre pessoas, sistemas e serviços."},
   {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Em desenvolvimento",description:"Experiências móveis para o ecossistema Korczak."}
 ];
-const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,menu:false};
+const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const icon=name=>{
@@ -89,6 +89,10 @@ function contact(){
   return '<main id="main-content" class="section shell"><span class="eyebrow">Contato</span><h2>Vamos conversar.</h2><p class="section-lead">Envie uma mensagem para a equipe Korczak Technology.</p><form class="form" id="contact-form"><label><span class="sr-only">Nome</span><input class="field" name="name" placeholder="Nome" autocomplete="name" required></label><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Telefone</span><input class="field" name="phone" placeholder="Telefone" autocomplete="tel"></label><label><span class="sr-only">Mensagem</span><textarea class="field" name="message" rows="7" placeholder="Como podemos ajudar?" required></textarea></label><button class="btn" type="submit">Enviar mensagem '+icon("arrow")+'</button><small id="msg" class="muted form-note" role="status"></small></form></main>';
 }
 
+function checkoutState(kind){
+  const success=kind==="sucesso";
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Checkout · '+(success?"Concluído":"Cancelado")+'</span><h2>'+(success?"Pagamento processado.":"Pagamento cancelado.")+'</h2><p class="section-lead">'+(success?"Seu checkout foi concluído pelo Stripe. O status do pedido pode ser consultado na sua conta.":"Nenhuma cobrança foi concluída nesta etapa. Você pode voltar ao catálogo e tentar novamente.")+'</p><div class="actions"><a class="btn" href="#/conta">Minha conta</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></div></main>';
+}
 function account(){
   if(!state.token)return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Entre na sua conta.</h2><form class="form" id="login-form"><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Senha</span><input class="field" name="password" type="password" placeholder="Senha" autocomplete="current-password" required></label><button class="btn" type="submit">Entrar</button><button type="button" class="btn ghost" data-action="register">Criar conta</button><small id="auth" class="muted form-note" role="status"></small></form></main>';
   const u=state.user||{},initial=esc((u.name||"K").slice(0,1).toUpperCase());
@@ -164,6 +168,8 @@ function render(){
   else if(pages[h])c=pages[h]();
   else if(h==="/contato")c=contact();
   else if(h==="/conta")c=account();
+  else if(h==="/checkout/sucesso")c=checkoutState("sucesso");
+  else if(h==="/checkout/cancelado")c=checkoutState("cancelado");
   else if(h==="/privacidade")c=legal("privacidade");
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
@@ -212,6 +218,13 @@ async function register(){
   catch(x){toast(x.message)}
 }
 
+async function checkout(id){
+  if(!state.token){location.hash="#/conta";toast("Entre na sua conta para continuar.");return}
+  try{
+    const d=await api("/api/checkout",{method:"POST",body:JSON.stringify({productId:id})});
+    if(d.url)location.href=d.url;else toast("Checkout indisponível.");
+  }catch(x){toast(x.message)}
+}
 async function quote(id){
   if(!state.token){location.hash="#/conta";toast("Entre na sua conta para solicitar um orçamento.");return}
   const message=prompt("Descreva o que você precisa:");
@@ -237,6 +250,7 @@ function handleAction(target){
   if(action==="logout"){logout();return true}
   if(action==="register"){register();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
+  if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
   return false;
 }
 
@@ -257,7 +271,7 @@ async function load(){
   try{
     const products=await api("/api/products");
     if(Array.isArray(products)&&products.length)state.products=products;
-    if(state.token)state.user=await api("/api/me");
+    if(state.token){state.user=await api("/api/me");state.quotes=await api("/api/quotes");state.orders=await api("/api/orders");}
   }catch(e){
     if(state.token){
       localStorage.removeItem("kz_token");
