@@ -112,6 +112,140 @@ app.post("/api/stripe/webhook",express.raw({type:"application/json",limit:"256kb
 });
 app.use(express.json({limit:"100kb"}));
 app.use(express.urlencoded({extended:false,limit:"100kb"}));
+app.use("/admin",express.static("admin",{extensions:["html"]}));
+
+const TIPOS_CONTEUDO=new Set(["texto","html","imagem","link","atributo","estilo","classe","visibilidade"]);
+const emailValida=v=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(v||"").trim());
+function idMongo(v){try{return new ObjectId(v)}catch{return null}}
+async function registrarAuditoria(req,acao,detalhes){
+  if(!db)return;
+  await db.collection("auditoria").insertOne({
+    acao,email:req.user?.email||"sistema",detalhes:String(detalhes||"").slice(0,2000),
+    criadoEm:new Date()
+  });
+}
+function limparConteudo(body={}){
+  const pagina=String(body.pagina||"/").trim().slice(0,300);
+  const seletor=String(body.seletor||"").trim().slice(0,1000);
+  const tipo=String(body.tipo||"texto").trim();
+  const valor=String(body.valor??"").slice(0,1000000);
+  const atributo=String(body.atributo||"").trim().slice(0,100);
+  const propriedade=String(body.propriedade||"").trim().slice(0,100);
+  if(!seletor||!TIPOS_CONTEUDO.has(tipo)||!valor)return null;
+  return {pagina:pagina||"/",seletor,tipo,valor,atributo,propriedade,publicado:body.publicado!==false,ordem:Number.isFinite(Number(body.ordem))?Number(body.ordem):0};
+}
+
+app.get("/api/conteudo-publicado",async(req,res)=>{
+  if(!db)return res.json([]);
+  const rows=await db.collection("conteudo").find({publicado:true}).sort({ordem:1,atualizadoEm:1}).toArray();
+  res.json(rows.map(r=>({_id:String(r._id),pagina:r.pagina,seletor:r.seletor,tipo:r.tipo,valor:r.valor,atributo:r.atributo||"",propriedade:r.propriedade||"",publicado:true,ordem:r.ordem||0})));
+});
+
+app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const [conteudo,midias,admins,auditoria]=await Promise.all([
+    db.collection("conteudo").countDocuments(),
+    db.collection("midias").countDocuments(),
+    db.collection("usuarios_administradores").countDocuments(),
+    db.collection("auditoria").countDocuments()
+  ]);
+  res.json({"Regras de conteúdo":conteudo,"Mídias":midias,"Administradores":admins,"Registros de auditoria":auditoria});
+});
+app.get("/api/admin/conteudo",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("conteudo").find().sort({atualizadoEm:-1}).limit(1000).toArray();
+  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+});
+app.post("/api/admin/conteudo",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const data=limparConteudo(req.body);
+  if(!data)return res.status(400).json({error:"Regra de conteúdo inválida"});
+  const agora=new Date();
+  const doc={...data,criadoEm:agora,atualizadoEm:agora,criadoPor:req.user.email,atualizadoPor:req.user.email};
+  const r=await db.collection("conteudo").insertOne(doc);
+  await registrarAuditoria(req,"criar_conteudo",`Regra ${r.insertedId} criada para ${data.pagina} / ${data.seletor}`);
+  res.status(201).json({...doc,_id:String(r.insertedId)});
+});
+app.put("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const id=idMongo(req.params.id),data=limparConteudo(req.body);
+  if(!id||!data)return res.status(400).json({error:"Regra de conteúdo inválida"});
+  const agora=new Date();
+  const r=await db.collection("conteudo").findOneAndUpdate({_id:id},{$set:{...data,atualizadoEm:agora,atualizadoPor:req.user.email}},{returnDocument:"after"});
+  if(!r.value)return res.status(404).json({error:"Regra não encontrada"});
+  await registrarAuditoria(req,"editar_conteudo",`Regra ${id} atualizada`);
+  res.json({...r.value,_id:String(r.value._id)});
+});
+app.patch("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const id=idMongo(req.params.id);
+  if(!id)return res.status(400).json({error:"Identificador inválido"});
+  const data={};
+  if(typeof req.body.publicado==="boolean")data.publicado=req.body.publicado;
+  if(!Object.keys(data).length)return res.status(400).json({error:"Nenhuma alteração informada"});
+  data.atualizadoEm=new Date();data.atualizadoPor=req.user.email;
+  await db.collection("conteudo").updateOne({_id:id},{$set:data});
+  await registrarAuditoria(req,data.publicado?"publicar_conteudo":"despublicar_conteudo",`Regra ${id}`);
+  res.json({ok:true});
+});
+app.delete("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const id=idMongo(req.params.id);if(!id)return res.status(400).json({error:"Identificador inválido"});
+  await db.collection("conteudo").deleteOne({_id:id});
+  await registrarAuditoria(req,"excluir_conteudo",`Regra ${id} excluída`);
+  res.json({ok:true});
+});
+
+app.get("/api/admin/midias",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("midias").find({}, {projection:{dados:0}}).sort({criadoEm:-1}).limit(300).toArray();
+  res.json(rows.map(r=>({...r,_id:String(r._id),url:`/api/midia/${r._id}`})));
+});
+app.post("/api/admin/midias",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const nome=String(req.body?.nome||"imagem").slice(0,200),tipo=String(req.body?.tipo||"").toLowerCase(),dados=String(req.body?.dados||"");
+  const tamanho=Number(req.body?.tamanho||0);
+  if(!/^image\\/(png|jpeg|jpg|webp|gif|svg\\+xml)$/.test(tipo)||!dados.startsWith("data:image/")||tamanho<1||tamanho>8*1024*1024)
+    return res.status(400).json({error:"Imagem inválida. Formatos aceitos: PNG, JPEG, WebP, GIF e SVG; máximo de 8 MB."});
+  const agora=new Date();
+  const r=await db.collection("midias").insertOne({nome,tipo,tamanho,dados,criadoEm:agora,criadoPor:req.user.email});
+  await registrarAuditoria(req,"enviar_midia",`Mídia ${r.insertedId} enviada: ${nome}`);
+  res.status(201).json({_id:String(r.insertedId),url:`/api/midia/${r.insertedId}`});
+});
+app.get("/api/midia/:id",async(req,res)=>{
+  if(!db)return res.status(404).end();
+  const id=idMongo(req.params.id);if(!id)return res.status(404).end();
+  const m=await db.collection("midias").findOne({_id:id},{projection:{dados:1,tipo:1}});
+  if(!m)return res.status(404).end();
+  const raw=String(m.dados||"").replace(/^data:[^;]+;base64,/,"");
+  try{
+    res.setHeader("Content-Type",m.tipo||"image/png");
+    res.setHeader("Cache-Control","public,max-age=31536000,immutable");
+    res.end(Buffer.from(raw,"base64"));
+  }catch{res.status(500).end()}
+});
+app.get("/api/admin/administradores",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("usuarios_administradores").find({}, {projection:{senhaHash:0}}).sort({criadoEm:-1}).toArray();
+  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+});
+app.post("/api/admin/administradores",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const nome=String(req.body?.nome||"").trim().slice(0,120),mail=email(req.body?.email),senha=String(req.body?.senha||"");
+  if(nome.length<2||!emailValida(mail)||senha.length<8||senha.length>128)return res.status(400).json({error:"Dados do administrador inválidos"});
+  try{
+    const agora=new Date();
+    const r=await db.collection("users").insertOne({name:nome,email:mail,passwordHash:await bcrypt.hash(senha,12),role:"admin",verified:true,createdAt:agora});
+    await db.collection("usuarios_administradores").insertOne({usuarioId:String(r.insertedId),nome,email:mail,papel:"administrador",criadoEm:agora,criadoPor:req.user.email});
+    await registrarAuditoria(req,"criar_administrador",`Administrador ${mail} criado`);
+    res.status(201).json({ok:true});
+  }catch(e){res.status(e.code===11000?409:500).json({error:e.code===11000?"E-mail já cadastrado":"Falha ao criar administrador"})}
+});
+app.get("/api/admin/auditoria",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("auditoria").find().sort({criadoEm:-1}).limit(300).toArray();
+  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+});
 
 const rate=new Map();
 app.use((req,res,next)=>{
@@ -284,6 +418,11 @@ async function start(){
     db=mongo.db(process.env.MONGODB_DB||"KZTech");
     await db.command({ping:1});
     await db.collection("users").createIndex({email:1},{unique:true});
+    await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
+    await db.collection("conteudo").createIndex({seletor:1,pagina:1},{unique:true});
+    await db.collection("midias").createIndex({criadoEm:-1});
+    await db.collection("usuarios_administradores").createIndex({email:1},{unique:true});
+    await db.collection("auditoria").createIndex({criadoEm:-1});
     await db.collection("contacts").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({userId:1,createdAt:-1});
