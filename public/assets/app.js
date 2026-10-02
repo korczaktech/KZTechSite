@@ -15,7 +15,7 @@ const FALLBACK_PRODUCTS=[
   {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Em desenvolvimento",description:"Experiências móveis para o ecossistema Korczak."},
   {id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Em desenvolvimento",description:"Gestão empresarial para clientes, processos, financeiro e operação."}
 ];
-const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false};
+const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const icon=name=>{
@@ -160,11 +160,11 @@ function checkoutState(kind){
 }
 function authPage(mode="login",message=""){
   const loginMode=mode==="login";
-  return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-brand"><img src="./assets/mark.svg" alt="" aria-hidden="true"><span>KORCZAK TECHNOLOGY</span></div><div class="auth-copy"><span class="eyebrow">Acesso seguro</span><h1>'+(loginMode?"Entre no seu ecossistema.":"Crie sua conta Korczak.")+'</h1><p>'+(loginMode?"Entre para acessar produtos, orçamento, pedidos e seu perfil.":"Crie sua conta para acessar o ecossistema Korczak, acompanhar solicitações e utilizar os recursos disponíveis.")+'</p></div><div class="auth-card"><div class="auth-tabs"><button class="'+(loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="login">Entrar</button><button class="'+(!loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="register">Criar conta</button></div><form class="auth-form" id="auth-form" data-mode="'+(loginMode?"login":"register")+'">'+(!loginMode?'<label><span>Nome</span><input class="field" name="name" autocomplete="name" placeholder="Seu nome" required></label>':"")+'<label><span>Email</span><input class="field" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required></label><label><span>Senha</span><input class="field" name="password" type="password" autocomplete="'+(loginMode?"current-password":"new-password")+'" placeholder="Mínimo de 8 caracteres" minlength="8" required></label><button class="btn auth-submit" type="submit">'+(loginMode?"Entrar":"Criar minha conta")+' '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status">'+esc(message)+'</small></form><p class="auth-terms">Ao continuar, você concorda com as <a href="#/privacidade">informações de privacidade</a> e as <a href="#/uso">regras de uso</a>.</p></div></section></main>';
+  return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-brand"><img src="./assets/mark.svg" alt="" aria-hidden="true"><span>KORCZAK TECHNOLOGY</span></div><div class="auth-copy"><span class="eyebrow">Acesso seguro</span><h1>'+(loginMode?"Entre no seu ecossistema.":"Crie sua conta Korczak.")+'</h1><p>'+(loginMode?"Entre para acessar produtos, orçamento, pedidos e seu perfil.":"Crie sua conta para acessar o ecossistema Korczak, acompanhar solicitações e utilizar os recursos disponíveis.")+'</p></div><div class="auth-card"><div class="auth-tabs"><button class="'+(loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="login">Entrar</button><button class="'+(!loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="register">Criar conta</button></div><form class="auth-form" id="auth-form" data-mode="'+(loginMode?"login":"register")+'" novalidate>'+(!loginMode?'<label><span>Nome</span><input class="field" name="name" autocomplete="name" placeholder="Seu nome" required></label>':"")+'<label><span>Email</span><input class="field" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required></label><label><span>Senha</span><input class="field" name="password" type="password" autocomplete="'+(loginMode?"current-password":"new-password")+'" placeholder="Mínimo de 8 caracteres" minlength="8" required></label><button class="btn auth-submit" type="submit">'+(loginMode?"Entrar":"Criar minha conta")+' '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status">'+esc(message)+'</small></form><p class="auth-terms">Ao continuar, você concorda com as <a href="#/privacidade">informações de privacidade</a> e as <a href="#/uso">regras de uso</a>.</p></div></section></main>';
 }
 
 function account(){
-  if(!state.token){state.authMode="login";return authPage(state.authMode,state.authMessage||"");}
+  if(!state.token){if(!state.authMode)state.authMode="login";return authPage(state.authMode,state.authMessage||"");}
   const u=state.user||{},initial=esc((u.name||"K").slice(0,1).toUpperCase());
   const quoteRows=state.quotes.length?state.quotes.map(q=>'<div class="profile-row"><span>'+esc(q.productId)+'</span><strong>'+esc(q.status||"pending")+'</strong><small class="muted">'+new Date(q.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma solicitação de orçamento ainda.</div>';
   const orderRows=state.orders.length?state.orders.map(o=>'<div class="profile-row"><span>'+esc(o.productId)+'</span><strong>'+esc(o.status||"checkout_created")+'</strong><small class="muted">'+new Date(o.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma compra registrada.</div>';
@@ -372,7 +372,7 @@ async function load(){
   if(!root)return;
   document.body.classList.add("loading");
   state.authenticated=false;
-  state.authMode="login";
+  if(!state.authMode)state.authMode="login";
   render();
   if(state.token){
     try{
