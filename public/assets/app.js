@@ -258,6 +258,8 @@ function render(){
   }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
   root.innerHTML=state.authenticated?nav()+c+footer():c;initMoon();
+  const authForm=root.querySelector("#auth-form");
+  if(authForm)authForm.addEventListener("submit",submitAuth,{once:true});
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
   const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
@@ -361,7 +363,7 @@ async function submitAuth(e){
 }
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
-  if(e.target.id==="auth-form")submitAuth(e);
+  if(e.target.id==="auth-form"){e.preventDefault();submitAuth(e);}
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
