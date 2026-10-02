@@ -115,6 +115,8 @@ const SERVICE_EXTRAS={
  ["integration","Integrações externas","Sistemas externos","Conecta a landing page a CRM, automações ou outras plataformas."]
 ],
 "site":[
+ ["blog","Blog","Conteúdo","Adiciona uma área estruturada para publicação de artigos e conteúdo."],
+ ["cms","CMS","Conteúdo gerenciável","Permite editar conteúdos do site por um painel sem alterar o código."],
  ["multilang","Mais idiomas","Internacionalização","Adiciona versões completas do site em outros idiomas."],
  ["integrations","Integrações externas","Sistemas e plataformas","Conecta o site a CRM, ERP, APIs ou ferramentas externas."],
  ["dashboard","Painel administrativo avançado","Gestão","Cria uma área administrativa personalizada para operações que exigem controles além do conteúdo padrão."],
@@ -123,12 +125,16 @@ const SERVICE_EXTRAS={
 ],
 "ecommerce":[
  ["abandoned","Recuperação de carrinho","Vendas","Cria automações para tentar recuperar compras não finalizadas."],
+ ["wishlist","Lista de desejos","Retenção","Permite salvar produtos para consultar ou comprar depois."],
+ ["reviews","Avaliações de produtos","Confiança","Permite que clientes avaliem produtos e compartilhem experiências."],
+ ["coupons","Cupons e promoções avançadas","Marketing","Cria regras promocionais além dos descontos básicos da loja."],
  ["multi-store","Multi-loja","Operações","Permite administrar mais de uma loja ou operação na mesma estrutura."],
  ["shipping-tracking","Rastreamento avançado de entrega","Logística","Integra o acompanhamento detalhado da entrega."],
  ["erp","Integração com ERP","Gestão empresarial","Sincroniza a loja com um sistema empresarial externo."],
  ["crm","Integração com CRM","Relacionamento","Sincroniza clientes e informações comerciais com um CRM."]
 ],
 "web-app":[
+ ["payments","Pagamentos e assinaturas","Cobrança","Adiciona cobrança, planos ou assinaturas à aplicação."],
  ["realtime","Tempo real","Atualização instantânea","Atualiza informações sem recarregar a aplicação."],
  ["webhooks","Webhooks","Eventos externos","Troca eventos automaticamente com outros sistemas."],
  ["queue","Filas de processamento","Processamento assíncrono","Processa tarefas demoradas em segundo plano."],
@@ -137,6 +143,7 @@ const SERVICE_EXTRAS={
  ["integrations","Integrações externas","Sistemas","Conecta a aplicação a plataformas e serviços externos."]
 ],
 "mobile":[
+ ["payments","Pagamentos","Cobrança","Adiciona compras, assinaturas ou pagamentos dentro do aplicativo."],
  ["biometric","Biometria","Acesso","Adiciona autenticação biométrica quando suportada pelo dispositivo."],
  ["deep-links","Deep links","Navegação","Abre diretamente telas específicas a partir de links."],
  ["location","Geolocalização","Localização","Usa a localização do dispositivo em recursos que dependem dela."],
@@ -189,19 +196,17 @@ const SERVICE_EXTRAS={
 };
 
 const SERVICE_INCLUDED={
-  "landing-page":["responsive","deployment","security","performance","accessibility","seo","sections","form","analytics","cookie"],
-  "site":["responsive","deployment","security","performance","accessibility","seo","sections","pages","blog","forms","search","files","auth","roles","faq","reviews","cookie","terms","privacy"],
-  "ecommerce":["responsive","deployment","security","performance","accessibility","seo","sections","pages","blog","forms","search","filters","files","auth","roles","faq","reviews","products","dashboard","payments","shipping","inventory","orders","customers","cart","wishlist","coupons","email","shipping-tracking"],
-  "web-app":["responsive","deployment","security","performance","accessibility","sections","pages","forms","search","filters","files","auth","roles","database","api","dashboard","notifications","audit","backup"],
-  "mobile":["security","performance","accessibility","auth","dashboard","notifications","files","payments","camera","api","store"],
+  "landing-page":["responsive","deployment","security","performance","accessibility","seo","sections","form","analytics"],
+  "site":["responsive","deployment","security","performance","accessibility","seo","sections","pages","forms","cookie","terms","privacy"],
+  "ecommerce":["responsive","deployment","security","performance","accessibility","seo","sections","pages","forms","search","filters","files","auth","roles","products","dashboard","payments","shipping","inventory","orders","customers","cart","checkout","email","analytics"],
+  "web-app":["responsive","deployment","security","performance","accessibility","sections","pages","forms","files","auth","roles","database","api","dashboard","notifications","audit","backup"],
+  "mobile":["deployment","security","performance","accessibility","auth","dashboard","notifications","files","api","store","crash"],
   "api":["auth","database","admin","docs","webhooks","storage","monitoring","rate-limit"],
   "integration":["api","webhook","auth","mapping","sync","retry","logs","monitoring"],
-  "automation":["workflow","n8n","conditions","filters","transform","retry"],
+  "automation":["workflow","webhook","conditions","transform","retry","logs"],
   "bot":["commands","faq","buttons","handoff","forms","auth","notifications"],
   "customization":[]
 };
-
-
 
 Object.keys(SERVICE_INCLUDED).forEach(serviceId=>{
   const included=new Set(SERVICE_INCLUDED[serviceId]||[]);
