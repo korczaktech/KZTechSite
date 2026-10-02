@@ -1,6 +1,6 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
-const APP_VERSION="2026.10.02.18";
+const APP_VERSION="2026.10.02.19";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
   {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
@@ -159,8 +159,8 @@ function servicePage(id){
     const price=prices[i];
     return '<label class="service-option"><input type="checkbox" data-service-option data-price="'+price+'" data-label="'+o[1]+'"><span><strong>'+o[1]+'</strong><small>'+o[2]+'</small></span><b>+'+money(price)+'</b></label>';
   }).join("");
-  const cap=s[1]==null?"Sem teto fixo":"Máximo com todas as opções: "+money(s[1]);
-  return '<main id="main-content" class="section shell"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+s[0]+'</span><h2>'+s[0]+'</h2><p class="section-lead">'+s[2]+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-base">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-base"><span>Recursos selecionados</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">Você começa sem custo. Cada recurso selecionado adiciona seu valor ao orçamento. O teto é atingido quando todas as opções são selecionadas.</p><button class="btn" type="button" data-service-request data-service-id="'+id+'">Solicitar este projeto →</button></aside></div></main>';
+  const cap=s[1]==null?"Sem teto fixo":"Teto máximo: "+money(s[1]);
+  return '<main id="main-content" class="section shell"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+s[0]+'</span><h2>'+s[0]+'</h2><p class="section-lead">'+s[2]+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-base">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-start"><span>Preço inicial</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">O projeto começa em R$ 0. Cada recurso selecionado adiciona seu valor ao orçamento. Com todas as opções selecionadas, o total chega ao teto máximo.</p><button class="btn" type="button" data-service-request data-service-id="'+id+'">Solicitar este projeto →</button></aside></div></main>';
 }
 
 function updateServiceQuote(el){
