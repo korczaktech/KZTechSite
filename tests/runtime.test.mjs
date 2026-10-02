@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {execFileSync} from "node:child_process";
 
+const app=fs.readFileSync("public/assets/app.js","utf8");
+const server=fs.readFileSync("server/index.mjs","utf8");
+const render=fs.readFileSync("render.yaml","utf8");
+
 test("runtime: backend e frontend são JavaScript sintaticamente válidos",()=>{
   execFileSync(process.execPath,["--check","server/index.mjs"]);
   execFileSync(process.execPath,["--check","public/assets/app.js"]);
