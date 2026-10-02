@@ -41,7 +41,7 @@ async function api(url,opt={}){
 }
 
 const links=[
-  ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/kos","KOS"],["/empresa","Empresa"],
+  ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/empresa","Empresa"],
   ["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],["/carreiras","Carreiras"],
   ["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
 ];
@@ -55,7 +55,7 @@ function nav(){
   return '<div class="site-background" aria-hidden="true"><svg viewBox="0 0 1600 900" preserveAspectRatio="none"><defs><radialGradient id="fogA"><stop stop-color="#8d6cff" stop-opacity=".22"/><stop offset=".55" stop-color="#473b75" stop-opacity=".09"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><radialGradient id="fogB"><stop stop-color="#fff" stop-opacity=".10"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="1600" height="900" fill="#050505"/><ellipse cx="1180" cy="260" rx="650" ry="300" fill="url(#fogA)"/><ellipse cx="390" cy="700" rx="600" ry="250" fill="url(#fogA)"/><ellipse cx="850" cy="500" rx="700" ry="190" fill="url(#fogB)" opacity=".5"/><path d="M-100 560 C240 420 430 690 760 535 S1240 410 1700 560" fill="none" stroke="#b9adff" stroke-opacity=".10" stroke-width="2"/><path d="M-100 650 C260 510 500 800 830 625 S1290 500 1700 650" fill="none" stroke="#fff" stroke-opacity=".055" stroke-width="1"/><g fill="#fff" opacity=".65"><circle cx="100" cy="130" r="1.4"/><circle cx="250" cy="310" r="1"/><circle cx="420" cy="100" r="1.2"/><circle cx="620" cy="250" r="1"/><circle cx="850" cy="120" r="1.3"/><circle cx="1050" cy="340" r="1"/><circle cx="1280" cy="100" r="1.3"/><circle cx="1480" cy="300" r="1"/></g></svg></div></div><header class="nav"><div class="shell"><a class="brand" href="#/" aria-label="Korczak Technology — início"><img class="brand-mark" src="./assets/mark.svg" alt="" aria-hidden="true">KORCZAK TECHNOLOGY</a><button class="menu-toggle '+(state.menu?"active":"")+'" type="button" aria-label="'+(state.menu?"Fechar navegação":"Abrir navegação")+'" aria-expanded="'+state.menu+'" aria-controls="site-sidebar" data-action="toggle-menu"><span class="menu-icon" aria-hidden="true"></span><span class="pulse" aria-hidden="true"></span></button></div></header>'+
     '<div class="sidebar-backdrop '+(state.menu?"open":"")+'" data-action="close-menu" aria-hidden="true"></div>'+
     '<aside id="site-sidebar" class="sidebar '+(state.menu?"open":"")+'" aria-label="Navegação principal" aria-hidden="'+(!state.menu)+'"'+(!state.menu?' inert':'')+'><div class="side-head"><div><small>Navegação</small></div><small>KZ / 01</small></div><nav class="side-nav">'+
-    group("Principal",links.slice(0,4),0)+group("Ecossistema",links.slice(4,9),9)+group("Conta & suporte",links.slice(9),14)+
+    group("Principal",links.slice(0,4),0)+group("Ecossistema",links.slice(4,8),8)+group("Conta & suporte",links.slice(8),12)+
     '</nav><div class="side-footer">Korczak Technology · Sistemas, software e produtos digitais.</div></aside>';
 }
 
@@ -177,7 +177,7 @@ function legal(kind){
 }
 
 function footer(){
-  return '<footer class="footer shell"><span>© '+new Date().getFullYear()+' Korczak Technology</span><span class="footer-links"><a href="#/privacidade">Privacidade</a><a href="#/uso">Uso</a><a href="#/servico">Serviço</a></span></footer>';
+  return '<footer class="footer"><div class="shell footer-grid"><div class="footer-company"><strong>KORCZAK TECHNOLOGY</strong><span>Software, sistemas e produtos digitais.</span><div class="footer-contact"><a href="tel:+5511954083183" aria-label="Ligar para Raphael">Raphael: +55 (11) 95408-3183</a><a href="mailto:SAC.korczak.tecnologies@gmail.com">SAC: SAC.korczak.tecnologies@gmail.com</a><a href="mailto:korczaktechnology@gmail.com">Comercial: korczaktechnology@gmail.com</a></div></div><div class="footer-social"><span>Redes sociais</span><div class="social-links"><a class="social-link" href="https://www.instagram.com/korczak_.tech/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @korczak_.tech"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg><span>Instagram · @korczak_.tech</span></a><a class="social-link" href="https://www.facebook.com/people/Korczak-Technologies/61593956412109/" target="_blank" rel="noopener noreferrer" aria-label="Facebook Korczak Technologies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v2H6v4h3v5h4v-5h3l1-4h-4V9c0-.7.3-1 1-1Z"></path></svg><span>Facebook · Korczak Technologies</span></a></div></div><div class="footer-legal"><span>© '+new Date().getFullYear()+' Korczak Technology</span><span class="footer-links"><a href="#/privacidade">Privacidade</a><a href="#/uso">Uso</a><a href="#/servico">Serviço</a></span></div></div></footer>';
 }
 
 function render(){
