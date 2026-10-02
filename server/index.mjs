@@ -19,6 +19,20 @@ if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.
 let db=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI):null;
 const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_KEY):null;
+const FRONTEND_URL=(process.env.FRONTEND_URL||"").replace(/\/$/,"");
+const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
+const commercialProducts=Object.fromEntries([
+  ["korczak-ai",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_KORCZAK_AI||""}],
+  ["morok",{"amount":4900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOROK||""}],
+  ["ide",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_IDE||""}],
+  ["workspace",{"amount":14900,"currency":"brl","priceId":process.env.STRIPE_PRICE_WORKSPACE||""}],
+  ["flow",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_FLOW||""}],
+  ["documents",{"amount":5900,"currency":"brl","priceId":process.env.STRIPE_PRICE_DOCUMENTS||""}],
+  ["vision",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_VISION||""}],
+  ["ops",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_OPS||""}],
+  ["connect",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_CONNECT||""}],
+  ["mobile",{"amount":7900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOBILE||""}]
+]);
 
 const products=[
 ["korczak-ai","Korczak AI","AI / Platform","Inteligência e automação para o ecossistema Korczak.","Em evolução"],
@@ -76,7 +90,7 @@ app.get("/api/ready",(req,res)=>{
   const ready=Boolean(db);
   res.status(ready?200:503).json({ready,database:ready,time:new Date().toISOString()});
 });
-app.get("/api/products",(req,res)=>res.json(products));
+app.get("/api/products",(req,res)=>res.json(products.map(p=>({...p,commercial:Boolean(commercialProducts[p.id]),price:commercialProducts[p.id]?.amount||null,currency:commercialProducts[p.id]?.currency||"brl"}))));
 
 app.post("/api/contact",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
@@ -116,7 +130,7 @@ app.post("/api/auth/login",async(req,res)=>{
   res.json({user:safe,token:token(safe)});
 });
 
-app.get("/api/me",auth,async(req,res)=>{
+app.get("/api/quotes",auth,async(req,res)=>{\n  if(!db)return res.status(503).json({error:"Banco não configurado"});\n  const rows=await db.collection("quotes").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();\n  res.json(rows);\n});\n\napp.get("/api/orders",auth,async(req,res)=>{\n  if(!db)return res.status(503).json({error:"Banco não configurado"});\n  const rows=await db.collection("orders").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();\n  res.json(rows);\n});\n\napp.get("/api/me",auth,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   let id;
   try{id=new ObjectId(req.user.sub)}catch{return res.status(401).json({error:"Sessão inválida"})}
