@@ -19,3 +19,10 @@ test("Fase 3: Stripe Checkout e estados",()=>{
 test("Fase 3: configuração Stripe documentada",()=>{
   for(const id of ["KORCZAK_AI","MOROK","IDE","WORKSPACE","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE"])assert.ok(env.includes("STRIPE_PRICE_"+id));
 });
+test("Fase 3: webhook Stripe confirma e atualiza pedidos",()=>{
+  assert.ok(server.includes('/api/stripe/webhook'));
+  assert.ok(server.includes('stripe.webhooks.constructEvent'));
+  assert.ok(server.includes('checkout.session.completed'));
+  assert.ok(server.includes('payment_failed'));
+  assert.ok(server.includes('sessionId:session.id'));
+});
