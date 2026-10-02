@@ -8,7 +8,7 @@ const phases=fs.readFileSync("docs/PHASE-2.md","utf8");
 
 test("Fase 2: shell frontend existe e usa assets versionados",()=>{
   assert.ok(html.includes('id="app"'));
-  assert.ok(html.includes('app.js?v=20261002-5'));
+  assert.ok(html.includes('app.js?v=20261002-6'));
 });
 
 test("Fase 2: rotas institucionais completas",()=>{
