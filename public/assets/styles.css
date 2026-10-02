@@ -208,3 +208,33 @@ input:focus,textarea:focus,select:focus{transform:translateY(-1px);box-shadow:0 
  button::after,.btn::after{display:none!important}
  button:hover,.btn:hover,.card:hover,.side-link:hover,.legal-nav a:hover,.footer-links a:hover,input:focus,textarea:focus,select:focus{transform:none!important}
 }
+
+/* Global navigation and interaction animation layer */
+.nav{transition:background-color .3s ease,box-shadow .3s ease,transform .3s ease}
+.nav:hover{background-color:rgba(5,5,5,.94);box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.brand{transition:transform .3s var(--ease),letter-spacing .3s var(--ease),opacity .3s ease}
+.brand:hover{transform:translateX(3px);letter-spacing:.055em}
+.brand-mark{transition:transform .45s var(--ease),filter .3s ease}
+.brand:hover .brand-mark{transform:rotate(8deg) scale(1.06);filter:brightness(1.25)}
+.menu-toggle{transition:transform .3s var(--ease),background-color .3s ease,border-color .3s ease,box-shadow .3s ease}
+.menu-toggle:hover{box-shadow:0 0 24px rgba(255,255,255,.1)}
+.menu-toggle .menu-icon,.menu-toggle .pulse{transition:transform .3s var(--ease),opacity .25s ease}
+.sidebar{transition:transform .4s var(--ease),opacity .3s ease,box-shadow .4s ease}
+.sidebar-backdrop{transition:opacity .35s ease,visibility .35s ease}
+.sidebar.open{box-shadow:20px 0 70px rgba(0,0,0,.45)}
+.side-link{position:relative;overflow:hidden}
+.side-link::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#fff;transform:scaleY(0);transform-origin:center;transition:transform .3s var(--ease)}
+.side-link:hover::before,.side-link.active::before{transform:scaleY(1)}
+.side-arrow{transition:transform .3s var(--ease),opacity .3s ease}
+.side-link:hover .side-arrow{transform:translateX(4px);opacity:1}
+.actions a,.actions button{transition:all .25s var(--ease)}
+.actions a:hover,.actions button:hover{letter-spacing:.015em}
+.footer{transition:opacity .3s ease}
+.footer-links a{display:inline-block}
+a:not(.brand):not(.card):not(.side-link):not(.legal-nav a):not(.footer-links a):hover{transform:translateY(-2px)}
+button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4);opacity:.55}
+@media(prefers-reduced-motion:reduce){
+ .nav,.brand,.brand-mark,.menu-toggle,.menu-toggle .menu-icon,.menu-toggle .pulse,.sidebar,.sidebar-backdrop,.side-link,.side-arrow,.actions a,.actions button,.footer,.footer-links a{transition:none!important}
+ .brand:hover,.brand:hover .brand-mark,.menu-toggle:hover,.side-link:hover .side-arrow,a:hover{transform:none!important}
+ .side-link::before{transition:none}
+}
