@@ -25,6 +25,18 @@ test("runtime: frontend não depende do backend para o primeiro render",()=>{
   assert.ok(app.includes('api("/api/products")'));
 });
 
+test("runtime: navegação lateral não bloqueia links",()=>{
+  const app=fs.readFileSync("public/assets/app.js","utf8");
+  assert.match(app,/action==="close-menu"\}\{closeMenu\(\);return false\}/);
+});
+
+test("runtime: API e Mongo têm configuração resiliente",()=>{
+  const server=fs.readFileSync("server/index.mjs","utf8");
+  assert.match(server,/serverSelectionTimeoutMS:10000/);
+  assert.match(server,/const FRONTEND_URLS=/);
+  assert.match(server,/FRONTEND_URLS\[0\]/);
+});
+
 test("runtime: Pages é uma origem CORS permitida por padrão",()=>{
   const server=fs.readFileSync("server/index.mjs","utf8");
   assert.match(server,/https:\/\/korczaktechnology-tech\.github\.io/);
