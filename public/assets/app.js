@@ -147,7 +147,7 @@ function footer(){
 }
 
 function render(){
-  const h=location.hash.slice(2)||"/";
+  const h=location.hash.startsWith("#/")?location.hash.slice(1):"/";
   if(!root)return;
   try{
   const pages={
@@ -207,7 +207,7 @@ function render(){
   else if(h==="/servico")c=legal("servico");
   else if(h.startsWith("/produto/")){
     let productId="";
-    try{productId=decodeURIComponent(h.split("/")[1]||"")}catch{}
+    try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}
     c=product(productId);
   }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
@@ -217,7 +217,7 @@ function render(){
   const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
   let detail=null;
   if(h.startsWith("/produto/")){
-    try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]||""))?.name||null}catch{}
+    try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[2]||""))?.name||null}catch{}
   }
   document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
   if(state.menu)document.querySelector(".sidebar")?.focus?.();
