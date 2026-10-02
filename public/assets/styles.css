@@ -238,3 +238,20 @@ button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4)
  .brand:hover,.brand:hover .brand-mark,.menu-toggle:hover,.side-link:hover .side-arrow,a:hover{transform:none!important}
  .side-link::before{transition:none}
 }
+
+/* Product card motion */
+.card{position:relative;overflow:hidden;transform:translateZ(0);will-change:transform,box-shadow}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 18%,rgba(255,255,255,.09) 48%,transparent 78%);transform:translateX(-130%);transition:transform .7s var(--ease);pointer-events:none}
+.card::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent);opacity:0;transform:scaleX(.35);transition:opacity .35s ease,transform .5s var(--ease);pointer-events:none}
+.card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 22px 55px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.055)}
+.card:hover::before{transform:translateX(130%)}
+.card:hover::after{opacity:.7;transform:scaleX(1)}
+.card:active{transform:translateY(-2px) scale(.992);transition-duration:.1s}
+.card .status,.card .card-index,.card h3,.card p,.card .card-arrow{transition:transform .35s var(--ease),color .3s ease,opacity .3s ease,letter-spacing .35s var(--ease)}
+.card:hover .status{transform:translateX(3px);color:#aaa}
+.card:hover .card-index{transform:translateX(-3px);color:#999}
+.card:hover h3{transform:translateX(3px);letter-spacing:.01em}
+.card:hover p{transform:translateX(3px);color:#bbb}
+.card .card-arrow{display:inline-flex}
+.card:hover .card-arrow{transform:translateX(8px);color:#fff}
+@media(prefers-reduced-motion:reduce){.card,.card::before,.card::after,.card .status,.card .card-index,.card h3,.card p,.card .card-arrow{transition:none!important}.card:hover{transform:none}.card:hover::before{transform:none}.card:hover::after{transform:none}}
