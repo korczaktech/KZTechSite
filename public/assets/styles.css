@@ -388,3 +388,58 @@ button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4)
   .service-included-panel{padding:1rem}
   .service-included-list{grid-template-columns:1fr}
 }
+
+
+/* Mentoria */
+.mentor-page{min-height:100vh}
+.mentor-hero{min-height:72vh;display:grid;grid-template-columns:minmax(0,1fr) 260px;align-items:center;gap:40px}
+.mentor-hero h1{margin:18px 0 24px}
+.mentor-hero h1 span{color:#aaa}
+.mentor-hero p{max-width:720px}
+.mentor-monogram,.mentor-price-hero{border:1px solid #292929;background:linear-gradient(145deg,#111,#080808);border-radius:28px;min-height:260px;display:grid;place-items:center;font-size:72px;font-weight:800;letter-spacing:-.08em;box-shadow:var(--shadow)}
+.mentor-price-hero{padding:28px;min-height:220px;align-content:center;gap:10px;text-align:center}
+.mentor-price-hero small{color:#777;text-transform:uppercase;letter-spacing:.18em;font-size:10px}
+.mentor-price-hero strong{font-size:34px}
+.mentor-feature-grid{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:28px}
+.mentor-track-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}
+.mentor-track-card,.mentor-level-card{border:1px solid var(--line);background:rgba(255,255,255,.018);border-radius:18px;padding:24px}
+.mentor-track-card h3{font-size:28px;margin:.5rem 0}
+.mentor-track-card>p{color:#888;min-height:52px}
+.mentor-level-list{display:grid;gap:8px;margin-top:20px}
+.mentor-price-row{display:grid;grid-template-columns:1fr auto 18px;gap:12px;align-items:center;padding:14px;border:1px solid #222;border-radius:12px;background:#0b0b0b}
+.mentor-price-row:hover{border-color:#555;background:#101010}
+.mentor-price-row span:first-child{display:grid;gap:2px}
+.mentor-price-row b{font-size:14px}.mentor-price-row small{color:#777;font-size:11px}
+.mentor-price-row strong{white-space:nowrap;font-size:14px}
+.mentor-custom{border:1px solid #252525;border-radius:20px;background:#080808}
+.mentor-custom-head{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}
+.mentor-total{border:1px solid #292929;border-radius:16px;padding:18px 22px;min-width:220px;display:grid;gap:5px;text-align:right}
+.mentor-total small{color:#666;letter-spacing:.16em;font-size:9px}.mentor-total strong{font-size:28px}.mentor-total span{color:#777;font-size:12px}
+.mentor-tech-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:24px}
+.mentor-tech-row{position:relative;display:grid;grid-template-columns:1fr auto 22px;gap:12px;align-items:center;padding:14px 16px;border:1px solid #202020;border-radius:12px;cursor:pointer;background:#0b0b0b}
+.mentor-tech-row:hover{border-color:#444}
+.mentor-tech-row span:first-child{display:grid}.mentor-tech-row small{color:#777;font-size:11px}.mentor-tech-row strong{font-size:13px}
+.mentor-tech-row input{position:absolute;opacity:0;pointer-events:none}
+.mentor-toggle{width:22px;height:22px;border:1px solid #444;border-radius:50%;position:relative}
+.mentor-tech-row input:checked~.mentor-toggle{background:#fff;border-color:#fff}
+.mentor-tech-row input:checked~.mentor-toggle:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#050505}
+.mentor-level-card{display:flex;flex-direction:column;gap:10px}
+.mentor-level-card h3{margin:0;font-size:26px}
+.mentor-level-card p{color:#999;margin:0;flex:1}
+.mentor-level-card small{color:#777}
+.mentor-level-card>strong{font-size:24px;margin:4px 0 8px}
+.mentor-tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.mentor-tech-pills span{border:1px solid #292929;background:#0b0b0b;border-radius:999px;padding:8px 12px;color:#ccc;font-size:12px}
+.mentor-cta{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media(max-width:900px){
+ .mentor-hero{grid-template-columns:1fr}.mentor-monogram,.mentor-price-hero{min-height:180px;max-width:280px}
+ .mentor-feature-grid,.mentor-track-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mentor-custom-head{grid-template-columns:1fr}.mentor-total{text-align:left}
+}
+@media(max-width:600px){
+ .mentor-feature-grid,.mentor-track-grid,.mentor-tech-list{grid-template-columns:1fr}
+ .mentor-hero{min-height:auto;padding-block:70px}.mentor-hero h1{font-size:clamp(48px,15vw,72px)}
+ .mentor-monogram,.mentor-price-hero{min-height:150px;font-size:52px}
+ .mentor-price-row{grid-template-columns:1fr auto}.mentor-price-row .side-arrow{display:none}
+ .mentor-custom{padding:20px}
+}
