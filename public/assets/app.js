@@ -346,7 +346,7 @@ async function submitAuth(e){
   button.dataset.originalText=button.textContent;
   button.textContent=mode==="login"?"Entrando…":"Criando conta…";
   try{
-    const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",body:JSON.stringify(payload)});
+    const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:new URLSearchParams(payload).toString()});
     if(!d?.token||!d?.user)throw Error("O servidor não retornou uma sessão válida.");
     state.token=d.token;state.user=d.user;state.authenticated=true;state.authMode="login";state.authMessage="";
     localStorage.setItem("kz_token",d.token);
