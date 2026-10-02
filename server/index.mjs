@@ -53,7 +53,20 @@ const products=[
 app.disable("x-powered-by");
 app.set("trust proxy",1);
 app.use(helmet({
-  contentSecurityPolicy:false,
+  contentSecurityPolicy:{
+    directives:{
+      defaultSrc:["'self'"],
+      scriptSrc:["'self'"],
+      styleSrc:["'self'","'unsafe-inline'"],
+      imgSrc:["'self'","data:"],
+      connectSrc:["'self'","https://kztechsite.onrender.com"],
+      fontSrc:["'self'","data:"],
+      objectSrc:["'none'"],
+      baseUri:["'self'"],
+      frameAncestors:["'none'"],
+      formAction:["'self'","https://checkout.stripe.com"]
+    }
+  },
   crossOriginEmbedderPolicy:false,
   referrerPolicy:{policy:"strict-origin-when-cross-origin"}
 }));
