@@ -18,6 +18,7 @@ const FALLBACK_PRODUCTS=[
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const money=value=>{const n=Number(value);return Number.isFinite(n)?n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2,maximumFractionDigits:2}):"R$ 0,00"};
 const icon=name=>{
   const paths={
     arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
