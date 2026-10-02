@@ -14,7 +14,7 @@ const SITE_URL=(process.env.SITE_URL||"").replace(/\/$/,"");
 const DEFAULT_FRONTEND_ORIGINS=["https://korczaktechnology-tech.github.io"];
 const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
 const FRONTEND_ORIGINS=FRONTEND_URLS.map(v=>{try{return new URL(v).origin}catch{return v}}).filter(Boolean);
-const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...FRONTEND_ORIGINS])];
+const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...FRONTEND_ORIGINS,SITE_URL,"https://kztechsite.onrender.com"].filter(Boolean))];
 
 if(isProd&&(!SECRET||SECRET.length<32))throw new Error("JWT_SECRET must be configured with at least 32 characters in production.");
 if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.");
@@ -78,7 +78,7 @@ app.use(cors({
     if(!origin||ALLOWED_ORIGINS.includes(origin))return callback(null,true);
     return callback(new Error("Origin not allowed by CORS"));
   },
-  methods:["GET","POST","OPTIONS"],
+  methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
   allowedHeaders:["Content-Type","Authorization"],
   maxAge:86400
 }));
