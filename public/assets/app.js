@@ -656,7 +656,7 @@ function handleAction(target){
   if(action==="logout"){logout();return true}
   if(action==="register"){state.authMode="register";state.authMessage="";location.hash="#/acesso";render();return true}
   if(action==="auth-mode"){state.authMode=target.closest("[data-action]").dataset.mode;state.authMessage="";render();return true}
-  if(action==="reload"){location.reload();return true}
+  if(action==="reload"){location.reregistrarPaginaAtual();\nload();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
   if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
   return false;
@@ -700,7 +700,36 @@ document.addEventListener("submit",e=>{
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
 });
+function registrarAnalitica(tipo="visualizacao",evento=""){
+  try{
+    const id=localStorage.getItem("kz_visitante")||crypto.randomUUID();
+    localStorage.setItem("kz_visitante",id);
+    const pagina=location.hash.replace(/^#/, "")||"/";
+    const ua=navigator.userAgent;
+    const navegador=/Edg/i.test(ua)?"Edge":/Chrome/i.test(ua)?"Chrome":/Firefox/i.test(ua)?"Firefox":/Safari/i.test(ua)?"Safari":"Outro";
+    const sistema=/Android/i.test(ua)?"Android":/i.test(ua)?"iOS":/Windows/i.test(ua)?"Windows":/Mac OS/i.test(ua)?"macOS":/Linux/i.test(ua)?"Linux":"Outro";
+    const dispositivo=/Mobi|Android/i.test(ua)?"mobile":"desktop";
+    fetch("https://kztechsite.onrender.com/api/analiticas/evento",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      pagina,tipo,caminho:location.href,titulo:document.title,referencia:id,dispositivo,navegador,sistema,
+      idioma:navigator.language,largura:innerWidth,altura:innerHeight,evento
+    }),keepalive:true}).catch(()=>{});
+  }catch{}
+}
 addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"})});
+let ultimaPaginaAnalitica="";
+function registrarPaginaAtual(){
+  const pagina=location.hash.replace(/^#/, "")||"/";
+  if(pagina===ultimaPaginaAnalitica)return;
+  ultimaPaginaAnalitica=pagina;
+  setTimeout(()=>registrarAnalitica("visualizacao"),150);
+}
+document.addEventListener("click",e=>{
+  const alvo=e.target.closest("a,button,[data-action]");
+  if(!alvo)return;
+  const texto=(alvo.textContent||"").trim().slice(0,100);
+  if(texto)registrarAnalitica("interacao",texto);
+});
+
 
 async function load(){
   if(!root)return;
