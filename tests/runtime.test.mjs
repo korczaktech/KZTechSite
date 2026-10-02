@@ -63,5 +63,25 @@ test("runtime: Render usa readiness endpoint",()=>assert.match(render,/healthChe
 
 test("runtime: Frontend URL pode conter caminho do GitHub Pages sem quebrar CORS",()=>{
   assert.match(server,/new URL\(v\)\.origin/);
-  assert.match(render,/healthCheckPath: \/api\/ready/);
+  assert.match(render,/healthCheckPath: \/health/);
+});
+
+test("runtime: Render health endpoint existe",()=>{
+  assert.match(server,/app\.get\("\/health"/);
+});
+test("runtime: entradas de contato possuem limites e email válido",()=>{
+  assert.match(server,/cleanName\.length<2/);
+  assert.match(server,/cleanMessage\.length>5000/);
+  assert.match(server,/cleanPhone\.length>40/);
+});
+test("runtime: frontend URL é obrigatória em produção",()=>{
+  assert.match(server,/FRONTEND_URL must be configured in production/);
+});
+test("runtime: Stripe usa o preço gerenciado quando Price ID existe",()=>{
+  assert.match(server,/stripe\.prices\.retrieve\(config\.priceId\)/);
+  assert.match(server,/price\.unit_amount/);
+});
+test("runtime: pedidos e webhook são idempotentes",()=>{
+  assert.match(server,/\{upsert:true\}/);
+  assert.match(server,/\$setOnInsert/);
 });
