@@ -476,7 +476,9 @@ async function start(){
     db=mongo.db(process.env.MONGODB_DB||"KZTech");
     await db.command({ping:1});
     await db.collection("users").createIndex({email:1},{unique:true});
-    await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});\n  await db.collection("analiticas").createIndex({criadoEm:-1});\n  await db.collection("analiticas").createIndex({pagina:1,criadoEm:-1});
+    await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
+  await db.collection("analiticas").createIndex({criadoEm:-1});
+  await db.collection("analiticas").createIndex({pagina:1,criadoEm:-1});
     await db.collection("conteudo").createIndex({seletor:1,pagina:1},{unique:true});
     await db.collection("midias").createIndex({criadoEm:-1});
     await db.collection("usuarios_administradores").createIndex({email:1},{unique:true});
