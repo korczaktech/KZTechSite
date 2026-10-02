@@ -1,141 +1,319 @@
 const API_URL="https://kztechsite.onrender.com";
-const APP_VERSION="2026.10.02.10";
+const APP_VERSION="2026.10.02.11";
 const root=document.querySelector("#app");
-
 const FALLBACK_PRODUCTS=[
-{id:"korczak-ai",name:"KORCZAK AI",type:"Inteligência",status:"Em evolução",price:49.90,description:"Camada de inteligência do ecossistema para assistência, análise e automação."},
-{id:"workspace",name:"Korczak Workspace",type:"Workspace",status:"Em evolução",price:69.90,description:"Ambiente unificado para reunir produtos, documentos, operações e fluxos."},
-{id:"ide",name:"Korczak IDE",type:"Desenvolvimento",status:"Em desenvolvimento",price:39.90,description:"Ambiente para criar, testar, organizar e evoluir software."},
-{id:"morok",name:"MOROK",type:"Assistente",status:"Em desenvolvimento",price:29.90,description:"Assistente pessoal e operacional com interface web, desktop e mobile."},
-{id:"erp",name:"KORCZAK ERP",type:"Gestão",status:"Em desenvolvimento",price:99.90,description:"Núcleo de gestão para organizar clientes, operações, financeiro e processos."},
-{id:"flow",name:"KORCZAK FLOW",type:"Automação",status:"Em evolução",price:39.90,description:"Criação e acompanhamento de fluxos, tarefas e automações."},
-{id:"documents",name:"KORCZAK DOCUMENTS",type:"Documentos",status:"Em evolução",price:24.90,description:"Criação, organização, consulta e gestão do ciclo de documentos."},
-{id:"vision",name:"KORCZAK VISION",type:"Inteligência operacional",status:"Em evolução",price:39.90,description:"Painéis e visão operacional para acompanhar informação e contexto."},
-{id:"ops",name:"KORCZAK OPS",type:"Operações",status:"Em evolução",price:49.90,description:"Controle técnico e operacional do ecossistema Korczak."},
-{id:"connect",name:"KORCZAK CONNECT",type:"Conectividade",status:"Planejado",price:29.90,description:"Integração entre pessoas, produtos, serviços e canais."},
-{id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Planejado",price:29.90,description:"Experiência móvel para acessar e operar o ecossistema."}
+  {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
+  {id:"morok",name:"MOROK",type:"Assistente",status:"Em desenvolvimento",description:"Assistente pessoal e operacional multiplataforma."},
+  {id:"ide",name:"Korczak IDE",type:"Developer Tool",status:"Em desenvolvimento",description:"Ambiente de desenvolvimento para projetos Korczak."},
+  {id:"workspace",name:"Korczak Workspace",type:"Produtividade",status:"Em evolução",description:"Suíte de produtividade e colaboração para documentos, arquivos, agenda, comunicação e trabalho em equipe."},
+  {id:"flow",name:"KORCZAK FLOW",type:"Operations",status:"Em desenvolvimento",description:"Fluxos e automações para operações digitais."},
+  {id:"documents",name:"KORCZAK DOCUMENTS",type:"Documents",status:"Em desenvolvimento",description:"Documentos e organização de informação."},
+  {id:"vision",name:"KORCZAK VISION",type:"Intelligence",status:"Em desenvolvimento",description:"Visão e inteligência para decisões digitais."},
+  {id:"ops",name:"KORCZAK OPS",type:"Operations",status:"Em desenvolvimento",description:"Operações e administração do ecossistema."},
+  {id:"connect",name:"KORCZAK CONNECT",type:"Connectivity",status:"Em desenvolvimento",description:"Conectividade entre pessoas, sistemas e serviços."},
+  {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Em desenvolvimento",description:"Experiências móveis para o ecossistema Korczak."},
+  {id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Em desenvolvimento",description:"Gestão empresarial para clientes, processos, financeiro e operação."}
 ];
-
-const PRODUCT_DETAILS={
-"korczak-ai":{tag:"Produto de destaque",lead:"A camada de inteligência do ecossistema Korczak.",how:"Recebe contexto, organiza informações e oferece assistência para tarefas, análise, criação e automação. A arquitetura pode conectar modelos e ferramentas conforme o produto e a configuração contratada.",features:["Assistência conversacional","Análise e síntese de informação","Automação orientada por contexto","Integração com outros módulos do KOS"],workflow:["Entrada: pergunta, arquivo, contexto ou tarefa.","Processamento: aplicação de regras, ferramentas e modelo configurado.","Saída: resposta, ação, documento ou encaminhamento para outro módulo."],plan:"Plano base a partir de R$ 49,90/mês."},
-"workspace":{tag:"Produto de destaque",lead:"O ponto de entrada para o conjunto de ferramentas Korczak.",how:"O Workspace funciona como uma camada de acesso comum: organiza aplicações, projetos, documentos e operações em um único ambiente, evitando que cada ferramenta precise ser usada de forma isolada.",features:["Acesso centralizado aos produtos","Projetos e espaços de trabalho","Integração com FLOW, DOCUMENTS, VISION e OPS","Conta única para o ecossistema"],workflow:["Escolha o espaço ou projeto.","Abra a ferramenta necessária.","Continue o trabalho sem perder o contexto organizacional."],plan:"Plano base a partir de R$ 69,90/mês."},
-"ide":{tag:"Produto de destaque",lead:"Ambiente de desenvolvimento para construir tecnologia.",how:"O IDE reúne edição, organização de projetos, execução e acompanhamento do desenvolvimento em um ambiente pensado para os produtos e serviços Korczak.",features:["Projetos e arquivos","Fluxo de desenvolvimento","Testes e validações","Integração com Git e deploys","Área para automações e ferramentas"],workflow:["Crie ou abra um projeto.","Desenvolva e valide as alterações.","Publique ou encaminhe o projeto para o próximo estágio."],plan:"Plano base a partir de R$ 39,90/mês."},
-"morok":{tag:"Assistente",lead:"Uma interface de assistência pessoal e operacional.",how:"O MOROK é pensado como uma interface para comandos, voz e ações autorizadas. Pode atuar em desktop, web e mobile, com comandos predefinidos e, quando habilitado, recursos de IA.",features:["Interface de voz e texto","Comandos predefinidos","Ações com confirmação","Integração desktop/web/mobile","Arquitetura preparada para ferramentas"],workflow:["O usuário inicia uma solicitação.","O sistema identifica o comando e mostra a confirmação quando necessária.","Após autorização, executa a ação e informa o resultado."],plan:"Plano base a partir de R$ 29,90/mês."},
-"erp":{tag:"Gestão",lead:"Gestão integrada para organizar a operação da empresa.",how:"O ERP centraliza dados operacionais e administrativos em módulos conectados. A proposta é reduzir informações espalhadas e criar uma visão única de clientes, processos, financeiro e atividades.",features:["Clientes e contatos","Orçamentos e pedidos","Financeiro e histórico","Processos e tarefas","Indicadores operacionais"],workflow:["Cadastre o contexto da operação.","Registre atividades e transações.","Acompanhe histórico, indicadores e próximos passos."],plan:"Plano base a partir de R$ 99,90/mês."},
-"flow":{tag:"Automação",lead:"Transforme processos repetitivos em fluxos claros.",how:"O FLOW organiza etapas, responsáveis, condições e ações. Um processo deixa de depender apenas de memória ou mensagens soltas e passa a possuir um caminho definido.",features:["Fluxos por etapas","Tarefas e responsáveis","Estados e gatilhos","Histórico de execução","Integração com outros módulos"],workflow:["Defina o gatilho.","Configure etapas e responsáveis.","Acompanhe cada execução e seus resultados."],plan:"Plano base a partir de R$ 39,90/mês."},
-"documents":{tag:"Documentos",lead:"Um espaço estruturado para informação documental.",how:"O DOCUMENTS organiza documentos por projeto, cliente ou operação, mantendo metadados e histórico para facilitar localização e continuidade do trabalho.",features:["Organização por espaços","Metadados","Histórico","Busca e consulta","Integração com Workspace"],workflow:["Crie ou envie o documento.","Classifique e associe ao contexto.","Consulte, atualize e acompanhe seu histórico."],plan:"Plano base a partir de R$ 24,90/mês."},
-"vision":{tag:"Inteligência operacional",lead:"Transforme dados espalhados em visão de operação.",how:"O VISION apresenta indicadores, informações e estados importantes em painéis orientados ao acompanhamento. A intenção é facilitar a leitura do que está acontecendo e do que exige atenção.",features:["Dashboards","Indicadores","Visão de projetos","Monitoramento de estados","Integração com dados do ecossistema"],workflow:["Colete informações dos módulos.","Organize indicadores e estados.","Acompanhe tendências e pontos de atenção."],plan:"Plano base a partir de R$ 39,90/mês."},
-"ops":{tag:"Operações",lead:"Controle técnico e operacional do ecossistema.",how:"O OPS reúne recursos de acompanhamento da infraestrutura, serviços, usuários e processos operacionais, criando uma camada de administração e observabilidade.",features:["Monitoramento","Serviços e ambientes","Status operacionais","Administração","Histórico e auditoria"],workflow:["Conecte os serviços autorizados.","Acompanhe saúde e eventos.","Atue sobre ocorrências com permissões adequadas."],plan:"Plano base a partir de R$ 49,90/mês."},
-"connect":{tag:"Conectividade",lead:"Conecte produtos, pessoas e serviços.",how:"O CONNECT é a camada destinada às integrações do ecossistema. Ele pode concentrar conexões, eventos e pontos de comunicação entre aplicações.",features:["Integrações","Eventos","Conectores","Comunicação entre módulos","Gestão de conexões"],workflow:["Cadastre uma conexão.","Defina os dados e eventos permitidos.","Acompanhe a comunicação entre os sistemas."],plan:"Plano base a partir de R$ 29,90/mês."},
-"mobile":{tag:"Mobile",lead:"O ecossistema Korczak na palma da mão.",how:"O MOBILE concentra experiências móveis para consulta, comandos, acompanhamento e acesso aos produtos que possuem suporte mobile.",features:["Acesso móvel","Conta e perfil","Notificações","Comandos e ações","Integração com Workspace"],workflow:["Entre com sua conta.","Escolha o produto ou ação.","Execute e acompanhe pelo dispositivo móvel."],plan:"Plano base a partir de R$ 29,90/mês."}
-};
-
-const KOS_PRODUCTS=["korczak-ai","workspace","ide","morok","erp","flow","documents","vision","ops","connect","mobile"];
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const icon=name=>{
- const paths={arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',close:'<path d="M6 6l12 12M18 6L6 18"/>',external:'<path d="M14 5h5v5M19 5l-8 8"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>'};
- return '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[name]||paths.arrow)+'</svg>';
+  const paths={
+    arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+    menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+    close:'<path d="M6 6l12 12M18 6L6 18"/>',
+    external:'<path d="M14 5h5v5M19 5l-8 8"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>'
+  };
+  return '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[name]||paths.arrow)+'</svg>';
 };
+
 async function api(url,opt={}){
- const h={"Content-Type":"application/json",...(opt.headers||{})}; if(state.token)h.Authorization="Bearer "+state.token;
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
- try{const r=await fetch(API_URL+url,{...opt,headers:h,signal:controller.signal});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||"Não foi possível concluir a operação.");return d}finally{clearTimeout(timer)}
+  const h={"Content-Type":"application/json",...(opt.headers||{})};
+  if(state.token)h.Authorization="Bearer "+state.token;
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),8000);
+  try{
+    const r=await fetch(API_URL+url,{...opt,headers:h,signal:controller.signal});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw Error(d.error||"Não foi possível concluir a operação.");
+    return d;
+  }finally{clearTimeout(timer)}
 }
+
 const links=[
- ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/precos","Preços"],["/empresa","Empresa"],["/kos","KOS"],
- ["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],["/carreiras","Carreiras"],
- ["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
+  ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/empresa","Empresa"],
+  ["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],["/carreiras","Carreiras"],
+  ["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
 ];
+
 function nav(){
- const h=location.hash.slice(2)||"/",active=p=>h===p||(p!=="/"&&h.startsWith(p));
- const group=(title,items,offset)=>'<div class="side-section">'+title+'</div>'+items.map(([p,n],i)=>'<a class="side-link '+(active(p)?"active":"")+'" aria-current="'+(active(p)?"page":"false")+'" href="#'+p+'" data-action="close-menu"><span>'+n+'</span><span class="side-arrow">'+String(offset+i+1).padStart(2,"0")+"</span></a>").join("");
- return '<header class="nav"><div class="shell"><a class="brand" href="#/" aria-label="Korczak Technology — início"><img class="brand-mark" src="./assets/mark.svg" alt="" aria-hidden="true">KORCZAK TECHNOLOGY</a><button class="menu-toggle '+(state.menu?"active":"")+'" type="button" aria-label="'+(state.menu?"Fechar navegação":"Abrir navegação")+'" aria-expanded="'+state.menu+'" aria-controls="site-sidebar" data-action="toggle-menu"><span class="menu-icon" aria-hidden="true"></span><span class="pulse" aria-hidden="true"></span></button></div></header><div class="sidebar-backdrop '+(state.menu?"open":"")+'" data-action="close-menu" aria-hidden="true"></div><aside id="site-sidebar" class="sidebar '+(state.menu?"open":"")+'" aria-label="Navegação principal" aria-hidden="'+(!state.menu)+'"'+(!state.menu?" inert":"")+'><div class="side-head"><div><small>Navegação</small></div><small>KZ / 01</small></div><nav class="side-nav">'+group("Principal",links.slice(0,6),0)+group("Empresa",links.slice(6,11),6)+group("Conta & suporte",links.slice(11),11)+'</nav><div class="side-footer">Korczak Technology · Sistemas, software e produtos digitais.</div></aside>';
+  const h=location.hash.slice(2)||"/";
+  const active=p=>h===p||(p!=="/"&&h.startsWith(p));
+  const group=(title,items,offset)=>'<div class="side-section">'+title+'</div>'+items.map(([p,n],i)=>
+    '<a class="side-link '+(active(p)?"active":"")+'" aria-current="'+(active(p)?"page":"false")+'" href="#'+p+'" data-action="close-menu"><span>'+n+'</span><span class="side-arrow">'+String(offset+i+1).padStart(2,"0")+'</span></a>'
+  ).join("");
+  return '<header class="nav"><div class="shell"><a class="brand" href="#/" aria-label="Korczak Technology — início"><img class="brand-mark" src="./assets/mark.svg" alt="" aria-hidden="true">KORCZAK TECHNOLOGY</a><button class="menu-toggle '+(state.menu?"active":"")+'" type="button" aria-label="'+(state.menu?"Fechar navegação":"Abrir navegação")+'" aria-expanded="'+state.menu+'" aria-controls="site-sidebar" data-action="toggle-menu"><span class="menu-icon" aria-hidden="true"></span><span class="pulse" aria-hidden="true"></span></button></div></header>'+
+    '<div class="sidebar-backdrop '+(state.menu?"open":"")+'" data-action="close-menu" aria-hidden="true"></div>'+
+    '<aside id="site-sidebar" class="sidebar '+(state.menu?"open":"")+'" aria-label="Navegação principal" aria-hidden="'+(!state.menu)+'"'+(!state.menu?' inert':'')+'><div class="side-head"><div><small>Navegação</small></div><small>KZ / 01</small></div><nav class="side-nav">'+
+    group("Principal",links.slice(0,4),0)+group("Ecossistema",links.slice(4,9),9)+group("Conta & suporte",links.slice(9),14)+
+    '</nav><div class="side-footer">Korczak Technology · Sistemas, software e produtos digitais.</div></aside>';
 }
-function price(p){return p.price?new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(p.price)):"Consultar"}
-function card(p,i,featured=false){
- return '<a class="card '+(featured?"featured":"")+'" href="#/produto/'+encodeURIComponent(p.id)+'"><span class="status">'+esc(p.status||p.type)+'</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p><span class="card-price">'+price(p)+'/mês</span><span class="card-arrow">'+icon("arrow")+"</span></a>";
+
+function card(p,i){
+  return '<a class="card" href="#/produto/'+encodeURIComponent(p.id)+'"><span class="status">'+esc(p.status||p.type)+'</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p><span class="card-arrow">'+icon("arrow")+'</span></a>';
 }
+
 function home(){
  const featured=state.products.filter(p=>["korczak-ai","workspace","ide"].includes(p.id));
- return '<main id="main-content"><section class="hero shell"><span class="eyebrow">KORCZAK TECHNOLOGY · ECOSSISTEMA KOS</span><h1>Tecnologia para construir, organizar e operar.</h1><p>Um ecossistema de software próprio para transformar ideias em produtos, processos e operações digitais.</p><div class="actions"><a class="btn" href="#/portfolio">Explorar portfólio '+icon("arrow")+'</a><a class="btn ghost" href="#/empresa">Conhecer a empresa</a></div></section><section class="section shell"><span class="eyebrow">Em destaque</span><h2>Comece pelo núcleo.</h2><p class="section-lead">Três portas de entrada para o ecossistema: inteligência, trabalho integrado e desenvolvimento.</p><div class="grid">'+featured.map((p,i)=>card(p,i,true)).join("")+'</div></section><section class="section shell"><span class="eyebrow">KOS · Korczak Operations System</span><h2>Um sistema maior por trás dos produtos.</h2><p class="section-lead">Conheça todos os módulos e veja como cada um participa da operação.</p><a class="btn ghost" href="#/kos">Ver todo o KOS '+icon("arrow")+'</a></section></main>';
+ return '<main id="main-content"><section class="hero shell"><span class="eyebrow">KORCZAK TECHNOLOGY · SOFTWARE · SISTEMAS</span><h1>Construímos tecnologia para operar o futuro.</h1><p>Produtos digitais para inteligência, produtividade, desenvolvimento e operações empresariais.</p><div class="actions"><a class="btn" href="#/portfolio">Ver portfólio '+icon("arrow")+'</a><a class="btn ghost" href="#/empresa">Conhecer a empresa</a></div></section><section class="section shell"><span class="eyebrow">Em destaque</span><h2>O núcleo do ecossistema.</h2><p class="section-lead">Na página inicial, três produtos representam as principais portas de entrada: inteligência, produtividade e desenvolvimento.</p><div class="grid">'+featured.map((p,i)=>card(p,i)).join("")+'</div></section><section class="section shell"><div class="split"><section><span class="eyebrow">Korczak Workspace</span><h3>Produtividade e colaboração.</h3><p class="muted">Uma suíte própria para o trabalho diário: documentos, planilhas, apresentações, arquivos, agenda, comunicação e colaboração.</p><a class="btn ghost" href="#/workspace">Conhecer o Workspace '+icon("arrow")+'</a></section><section><span class="eyebrow">KOS · Korczak Operations System</span><h3>Operação empresarial.</h3><p class="muted">Uma suíte separada para empresas: ERP, FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE.</p><a class="btn ghost" href="#/kos">Conhecer o KOS '+icon("arrow")+'</a></section></div></section></main>';
 }
+
 function portfolio(){
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Portfólio</span><h2>Produtos que formam o ecossistema.</h2><p class="section-lead">MOROK, ERP, IDE e os demais produtos são apresentados aqui com propósito, funcionamento, recursos e modelo de preço.</p></div><div class="grid">'+state.products.map((p,i)=>card(p,i)).join("")+'</div></main>';
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Portfólio</span><h2>O universo Korczak.</h2><p class="section-lead">Um conjunto de produtos e projetos que formam o ecossistema Korczak Technology. Explore cada iniciativa, seu propósito e estágio atual.</p></div><div class="grid">'+state.products.map(card).join("")+'</div></main>';
 }
-function products(){return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Produtos</span><h2>Catálogo completo.</h2><p class="section-lead">Explore todos os aplicativos do KOS, incluindo os produtos que não aparecem na página inicial.</p><div class="price-note">Preços base em reais. Produtos com IA usam como referência custos públicos da Claude convertidos para BRL e a regra de preço definida para o ecossistema; consumo, impostos e recursos adicionais podem alterar o valor final.</div></div><div class="grid">'+state.products.map((p,i)=>card(p,i)).join("")+'</div></main>'}
-function pricing(){
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Preços</span><h2>Valores claros.</h2><p class="section-lead">Valores iniciais de referência para os produtos. A contratação final pode variar conforme escopo, uso, integrações e recursos.</p></div><div class="pricing-grid">'+state.products.map((p,i)=>'<article class="price-card"><span class="eyebrow">'+String(i+1).padStart(2,"0")+' · '+esc(p.type)+'</span><h3>'+esc(p.name)+'</h3><strong>'+price(p)+'</strong><small>/mês · plano base</small><p class="muted">'+esc(p.description)+'</p><a class="btn ghost" href="#/produto/'+encodeURIComponent(p.id)+'">Detalhes '+icon("arrow")+'</a></article>').join("")+'</div><div class="rule"></div><section class="pricing-method"><span class="eyebrow">Base de cálculo para IA</span><h3>Referência de custo de modelo</h3><p class="muted">Para produtos com IA, a referência pública atual da Claude Sonnet 5.5 é US$ 2 por milhão de tokens de entrada e US$ 10 por milhão de tokens de saída. Usando US$ 1 = R$ 5,2073 como referência de câmbio e aplicando a regra informada de redução de 25% sobre o custo convertido, isso corresponde aproximadamente a R$ 7,81 por milhão de tokens de entrada e R$ 39,05 por milhão de tokens de saída. Essa referência não substitui o custo real de infraestrutura e uso.</p></section></main>';
+
+function products(){
+ const groups=[["Produtos em destaque",state.products.filter(p=>["korczak-ai","morok","ide"].includes(p.id))],["Korczak Workspace",state.products.filter(p=>p.id==="workspace")],["KOS · Operações empresariais",state.products.filter(p=>["erp","flow","documents","vision","ops","connect","mobile"].includes(p.id))]];
+ return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Produtos · Catálogo</span><h2>Do trabalho diário à operação empresarial.</h2><p class="section-lead">Explore os produtos da Korczak Technology. O Workspace é a suíte de produtividade; o KOS é a suíte voltada à operação de empresas.</p></div>'+groups.map(g=>'<section class="section-group"><div class="split-head"><div><span class="eyebrow">'+esc(g[0])+'</span><h3>'+g[0]+'</h3></div><span class="muted">'+g[1].length+' produto(s)</span></div><div class="grid">'+g[1].map((p,i)=>card(p,i)).join("")+'</div></section>').join("")+'</main>';
+}
+function workspace(){
+ const apps=[["documents","Korczak Documents","Documentos de texto, edição e colaboração."],["sheets","Korczak Sheets","Planilhas, dados, fórmulas e análises."],["slides","Korczak Slides","Apresentações e materiais visuais."],["drive","Korczak Drive","Arquivos, pastas e armazenamento organizado."],["mail","Korczak Mail","Comunicação por email para o trabalho."],["calendar","Korczak Calendar","Agenda, eventos, reuniões e compromissos."],["meet","Korczak Meet","Reuniões e comunicação por vídeo."],["chat","Korczak Chat","Comunicação rápida entre pessoas e equipes."],["forms","Korczak Forms","Formulários, coleta de informações e respostas."],["sites","Korczak Sites","Páginas internas e espaços compartilhados."]];
+ return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Korczak Workspace</span><h2>A suíte de produtividade da Korczak.</h2><p class="section-lead">O Workspace reúne ferramentas para o trabalho diário, seguindo a mesma categoria de necessidades atendidas por suítes como o Google Workspace: criar, armazenar, comunicar, organizar e colaborar.</p></div><div class="grid">'+apps.map((a,i)=>'<article class="card"><span class="status">Workspace</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(a[1])+'</h3><p class="muted">'+esc(a[2])+'</p><span class="card-arrow">'+icon("arrow")+'</span></article>').join("")+'</div><div class="rule"></div><span class="eyebrow">Como funciona</span><h3>Uma conta, várias ferramentas.</h3><p class="section-lead">O usuário trabalha em um espaço comum, com documentos, arquivos, comunicação e agenda conectados ao contexto de sua equipe.</p></main>';
 }
 function kos(){
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">KOS · Korczak Operations System</span><h2>Todos os módulos.</h2><p class="section-lead">O KOS reúne os aplicativos da Korczak Technology em uma arquitetura modular. Alguns produtos são destinados ao uso direto; outros funcionam como camadas de suporte, operação ou integração.</p></div><div class="kos-list">'+state.products.map((p,i)=>{const d=PRODUCT_DETAILS[p.id]||{};return '<a class="kos-row" href="#/produto/'+encodeURIComponent(p.id)+'"><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+esc(p.name)+'</strong><small>'+esc(d.tag||p.type)+'</small><em>'+icon("arrow")+'</em></a>'}).join("")+'</div></main>';
+ const ids=["erp","flow","documents","vision","ops","connect","mobile"];
+ const descriptions={erp:"Gestão empresarial, clientes, processos e financeiro.",flow:"Fluxos, tarefas e automações de processos.",documents:"Documentos empresariais, organização e histórico.",vision:"Painéis e visão operacional para indicadores.",ops:"Operação, administração e observabilidade.",connect:"Integrações e comunicação entre sistemas.",mobile:"Acesso móvel aos recursos empresariais."};
+ return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">KOS · Korczak Operations System</span><h2>A suíte empresarial.</h2><p class="section-lead">O KOS é separado do Workspace. Enquanto o Workspace atende produtividade e colaboração, o KOS organiza a operação de empresas.</p></div><div class="grid">'+ids.map((id,i)=>{const p=state.products.find(x=>x.id===id);return p?'<a class="card" href="#/produto/'+encodeURIComponent(id)+'"><span class="status">KOS</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(descriptions[id])+'</p><span class="card-arrow">'+icon("arrow")+'</span></a>':""}).join("")+'</div></main>';
 }
+
 function product(id){
- const p=state.products.find(x=>x.id===id),d=PRODUCT_DETAILS[id];
- if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>';
- const details=d||{tag:p.type,lead:p.description,how:"Produto em evolução dentro do ecossistema Korczak Technology.",features:[],workflow:[],plan:"Preço sob consulta."};
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(details.tag)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(details.lead)+'</p><div class="actions"><button class="btn" type="button" data-action="quote" data-product="'+esc(p.id)+'">Solicitar orçamento '+icon("arrow")+'</button><button class="btn ghost" type="button" data-action="checkout" data-product="'+esc(p.id)+'">Comprar · '+price(p)+'</button></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">Como funciona</span><h3>Da necessidade à execução.</h3><p class="muted">'+esc(details.how)+'</p></section><section class="detail-panel"><span class="eyebrow">Valor base</span><h3>'+esc(details.plan)+'</h3><p class="muted">O valor apresentado é uma referência comercial. Projetos sob medida podem ser tratados por orçamento.</p></section></div><div class="split"><section><span class="eyebrow">Recursos</span><h3>O que compõe o produto.</h3><ul class="feature-list">'+details.features.map(x=>"<li>"+esc(x)+"</li>").join("")+'</ul></section><section><span class="eyebrow">Fluxo</span><h3>Como uma operação acontece.</h3><ol class="feature-list">'+details.workflow.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ol></section></div><div class="rule"></div><span class="eyebrow">No ecossistema</span><p class="section-lead">O produto pode funcionar de forma independente ou integrado ao KOS, conforme os recursos disponíveis.</p><a class="btn ghost" href="#/kos">Voltar ao KOS '+icon("arrow")+'</a></main>';
+  const p=state.products.find(x=>x.id===id);
+  if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>';
+  const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(p.description)+'</p><div class="actions"><button class="btn" type="button" data-action="quote" data-product="'+esc(p.id)+'">Solicitar orçamento '+icon("arrow")+'</button><button class="btn ghost" type="button" data-action="checkout" data-product="'+esc(p.id)+'">Comprar</button><a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="split"><section><span class="eyebrow">Propósito</span><h3>Uma peça do ecossistema.</h3><p class="muted">'+esc(p.name)+' faz parte da arquitetura de produtos da Korczak Technology e possui o estágio <strong>'+esc(p.status)+'</strong>.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Fale sobre sua necessidade.</h3><p class="muted">Envie uma solicitação com contexto, objetivo e requisitos. A equipe poderá avaliar o escopo.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>';
 }
+
 function company(){
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Empresa · Korczak Technology</span><h2>Software próprio para problemas reais.</h2><p class="section-lead">A Korczak Technology organiza seu trabalho em produtos, sistemas e ferramentas digitais. O objetivo é construir tecnologia modular, clara e evolutiva, do desenvolvimento à operação.</p></div><div class="split"><section><span class="eyebrow">Atuação</span><h3>Construção de software.</h3><p class="muted">Produtos web, experiências digitais, sistemas operacionais e ferramentas para desenvolvimento, produtividade e gestão.</p></section><section><span class="eyebrow">Ecossistema</span><h3>KOS.</h3><p class="muted">O Korczak Operations System conecta produtos com responsabilidades diferentes: inteligência, workspace, desenvolvimento, gestão, documentos, automação, visão, operações, conectividade e mobile.</p></section></div><div class="rule"></div><div class="split"><section><span class="eyebrow">Forma de trabalho</span><h3>Construção incremental.</h3><p class="muted">Produtos podem evoluir por fases, começando com uma base utilizável e recebendo novos módulos, integrações e automações.</p></section><section><span class="eyebrow">Posicionamento</span><h3>Produto + engenharia.</h3><p class="muted">A proposta combina experiência de produto com uma base técnica que pode ser mantida, testada e publicada continuamente.</p></section></div><div class="actions"><a class="btn" href="#/produtos">Ver produtos '+icon("arrow")+'</a><a class="btn ghost" href="#/contato">Entrar em contato</a></div></main>';
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Empresa · Korczak Technology</span><h2>Construímos o ecossistema, não apenas páginas.</h2><p class="section-lead">A Korczak Technology desenvolve software, sistemas e produtos digitais próprios para transformar ideias em ferramentas utilizáveis, conectadas e evolutivas.</p><div class="actions"><a class="btn" href="#/produtos">Explorar produtos '+icon("arrow")+'</a><a class="btn ghost" href="#/contato">Falar com a equipe</a></div></div><div class="split"><section><span class="eyebrow">O que fazemos</span><h3>Produto + engenharia.</h3><p class="muted">Projetamos interfaces, aplicações, plataformas e infraestrutura digital com foco em clareza, modularidade, segurança e evolução contínua.</p></section><section><span class="eyebrow">Como pensamos</span><h3>Construção incremental.</h3><p class="muted">Cada produto pode começar pequeno e crescer por fases, preservando uma base técnica organizada e preparada para novas integrações.</p></section></div><div class="rule"></div><span class="eyebrow">Ecossistema</span><h3>De ferramentas a operações.</h3><p class="muted">O portfólio reúne produtos de inteligência, desenvolvimento, produtividade, documentos, operações, conectividade e experiências móveis.</p></main>';
 }
-function infoPage(title,kicker,body,sections=[]){return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(kicker)+'</span><h2>'+esc(title)+'.</h2><p class="section-lead">'+esc(body)+'</p></div><div class="split">'+sections.map(x=>'<section><span class="eyebrow">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p class="muted">'+esc(x[2])+'</p></section>').join("")+'</div></main>'}
-function contact(){return '<main id="main-content" class="section shell"><span class="eyebrow">Contato</span><h2>Vamos conversar.</h2><p class="section-lead">Envie contexto, objetivo e requisitos. A mensagem é encaminhada para o backend comercial.</p><form class="form" id="contact-form"><input class="field" name="name" placeholder="Nome" autocomplete="name" required><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required><input class="field" name="phone" placeholder="Telefone" autocomplete="tel"><textarea class="field" name="message" rows="8" placeholder="Como podemos ajudar?" required></textarea><button class="btn" type="submit">Enviar mensagem '+icon("arrow")+'</button><small id="msg" class="muted form-note" role="status"></small></form></main>'}
+
+function contact(){
+  return '<main id="main-content" class="section shell"><span class="eyebrow">Contato</span><h2>Vamos conversar.</h2><p class="section-lead">Envie uma mensagem para a equipe Korczak Technology.</p><form class="form" id="contact-form"><label><span class="sr-only">Nome</span><input class="field" name="name" placeholder="Nome" autocomplete="name" required></label><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Telefone</span><input class="field" name="phone" placeholder="Telefone" autocomplete="tel"></label><label><span class="sr-only">Mensagem</span><textarea class="field" name="message" rows="7" placeholder="Como podemos ajudar?" required></textarea></label><button class="btn" type="submit">Enviar mensagem '+icon("arrow")+'</button><small id="msg" class="muted form-note" role="status"></small></form></main>';
+}
+
+function checkoutState(kind){
+  const success=kind==="sucesso";
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Checkout · '+(success?"Concluído":"Cancelado")+'</span><h2>'+(success?"Pagamento processado.":"Pagamento cancelado.")+'</h2><p class="section-lead">'+(success?"Seu checkout foi concluído pelo Stripe. O status do pedido pode ser consultado na sua conta.":"Nenhuma cobrança foi concluída nesta etapa. Você pode voltar ao catálogo e tentar novamente.")+'</p><div class="actions"><a class="btn" href="#/conta">Minha conta</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></div></main>';
+}
 function account(){
- if(!state.token)return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Entre na sua conta.</h2><form class="form" id="login-form"><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required><input class="field" name="password" type="password" placeholder="Senha" autocomplete="current-password" required><button class="btn" type="submit">Entrar</button><button type="button" class="btn ghost" data-action="register">Criar conta</button><small id="auth" class="muted form-note" role="status"></small></form></main>';
- const u=state.user||{};const quoteRows=state.quotes.length?state.quotes.map(q=>'<div class="profile-row"><span>'+esc(q.productId)+'</span><strong>'+esc(q.status||"pending")+'</strong></div>').join(""):'<div class="empty">Nenhuma solicitação de orçamento.</div>';const orderRows=state.orders.length?state.orders.map(o=>'<div class="profile-row"><span>'+esc(o.productId)+'</span><strong>'+esc(o.status||"checkout_created")+'</strong></div>').join(""):'<div class="empty">Nenhuma compra registrada.</div>';
- return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>'+esc(u.name||"Minha conta")+'.</h2><div class="profile"><aside class="profile-aside"><div class="profile-avatar">'+esc((u.name||"K").slice(0,1).toUpperCase())+'</div><h3>'+esc(u.name||"Usuário")+'</h3><p class="muted">'+esc(u.email||"")+'</p></aside><section class="profile-main"><div class="profile-row"><span>Nome</span><strong>'+esc(u.name||"—")+'</strong></div><div class="profile-row"><span>Email</span><strong>'+esc(u.email||"—")+'</strong></div><div class="profile-row"><span>Perfil</span><strong>'+esc(u.role||"user")+'</strong></div><div class="profile-row"><span>Verificação</span><strong>'+((u.verified)?"Verificado":"Pendente")+'</strong></div><div class="actions"><a class="btn ghost" href="#/contato">Contato</a><button class="btn" type="button" data-action="logout">Sair</button></div></section></div><div class="rule"></div><div class="split"><section><span class="eyebrow">Orçamentos</span><h3>Histórico comercial</h3>'+quoteRows+'</section><section><span class="eyebrow">Pedidos</span><h3>Histórico de compras</h3>'+orderRows+'</section></div></main>';
+  if(!state.token)return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Entre na sua conta.</h2><form class="form" id="login-form"><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Senha</span><input class="field" name="password" type="password" placeholder="Senha" autocomplete="current-password" required></label><button class="btn" type="submit">Entrar</button><button type="button" class="btn ghost" data-action="register">Criar conta</button><small id="auth" class="muted form-note" role="status"></small></form></main>';
+  const u=state.user||{},initial=esc((u.name||"K").slice(0,1).toUpperCase());
+  const quoteRows=state.quotes.length?state.quotes.map(q=>'<div class="profile-row"><span>'+esc(q.productId)+'</span><strong>'+esc(q.status||"pending")+'</strong><small class="muted">'+new Date(q.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma solicitação de orçamento ainda.</div>';
+  const orderRows=state.orders.length?state.orders.map(o=>'<div class="profile-row"><span>'+esc(o.productId)+'</span><strong>'+esc(o.status||"checkout_created")+'</strong><small class="muted">'+new Date(o.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma compra registrada.</div>';
+  return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Minha conta.</h2><div class="profile"><aside class="profile-aside"><div class="profile-avatar" aria-hidden="true">'+initial+'</div><h3>'+esc(u.name||"Usuário")+'</h3><p class="muted">'+esc(u.email||"")+'</p><span class="status">'+esc(u.role||"user")+'</span></aside><section class="profile-main"><div class="profile-row"><span class="muted">Nome</span><strong>'+esc(u.name||"—")+'</strong></div><div class="profile-row"><span class="muted">Email</span><strong>'+esc(u.email||"—")+'</strong></div><div class="profile-row"><span class="muted">Perfil</span><strong>'+esc(u.role||"user")+'</strong></div><div class="profile-row"><span class="muted">Verificação</span><strong>'+((u.verified)?"Verificado":"Pendente")+'</strong></div><div class="actions"><a class="btn ghost" href="#/contato">Falar com a equipe</a><button class="btn" type="button" data-action="logout">Sair</button></div></section></div><div class="rule"></div><div class="split"><section><span class="eyebrow">Orçamentos</span><h3>Histórico comercial</h3>'+quoteRows+'</section><section><span class="eyebrow">Pedidos</span><h3>Histórico de compras</h3>'+orderRows+'</section></div></main>';
 }
-const legalPages={privacidade:["Privacidade","Tratamento de dados","Explicamos de forma geral como dados de conta, contato, orçamento e pedidos são utilizados.","Dados são tratados para autenticação, atendimento, acompanhamento comercial e execução de recursos solicitados.","Credenciais são armazenadas com hash no backend; informações de pagamento são processadas pelo provedor de checkout."],uso:["Uso","Uso responsável","O site e as APIs devem ser utilizados de forma lícita e compatível com suas finalidades.","Não é permitido tentar acesso não autorizado, comprometer sistemas, abusar das APIs ou interferir deliberadamente nos serviços.","Recursos podem ser limitados quando houver risco de segurança ou violação das regras aplicáveis."],servico:["Serviço","Condições comerciais","Recursos, disponibilidade, preços e integrações podem variar conforme produto e estágio.","Valores de referência não substituem propostas específicas para projetos, integrações ou necessidades empresariais.","Pagamentos seguem também as condições do provedor de checkout utilizado."]};
-function legal(kind){const p=legalPages[kind]||legalPages.privacidade;return '<main id="main-content" class="section shell"><span class="eyebrow">Legal</span><h2>'+p[0]+'.</h2><nav class="legal-nav">'+Object.entries(legalPages).map(([k,v])=>'<a href="#/'+k+'">'+v[0]+'</a>').join("")+'</nav><article class="legal-copy"><h3>'+p[1]+'</h3><p class="muted">'+p[2]+'</p><h3>Diretrizes</h3><p class="muted">'+p[3]+'</p><h3>Responsabilidade</h3><p class="muted">'+p[4]+'</p></article></main>'}
-function footer(){return '<footer class="footer shell"><span>© '+new Date().getFullYear()+' Korczak Technology</span><span class="footer-links"><a href="#/privacidade">Privacidade</a><a href="#/uso">Uso</a><a href="#/servico">Serviço</a></span></footer>'}
+
+function infoPage(title,kicker,body,sections=[]){
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(kicker)+'</span><h2>'+esc(title)+'.</h2><p class="section-lead">'+esc(body)+'</p></div>'+(sections.length?'<div class="split">'+sections.map(x=>'<section><span class="eyebrow">'+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p class="muted">'+esc(x[2])+'</p></section>').join('')+'</div>':'')+'</main>';
+}
+
+const legalPages={
+  privacidade:["Privacidade","Como tratamos dados","Esta página descreve, de forma geral, como dados pessoais podem ser utilizados no ecossistema Korczak Technology.","Dados de conta podem ser utilizados para autenticação e manutenção do perfil. Dados enviados pelo formulário de contato são utilizados para atendimento. Solicitações de orçamento ficam associadas à conta para acompanhamento.","Coletamos apenas informações necessárias aos recursos utilizados. Credenciais são armazenadas no backend em formato protegido por hash; senhas não devem ser armazenadas em texto puro."],
+  uso:["Uso","Regras de uso","O uso do site e dos serviços deve ocorrer de forma lícita, responsável e compatível com sua finalidade.","Não é permitido utilizar as interfaces ou APIs para comprometer sistemas, tentar obter acesso não autorizado, enviar conteúdo ilícito ou interferir deliberadamente na disponibilidade dos serviços.","Podemos limitar ou suspender acessos que representem risco à segurança ou violação das regras aplicáveis, respeitados os direitos previstos em lei."],
+  servico:["Serviço","Condições de serviço","As características, disponibilidade e condições de cada produto podem variar conforme seu estágio de desenvolvimento e contratação.","Recursos em desenvolvimento ou planejados podem sofrer alterações. Serviços comerciais específicos podem possuir condições, preços, prazos e responsabilidades definidos em proposta ou contrato.","Pagamentos processados por terceiros seguem também as condições do respectivo provedor. Informações comerciais definitivas devem ser verificadas antes da contratação."]
+};
+
+function legal(kind){
+  const p=legalPages[kind]||legalPages.privacidade;
+  return '<main id="main-content" class="section shell"><span class="eyebrow">Legal</span><h2>'+p[0]+'.</h2><nav class="legal-nav" aria-label="Documentos legais">'+Object.entries(legalPages).map(([k,v])=>'<a href="#/'+k+'" aria-current="'+(k===kind?"page":"false")+'">'+v[0]+'</a>').join("")+'</nav><article class="legal-copy"><h3>'+p[1]+'</h3><p class="muted">'+p[2]+'</p><h3>Diretrizes</h3><p class="muted">'+p[3]+'</p><h3>Responsabilidade</h3><p class="muted">'+p[4]+'</p></article></main>';
+}
+
+function footer(){
+  return '<footer class="footer shell"><span>© '+new Date().getFullYear()+' Korczak Technology</span><span class="footer-links"><a href="#/privacidade">Privacidade</a><a href="#/uso">Uso</a><a href="#/servico">Serviço</a></span></footer>';
+}
 
 function render(){
- const h=location.hash.slice(2)||"/"; if(!root)return;
- try{
-  const routes={
-   "/":home,"/portfolio":portfolio,"/produtos":products,"/precos":pricing,"/empresa":company,"/kos":kos,
-   "/sobre":()=>infoPage("Sobre nós","Empresa","Tecnologia com produto, engenharia e operação.",[["Identidade","Produto próprio","Construção de software e sistemas digitais."],["Atuação","Ecossistema","Produtos modulares para diferentes necessidades."],["Princípio","Clareza","Interfaces, responsabilidades e processos compreensíveis."]]),
-   "/historia":()=>infoPage("Nossa história","História","Uma trajetória organizada em projetos, produtos e evolução contínua.",[["Origem","Construir","A operação nasce da criação de tecnologia própria."],["Evolução","Modularizar","Projetos foram organizados em produtos com responsabilidades específicas."],["Hoje","Integrar","O KOS conecta inteligência, desenvolvimento, gestão e operações."]]),
-   "/visao":()=>infoPage("Nossa visão","Visão","Construir um ecossistema tecnológico integrado e acessível.",[["Produto","Utilidade","Cada módulo deve resolver uma necessidade concreta."],["Engenharia","Evolução","A base deve permitir novas funcionalidades sem perder organização."],["Ecossistema","Integração","Produtos independentes podem compartilhar contexto e serviços."]]),
-   "/valores":()=>infoPage("Nossos valores","Valores","Princípios que orientam a construção dos produtos.",[["Clareza","Entender antes de automatizar","Interfaces e processos devem ser compreensíveis."],["Autonomia","Ferramentas que ampliam capacidade","O software deve permitir que pessoas e equipes executem melhor seu trabalho."],["Evolução","Construir em ciclos","Produtos digitais melhoram por iteração, teste e aprendizado."]]),
-   "/parcerias":()=>infoPage("Parcerias","Parcerias","Construímos relações para ampliar produtos, integrações e distribuição.",[["Tecnologia","Integrações","Conectores e serviços podem ampliar o ecossistema."],["Negócios","Soluções","Projetos sob medida podem combinar produtos e serviços."],["Contato","Vamos conversar","Use o canal comercial para apresentar sua proposta."]]),
-   "/carreiras":()=>infoPage("Carreiras","Carreiras","Espaço para oportunidades e colaboração futura.",[["Engenharia","Software","Desenvolvimento frontend, backend, infraestrutura e qualidade."],["Produto","Experiência","Pesquisa, UX, documentação e evolução dos produtos."],["Ecossistema","Operação","Projetos que conectam tecnologia, processos e negócio."]]),
-   "/faq":()=>infoPage("Perguntas frequentes","FAQ","Respostas rápidas sobre produtos e contratação.",[["Produtos","O que é o KOS?","É o ecossistema que reúne os aplicativos e camadas operacionais da Korczak Technology."],["Preços","Os valores são finais?","Não. São referências de plano base; projetos, integrações e consumo podem alterar o valor."],["Compra","Como contratar?","Use a página do produto para comprar quando o checkout estiver habilitado ou solicitar um orçamento."]]),
-   "/contato":contact,"/conta":account,"/privacidade":()=>legal("privacidade"),"/uso":()=>legal("uso"),"/servico":()=>legal("servico"),
-   "/checkout/sucesso":()=>infoPage("Pagamento processado","Checkout","O checkout foi concluído. O pedido pode ser acompanhado na conta.",[["Próximo","Minha conta","Consulte o histórico do pedido."],["Produtos","Continuar","Volte ao catálogo para explorar o ecossistema."]]),
-   "/checkout/cancelado":()=>infoPage("Pagamento cancelado","Checkout","Nenhuma cobrança foi concluída nesta etapa.",[["Próximo","Catálogo","Você pode retornar ao produto e tentar novamente."],["Alternativa","Orçamento","Também é possível solicitar uma proposta."]])
+  const h=location.hash.slice(2)||"/";
+  if(!root)return;
+  try{
+  const workspacePage=workspace;
+const pages={
+    "/sobre":()=>infoPage("Sobre nós","Empresa","Tecnologia com propósito, engenharia enxuta e produtos próprios.",[
+      ["Identidade","Korczak Technology","Uma empresa orientada à construção de software, sistemas e produtos digitais próprios."],
+      ["Atuação","Ecossistema","Produtos independentes que também podem trabalhar em conjunto conforme a necessidade."],
+      ["Princípio","Clareza","Interfaces compreensíveis, responsabilidades bem definidas e evolução técnica documentada."]
+    ]),
+    "/historia":()=>infoPage("Nossa história","História","Uma trajetória construída por projetos, experimentação e evolução contínua.",[
+      ["Origem","Construir","A operação nasceu da vontade de criar tecnologia própria em vez de depender apenas de soluções prontas."],
+      ["Evolução","Projetar","Projetos foram sendo organizados em produtos e módulos com responsabilidades específicas."],
+      ["Hoje","Integrar","O ecossistema conecta desenvolvimento, produtividade, inteligência, operações e experiências digitais."]
+    ]),
+    "/visao":()=>infoPage("Nossa visão","Visão","Criar uma camada tecnológica integrada para trabalho, operações, desenvolvimento e inteligência digital.",[
+      ["Horizonte","Tecnologia acessível","Produtos devem ser claros para quem usa e sustentáveis para quem mantém."],
+      ["Arquitetura","Modularidade","Cada módulo deve poder evoluir sem exigir que todo o ecossistema seja reconstruído."],
+      ["Futuro","Integração","Conectar ferramentas e fluxos para reduzir fragmentação e ampliar autonomia."]
+    ]),
+    "/valores":()=>infoPage("Nossos valores","Valores","Princípios que orientam decisões de produto, engenharia e relacionamento.",[
+      ["01","Clareza","Comunicar o que um sistema faz, quais são seus limites e como utilizá-lo."],
+      ["02","Autonomia","Criar ferramentas que ampliem a capacidade das pessoas e equipes."],
+      ["03","Engenharia","Priorizar bases técnicas organizadas, testáveis e evolutivas."],
+      ["04","Privacidade","Tratar dados e acessos com responsabilidade e necessidade mínima."],
+      ["05","Evolução","Melhorar continuamente por fases, métricas, feedback e aprendizado."]
+    ]),
+    "/parcerias":()=>infoPage("Parcerias","Comercial","Integrações, projetos, distribuição e oportunidades comerciais.",[
+      ["Tecnologia","Integrações","Conecte serviços, APIs e ferramentas ao ecossistema quando houver uma necessidade técnica compatível."],
+      ["Projetos","Construção conjunta","Projetos específicos podem ser avaliados conforme escopo, prazo, capacidade e requisitos."],
+      ["Ecossistema","Cooperação","Buscamos relações que criem utilidade concreta para usuários, empresas e produtos."]
+    ]),
+    "/carreiras":()=>infoPage("Carreiras","Empresa","Oportunidades serão publicadas conforme novos times e projetos forem abertos.",[
+      ["Perfil","Construção","Interesse por software, produto, sistemas, design e resolução de problemas."],
+      ["Cultura","Responsabilidade","Autonomia vem acompanhada de documentação, comunicação e compromisso com a qualidade."],
+      ["Oportunidades","Em evolução","As posições e formatos de colaboração serão apresentados conforme forem oficialmente abertos."]
+    ]),
+    "/faq":()=>infoPage("Perguntas frequentes","Suporte","Informações gerais sobre produtos, contas, orçamento, pagamentos e suporte.",[
+      ["Produtos","O que existe?","O catálogo apresenta os produtos e projetos atualmente registrados no ecossistema, incluindo seus respectivos estágios."],
+      ["Orçamento","Como solicitar?","Entre em uma conta, abra a página de um produto e envie uma solicitação descrevendo sua necessidade."],
+      ["Contato","Como falar conosco?","Use o formulário de contato para enviar nome, email, telefone opcional e mensagem."],
+      ["Desenvolvimento","Tudo está pronto?","Não. Cada produto possui um estágio explícito para diferenciar evolução, desenvolvimento e planejamento."]
+    ])
   };
-  let html;
-  if(h.startsWith("/produto/"))html=product(decodeURIComponent(h.slice("/produto/".length)));
-  else html=(routes[h]||(()=>infoPage("Página não encontrada","404","A rota solicitada não existe.",[["Voltar","Início","Retorne à página inicial do site."]])) )();
-  root.innerHTML=nav()+html+footer()+'<div class="toast-region" id="toasts" aria-live="polite"></div>';
-  document.body.classList.remove("loading"); window.scrollTo(0,0);
- }catch(e){console.error(e);root.innerHTML='<main id="main-content" class="section shell"><span class="eyebrow">Erro</span><h2>Não foi possível renderizar esta página.</h2><button class="btn" data-action="reload">Recarregar</button></main>';document.body.classList.remove("loading")}
+  let c;
+  if(h==="/")c=home();
+  else if(h==="/portfolio")c=portfolio();
+  else if(h==="/produtos")c=products();
+  else if(h==="/empresa")c=company();
+  else if(pages[h])c=pages[h]();
+  else if(h==="/contato")c=contact();
+  else if(h==="/conta")c=account();
+  else if(h==="/checkout/sucesso")c=checkoutState("sucesso");
+  else if(h==="/checkout/cancelado")c=checkoutState("cancelado");
+  else if(h==="/privacidade")c=legal("privacidade");
+  else if(h==="/uso")c=legal("uso");
+  else if(h==="/servico")c=legal("servico");
+  else if(h.startsWith("produto/")){
+    let productId="";
+    try{productId=decodeURIComponent(h.split("/")[1]||"")}catch{}
+    c=product(productId);
+  }
+  else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
+  root.innerHTML=nav()+c+footer();
+  document.body.classList.toggle("menu-open",state.menu);
+  document.body.classList.remove("loading");
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  let detail=null;
+  if(h.startsWith("produto/")){
+    try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]||""))?.name||null}catch{}
+  }
+  document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
+  if(state.menu)document.querySelector(".sidebar")?.focus?.();
+  }catch(error){
+    console.error("Render error:",error);
+    root.innerHTML=nav()+`<main id="main-content" class="section shell"><span class="eyebrow">KZ Tech</span><h2>Não foi possível carregar esta página.</h2><p class="section-lead">O conteúdo encontrou um erro inesperado. Recarregue a página ou volte ao início.</p><div class="actions"><a class="btn" href="#/">Voltar ao início</a><button class="btn ghost" type="button" data-action="reload">Recarregar</button></div></main>`+footer();
+  }
 }
-function toast(message){const r=document.querySelector("#toasts");if(!r)return;const el=document.createElement("div");el.className="toast";el.textContent=message;r.appendChild(el);setTimeout(()=>el.remove(),3500)}
-function closeMenu(){state.menu=false;render()}
-function openAuth(){
- const name=prompt("Seu nome");if(!name)return;const email=prompt("Seu email");if(!email)return;const password=prompt("Crie uma senha com pelo menos 8 caracteres");if(!password)return;
- api("/api/auth/register",{method:"POST",body:JSON.stringify({name,email,password})}).then(d=>{state.token=d.token;localStorage.setItem("kz_token",d.token);state.user=d.user;location.hash="#/conta";render();toast("Conta criada.")}).catch(e=>toast(e.message))
+
+function toast(message){
+  let region=document.querySelector(".toast-region");
+  if(!region){region=document.createElement("div");region.className="toast-region";region.setAttribute("aria-live","polite");document.body.append(region)}
+  const el=document.createElement("div");el.className="toast";el.textContent=message;region.append(el);
+  setTimeout(()=>el.remove(),4200);
 }
-document.addEventListener("click",e=>{
- const el=e.target.closest("[data-action]");if(!el)return;const action=el.dataset.action;
- if(action==="close-menu"){closeMenu();return false}
- if(action==="toggle-menu"){state.menu=!state.menu;render();return}
- if(action==="register"){openAuth();return}
- if(action==="logout"){state.token=null;state.user=null;state.quotes=[];state.orders=[];localStorage.removeItem("kz_token");render();return}
- if(action==="reload"){location.reload();return}
- if(action==="quote"){if(!state.token){location.hash="#/conta";render();toast("Entre na conta para solicitar orçamento.");return}const message=prompt("Descreva brevemente sua necessidade:");if(!message)return;api("/api/quotes",{method:"POST",body:JSON.stringify({productId:el.dataset.product,message})}).then(()=>toast("Solicitação enviada.")).catch(x=>toast(x.message));return}
- if(action==="checkout"){if(!state.token){location.hash="#/conta";render();toast("Entre na conta para comprar.");return}api("/api/checkout",{method:"POST",body:JSON.stringify({productId:el.dataset.product})}).then(d=>{if(d.url)location.href=d.url}).catch(x=>toast(x.message));return}
+
+async function sendContact(e){
+  e.preventDefault();
+  const form=e.currentTarget,msg=form.querySelector("#msg"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Enviando…";
+  try{await api("/api/contact",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});form.reset();msg.textContent="Mensagem enviada.";toast("Mensagem enviada com sucesso.");}
+  catch(x){msg.textContent=x.message;toast(x.message)}
+  finally{button.disabled=false}
+}
+
+async function login(e){
+  e.preventDefault();
+  const form=e.currentTarget,msg=form.querySelector("#auth"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Entrando…";
+  try{const d=await api("/api/auth/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});state.token=d.token;state.user=d.user;localStorage.setItem("kz_token",d.token);render();toast("Login realizado.");}
+  catch(x){msg.textContent=x.message}
+  finally{button.disabled=false}
+}
+
+async function register(){
+  const name=prompt("Nome:");
+  const email=prompt("Email:");
+  const password=prompt("Senha (8+ caracteres):");
+  if(!name||!email||!password)return;
+  try{const d=await api("/api/auth/register",{method:"POST",body:JSON.stringify({name,email,password})});state.token=d.token;state.user=d.user;localStorage.setItem("kz_token",d.token);render();toast("Conta criada.");}
+  catch(x){toast(x.message)}
+}
+
+async function checkout(id){
+  if(!state.token){location.hash="#/conta";toast("Entre na sua conta para continuar.");return}
+  try{
+    const d=await api("/api/checkout",{method:"POST",body:JSON.stringify({productId:id})});
+    if(d.url)location.href=d.url;else toast("Checkout indisponível.");
+  }catch(x){toast(x.message)}
+}
+async function quote(id){
+  if(!state.token){location.hash="#/conta";toast("Entre na sua conta para solicitar um orçamento.");return}
+  const message=prompt("Descreva o que você precisa:");
+  if(message===null)return;
+  try{await api("/api/quotes",{method:"POST",body:JSON.stringify({productId:id,message})});toast("Solicitação enviada.");}
+  catch(x){toast(x.message)}
+}
+
+function logout(){
+  state.token=null;state.user=null;localStorage.removeItem("kz_token");render();toast("Sessão encerrada.");
+}
+
+function closeMenu(){
+  if(!state.menu)return;
+  state.menu=false;render();
+}
+
+function handleAction(target){
+  const action=target.closest("[data-action]")?.dataset.action;
+  if(!action)return false;
+  if(action==="toggle-menu"){state.menu=!state.menu;render();return true}
+  if(action==="close-menu"){closeMenu();return false}
+  if(action==="logout"){logout();return true}
+  if(action==="register"){register();return true}
+  if(action==="reload"){location.reload();return true}
+  if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
+  if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
+  return false;
+}
+
+document.addEventListener("click",e=>{if(handleAction(e.target))e.preventDefault()});
+document.addEventListener("submit",e=>{
+  if(e.target.id==="contact-form")sendContact(e);
+  if(e.target.id==="login-form")login(e);
 });
-document.addEventListener("submit",async e=>{
- if(e.target.id==="contact-form"){e.preventDefault();const f=new FormData(e.target),msg=e.target.querySelector("#msg");try{await api("/api/contact",{method:"POST",body:JSON.stringify(Object.fromEntries(f))});e.target.reset();msg.textContent="Mensagem enviada.";toast("Mensagem enviada.")}catch(x){msg.textContent=x.message}}
- if(e.target.id==="login-form"){e.preventDefault();const f=new FormData(e.target),msg=e.target.querySelector("#auth");try{const d=await api("/api/auth/login",{method:"POST",body:JSON.stringify(Object.fromEntries(f))});state.token=d.token;state.user=d.user;localStorage.setItem("kz_token",d.token);await loadAccount();render()}catch(x){msg.textContent=x.message}}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&state.menu)closeMenu();
 });
-async function loadAccount(){if(!state.token)return;try{state.user=await api("/api/me");state.quotes=await api("/api/quotes");state.orders=await api("/api/orders")}catch{state.token=null;localStorage.removeItem("kz_token")}}
-async function bootstrap(){try{const remote=await api("/api/products");if(Array.isArray(remote)&&remote.length)state.products=remote}catch{}await loadAccount();render()}
-window.addEventListener("hashchange",render);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&state.menu){state.menu=false;render()}});
-bootstrap();
+addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"})});
+
+async function load(){
+  if(!root)return;
+  document.body.classList.add("loading");
+  render();
+  try{
+    const products=await api("/api/products");
+    if(Array.isArray(products)&&products.length)state.products=products;
+  }catch{}
+  if(state.token){
+    try{
+      state.user=await api("/api/me");
+      state.quotes=await api("/api/quotes");
+      state.orders=await api("/api/orders");
+    }catch(x){
+      if(x?.message==="Não autenticado"||x?.message==="Sessão inválida"||x?.message==="Usuário não encontrado"){
+        localStorage.removeItem("kz_token"); state.token=null; state.user=null;
+      }
+      state.quotes=[]; state.orders=[];
+    }
+  }
+  render();
+  document.body.classList.remove("loading");
+}
+load();
