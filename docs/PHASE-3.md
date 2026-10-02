@@ -14,7 +14,8 @@
 - Metadata de usuário e produto na sessão Stripe.
 - Estados de checkout: sucesso e cancelamento.
 - Consulta autenticada de sessão de Checkout.
-- Registro do pedido quando uma sessão é criada.
+- Registro idempotente do pedido quando uma sessão é criada.
+- Webhook Stripe assinado para atualização de pagamento.
 - Configuração dos preços via variáveis de ambiente.
 - Fallback para valores definidos no servidor quando Price ID não estiver configurado.
 - Cache-busting do frontend.
@@ -26,7 +27,7 @@ O cliente envia somente o identificador do produto. O backend resolve produto, m
 
 ## Configuração
 
-Configure STRIPE_SECRET_KEY e, preferencialmente, os STRIPE_PRICE_* correspondentes no Render. SITE_URL/FRONTEND_URL devem apontar para os destinos corretos do ambiente.
+Configure STRIPE_SECRET_KEY e, preferencialmente, os STRIPE_PRICE_* correspondentes no Render. SITE_URL/FRONTEND_URL devem apontar para os destinos corretos do ambiente; FRONTEND_URL deve incluir o caminho /KZTechSite quando usado como GitHub Pages Project Site.
 
 ## Critérios de conclusão
 
