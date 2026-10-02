@@ -1,4 +1,5 @@
 const API_URL="https://kztechsite.onrender.com";
+const API_TIMEOUT_MS=30000;
 const APP_VERSION="2026.10.02.12";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
@@ -31,12 +32,16 @@ async function api(url,opt={}){
   const h={"Content-Type":"application/json",...(opt.headers||{})};
   if(state.token)h.Authorization="Bearer "+state.token;
   const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),8000);
+  const timer=setTimeout(()=>controller.abort(),API_TIMEOUT_MS);
   try{
     const r=await fetch(API_URL+url,{...opt,headers:h,signal:controller.signal});
     const d=await r.json().catch(()=>({}));
     if(!r.ok)throw Error(d.error||"Não foi possível concluir a operação.");
     return d;
+  }catch(error){
+    if(error?.name==="AbortError")throw Error("O servidor demorou para responder. Tente novamente em alguns segundos.");
+    if(error instanceof TypeError)throw Error("Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.");
+    throw error;
   }finally{clearTimeout(timer)}
 }
 
