@@ -1,9 +1,0 @@
-{
-  "response": {
-    "success": "boolean",
-    "data": "object|null",
-    "error": "object|null",
-    "requestId": "string|null"
-  },
-  "httpStatus": [200, 201, 400, 401, 403, 404, 409, 429, 500]
-}
