@@ -130,7 +130,19 @@ app.post("/api/auth/login",async(req,res)=>{
   res.json({user:safe,token:token(safe)});
 });
 
-app.get("/api/quotes",auth,async(req,res)=>{\n  if(!db)return res.status(503).json({error:"Banco não configurado"});\n  const rows=await db.collection("quotes").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();\n  res.json(rows);\n});\n\napp.get("/api/orders",auth,async(req,res)=>{\n  if(!db)return res.status(503).json({error:"Banco não configurado"});\n  const rows=await db.collection("orders").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();\n  res.json(rows);\n});\n\napp.get("/api/me",auth,async(req,res)=>{
+app.get("/api/quotes",auth,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("quotes").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();
+  res.json(rows);
+});
+
+app.get("/api/orders",auth,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const rows=await db.collection("orders").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();
+  res.json(rows);
+});
+
+app.get("/api/me",auth,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   let id;
   try{id=new ObjectId(req.user.sub)}catch{return res.status(401).json({error:"Sessão inválida"})}
