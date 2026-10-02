@@ -47,9 +47,9 @@ async function api(url,opt={}){
 }
 
 const links=[
-  ["/","Início"],["/comercial","Comercial"],["/institucional","Institucional"],["/produtos","Produtos"],
-  ["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],["/carreiras","Carreiras"],
-  ["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
+  ["/","Início"],["/mentoria","Mentoria"],["/comercial","Comercial"],["/institucional","Institucional"],
+  ["/produtos","Produtos"],["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],
+  ["/carreiras","Carreiras"],["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
 ];
 
 function nav(){
@@ -61,7 +61,7 @@ function nav(){
   return '<div class="site-background" aria-hidden="true"><svg viewBox="0 0 1600 900" preserveAspectRatio="none"><defs><radialGradient id="fogA"><stop stop-color="#8d6cff" stop-opacity=".22"/><stop offset=".55" stop-color="#473b75" stop-opacity=".09"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><radialGradient id="fogB"><stop stop-color="#fff" stop-opacity=".10"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="1600" height="900" fill="#050505"/><ellipse cx="1180" cy="260" rx="650" ry="300" fill="url(#fogA)"/><ellipse cx="390" cy="700" rx="600" ry="250" fill="url(#fogA)"/><ellipse cx="850" cy="500" rx="700" ry="190" fill="url(#fogB)" opacity=".5"/><path d="M-100 560 C240 420 430 690 760 535 S1240 410 1700 560" fill="none" stroke="#b9adff" stroke-opacity=".10" stroke-width="2"/><path d="M-100 650 C260 510 500 800 830 625 S1290 500 1700 650" fill="none" stroke="#fff" stroke-opacity=".055" stroke-width="1"/><g fill="#fff" opacity=".65"><circle cx="100" cy="130" r="1.4"/><circle cx="250" cy="310" r="1"/><circle cx="420" cy="100" r="1.2"/><circle cx="620" cy="250" r="1"/><circle cx="850" cy="120" r="1.3"/><circle cx="1050" cy="340" r="1"/><circle cx="1280" cy="100" r="1.3"/><circle cx="1480" cy="300" r="1"/></g></svg></div></div><header class="nav"><div class="shell"><a class="brand" href="#/" aria-label="Korczak Technology — início"><img class="brand-mark" src="./assets/mark.svg" alt="" aria-hidden="true">KORCZAK TECHNOLOGY</a><button class="menu-toggle '+(state.menu?"active":"")+'" type="button" aria-label="'+(state.menu?"Fechar navegação":"Abrir navegação")+'" aria-expanded="'+state.menu+'" aria-controls="site-sidebar" data-action="toggle-menu"><span class="menu-icon" aria-hidden="true"></span><span class="pulse" aria-hidden="true"></span></button></div></header>'+
     '<div class="sidebar-backdrop '+(state.menu?"open":"")+'" data-action="close-menu" aria-hidden="true"></div>'+
     '<aside id="site-sidebar" class="sidebar '+(state.menu?"open":"")+'" aria-label="Navegação principal" aria-hidden="'+(!state.menu)+'"'+(!state.menu?' inert':'')+'><div class="side-head"><div><small>Navegação</small></div><small>KZ / 01</small></div><nav class="side-nav">'+
-    group("Principal",links.slice(0,4),0)+group("Ecossistema",links.slice(4,8),8)+group("Empresa & suporte",links.slice(8),12)+
+    group("Principal",links.slice(0,5),0)+group("Ecossistema",links.slice(5,9),5)+group("Empresa & suporte",links.slice(9),9)+
     '</nav><div class="side-footer">Korczak Technology · Sistemas, software e produtos digitais.</div></aside>';
 }
 
@@ -343,6 +343,47 @@ function beginnerExplanation(o){
   };
   return descriptions[id]||String(o[3]||o[2]||"Recurso adicional configurado de acordo com a necessidade do projeto.");
 }
+
+const MENTOR_WHATSAPP="https://wa.me/5511954083183";
+const MENTOR_TRACKS={
+  frontend:{title:"Front-end",description:"Interfaces, páginas e aplicações web.",levels:[
+    ["iniciante-front","Iniciante","HTML · CSS · JavaScript",500,"Aprenda a criar páginas e interfaces começando pela estrutura, estilos e lógica da web."],
+    ["intermediario-front","Intermediário","HTML · CSS · JavaScript · React",750,"Evolua para aplicações mais completas, componentes e organização de projetos com React."],
+    ["profissional-front","Profissional","React · TypeScript · Git/GitHub · APIs",900,"Trabalhe com uma stack profissional, integração com APIs e fluxo de desenvolvimento com Git."]
+  ]},
+  backend:{title:"Back-end",description:"Servidores, APIs, bancos de dados e lógica.",levels:[
+    ["iniciante-back","Iniciante","Python · JavaScript · SQL",600,"Aprenda lógica de servidor, programação e os fundamentos de bancos de dados."],
+    ["intermediario-back","Intermediário","Python · Node.js · SQL · APIs",900,"Construa servidores e APIs conectados a bancos de dados e aplicações."],
+    ["profissional-back","Profissional","Node.js · Java · SQL · APIs · Git",1050,"Aprofunde arquitetura de back-end, APIs, bancos e práticas profissionais de desenvolvimento."]
+  ]},
+  fullstack:{title:"Full-stack",description:"Front-end e back-end integrados em projetos completos.",levels:[
+    ["iniciante-fullstack","Iniciante","HTML · CSS · JavaScript · Python",700,"Aprenda a construir uma aplicação completa começando pela interface e chegando ao servidor."],
+    ["intermediario-fullstack","Intermediário","React · Node.js · SQL · APIs",1000,"Integre interface, servidor, banco de dados e APIs em projetos mais completos."],
+    ["profissional-fullstack","Profissional","React · TypeScript · Node.js · SQL · Git",1200,"Trabalhe com uma stack full-stack profissional e desenvolva projetos completos com boas práticas."]
+  ]}
+};
+const MENTOR_TECHS=[["JavaScript","Web e lógica de programação",50],["Python","Programação e automação",50],["HTML","Estrutura web",50],["CSS","Interfaces e estilos",50],["Kotlin","Desenvolvimento Kotlin",100],["Java","Aplicações e back-end",100],["Node.js","Back-end com JavaScript",150],["React","Interfaces e aplicações web",150],["SQL","Bancos de dados",100],["Git / GitHub","Versionamento e colaboração",100],["C#","Desenvolvimento com .NET",150],["TypeScript","JavaScript tipado",100]];
+
+function mentorMoney(v){return Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0,maximumFractionDigits:0})+"/mês";}
+function mentorCard(track,level){
+  return '<article class="mentor-level-card"><span class="eyebrow">'+esc(track.title)+'</span><h3>'+esc(level[1])+'</h3><p>'+esc(level[4])+'</p><small>'+esc(level[2])+'</small><strong>'+mentorMoney(level[3])+'</strong><a class="btn ghost" href="#/mentoria/'+encodeURIComponent(level[0])+'">Conhecer trilha '+icon("arrow")+'</a></article>';
+}
+function mentorshipPage(){
+  return '<main id="main-content" class="mentor-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KORCZAK TECHNOLOGY · FORMAÇÃO · PRÁTICA</span><h1>Mentoria<br><span>Korczak.</span></h1><p>Aprenda tecnologia construindo um projeto real, com acompanhamento e orientação profissional.</p><div class="actions"><a class="btn" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Quero me inscrever '+icon("arrow")+'</a><a class="btn ghost" href="#/mentoria/precos">Calcular mensalidade '+icon("arrow")+'</a></div></div><div class="mentor-monogram" aria-hidden="true">M</div></section><section class="section shell split"><span class="eyebrow">01 · A MENTORIA</span><div><h2>Formação técnica prática e acompanhada.</h2><p>A mentoria foi criada para quem quer aprender programação colocando o conhecimento em prática. O conteúdo é definido de acordo com a trilha, as tecnologias e o projeto que você deseja desenvolver.</p><p>A mensalidade pode partir de <strong>R$ 100/mês</strong> em uma grade personalizada, enquanto as trilhas prontas possuem valores próprios.</p></div></section><section class="section shell"><span class="eyebrow">02 · COMO FUNCIONA</span><div class="grid mentor-feature-grid"><article class="card"><span class="card-index">01</span><h3>Projeto real</h3><p>Você aplica os conhecimentos em um projeto desenvolvido ao longo da mentoria.</p></article><article class="card"><span class="card-index">02</span><h3>Acompanhamento</h3><p>O aprendizado acontece com orientação, revisão e direcionamento técnico.</p></article><article class="card"><span class="card-index">03</span><h3>Trilha definida</h3><p>Escolha Front-end, Back-end, Full-stack ou monte uma grade personalizada.</p></article><article class="card"><span class="card-index">04</span><h3>Formação prática</h3><p>O objetivo é transformar estudo em capacidade de construir e evoluir projetos.</p></article></div></section><section class="section shell split"><span class="eyebrow">03 · ESTRUTURA</span><div><h2>Um caminho de estudo com objetivo claro.</h2><p>As trilhas possuem níveis iniciante, intermediário e profissional. O nível escolhido define as tecnologias e a profundidade esperada.</p><p>Também é possível montar uma grade própria selecionando as tecnologias desejadas.</p></div></section><section class="section shell mentor-cta"><span class="eyebrow">04 · PRÓXIMO PASSO</span><h2>Escolha sua formação.</h2><p>Veja os valores, compare as trilhas e calcule uma grade personalizada.</p><div class="actions"><a class="btn" href="#/mentoria/precos">Ver preços e calcular '+icon("arrow")+'</a><a class="btn ghost" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Inscrever-se pelo WhatsApp '+icon("external")+'</a></div></section></main>';
+}
+function mentorshipPrices(){
+  const tracks=Object.values(MENTOR_TRACKS).map(t=>'<article class="mentor-track-card"><span class="eyebrow">TRILHA</span><h3>'+esc(t.title)+'</h3><p>'+esc(t.description)+'</p><div class="mentor-level-list">'+t.levels.map(l=>'<a class="mentor-price-row" href="#/mentoria/'+encodeURIComponent(l[0])+'"><span><b>'+esc(l[1])+'</b><small>'+esc(l[2])+'</small></span><strong>'+mentorMoney(l[3])+'</strong><span class="side-arrow">→</span></a>').join("")+'</div></article>').join("");
+  const techs=MENTOR_TECHS.map(t=>'<label class="mentor-tech-row"><span><b>'+esc(t[0])+'</b><small>'+esc(t[1])+'</small></span><strong>+ '+mentorMoney(t[2]).replace("/mês","")+'</strong><input type="checkbox" data-mentor-tech data-price="'+t[2]+'"><span class="mentor-toggle" aria-hidden="true"></span></label>').join("");
+  return '<main id="main-content" class="mentor-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KORCZAK TECHNOLOGY · MENTORIA · INVESTIMENTO</span><h1>Quanto<br><span>custa?</span></h1><p>Escolha uma trilha pronta ou monte sua própria grade de estudos.</p></div><div class="mentor-monogram" aria-hidden="true">R$</div></section><section class="section shell"><span class="eyebrow">01 · TRILHAS</span><h2>Escolha seu caminho.</h2><p class="section-lead">Cada trilha possui uma formação diferente, com três níveis: iniciante, intermediário e profissional.</p><div class="mentor-track-grid">'+tracks+'</div></section><section class="section shell mentor-custom"><div class="mentor-custom-head"><div><span class="eyebrow">02 · MINHA PRÓPRIA GRADE</span><h2>Monte do seu jeito.</h2><p>Começa em R$ 100/mês e aumenta conforme as tecnologias escolhidas.</p></div><div class="mentor-total"><small>TOTAL MENSAL</small><strong data-mentor-total>R$ 100</strong><span data-mentor-count>0 tecnologias selecionadas</span></div></div><div class="mentor-tech-list">'+techs+'</div></section><section class="section shell split"><span class="eyebrow">03 · VALORES</span><div><h2>Formação técnica com preço acessível.</h2><p>Os valores exibidos são mensalidades da mentoria. A grade personalizada começa em R$ 100/mês e recebe os acréscimos correspondentes às tecnologias selecionadas.</p></div></section><section class="section shell mentor-cta"><span class="eyebrow">04 · INSCRIÇÃO</span><h2>Escolheu sua trilha?</h2><p>Fale diretamente com a Korczak Technology para confirmar sua formação.</p><div class="actions"><a class="btn" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Quero me inscrever '+icon("arrow")+'</a><a class="btn ghost" href="#/mentoria">Voltar para Mentoria</a></div></section></main>';
+}
+function mentorshipDetail(id){
+  let selected=null;
+  for(const t of Object.values(MENTOR_TRACKS)){selected=t.levels.find(l=>l[0]===id);if(selected)break;}
+  if(!selected)return mentorshipPrices();
+  const techs=selected[2].split(" · ");
+  return '<main id="main-content" class="mentor-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KORCZAK TECHNOLOGY · MENTORIA</span><h1>'+esc(selected[1])+'<br><span>'+esc(selected[0].includes("front")?"Front-end":selected[0].includes("back")?"Back-end":"Full-stack")+'</span></h1><p>'+esc(selected[4])+'</p><div class="actions"><a class="btn" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Quero me inscrever '+icon("arrow")+'</a><a class="btn ghost" href="#/mentoria/precos">Ver preços</a></div></div><div class="mentor-price-hero"><small>Mensalidade</small><strong>'+mentorMoney(selected[3])+'</strong></div></section><section class="section shell split"><span class="eyebrow">01 · O QUE VOCÊ ESTUDA</span><div><h2>Trilha de '+esc(selected[1].toLowerCase())+'.</h2><p>Você desenvolve os fundamentos e práticas necessários para avançar nesta etapa da formação.</p><div class="mentor-tech-pills">'+techs.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div></div></section><section class="section shell mentor-cta"><span class="eyebrow">02 · INSCRIÇÃO</span><h2>Pronto para começar?</h2><p>Use o WhatsApp para confirmar disponibilidade e alinhar o início da mentoria.</p><a class="btn" href="'+MENTOR_WHATSAPP+'" target="_blank" rel="noopener">Inscrever-se pelo WhatsApp '+icon("external")+'</a></section></main>';
+}
+
 function servicePage(id){
   const safeId=Object.prototype.hasOwnProperty.call(READY_SERVICES,id)?id:"site";
   const s=READY_SERVICES[safeId]||READY_SERVICES.site;
@@ -515,6 +556,9 @@ function render(){
   else if(h==="/conta"&&!state.authenticated)c=authPage(state.authMode||"login");
   else if(h==="/")c=home();
   else if(h==="/comercial")c=commercial();
+  else if(h==="/mentoria")c=mentorshipPage();
+  else if(h==="/mentoria/precos")c=mentorshipPrices();
+  else if(h.startsWith("/mentoria/"))c=mentorshipDetail(decodeURIComponent(h.split("/")[2]||""));
   else if(h.startsWith("/servicos/")){let serviceId="site";try{serviceId=decodeURIComponent(h.split("/")[2]||"site")}catch{}c=servicePage(serviceId);}
   else if(h==="/institucional")c=institutional();
   else if(h==="/portfolio")c=portfolio();
@@ -542,7 +586,7 @@ function render(){
   root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
   let detail=null;
   if(h.startsWith("/produto/")){
     try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[2]||""))?.name||null}catch{}
