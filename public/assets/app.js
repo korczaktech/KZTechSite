@@ -1,6 +1,6 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
-const APP_VERSION="2026.10.02.38";
+const APP_VERSION="2026.10.02.40";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
   {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
@@ -125,7 +125,7 @@ Object.keys(READY_SERVICES).forEach(k=>{
   (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
 });
 function money(v){return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(v)}function serviceOptionPrices(service){
-  const target=service[1],weights=service[3].map(o=>Number(o[3])||0);
+  const target=service[1],weights=service[3].map(o=>Number(o[4]??o[3])||0);
   if(!Number.isFinite(target)||target<=0)return weights;
   const sum=weights.reduce((a,b)=>a+b,0);
   if(!sum)return weights.map(()=>0);
@@ -141,10 +141,10 @@ function servicePage(id){
   const prices=serviceOptionPrices(s);
   const opts=s[3].map((o,i)=>{
     const price=prices[i];
-    return '<div class="service-option-wrap"><label class="service-option"><input type="checkbox" data-service-option data-price="'+price+'" data-label="'+esc(o[1])+'"><span><strong>'+esc(o[1])+'</strong><small>'+esc(o[2])+'</small></span><b>+'+money(price)+'</b></label><details class="service-option-info"><summary>O que isso faz?</summary><p>'+esc(o[3])+'</p></details></div>';
+    return '<div class="service-option-wrap"><label class="service-option"><input type="checkbox" data-service-option data-price="'+price+'" data-label="'+esc(o[1])+'"><span><strong>'+esc(o[1])+'</strong><small>'+esc(o[2])+'</small></span><b class="service-option-price"><small>Preço</small>'+money(price)+'</b></label><details class="service-option-info"><summary>O que isso faz?</summary><p>'+esc(beginnerExplanation(o))+'</p></details></div>';
   }).join("");
   const cap=s[1]==null?"Sem teto fixo":"Teto máximo: "+money(s[1]);
-  return '<main id="main-content" class="section shell"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+esc(s[0])+'</span><h2>'+esc(s[0])+'</h2><p class="section-lead">'+esc(s[2])+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-cap">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-start"><span>Valor atual</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">O projeto começa em R$ 0. Cada recurso selecionado adiciona seu valor ao orçamento. Com todas as opções selecionadas, o total chega ao teto máximo.</p><button class="btn" type="button" data-service-request data-service-id="'+esc(id)+'">Solicitar este projeto →</button></aside></div></main>';
+  return '<main id="main-content" class="section shell"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+esc(s[0])+'</span><h2>'+esc(s[0])+'</h2><p class="section-lead">'+esc(s[2])+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-cap">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-start"><span>Valor atual</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">O projeto começa em R$ 0. Cada recurso selecionado adiciona seu valor ao orçamento. Os valores de cada recurso são proporcionais ao esforço técnico, complexidade e necessidade relativa dentro do serviço.</p><button class="btn" type="button" data-service-request data-service-id="'+esc(id)+'">Solicitar este projeto →</button></aside></div></main>';
 }
 
 function updateServiceQuote(el){
