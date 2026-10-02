@@ -141,6 +141,60 @@ app.get("/api/conteudo-publicado",async(req,res)=>{
   res.json(rows.map(r=>({_id:String(r._id),pagina:r.pagina,seletor:r.seletor,tipo:r.tipo,valor:r.valor,atributo:r.atributo||"",propriedade:r.propriedade||"",publicado:true,ordem:r.ordem||0})));
 });
 
+app.post("/api/analiticas/evento",async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const b=req.body||{},pagina=String(b.pagina||"/").slice(0,300),tipo=String(b.tipo||"visualizacao").slice(0,60);
+  if(!pagina)return res.status(400).json({error:"Página inválida"});
+  await db.collection("analiticas").insertOne({
+    pagina,tipo,
+    caminho:String(b.caminho||pagina).slice(0,500),
+    titulo:String(b.titulo||"").slice(0,300),
+    referencia:String(b.referencia||"").slice(0,500),
+    dispositivo:String(b.dispositivo||"desktop").slice(0,30),
+    navegador:String(b.navegador||"").slice(0,80),
+    sistema:String(b.sistema||"").slice(0,80),
+    idioma:String(b.idioma||"pt-BR").slice(0,30),
+    largura:Number(b.largura)||0,altura:Number(b.altura)||0,
+    evento:String(b.evento||"").slice(0,120),
+    criadoEm:new Date()
+  });
+  res.status(201).json({ok:true});
+});
+app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
+  const desde=new Date(Date.now()-dias*86400000);
+  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,ultimos]=await Promise.all([
+    db.collection("analiticas").countDocuments({criadoEm:{$gte:desde}}),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
+      {$group:{_id:"$referencia"}},{$count:"total"}
+    ]).toArray(),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
+      {$group:{_id:"$pagina",total:{$sum:1}}},{$sort:{total:-1}},{$limit:12}
+    ]).toArray(),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde}}},
+      {$group:{_id:"$dispositivo",total:{$sum:1}}},{$sort:{total:-1}}
+    ]).toArray(),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde}}},
+      {$group:{_id:"$navegador",total:{$sum:1}}},{$sort:{total:-1}},{$limit:8}
+    ]).toArray(),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde}}},
+      {$group:{_id:"$tipo",total:{$sum:1}}},{$sort:{total:-1}}
+    ]).toArray(),
+    db.collection("analiticas").aggregate([
+      {$match:{criadoEm:{$gte:desde}}},
+      {$group:{_id:{$dateToString:{format:"%Y-%m-%d",date:"$criadoEm"}},total:{$sum:1}}},
+      {$sort:{_id:1}}
+    ]).toArray(),
+    db.collection("analiticas").find({}).sort({criadoEm:-1}).limit(20).project({referencia:1,pagina:1,tipo:1,evento:1,dispositivo:1,criadoEm:1}).toArray()
+  ]);
+  res.json({dias,total,visitantes:(unicos[0]?.total||0),paginas,dispositivos,navegadores,tipos,diarios,ultimos});
+});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const [conteudo,midias,admins,auditoria]=await Promise.all([
@@ -418,7 +472,7 @@ async function start(){
     db=mongo.db(process.env.MONGODB_DB||"KZTech");
     await db.command({ping:1});
     await db.collection("users").createIndex({email:1},{unique:true});
-    await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
+    await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});\n  await db.collection("analiticas").createIndex({criadoEm:-1});\n  await db.collection("analiticas").createIndex({pagina:1,criadoEm:-1});
     await db.collection("conteudo").createIndex({seletor:1,pagina:1},{unique:true});
     await db.collection("midias").createIndex({criadoEm:-1});
     await db.collection("usuarios_administradores").createIndex({email:1},{unique:true});
