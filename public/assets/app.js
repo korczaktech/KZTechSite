@@ -191,7 +191,7 @@ function render(){
   else if(h==="/privacidade")c=legal("privacidade");
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
-  else if(h.startsWith("produto/")){
+  else if(h.startsWith("/produto/")){
     let productId="";
     try{productId=decodeURIComponent(h.split("/")[1]||"")}catch{}
     c=product(productId);
@@ -200,9 +200,9 @@ function render(){
   root.innerHTML=nav()+c+footer();
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
   let detail=null;
-  if(h.startsWith("produto/")){
+  if(h.startsWith("/produto/")){
     try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]||""))?.name||null}catch{}
   }
   document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
