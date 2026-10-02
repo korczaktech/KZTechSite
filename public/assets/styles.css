@@ -443,3 +443,87 @@ button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4)
  .mentor-price-row{grid-template-columns:1fr auto}.mentor-price-row .side-arrow{display:none}
  .mentor-custom{padding:20px}
 }
+
+
+/* Mentoria — visual system */
+.mentor-page{position:relative;isolation:isolate;overflow:hidden}
+.mentor-page:before,.mentor-page:after{content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;filter:blur(2px)}
+.mentor-page:before{width:620px;height:620px;right:-260px;top:80px;background:radial-gradient(circle,rgba(141,108,255,.13),transparent 68%);animation:mentor-orb 9s ease-in-out infinite}
+.mentor-page:after{width:520px;height:520px;left:-300px;top:820px;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 70%);animation:mentor-orb 12s ease-in-out infinite reverse}
+@keyframes mentor-orb{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(24px,-18px,0) scale(1.06)}}
+.mentor-hero{position:relative}
+.mentor-hero>div:first-child{animation:mentor-enter .8s cubic-bezier(.2,.8,.2,1) both}
+.mentor-hero h1{font-weight:850;letter-spacing:-.075em;text-shadow:0 10px 45px rgba(255,255,255,.05)}
+.mentor-hero h1 span{background:linear-gradient(110deg,#fff,#8d6cff 55%,#888);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mentor-hero p{line-height:1.75}
+.mentor-monogram,.mentor-price-hero{position:relative;overflow:hidden;border-color:#303030;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 42%,rgba(141,108,255,.06));box-shadow:0 30px 100px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.08);animation:mentor-card-enter 1s .12s cubic-bezier(.2,.8,.2,1) both}
+.mentor-monogram:before,.mentor-price-hero:before{content:"";position:absolute;width:180%;height:1px;left:-40%;top:50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:rotate(-32deg);animation:mentor-scan 5s linear infinite}
+.mentor-monogram:after,.mentor-price-hero:after{content:"";position:absolute;inset:14px;border:1px solid rgba(255,255,255,.06);border-radius:20px;pointer-events:none}
+@keyframes mentor-scan{from{transform:translateY(-180px) rotate(-32deg)}to{transform:translateY(180px) rotate(-32deg)}}
+.actions .btn{position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease}
+.actions .btn:after{content:"";position:absolute;inset:0;transform:translateX(-110%);background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent);transition:transform .55s ease}
+.actions .btn:hover:after{transform:translateX(110%)}
+.actions .btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,.35)}
+.actions .btn:active{transform:translateY(0) scale(.98)}
+.mentor-feature-grid .card,.mentor-track-card,.mentor-level-card,.mentor-tech-row{transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s ease,background .3s ease,box-shadow .3s ease}
+.mentor-feature-grid .card{position:relative;overflow:hidden}
+.mentor-feature-grid .card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(141,108,255,.11),transparent 45%);opacity:0;transition:opacity .3s ease}
+.mentor-feature-grid .card:hover{transform:translateY(-7px);border-color:#3b3b3b;box-shadow:0 18px 55px rgba(0,0,0,.28)}
+.mentor-feature-grid .card:hover:before{opacity:1}
+.mentor-feature-grid .card h3,.mentor-feature-grid .card p,.mentor-feature-grid .card .card-index{position:relative}
+.mentor-track-grid{align-items:stretch}
+.mentor-track-card{position:relative;overflow:hidden}
+.mentor-track-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(141,108,255,.10),transparent 42%);opacity:0;transition:opacity .35s ease}
+.mentor-track-card:hover{transform:translateY(-8px);border-color:#454545;box-shadow:0 25px 65px rgba(0,0,0,.35)}
+.mentor-track-card:hover:before{opacity:1}
+.mentor-track-card>*{position:relative}
+.mentor-track-card:nth-child(2){transform:translateY(12px)}
+.mentor-track-card:nth-child(2):hover{transform:translateY(4px)}
+.mentor-level-list{position:relative}
+.mentor-price-row{transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
+.mentor-price-row:hover{transform:translateX(5px);border-color:#4a4a4a;box-shadow:0 8px 25px rgba(0,0,0,.24)}
+.mentor-price-row strong{font-variant-numeric:tabular-nums}
+.mentor-custom{position:relative;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.25)}
+.mentor-custom:before{content:"";position:absolute;width:420px;height:420px;right:-220px;top:-220px;background:radial-gradient(circle,rgba(141,108,255,.13),transparent 68%);pointer-events:none}
+.mentor-custom>*{position:relative}
+.mentor-total{background:linear-gradient(145deg,#111,#090909);box-shadow:inset 0 1px rgba(255,255,255,.07),0 12px 40px rgba(0,0,0,.3)}
+.mentor-total strong{background:linear-gradient(110deg,#fff,#b7a8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mentor-tech-row{transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.mentor-tech-row:hover{transform:translateY(-2px);border-color:#414141;background:#101010}
+.mentor-tech-row:has(input:checked){border-color:#5c4ca0;background:linear-gradient(100deg,rgba(141,108,255,.10),rgba(255,255,255,.02));box-shadow:0 8px 30px rgba(80,60,150,.12)}
+.mentor-toggle{transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.mentor-tech-row input:checked~.mentor-toggle{transform:scale(1.08);box-shadow:0 0 18px rgba(255,255,255,.16)}
+.mentor-level-card{position:relative;overflow:hidden}
+.mentor-level-card:before{content:"";position:absolute;inset:-1px;background:linear-gradient(120deg,transparent 25%,rgba(255,255,255,.06),transparent 70%);transform:translateX(-100%);transition:transform .8s ease}
+.mentor-level-card:hover{transform:translateY(-8px);border-color:#454545;box-shadow:0 24px 65px rgba(0,0,0,.35)}
+.mentor-level-card:hover:before{transform:translateX(100%)}
+.mentor-level-card>*{position:relative}
+.mentor-level-card>strong{background:linear-gradient(110deg,#fff,#a99aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mentor-tech-pills span{transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.mentor-tech-pills span:hover{transform:translateY(-2px);border-color:#555;background:#111}
+.mentor-cta{position:relative;overflow:hidden}
+.mentor-cta:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(141,108,255,.7),transparent);animation:mentor-line 4s ease-in-out infinite}
+@keyframes mentor-line{0%,100%{opacity:.35;transform:scaleX(.5)}50%{opacity:1;transform:scaleX(1)}}
+@keyframes mentor-enter{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes mentor-card-enter{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.mentor-track-grid .mentor-track-card:nth-child(1){animation:mentor-card-enter .65s .08s both}
+.mentor-track-grid .mentor-track-card:nth-child(2){animation:mentor-card-enter .65s .16s both}
+.mentor-track-grid .mentor-track-card:nth-child(3){animation:mentor-card-enter .65s .24s both}
+.mentor-level-card{animation:mentor-card-enter .55s .08s both}
+@media(max-width:900px){
+ .mentor-track-card:nth-child(2),.mentor-track-card:nth-child(2):hover{transform:none}
+ .mentor-track-card:hover,.mentor-level-card:hover{transform:translateY(-4px)}
+}
+@media(max-width:600px){
+ .mentor-page:before{width:380px;height:380px;right:-240px}
+ .mentor-page:after{width:320px;height:320px;left:-220px}
+ .mentor-hero{gap:26px}
+ .mentor-monogram,.mentor-price-hero{max-width:none;width:100%}
+ .actions{flex-wrap:wrap}
+ .actions .btn{width:100%;justify-content:center}
+ .mentor-track-card:hover,.mentor-level-card:hover{transform:translateY(-3px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .mentor-page:before,.mentor-page:after,.mentor-hero>div:first-child,.mentor-monogram,.mentor-price-hero,.mentor-track-grid .mentor-track-card,.mentor-level-card,.mentor-cta:before{animation:none!important}
+ .actions .btn,.mentor-feature-grid .card,.mentor-track-card,.mentor-price-row,.mentor-tech-row,.mentor-level-card,.mentor-tech-pills span{transition:none!important}
+}
