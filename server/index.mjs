@@ -205,7 +205,7 @@ app.post("/api/admin/midias",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const nome=String(req.body?.nome||"imagem").slice(0,200),tipo=String(req.body?.tipo||"").toLowerCase(),dados=String(req.body?.dados||"");
   const tamanho=Number(req.body?.tamanho||0);
-  if(!/^image\\/(png|jpeg|jpg|webp|gif|svg\\+xml)$/.test(tipo)||!dados.startsWith("data:image/")||tamanho<1||tamanho>8*1024*1024)
+  if(!/^image\/(png|jpeg|jpg|webp|gif|svg\+xml)$/.test(tipo)||!dados.startsWith("data:image/")||tamanho<1||tamanho>8*1024*1024)
     return res.status(400).json({error:"Imagem inválida. Formatos aceitos: PNG, JPEG, WebP, GIF e SVG; máximo de 8 MB."});
   const agora=new Date();
   const r=await db.collection("midias").insertOne({nome,tipo,tamanho,dados,criadoEm:agora,criadoPor:req.user.email});
