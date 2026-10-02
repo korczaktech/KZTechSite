@@ -162,14 +162,15 @@ function beginnerExplanation(o){
   return map[label]||detail;
 }
 function servicePage(id){
-  const s=READY_SERVICES[id]||READY_SERVICES.site;
+  const safeId=Object.prototype.hasOwnProperty.call(READY_SERVICES,id)?id:"site";
+  const s=READY_SERVICES[safeId]||READY_SERVICES.site;
   const prices=serviceOptionPrices(s);
   const opts=s[3].map((o,i)=>{
     const price=prices[i];
     return '<div class="service-option-wrap"><label class="service-option"><input type="checkbox" data-service-option data-price="'+price+'" data-label="'+esc(o[1])+'"><span><strong>'+esc(o[1])+'</strong><small>'+esc(o[2])+'</small></span><b class="service-option-price"><small>Preço</small>'+money(price)+'</b></label><details class="service-option-info"><summary>O que isso faz?</summary><p>'+esc(beginnerExplanation(o))+'</p></details></div>';
   }).join("");
   const cap=s[1]==null?"Sem teto fixo":"Teto máximo: "+money(s[1]);
-  return '<main id="main-content" class="section shell"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+esc(s[0])+'</span><h2>'+esc(s[0])+'</h2><p class="section-lead">'+esc(s[2])+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-cap">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-start"><span>Valor atual</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">O projeto começa em R$ 0. Cada recurso selecionado adiciona seu valor ao orçamento. Os valores de cada recurso são proporcionais ao esforço técnico, complexidade e necessidade relativa dentro do serviço.</p><button class="btn" type="button" data-service-request data-service-id="'+esc(id)+'">Solicitar este projeto →</button></aside></div></main>';
+  return '<main id="main-content" class="section shell commercial-config-page"><div class="service-config-head"><a class="text-link" href="#/comercial">← Voltar para serviços</a><span class="eyebrow">Configurador · '+esc(s[0])+'</span><h2>'+esc(s[0])+'</h2><p class="section-lead">'+esc(s[2])+' Escolha os recursos que deseja incluir.</p></div><div class="service-config-layout"><section class="service-options-panel"><div class="config-panel-head"><div><span class="eyebrow">01 · Configure</span><h3>Monte sua solução.</h3></div><span class="config-cap">'+cap+'</span></div><div class="service-options">'+opts+'</div></section><aside class="service-summary"><span class="eyebrow">02 · Orçamento estimado</span><h3>Seu projeto</h3><div class="summary-start"><span>Valor atual</span><strong>R$ 0</strong></div><div class="summary-selected" data-service-selected><span>Nenhum recurso selecionado.</span></div><div class="summary-total"><span>Total estimado</span><strong data-service-total>R$ 0</strong></div><p class="muted">O projeto começa em R$ 0. Cada recurso selecionado adiciona seu valor ao orçamento. Os valores de cada recurso são proporcionais ao esforço técnico, complexidade e necessidade relativa dentro do serviço.</p><button class="btn" type="button" data-service-request data-service-id="'+esc(safeId)+'">Solicitar este projeto →</button></aside></div></main>';
 }
 
 function updateServiceQuote(el){
@@ -183,7 +184,7 @@ function updateServiceQuote(el){
 }
 
 function requestServiceQuote(btn){
-  const s=READY_SERVICES[btn.dataset.serviceId],panel=btn.closest(".service-config-layout");
+  const s=READY_SERVICES[btn.dataset.serviceId]||READY_SERVICES.site,panel=btn.closest(".service-config-layout");
   if(!s||!panel)return;
   const selected=[...panel.querySelectorAll("[data-service-option]:checked")].map(x=>({label:x.dataset.label,price:Number(x.dataset.price)||0}));
   const total=selected.reduce((n,x)=>n+x.price,0);
