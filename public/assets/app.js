@@ -327,7 +327,7 @@ function render(){
   else if(h==="/conta"&&!state.authenticated)c=authPage(state.authMode||"login");
   else if(h==="/")c=home();
   else if(h==="/comercial")c=commercial();
-  else if(h.startsWith("/servicos/"))c=servicePage(decodeURIComponent(h.split("/")[2]||"site"));
+  else if(h.startsWith("/servicos/")){let serviceId="site";try{serviceId=decodeURIComponent(h.split("/")[2]||"site")}catch{}c=servicePage(serviceId);}
   else if(h==="/institucional")c=institutional();
   else if(h==="/portfolio")c=portfolio();
   else if(h==="/produtos")c=products();
