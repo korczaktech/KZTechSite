@@ -1,6 +1,18 @@
 const API_URL="https://kztechsite.onrender.com";
 const root=document.querySelector("#app");
-const state={token:localStorage.getItem("kz_token"),user:null,products:[],menu:false};
+const FALLBACK_PRODUCTS=[
+  {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
+  {id:"morok",name:"MOROK",type:"Assistente",status:"Em desenvolvimento",description:"Assistente pessoal e operacional multiplataforma."},
+  {id:"ide",name:"Korczak IDE",type:"Developer Tool",status:"Em desenvolvimento",description:"Ambiente de desenvolvimento para projetos Korczak."},
+  {id:"workspace",name:"Korczak Workspace",type:"Workspace",status:"Em evolução",description:"Espaço unificado para FLOW, DOCUMENTS, VISION, OPS e mais."},
+  {id:"flow",name:"KORCZAK FLOW",type:"Operations",status:"Em desenvolvimento",description:"Fluxos e automações para operações digitais."},
+  {id:"documents",name:"KORCZAK DOCUMENTS",type:"Documents",status:"Em desenvolvimento",description:"Documentos e organização de informação."},
+  {id:"vision",name:"KORCZAK VISION",type:"Intelligence",status:"Em desenvolvimento",description:"Visão e inteligência para decisões digitais."},
+  {id:"ops",name:"KORCZAK OPS",type:"Operations",status:"Em desenvolvimento",description:"Operações e administração do ecossistema."},
+  {id:"connect",name:"KORCZAK CONNECT",type:"Connectivity",status:"Em desenvolvimento",description:"Conectividade entre pessoas, sistemas e serviços."},
+  {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Em desenvolvimento",description:"Experiências móveis para o ecossistema Korczak."}
+];
+const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,menu:false};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const icon=name=>{
@@ -16,10 +28,14 @@ const icon=name=>{
 async function api(url,opt={}){
   const h={"Content-Type":"application/json",...(opt.headers||{})};
   if(state.token)h.Authorization="Bearer "+state.token;
-  const r=await fetch(API_URL+url,{...opt,headers:h});
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok)throw Error(d.error||"Não foi possível concluir a operação.");
-  return d;
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),8000);
+  try{
+    const r=await fetch(API_URL+url,{...opt,headers:h,signal:controller.signal});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw Error(d.error||"Não foi possível concluir a operação.");
+    return d;
+  }finally{clearTimeout(timer)}
 }
 
 const links=[
@@ -179,9 +195,20 @@ document.addEventListener("keydown",e=>{
 addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"})});
 
 async function load(){
+  if(!root)return;
   document.body.classList.add("loading");
-  try{state.products=await api("/api/products");if(state.token)state.user=await api("/api/me")}
-  catch(e){if(state.token){localStorage.removeItem("kz_token");state.token=null;state.user=null}}
+  render();
+  try{
+    const products=await api("/api/products");
+    if(Array.isArray(products)&&products.length)state.products=products;
+    if(state.token)state.user=await api("/api/me");
+  }catch(e){
+    if(state.token){
+      localStorage.removeItem("kz_token");
+      state.token=null;
+      state.user=null;
+    }
+  }
   render();
 }
 load();
