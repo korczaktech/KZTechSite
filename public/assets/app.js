@@ -302,5 +302,6 @@ async function load(){
     }
   }
   render();
+  document.body.classList.remove("loading");
 }
 load();
