@@ -9,7 +9,7 @@ A Fase 0 deixa o projeto executável e preparado para infraestrutura externa.
 **Banco:** MongoDB Atlas  
 **Pagamentos:** Stripe (somente backend)  
 **Deploy:** Render Web Service Free  
-**Frontend:** servido pelo próprio Express  
+**Frontend:** publicado pelo GitHub Pages  
 **Segredos:** variáveis de ambiente do Render
 
 ## Endpoints base
@@ -22,6 +22,7 @@ A Fase 0 deixa o projeto executável e preparado para infraestrutura externa.
 Em produção, o processo não inicia sem:
 - MONGODB_URI
 - JWT_SECRET com pelo menos 32 caracteres
+- FRONTEND_URL
 
 O servidor faz ping no MongoDB antes de abrir a porta.
 
@@ -45,6 +46,7 @@ Coleções iniciais:
 - users
 - contacts
 - quotes
+- orders
 
 Índices são criados automaticamente na inicialização.
 
