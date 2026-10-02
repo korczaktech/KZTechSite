@@ -136,8 +136,7 @@ function render(){
   const h=location.hash.slice(2)||"/";
   if(!root)return;
   try{
-  const workspacePage=workspace;
-const pages={
+  const pages={
     "/sobre":()=>infoPage("Sobre nós","Empresa","Tecnologia com propósito, engenharia enxuta e produtos próprios.",[
       ["Identidade","Korczak Technology","Uma empresa orientada à construção de software, sistemas e produtos digitais próprios."],
       ["Atuação","Ecossistema","Produtos independentes que também podem trabalhar em conjunto conforme a necessidade."],
@@ -182,6 +181,8 @@ const pages={
   else if(h==="/portfolio")c=portfolio();
   else if(h==="/produtos")c=products();
   else if(h==="/empresa")c=company();
+  else if(h==="/workspace")c=workspace();
+  else if(h==="/kos")c=kos();
   else if(pages[h])c=pages[h]();
   else if(h==="/contato")c=contact();
   else if(h==="/conta")c=account();
