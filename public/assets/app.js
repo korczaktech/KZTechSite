@@ -65,17 +65,38 @@ function card(p,i){
 
 function initMoon(){
  const canvas=document.getElementById("moon-canvas"); if(!canvas||canvas.dataset.ready)return; canvas.dataset.ready="1";
- const THREE=window.THREE; if(!THREE){canvas.style.background="radial-gradient(circle,#777 0 48%,#111 49% 100%)";return;}
- const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(canvas.clientWidth,canvas.clientHeight,false); renderer.outputColorSpace=THREE.SRGBColorSpace;
- const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(30,canvas.clientWidth/canvas.clientHeight,.1,100); camera.position.set(0,0,3.05);
- const light=new THREE.DirectionalLight(0xffffff,2.6); light.position.set(-3,1.5,4); scene.add(light); scene.add(new THREE.AmbientLight(0x5d5d5d,.12));
- const geo=new THREE.SphereGeometry(1,128,128);
- const loader=new THREE.TextureLoader(); loader.setCrossOrigin("anonymous");
- const textureUrl="https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/Moon-Model-Preview-Topo.jpg";
- loader.load(textureUrl,t=>{t.colorSpace=THREE.SRGBColorSpace;const mat=new THREE.MeshStandardMaterial({map:t,roughness:.98,metalness:0,bumpMap:t,bumpScale:.045});const moon=new THREE.Mesh(geo,mat);moon.rotation.z=THREE.MathUtils.degToRad(5);scene.add(moon);canvas._moon=moon;},undefined,()=>{const fallback=document.createElement("div");fallback.className="moon-fallback";canvas.parentElement.appendChild(fallback);canvas.style.display="none";});const moon=new THREE.Mesh(geo,mat);scene.add(moon);canvas._moon=moon;});
- function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()} addEventListener("resize",resize); resize();
- const clock=new THREE.Clock(); function frame(){const m=canvas._moon;if(m)m.rotation.y+=clock.getDelta()*.18; else clock.getDelta(); renderer.render(scene,camera);requestAnimationFrame(frame)} frame();
+ const THREE=window.THREE;
+ if(!THREE){canvas.style.display="none";canvas.parentElement.classList.add("moon-visible-fallback");return;}
+ const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+ renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+ const scene=new THREE.Scene();
+ const camera=new THREE.PerspectiveCamera(35,1,.1,100);
+ camera.position.z=3;
+ const light=new THREE.DirectionalLight(0xffffff,3);
+ light.position.set(-2,2,4);
+ scene.add(light);
+ scene.add(new THREE.AmbientLight(0xffffff,.35));
+ const geometry=new THREE.SphereGeometry(1,96,96);
+ const material=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.9,metalness:0});
+ const moon=new THREE.Mesh(geometry,material);
+ scene.add(moon);
+ canvas._moon=moon;
+ function resize(){
+   const w=canvas.clientWidth||400,h=canvas.clientHeight||400;
+   renderer.setSize(w,h,false);
+   camera.aspect=w/h;
+   camera.updateProjectionMatrix();
+ }
+ addEventListener("resize",resize);
+ resize();
+ function frame(){
+   moon.rotation.y+=.0025;
+   renderer.render(scene,camera);
+   requestAnimationFrame(frame);
+ }
+ frame();
 }
+
 function home(){
  const featured=state.products.filter(p=>["korczak-ai","workspace","ide"].includes(p.id));
  return '<main id="main-content"><section class="hero shell"><div class="hero-copy"><span class="eyebrow">KORCZAK TECHNOLOGY · SOFTWARE · SISTEMAS</span><h1>Construímos tecnologia para operar o futuro.</h1><p>Produtos digitais para inteligência, produtividade, desenvolvimento e operações empresariais.</p><div class="actions"><a class="btn" href="#/portfolio">Ver portfólio '+icon("arrow")+'</a><a class="btn ghost" href="#/empresa">Conhecer a empresa</a></div></div><div class="moon-stage" aria-label="Lua 3D realista baseada em dados lunares da NASA"><div class="moon-3d-wrap" aria-label="Lua 3D realista"><canvas id="moon-canvas"></canvas></div></div></div></section><section class="section shell"><span class="eyebrow">Em destaque</span><h2>O núcleo do ecossistema.</h2><p class="section-lead">Na página inicial, três produtos representam as principais portas de entrada: inteligência, produtividade e desenvolvimento.</p><div class="grid">'+featured.map((p,i)=>card(p,i)).join("")+'</div></section><section class="section shell"><div class="split"><section><span class="eyebrow">Korczak Workspace</span><h3>Produtividade e colaboração.</h3><p class="muted">Uma suíte própria para o trabalho diário: documentos, planilhas, apresentações, arquivos, agenda, comunicação e colaboração.</p><a class="btn ghost" href="#/workspace">Conhecer o Workspace '+icon("arrow")+'</a></section><section><span class="eyebrow">KOS · Korczak Operations System</span><h3>Operação empresarial.</h3><p class="muted">Uma suíte separada para empresas: ERP, FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE.</p><a class="btn ghost" href="#/kos">Conhecer o KOS '+icon("arrow")+'</a></section></div></section></main>';
