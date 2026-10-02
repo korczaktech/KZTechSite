@@ -118,6 +118,32 @@ const SERVICE_EXTRAS={
 "bot":[["commands","Comandos","Ações","Executa ações específicas por comandos."],["forms","Formulários","Coleta de dados","Coleta informações estruturadas na conversa."],["media","Mídia","Imagens e arquivos","Trabalha com arquivos e mídias."],["notifications","Notificações","Avisos","Envia mensagens automáticas."],["auth","Autenticação","Identidade","Identifica o usuário quando necessário."],["payments","Pagamentos","Cobrança","Integra operações de pagamento."],["integrations","Integrações","Serviços externos","Conecta APIs, ERP, CRM e agenda."],["analytics","Analytics","Métricas","Mede conversas e etapas."],["multichannel","Multicanal","Vários canais","Reaproveita fluxos em vários canais."],["knowledge","Base de conhecimento","Conteúdo","Organiza informações usadas pelo bot."]],
 "customization":[["integration","Integração","Serviço externo","Conecta o sistema a uma plataforma externa."],["dashboard","Dashboard","Painel","Cria telas administrativas e indicadores."],["report","Relatório","Informações","Cria consultas e relatórios personalizados."],["notification","Notificações","Avisos","Adiciona emails e alertas."],["search","Busca","Pesquisa","Adiciona busca e filtros."],["performance","Performance","Otimização","Melhora carregamento e processamento."],["security","Segurança","Proteção","Adiciona validações e controles."],["backup","Backup","Recuperação","Estrutura cópias de segurança."],["monitoring","Monitoramento","Saúde","Acompanha erros e disponibilidade."],["accessibility","Acessibilidade","Uso inclusivo","Adapta componentes para acessibilidade."]]
 };
+
+
+// Recursos que fazem parte da entrega mínima de cada serviço e, por isso, não aparecem como adicionais.
+// O cliente paga pelo serviço base; aqui ficam somente recursos realmente incrementais.
+const SERVICE_INCLUDED={
+  "landing-page":["responsive","deployment","security","performance","accessibility"],
+  "site":["security","performance","accessibility"],
+  "ecommerce":["dashboard"],
+  "web-app":["auth","database","api"],
+  "mobile":[],
+  "api":["docs"],
+  "integration":["api","webhook","auth"],
+  "automation":["workflow","n8n"],
+  "bot":["commands"],
+  "customization":[]
+};
+
+Object.keys(SERVICE_INCLUDED).forEach(serviceId=>{
+  const included=new Set(SERVICE_INCLUDED[serviceId]||[]);
+  if(READY_SERVICES[serviceId]){
+    READY_SERVICES[serviceId][3]=(READY_SERVICES[serviceId][3]||[]).filter(option=>!included.has(option[0]));
+  }
+  if(SERVICE_EXTRAS[serviceId]){
+    SERVICE_EXTRAS[serviceId]=SERVICE_EXTRAS[serviceId].filter(option=>!included.has(option[0]));
+  }
+});
 Object.keys(READY_SERVICES).forEach(k=>{
   const base=READY_SERVICES[k][3]||[];
   const existing=new Set(base.map(o=>o[0]));
