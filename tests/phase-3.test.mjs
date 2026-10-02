@@ -17,7 +17,7 @@ test("Fase 3: Stripe Checkout e estados",()=>{
   assert.ok(app.includes("/checkout/sucesso")); assert.ok(app.includes("/checkout/cancelado")); assert.ok(app.includes('data-action="checkout"'));
 });
 test("Fase 3: configuração Stripe documentada",()=>{
-  for(const id of ["KORCZAK_AI","MOROK","IDE","WORKSPACE","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE"])assert.ok(env.includes("STRIPE_PRICE_"+id));
+  for(const id of ["KORCZAK_AI","MOROK","ERP","IDE","WORKSPACE","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE"])assert.ok(env.includes("STRIPE_PRICE_"+id));
 });
 test("Fase 3: webhook Stripe confirma e atualiza pedidos",()=>{
   assert.ok(server.includes('/api/stripe/webhook'));
