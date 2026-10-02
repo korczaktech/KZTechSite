@@ -13,4 +13,6 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - run: node --check server/index.mjs
+      - run: node --check public/assets/app.js
       - run: npm test
