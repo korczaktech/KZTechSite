@@ -126,15 +126,24 @@ const OPTION_NEED={sections:3,form:6,analytics:5,seo:6,animations:2,integration:
 // Recursos que fazem parte da entrega mínima de cada serviço e, por isso, não aparecem como adicionais.
 // O cliente paga pelo serviço base; aqui ficam somente recursos realmente incrementais.
 const SERVICE_INCLUDED={
-  "landing-page":["responsive","deployment","security","performance","accessibility"],
-  "site":["security","performance","accessibility"],
-  "ecommerce":["dashboard"],
-  "web-app":["auth","database","api"],
-  "mobile":[],
-  "api":["docs"],
-  "integration":["api","webhook","auth"],
-  "automation":["workflow","n8n"],
-  "bot":["commands"],
+  // Fundamentos de entrega não devem aparecer como adicionais.
+  "landing-page":["responsive","deployment","security","performance","accessibility","seo"],
+  "site":["responsive","deployment","security","performance","accessibility","seo","forms"],
+  // Uma loja precisa conseguir vender e operar pedidos/estoque no pacote principal.
+  "ecommerce":["dashboard","responsive","deployment","security","performance","accessibility","seo","products","payments","shipping","inventory","orders","customers"],
+  // O núcleo de uma aplicação web é a própria aplicação, não recursos acessórios.
+  "web-app":["dashboard","auth","database","api","responsive","deployment","security","performance","accessibility"],
+  // Segurança, desempenho e acessibilidade são requisitos de qualidade do aplicativo.
+  "mobile":["security","performance","accessibility"],
+  // Documentação, proteção contra abuso e observabilidade básica fazem parte de uma API pronta para uso.
+  "api":["docs","rate-limit","monitoring"],
+  // Uma integração precisa de comunicação, autenticação, mapeamento, tolerância a falhas e rastreabilidade.
+  "integration":["api","webhook","auth","mapping","retry","logs","monitoring"],
+  // Condições, filtros, transformação e retry são blocos fundamentais de uma automação.
+  "automation":["workflow","n8n","conditions","filters","transform","retry"],
+  // Um chatbot comercial precisa do fluxo básico, comandos e fallback para atendimento humano.
+  "bot":["commands","faq","buttons","handoff"],
+  // Na customização, o escopo continua variável por projeto; por isso os recursos permanecem selecionáveis.
   "customization":[]
 };
 
