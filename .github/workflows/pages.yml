@@ -28,6 +28,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -R public/. _site/
+          mkdir -p _site/admin
+          cp -R admin/. _site/admin/
           touch _site/.nojekyll
 
       - name: Upload artifact
