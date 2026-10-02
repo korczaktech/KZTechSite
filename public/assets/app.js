@@ -120,11 +120,6 @@ const SERVICE_EXTRAS={
 };
 
 
-Object.keys(READY_SERVICES).forEach(k=>{
-  const base=READY_SERVICES[k][3]||[];
-  const existing=new Set(base.map(o=>o[0]));
-  (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
-});
 function money(v){return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(v)}
 // Preço individual: a dificuldade técnica e a necessidade do recurso pesam no valor.
 // Recursos opcionais continuam mais baratos que recursos estruturais de alta complexidade.
@@ -167,6 +162,12 @@ Object.keys(SERVICE_INCLUDED).forEach(serviceId=>{
     SERVICE_EXTRAS[serviceId]=SERVICE_EXTRAS[serviceId].filter(option=>!included.has(option[0]));
   }
 });
+Object.keys(READY_SERVICES).forEach(k=>{
+  const base=READY_SERVICES[k][3]||[];
+  const existing=new Set(base.map(o=>o[0]));
+  (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
+});
+
 
 function serviceOptionPrices(service){
   const options=service[3]||[];
