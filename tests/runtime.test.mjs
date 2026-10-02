@@ -47,3 +47,12 @@ test("runtime: validação de email aceita formato comum",()=>{
   const server=fs.readFileSync("server/index.mjs","utf8");
   assert.match(server,/\^\[\^\\s@\]\+@\[\^\\s@\]\+\\\.\[\^\\s@\]\+\$/);
 });
+
+test("runtime: frontend remove o estado loading após bootstrap",()=>{
+  assert.match(app,/document\.body\.classList\.remove\(["']loading["']\)/);
+});
+test("runtime: CSP está habilitado no backend",()=>{
+  assert.match(server,/contentSecurityPolicy:\{/);
+  assert.match(server,/frameAncestors:\[["']none["']\]/);
+});
+test("runtime: Render usa readiness endpoint",()=>assert.match(render,/healthCheckPath: \/api\/ready/));
