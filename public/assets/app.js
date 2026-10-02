@@ -65,14 +65,14 @@ function card(p,i){
 
 function initMoon(){
  const canvas=document.getElementById("moon-canvas"); if(!canvas||canvas.dataset.ready)return; canvas.dataset.ready="1";
- const THREE=window.THREE; if(!THREE)return;
+ const THREE=window.THREE; if(!THREE){canvas.style.background="radial-gradient(circle,#777 0 48%,#111 49% 100%)";return;}
  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(canvas.clientWidth,canvas.clientHeight,false); renderer.outputColorSpace=THREE.SRGBColorSpace;
  const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(30,canvas.clientWidth/canvas.clientHeight,.1,100); camera.position.set(0,0,3.05);
  const light=new THREE.DirectionalLight(0xffffff,2.6); light.position.set(-3,1.5,4); scene.add(light); scene.add(new THREE.AmbientLight(0x5d5d5d,.12));
  const geo=new THREE.SphereGeometry(1,128,128);
  const loader=new THREE.TextureLoader(); loader.setCrossOrigin("anonymous");
  const textureUrl="https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/Moon-Model-Preview-Topo.jpg";
- loader.load(textureUrl,t=>{t.colorSpace=THREE.SRGBColorSpace; const mat=new THREE.MeshStandardMaterial({map:t,roughness:.96,metalness:0,bumpMap:t,bumpScale:.035}); const moon=new THREE.Mesh(geo,mat); moon.rotation.z=THREE.MathUtils.degToRad(5); scene.add(moon); canvas._moon=moon;},undefined,()=>{const mat=new THREE.MeshStandardMaterial({color:0x777777,roughness:1});const moon=new THREE.Mesh(geo,mat);scene.add(moon);canvas._moon=moon;});
+ loader.load(textureUrl,t=>{t.colorSpace=THREE.SRGBColorSpace;const mat=new THREE.MeshStandardMaterial({map:t,roughness:.98,metalness:0,bumpMap:t,bumpScale:.045});const moon=new THREE.Mesh(geo,mat);moon.rotation.z=THREE.MathUtils.degToRad(5);scene.add(moon);canvas._moon=moon;},undefined,()=>{const fallback=document.createElement("div");fallback.className="moon-fallback";canvas.parentElement.appendChild(fallback);canvas.style.display="none";});const moon=new THREE.Mesh(geo,mat);scene.add(moon);canvas._moon=moon;});
  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()} addEventListener("resize",resize); resize();
  const clock=new THREE.Clock(); function frame(){const m=canvas._moon;if(m)m.rotation.y+=clock.getDelta()*.18; else clock.getDelta(); renderer.render(scene,camera);requestAnimationFrame(frame)} frame();
 }
