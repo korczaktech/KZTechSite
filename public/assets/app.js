@@ -47,7 +47,7 @@ const links=[
 ];
 
 function nav(){
-  const h=location.hash.slice(2)||"/";
+  const h=location.hash.startsWith("#/")?location.hash.slice(1):"/";
   const active=p=>h===p||(p!=="/"&&h.startsWith(p));
   const group=(title,items,offset)=>'<div class="side-section">'+title+'</div>'+items.map(([p,n],i)=>
     '<a class="side-link '+(active(p)?"active":"")+'" aria-current="'+(active(p)?"page":"false")+'" href="#'+p+'" data-action="close-menu"><span>'+n+'</span><span class="side-arrow">'+String(offset+i+1).padStart(2,"0")+'</span></a>'
