@@ -17,8 +17,8 @@ test("Fase 2: rotas institucionais completas",()=>{
   }
 });
 
-test("Fase 2: catálogo completo contém os dez produtos",()=>{
-  for(const id of ["korczak-ai","morok","ide","workspace","flow","documents","vision","ops","connect","mobile"]){
+test("Fase 2: catálogo completo contém os produtos do KOS",()=>{
+  for(const id of ["korczak-ai","morok","ide","workspace","erp","flow","documents","vision","ops","connect","mobile"]){
     assert.ok(app.includes('id:"'+id+'"'),"Produto ausente: "+id);
   }
 });
