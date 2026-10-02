@@ -27,7 +27,7 @@ test("runtime: frontend não depende do backend para o primeiro render",()=>{
 
 test("runtime: navegação lateral não bloqueia links",()=>{
   const app=fs.readFileSync("public/assets/app.js","utf8");
-  assert.match(app,/action==="close-menu"\}\{closeMenu\(\);return false\}/);
+  assert.ok(app.includes('if(action==="close-menu"){closeMenu();return false}'));
 });
 
 test("runtime: API e Mongo têm configuração resiliente",()=>{
