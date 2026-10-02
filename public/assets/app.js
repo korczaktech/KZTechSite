@@ -707,7 +707,7 @@ function registrarAnalitica(tipo="visualizacao",evento=""){
     const pagina=location.hash.replace(/^#/, "")||"/";
     const ua=navigator.userAgent;
     const navegador=/Edg/i.test(ua)?"Edge":/Chrome/i.test(ua)?"Chrome":/Firefox/i.test(ua)?"Firefox":/Safari/i.test(ua)?"Safari":"Outro";
-    const sistema=/Android/i.test(ua)?"Android":/i.test(ua)?"iOS":/Windows/i.test(ua)?"Windows":/Mac OS/i.test(ua)?"macOS":/Linux/i.test(ua)?"Linux":"Outro";
+    const sistema=/Android/i.test(ua)?"Android":/iPhone|iPad|iPod/i.test(ua)?"iOS":/Windows/i.test(ua)?"Windows":/Mac OS/i.test(ua)?"macOS":/Linux/i.test(ua)?"Linux":"Outro";
     const dispositivo=/Mobi|Android/i.test(ua)?"mobile":"desktop";
     fetch("https://kztechsite.onrender.com/api/analiticas/evento",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
       pagina,tipo,caminho:location.href,titulo:document.title,referencia:id,dispositivo,navegador,sistema,
@@ -715,7 +715,7 @@ function registrarAnalitica(tipo="visualizacao",evento=""){
     }),keepalive:true}).catch(()=>{});
   }catch{}
 }
-addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"})});
+addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"});registrarPaginaAtual()});
 let ultimaPaginaAnalitica="";
 function registrarPaginaAtual(){
   const pagina=location.hash.replace(/^#/, "")||"/";
