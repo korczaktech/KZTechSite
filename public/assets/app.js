@@ -289,7 +289,7 @@ async function sendContact(e){
   finally{button.disabled=false}
 }
 
-async async function checkout(id){
+async function checkout(id){
   if(!state.token){location.hash="#/conta";toast("Entre na sua conta para continuar.");return}
   try{
     const d=await api("/api/checkout",{method:"POST",body:JSON.stringify({productId:id})});
@@ -341,7 +341,6 @@ async function submitAuth(e){
 }
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
-  if(e.target.id==="login-form")login(e);
   if(e.target.id==="auth-form")submitAuth(e);
 });
 document.addEventListener("keydown",e=>{
