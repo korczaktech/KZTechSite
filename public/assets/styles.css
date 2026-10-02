@@ -147,3 +147,55 @@ button{color:inherit}
 .feature-list li::before{content:"— ";color:#666}
 @media(max-width:900px){.pricing-grid{grid-template-columns:1fr 1fr}.detail-grid{grid-template-columns:1fr}.kos-row{grid-template-columns:40px 1fr 40px}.kos-row small{display:none}}
 @media(max-width:600px){.pricing-grid{grid-template-columns:1fr}.kos-row strong{font-size:17px}.card.featured{min-height:260px}}
+
+/* Visual system v2026.10.02 */
+.site-background{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:.92}
+.site-background svg{width:100%;height:100%;display:block}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 78% 22%,rgba(255,255,255,.035),transparent 24%),linear-gradient(115deg,transparent 0 48%,rgba(255,0,80,.018) 65%,transparent 82%)}
+.hero{position:relative;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:30px;overflow:hidden}
+.hero-copy{position:relative;z-index:2}
+.moon-stage{min-height:520px;display:grid;place-items:center;position:relative;isolation:isolate}
+.moon-halo{position:absolute;width:min(45vw,560px);height:min(45vw,560px);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),rgba(150,120,190,.025) 38%,transparent 68%);filter:blur(2px);animation:moon-breathe 7s ease-in-out infinite}
+.moon{width:min(31vw,390px);height:min(31vw,390px);min-width:260px;min-height:260px;border-radius:50%;position:relative;overflow:hidden;background:#aaa;box-shadow:-32px -16px 55px rgba(0,0,0,.65),18px 18px 55px rgba(255,255,255,.06),inset -32px -20px 55px rgba(0,0,0,.62),inset 16px 10px 30px rgba(255,255,255,.12);animation:moon-float 6s ease-in-out infinite}
+.moon-surface{position:absolute;inset:-8%;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ddd 0 3%,#aaa 13%,#777 35%,#b7b7b7 54%,#666 72%,#aaa 100%);background-image:radial-gradient(circle at 28% 30%,rgba(255,255,255,.28),transparent 25%),radial-gradient(circle at 72% 65%,rgba(0,0,0,.28),transparent 32%),radial-gradient(circle at 20% 72%,rgba(0,0,0,.18) 0 4%,transparent 4.7%),radial-gradient(circle at 58% 28%,rgba(0,0,0,.22) 0 5%,transparent 5.8%),radial-gradient(circle at 76% 38%,rgba(255,255,255,.12) 0 3%,transparent 3.8%),radial-gradient(circle at 42% 60%,rgba(0,0,0,.22) 0 7%,transparent 7.8%),linear-gradient(110deg,#d0d0d0,#858585 45%,#555 72%,#aaa);animation:moon-surface 24s linear infinite}
+.crater{position:absolute;border-radius:50%;background:rgba(45,45,45,.24);box-shadow:inset 5px 4px 8px rgba(0,0,0,.28),inset -3px -3px 5px rgba(255,255,255,.08)}
+.c1{width:52px;height:52px;left:24%;top:24%}.c2{width:32px;height:32px;left:58%;top:20%}.c3{width:70px;height:70px;left:47%;top:52%}.c4{width:28px;height:28px;left:70%;top:67%}.c5{width:42px;height:42px;left:18%;top:63%}.c6{width:22px;height:22px;left:62%;top:40%}
+.moon-caption{position:absolute;bottom:30px;color:#555;font-size:9px;letter-spacing:.28em;text-transform:uppercase}
+@keyframes moon-surface{from{transform:translateX(-2%)}to{transform:translateX(2%)}} 
+@keyframes moon-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@keyframes moon-breathe{0%,100%{transform:scale(.94);opacity:.45}50%{transform:scale(1.05);opacity:.8}}
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.42) 48%,transparent 72%);transform:translateX(-120%);transition:transform .55s ease;z-index:-1}
+.btn:hover:before{transform:translateX(120%)}
+.btn:hover{box-shadow:0 8px 30px rgba(255,255,255,.08)}
+.btn:active{box-shadow:0 2px 12px rgba(255,255,255,.12)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.info-card{background:rgba(5,5,5,.88);padding:32px;min-height:270px;transition:transform .25s ease,background .25s ease}
+.info-card:hover{background:#0b0b0b;transform:translateY(-5px)}
+.info-card h3{font-size:25px;margin:35px 0 12px}
+.text-link{display:inline-flex;align-items:center;gap:7px;margin-top:20px;color:#aaa;transition:color .2s,transform .2s}
+.text-link:hover{color:#fff;transform:translateX(4px)}
+.info-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px}
+.info-meta span{border:1px solid var(--line);padding:8px 12px;border-radius:999px;color:#666;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.info-deep{display:grid;grid-template-columns:1fr 1.5fr;gap:50px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:55px 0;margin:65px 0 0}
+.info-deep h3{font-size:32px;margin:0}
+.portfolio-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.portfolio-stats div{background:#080808;padding:24px}.portfolio-stats strong{display:block;font-size:32px}.portfolio-stats span{color:#666;font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.product-principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:35px}
+.product-principles div{background:#080808;padding:24px}.product-principles strong{display:block;color:#555}.product-principles span{display:block;font-weight:700;margin-top:15px}.product-principles small{display:block;color:#666;margin-top:6px}
+.workspace-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:42px}
+.workspace-flow div{background:#080808;padding:22px}.workspace-flow strong{display:block;font-size:11px;letter-spacing:.15em}.workspace-flow span{display:block;color:#666;margin-top:8px;font-size:12px}
+.kos-architecture{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:42px}
+.kos-architecture div{background:#080808;padding:22px;text-align:center}.kos-architecture b{display:block}.kos-architecture span{display:block;color:#666;font-size:10px;text-transform:uppercase;margin-top:5px}
+.hero-metrics{display:flex;gap:30px;margin-top:45px}.hero-metrics div{display:grid;gap:3px}.hero-metrics strong{font-size:24px}.hero-metrics span{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.08em}
+.mini-list{margin-top:30px;border-top:1px solid var(--line)}.mini-list div{display:flex;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}.mini-list strong{color:#555}.mini-list span{color:#aaa}
+.signal-panel{border:1px solid var(--line);padding:30px;min-height:300px;position:relative;overflow:hidden}.signal-orbit{width:170px;height:170px;border:1px solid #333;border-radius:50%;margin:15px auto 30px;position:relative}.signal-orbit:before,.signal-orbit:after{content:"";position:absolute;inset:22px;border:1px solid #252525;border-radius:50%}.signal-orbit span{position:absolute;width:5px;height:5px;background:#fff;border-radius:50%;top:50%;left:50%;transform-origin:0 0;animation:orbit 4s linear infinite}.signal-orbit span:nth-child(2){animation-duration:6s}.signal-orbit span:nth-child(3){animation-duration:8s}
+@keyframes orbit{from{transform:rotate(0deg) translateX(75px)}to{transform:rotate(360deg) translateX(75px)}}
+.section-inner{margin-top:80px;padding-top:60px;border-top:1px solid var(--line)}
+.closing-panel{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(255,255,255,.025),transparent);padding-block:80px}
+button:not(.menu-toggle){position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .25s ease,filter .2s ease}
+button:not(.menu-toggle):hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.08)}
+button:not(.menu-toggle):active{transform:scale(.97)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.moon-stage{min-height:390px;order:-1}.moon{width:300px;height:300px}.info-grid,.product-principles{grid-template-columns:1fr 1fr}.portfolio-stats{grid-template-columns:1fr 1fr}.workspace-flow{grid-template-columns:1fr 1fr}.kos-architecture{grid-template-columns:repeat(3,1fr)}.info-deep{grid-template-columns:1fr}}
+@media(max-width:600px){.moon-stage{min-height:320px}.moon{min-width:220px;min-height:220px;width:220px;height:220px}.moon-caption{bottom:8px}.hero-metrics{gap:14px;flex-wrap:wrap}.info-grid,.product-principles,.portfolio-stats,.workspace-flow{grid-template-columns:1fr}.kos-architecture{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.moon,.moon-surface,.moon-halo,.signal-orbit span{animation:none!important}}
