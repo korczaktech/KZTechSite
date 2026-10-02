@@ -102,7 +102,7 @@ function render(){
   root.innerHTML=nav()+c+footer();
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  document.title=(h===" /"?"KORCZAK TECHNOLOGY":"KORCZAK TECHNOLOGY · "+(h.split("/")[1]||""));
+  document.title=(h==="/"?"KORCZAK TECHNOLOGY":"KORCZAK TECHNOLOGY · "+(h.split("/")[1]||""));
   if(state.menu){document.querySelector(".sidebar")?.focus?.()}
 }
 
