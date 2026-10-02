@@ -149,22 +149,13 @@ button{color:inherit}
 @media(max-width:600px){.pricing-grid{grid-template-columns:1fr}.kos-row strong{font-size:17px}.card.featured{min-height:260px}}
 
 /* Visual system v2026.10.02 */
-.site-background{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:.92}
-.site-background svg{width:100%;height:100%;display:block}
-body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 78% 22%,rgba(255,255,255,.035),transparent 24%),linear-gradient(115deg,transparent 0 48%,rgba(255,0,80,.018) 65%,transparent 82%)}
-.hero{position:relative;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:30px;overflow:hidden}
+
+.hero{position:relative;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:30px;overflow:hidden;background:transparent}
 .hero-copy{position:relative;z-index:2}
-.moon-stage{min-height:520px;display:grid;place-items:center;position:relative;isolation:isolate}
-.moon-halo{position:absolute;width:min(45vw,560px);height:min(45vw,560px);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),rgba(150,120,190,.025) 38%,transparent 68%);filter:blur(2px);animation:moon-breathe 7s ease-in-out infinite}
-.moon{width:min(31vw,390px);height:min(31vw,390px);min-width:260px;min-height:260px;border-radius:50%;position:relative;overflow:hidden;background:#aaa;box-shadow:-32px -16px 55px rgba(0,0,0,.65),18px 18px 55px rgba(255,255,255,.06),inset -32px -20px 55px rgba(0,0,0,.62),inset 16px 10px 30px rgba(255,255,255,.12);animation:moon-spin 42s linear infinite,moon-float 6s ease-in-out infinite}
-.moon-surface{position:absolute;inset:-8%;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ddd 0 3%,#aaa 13%,#777 35%,#b7b7b7 54%,#666 72%,#aaa 100%);background-image:radial-gradient(circle at 28% 30%,rgba(255,255,255,.28),transparent 25%),radial-gradient(circle at 72% 65%,rgba(0,0,0,.28),transparent 32%),radial-gradient(circle at 20% 72%,rgba(0,0,0,.18) 0 4%,transparent 4.7%),radial-gradient(circle at 58% 28%,rgba(0,0,0,.22) 0 5%,transparent 5.8%),radial-gradient(circle at 76% 38%,rgba(255,255,255,.12) 0 3%,transparent 3.8%),radial-gradient(circle at 42% 60%,rgba(0,0,0,.22) 0 7%,transparent 7.8%),linear-gradient(110deg,#d0d0d0,#858585 45%,#555 72%,#aaa);animation:moon-surface 24s linear infinite}
-.crater{position:absolute;border-radius:50%;background:rgba(45,45,45,.24);box-shadow:inset 5px 4px 8px rgba(0,0,0,.28),inset -3px -3px 5px rgba(255,255,255,.08)}
-.c1{width:52px;height:52px;left:24%;top:24%}.c2{width:32px;height:32px;left:58%;top:20%}.c3{width:70px;height:70px;left:47%;top:52%}.c4{width:28px;height:28px;left:70%;top:67%}.c5{width:42px;height:42px;left:18%;top:63%}.c6{width:22px;height:22px;left:62%;top:40%}
-.moon-caption{position:absolute;bottom:30px;color:#555;font-size:9px;letter-spacing:.28em;text-transform:uppercase}
-@keyframes moon-surface{from{transform:translateX(-2%)}to{transform:translateX(2%)}} 
-@keyframes moon-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes moon-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes moon-breathe{0%,100%{transform:scale(.94);opacity:.45}50%{transform:scale(1.05);opacity:.8}}
+.moon-stage{min-height:520px;display:grid;place-items:center;position:relative;isolation:isolate;background:transparent}
+.real-moon{width:min(46vw,620px);height:min(46vw,620px);min-width:340px;min-height:340px;background:transparent;--poster-color:transparent;--progress-bar-color:transparent;filter:drop-shadow(-28px 28px 38px rgba(0,0,0,.7));}
+@media(max-width:900px){.real-moon{width:min(76vw,520px);height:min(76vw,520px);min-width:280px;min-height:280px}}
+@media(max-width:600px){.real-moon{width:300px;height:300px;min-width:240px;min-height:240px}}
 .btn{position:relative;overflow:hidden;isolation:isolate}
 .btn:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.42) 48%,transparent 72%);transform:translateX(-120%);transition:transform .55s ease;z-index:-1}
 .btn:hover:before{transform:translateX(120%)}
@@ -199,4 +190,4 @@ button:not(.menu-toggle):hover{transform:translateY(-2px);box-shadow:0 8px 28px 
 button:not(.menu-toggle):active{transform:scale(.97)}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.moon-stage{min-height:390px;order:-1}.moon{width:300px;height:300px}.info-grid,.product-principles{grid-template-columns:1fr 1fr}.portfolio-stats{grid-template-columns:1fr 1fr}.workspace-flow{grid-template-columns:1fr 1fr}.kos-architecture{grid-template-columns:repeat(3,1fr)}.info-deep{grid-template-columns:1fr}}
 @media(max-width:600px){.moon-stage{min-height:320px}.moon{min-width:220px;min-height:220px;width:220px;height:220px}.moon-caption{bottom:8px}.hero-metrics{gap:14px;flex-wrap:wrap}.info-grid,.product-principles,.portfolio-stats,.workspace-flow{grid-template-columns:1fr}.kos-architecture{grid-template-columns:1fr 1fr}}
-@media(prefers-reduced-motion:reduce){.moon,.moon-surface,.moon-halo,.signal-orbit span{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.signal-orbit span{animation:none!important}.real-moon{--rotation-per-second:0deg}}}
