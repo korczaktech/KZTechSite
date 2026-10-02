@@ -24,6 +24,7 @@ const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_
 const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
+const publicOrigin=checkoutBase;
 const commercialProducts=Object.fromEntries([
   ["korczak-ai",{"amount":9900,"currency":"brl","priceId":process.env.STRIPE_PRICE_KORCZAK_AI||""}],
   ["morok",{"amount":4900,"currency":"brl","priceId":process.env.STRIPE_PRICE_MOROK||""}],
@@ -66,6 +67,33 @@ app.use(cors({
   allowedHeaders:["Content-Type","Authorization"],
   maxAge:86400
 }));
+app.post("/api/stripe/webhook",express.raw({type:"application/json",limit:"256kb"}),async(req,res)=>{
+  if(!stripe||!process.env.STRIPE_WEBHOOK_SECRET)return res.status(503).json({error:"Stripe webhook não configurado"});
+  const signature=req.headers["stripe-signature"];
+  if(!signature)return res.status(400).json({error:"Assinatura Stripe ausente"});
+  let event;
+  try{event=stripe.webhooks.constructEvent(req.body,signature,process.env.STRIPE_WEBHOOK_SECRET)}
+  catch{ return res.status(400).json({error:"Assinatura Stripe inválida"}) }
+  try{
+    const session=event.data?.object;
+    if(db&&session?.metadata?.userId&&session?.id){
+      const status=event.type==="checkout.session.completed"?"paid":
+        event.type==="checkout.session.async_payment_succeeded"?"paid":
+        event.type==="checkout.session.async_payment_failed"?"payment_failed":
+        event.type==="checkout.session.expired"?"expired":null;
+      if(status){
+        await db.collection("orders").updateOne(
+          {sessionId:session.id,userId:session.metadata.userId},
+          {$set:{status,paymentStatus:session.payment_status||null,updatedAt:new Date()}}
+        );
+      }
+    }
+    res.json({received:true});
+  }catch(err){
+    console.error("Stripe webhook error:",err?.message||err);
+    res.status(500).json({error:"Erro ao processar webhook"});
+  }
+});
 app.use(express.json({limit:"100kb"}));
 
 const rate=new Map();
@@ -165,12 +193,14 @@ app.post("/api/quotes",auth,async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
-app.get("/api/admin/contacts",auth,admin,async(req,res)=>
-  res.json(await db.collection("contacts").find().sort({createdAt:-1}).limit(100).toArray())
-);
-app.get("/api/admin/quotes",auth,admin,async(req,res)=>
-  res.json(await db.collection("quotes").find().sort({createdAt:-1}).limit(100).toArray())
-);
+app.get("/api/admin/contacts",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  res.json(await db.collection("contacts").find().sort({createdAt:-1}).limit(100).toArray());
+});
+app.get("/api/admin/quotes",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  res.json(await db.collection("quotes").find().sort({createdAt:-1}).limit(100).toArray());
+});
 
 app.post("/api/checkout",auth,async(req,res)=>{
   if(!stripe)return res.status(503).json({error:"Stripe não configurado"});
@@ -223,6 +253,9 @@ async function start(){
     await db.collection("users").createIndex({email:1},{unique:true});
     await db.collection("contacts").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({createdAt:-1});
+    await db.collection("quotes").createIndex({userId:1,createdAt:-1});
+    await db.collection("orders").createIndex({userId:1,createdAt:-1});
+    await db.collection("orders").createIndex({sessionId:1},{unique:true,sparse:true});
     console.log("MongoDB connected");
   }
   server=app.listen(PORT,()=>console.log(`KZTechSite API listening on ${PORT}`));
