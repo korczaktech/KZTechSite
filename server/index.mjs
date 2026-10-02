@@ -171,16 +171,31 @@ app.get("/api/admin/quotes",auth,admin,async(req,res)=>
 
 app.post("/api/checkout",auth,async(req,res)=>{
   if(!stripe)return res.status(503).json({error:"Stripe não configurado"});
-  const p=products.find(x=>x.id===req.body?.productId),amount=Number(req.body?.amount);
-  if(!p||!Number.isFinite(amount)||amount<1)return res.status(400).json({error:"Produto ou valor inválido"});
+  const p=products.find(x=>x.id===req.body?.productId);
+  const config=p&&commercialProducts[p.id];
+  if(!p||!config)return res.status(400).json({error:"Produto não disponível para compra"});
+  const line=config.priceId
+    ?{price:config.priceId,quantity:1}
+    :{price_data:{currency:config.currency,product_data:{name:p.name},unit_amount:config.amount},quantity:1};
   const s=await stripe.checkout.sessions.create({
-    mode:"payment",
-    line_items:[{price_data:{currency:"brl",product_data:{name:p.name},unit_amount:Math.round(amount*100)},quantity:1}],
-    success_url:(SITE_URL||"http://localhost:3000")+"/#/checkout/sucesso",
-    cancel_url:(SITE_URL||"http://localhost:3000")+"/#/checkout/cancelado",
+    mode:"payment",line_items:[line],
+    success_url:checkoutBase+"/#/checkout/sucesso?session_id={CHECKOUT_SESSION_ID}",
+    cancel_url:checkoutBase+"/#/checkout/cancelado",
+    customer_email:req.user.email,
     metadata:{userId:req.user.sub,productId:p.id}
   });
+  if(db)await db.collection("orders").insertOne({
+    userId:req.user.sub,productId:p.id,sessionId:s.id,status:"checkout_created",
+    amount:config.amount,currency:config.currency,createdAt:new Date()
+  });
   res.json({url:s.url});
+});
+
+app.get("/api/checkout/session/:id",auth,async(req,res)=>{
+  if(!stripe)return res.status(503).json({error:"Stripe não configurado"});
+  const session=await stripe.checkout.sessions.retrieve(req.params.id);
+  if(session.metadata?.userId!==req.user.sub)return res.status(403).json({error:"Sessão não pertence ao usuário"});
+  res.json({id:session.id,status:session.status,paymentStatus:session.payment_status,productId:session.metadata?.productId||null});
 });
 
 app.use((err,req,res,next)=>{
