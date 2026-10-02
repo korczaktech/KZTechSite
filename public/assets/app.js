@@ -41,7 +41,7 @@ async function api(url,opt={}){
 }
 
 const links=[
-  ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/empresa","Empresa"],
+  ["/","Início"],["/portfolio","Portfólio"],["/produtos","Produtos"],["/workspace","Korczak Workspace"],["/kos","KOS"],["/empresa","Empresa"],
   ["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],["/carreiras","Carreiras"],
   ["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
 ];
