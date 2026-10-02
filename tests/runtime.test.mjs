@@ -60,3 +60,8 @@ test("runtime: CSP está habilitado no backend",()=>{
   assert.match(server,/frameAncestors:\[["']none["']\]/);
 });
 test("runtime: Render usa readiness endpoint",()=>assert.match(render,/healthCheckPath: \/api\/ready/));
+
+test("runtime: Frontend URL pode conter caminho do GitHub Pages sem quebrar CORS",()=>{
+  assert.match(server,/new URL\(v\)\.origin/);
+  assert.match(render,/healthCheckPath: \/api\/ready/);
+});
