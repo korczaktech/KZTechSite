@@ -1,14 +1,19 @@
 # KZ Tech Site
 
-Site institucional/comercial da Korczak Technology, reconstruído do zero em seis fases (0–5).
+Site institucional e comercial da **Korczak Technology**, com portfólio, catálogo de produtos, KOS, páginas institucionais, conta, orçamento e checkout.
 
-Stack: Node.js, Express, HTML/CSS/JS/SVG, MongoDB Atlas e Stripe, preparado para Render Free.
+## Ecossistema
 
-**Status:** Fases 0, 1, 2 e 3 concluídas. Fases 4–5 aguardam implementação.
+A página inicial destaca **KORCZAK AI**, **Korczak Workspace** e **Korczak IDE**. O catálogo completo inclui MOROK, KORCZAK ERP, FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE.
 
-- Fase 0 — Fundação
-- Fase 1 — Interface
-- Fase 2 — Institucional / Ecossistema
-- Fase 3 — Comercial
-- Fase 4 — Segurança e administração
-- Fase 5 — Qualidade e operação
+## Preços
+
+Os valores exibidos são referências de plano base em BRL. Para a camada de IA, a página de preços documenta a referência pública de custo da Claude convertida para real e a regra de 25% informada para o cálculo. Projetos sob medida, integrações, impostos e consumo adicional podem alterar o preço final.
+
+## Stack
+
+Node.js, Express, HTML/CSS/JS/SVG, MongoDB Atlas, Stripe, GitHub Pages e Render.
+
+## Status
+
+Fases 0–3 estão implementadas. A expansão atual cobre portfólio, KOS, páginas de produto, preços e empresa; fases posteriores continuam dedicadas a administração avançada, segurança operacional adicional e qualidade contínua.
