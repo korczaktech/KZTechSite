@@ -124,18 +124,48 @@ Object.keys(READY_SERVICES).forEach(k=>{
   const existing=new Set(base.map(o=>o[0]));
   (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
 });
-function money(v){return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(v)}function serviceOptionPrices(service){
-  const target=service[1],weights=service[3].map(o=>Number(o[4]??o[3])||0);
-  if(!Number.isFinite(target)||target<=0)return weights;
-  const sum=weights.reduce((a,b)=>a+b,0);
-  if(!sum)return weights.map(()=>0);
-  const raw=weights.map(w=>w*target/sum);
-  const prices=raw.map(Math.floor);
-  let remainder=target-prices.reduce((a,b)=>a+b,0);
-  raw.map((v,i)=>({i,f:v-Math.floor(v)})).sort((a,b)=>b.f-a.f).forEach(x=>{if(remainder>0){prices[x.i]++;remainder--;}});
-  return prices;
+function money(v){return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(v)}
+// Preço individual: a dificuldade técnica e a necessidade do recurso pesam no valor.
+// Recursos opcionais continuam mais baratos que recursos estruturais de alta complexidade.
+const OPTION_DIFFICULTY={
+  sections:2,terms:1,privacy:1,analytics:3,seo:3,animations:3,integration:6,form:4,responsive:2,tracking:3,whatsapp:3,cookie:2,domain:2,deployment:4,accessibility:4,performance:5,multilang:6,security:7,
+  dashboard:6,blog:3,cms:6,auth:6,integrations:7,search:5,forms:4,notifications:5,roles:6,files:5,backup:6,support:2,
+  products:5,payments:8,shipping:5,coupons:3,customers:6,inventory:6,orders:7,reviews:3,abandoned:6,email:3,wishlist:2,"shipping-tracking":5,"multi-store":9,"reviews-admin":4,
+  filters:4,audit:6,"admin-area":7,realtime:8,webhooks:5,queue:7,cache:5,monitoring:5,
+  offline:8,maps:6,camera:4,api:7,store:4,biometric:5,"deep-links":3,sharing:2,chat:7,crash:5,
+  database:7,admin:6,docs:3,storage:5,"rate-limit":5,queues:7,"api-docs":3,"api-version":4,cron:3,
+  webhook:5,crm:6,erp:8,ss0:7,sso:7,mapping:6,sync:8,retry:4,logs:4,alerts:4,scheduler:3,
+  workflow:5,n8n:5,schedules:3,sheets:3,conditions:4,transform:5,http:5,approval:5,reports:5,
+  faq:2,buttons:3,telegram:3,scheduling:4,handoff:4,commands:4,media:5,knowledge:6,multichannel:7,
+  ui:2,page:4,module:7,automation:5,access:5,report:5,notification:4,migration:8
+};
+// Necessidade relativa: 1 = complementar; 10 = recurso estrutural para aquele tipo de solução.
+const OPTION_NEED={
+  terms:3,privacy:4,sections:3,form:6,analytics:5,seo:6,animations:2,integration:7,responsive:8,tracking:5,whatsapp:5,cookie:4,domain:5,deployment:8,accessibility:7,performance:7,multilang:3,security:9,
+  dashboard:7,blog:4,cms:7,auth:8,integrations:7,search:5,forms:6,notifications:4,roles:7,files:5,backup:8,support:4,
+  products:9,payments:10,shipping:8,coupons:4,customers:8,analytics:5,seo:6,inventory:9,orders:10,reviews:4,abandoned:5,email:7,wishlist:3,"shipping-tracking":7,"multi-store":3,"reviews-admin":4,
+  filters:6,audit:7,"admin-area":8,realtime:6,webhooks:7,queue:7,cache:5,monitoring:8,
+  offline:5,maps:5,camera:4,api:9,store:7,biometric:4,"deep-links":4,sharing:3,chat:7,crash:8,
+  database:10,admin:8,docs:5,"rate-limit":8,queues:8,"api-version":5,cron:5,
+  webhook:7,crm:6,erp:7,sso:6,mapping:6,sync:9,retry:7,logs:7,alerts:6,scheduler:5,
+  workflow:9,n8n:7,schedules:5,sheets:4,conditions:7,transform:7,http:8,approval:5,reports:6,
+  faq:6,buttons:5,telegram:4,scheduling:6,handoff:6,commands:7,media:5,knowledge:8,multichannel:7,
+  ui:4,page:6,module:9,automation:7,access:7,report:6,notification:5,search:5,monitoring:8
+};
+function serviceOptionPrices(service){
+  const options=service[3]||[];
+  return options.map((o)=>{
+    const base=Math.max(100,Number(o[3])||0);
+    const difficulty=Number(o[4]??OPTION_DIFFICULTY[o[0]]??5);
+    const need=Number(OPTION_NEED[o[0]]??5);
+    // A dificuldade tem peso maior que a necessidade, pois horas e complexidade
+    // de implementação são o principal componente do esforço técnico.
+    const difficultyFactor=0.62+(difficulty/10)*0.78;
+    const needFactor=0.72+(need/10)*0.56;
+    const price=base*difficultyFactor*needFactor;
+    return Math.max(150,Math.round(price/50)*50);
+  });
 }
-
 function beginnerExplanation(o){
   const label=String(o[1]||"");
   const detail=String(o[3]||o[2]||"");
