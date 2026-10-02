@@ -12,8 +12,9 @@ const isProd=process.env.NODE_ENV==="production";
 const SECRET=process.env.JWT_SECRET||"";
 const SITE_URL=(process.env.SITE_URL||"").replace(/\/$/,"");
 const DEFAULT_FRONTEND_ORIGINS=["https://korczaktechnology-tech.github.io"];
-const API_ORIGINS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
-const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...API_ORIGINS])];
+const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
+const FRONTEND_ORIGINS=FRONTEND_URLS.map(v=>{try{return new URL(v).origin}catch{return v}}).filter(Boolean);
+const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...FRONTEND_ORIGINS])];
 
 if(isProd&&(!SECRET||SECRET.length<32))throw new Error("JWT_SECRET must be configured with at least 32 characters in production.");
 if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.");
@@ -21,7 +22,6 @@ if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.
 let db=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
 const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_KEY):null;
-const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
 const commercialProducts=Object.fromEntries([
