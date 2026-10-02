@@ -22,7 +22,7 @@ test("runtime: frontend não depende do backend para o primeiro render",()=>{
   const app=fs.readFileSync("public/assets/app.js","utf8");
   assert.match(app,/FALLBACK_PRODUCTS/);
   assert.match(app,/render\(\);/);
-  assert.match(app,/api\("\/api\/products")/);
+  assert.ok(app.includes('api("/api/products")'));
 });
 
 test("runtime: Pages é uma origem CORS permitida por padrão",()=>{
