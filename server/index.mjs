@@ -18,6 +18,7 @@ const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...FRONTEND_ORIGI
 
 if(isProd&&(!SECRET||SECRET.length<32))throw new Error("JWT_SECRET must be configured with at least 32 characters in production.");
 if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.");
+if(isProd&&!FRONTEND_URLS.length)throw new Error("FRONTEND_URL must be configured in production.");
 
 let db=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
@@ -96,7 +97,8 @@ app.post("/api/stripe/webhook",express.raw({type:"application/json",limit:"256kb
       if(status){
         await db.collection("orders").updateOne(
           {sessionId:session.id,userId:session.metadata.userId},
-          {$set:{status,paymentStatus:session.payment_status||null,updatedAt:new Date()}}
+          {$set:{status,paymentStatus:session.payment_status||null,updatedAt:new Date()},$setOnInsert:{productId:session.metadata.productId||null,createdAt:new Date()}},
+          {upsert:true}
         );
       }
     }
@@ -125,6 +127,10 @@ const token=u=>jwt.sign({sub:String(u._id),email:u.email,role:u.role||"user"},SE
 function auth(req,res,next){try{const h=req.headers.authorization||"";if(!h.startsWith("Bearer "))throw 0;req.user=jwt.verify(h.slice(7),SECRET);next()}catch{res.status(401).json({error:"Não autenticado"})}}
 function admin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Acesso restrito"});next()}
 
+app.get("/health",(req,res)=>res.status(200).json({
+  ok:true,service:"kztechsite",database:Boolean(db),stripe:Boolean(stripe),
+  environment:process.env.NODE_ENV||"development",time:new Date().toISOString()
+}));
 app.get("/api/health",(req,res)=>res.status(200).json({
   ok:true,service:"kztechsite",database:Boolean(db),stripe:Boolean(stripe),
   environment:process.env.NODE_ENV||"development",time:new Date().toISOString()
@@ -138,10 +144,12 @@ app.get("/api/products",(req,res)=>res.json(products.map(p=>({...p,commercial:Bo
 app.post("/api/contact",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const {name,phone,message}=req.body||{},mail=email(req.body?.email);
-  if(!name||!mail||!message)return res.status(400).json({error:"Nome, email e mensagem são obrigatórios"});
+  const cleanName=String(name||"").trim(),cleanMessage=String(message||"").trim(),cleanPhone=String(phone||"").trim();
+  if(cleanName.length<2||cleanName.length>120||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(mail)||cleanMessage.length<1||cleanMessage.length>5000||cleanPhone.length>40)
+    return res.status(400).json({error:"Dados de contato inválidos"});
   await db.collection("contacts").insertOne({
-    name:String(name).trim().slice(0,120),email:mail.slice(0,180),
-    phone:String(phone||"").slice(0,40),message:String(message).slice(0,5000),
+    name:cleanName,email:mail.slice(0,180),
+    phone:cleanPhone,message:cleanMessage,
     createdAt:new Date(),status:"new"
   });
   res.status(201).json({ok:true});
@@ -150,7 +158,7 @@ app.post("/api/contact",async(req,res)=>{
 app.post("/api/auth/register",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const name=String(req.body?.name||"").trim(),mail=email(req.body?.email),pass=String(req.body?.password||"");
-  if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8)
+  if(name.length<2||name.length>120||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8||pass.length>128)
     return res.status(400).json({error:"Dados inválidos"});
   try{
     const r=await db.collection("users").insertOne({
@@ -219,9 +227,18 @@ app.post("/api/checkout",auth,async(req,res)=>{
   const p=products.find(x=>x.id===req.body?.productId);
   const config=p&&commercialProducts[p.id];
   if(!p||!config)return res.status(400).json({error:"Produto não disponível para compra"});
+  let amount=config.amount;
+  let currency=config.currency;
+  if(config.priceId){
+    const price=await stripe.prices.retrieve(config.priceId);
+    if(!price.active||price.type!=="one_time"||price.currency!==currency||typeof price.unit_amount!=="number")
+      return res.status(503).json({error:"Preço Stripe inválido ou indisponível"});
+    amount=price.unit_amount;
+    currency=price.currency;
+  }
   const line=config.priceId
     ?{price:config.priceId,quantity:1}
-    :{price_data:{currency:config.currency,product_data:{name:p.name},unit_amount:config.amount},quantity:1};
+    :{price_data:{currency,product_data:{name:p.name},unit_amount:amount},quantity:1};
   const s=await stripe.checkout.sessions.create({
     mode:"payment",line_items:[line],
     success_url:checkoutBase+"/#/checkout/sucesso?session_id={CHECKOUT_SESSION_ID}",
@@ -229,10 +246,11 @@ app.post("/api/checkout",auth,async(req,res)=>{
     customer_email:req.user.email,
     metadata:{userId:req.user.sub,productId:p.id}
   });
-  if(db)await db.collection("orders").insertOne({
-    userId:req.user.sub,productId:p.id,sessionId:s.id,status:"checkout_created",
-    amount:config.amount,currency:config.currency,createdAt:new Date()
-  });
+  if(db)await db.collection("orders").updateOne(
+    {sessionId:s.id},
+    {$setOnInsert:{userId:req.user.sub,productId:p.id,sessionId:s.id,status:"checkout_created",amount,currency,createdAt:new Date(),updatedAt:new Date()}},
+    {upsert:true}
+  );
   res.json({url:s.url});
 });
 
