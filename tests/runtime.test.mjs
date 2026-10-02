@@ -57,7 +57,7 @@ test("runtime: frontend remove o estado loading após bootstrap",()=>{
 });
 test("runtime: CSP está habilitado no backend",()=>{
   assert.match(server,/contentSecurityPolicy:\{/);
-  assert.match(server,/frameAncestors:\[["']none["']\]/);
+  assert.ok(server.includes("frameAncestors:[\"'none'\"]"));
 });
 test("runtime: Render usa health endpoint configurado",()=>assert.match(render,/healthCheckPath: \/health/));
 
