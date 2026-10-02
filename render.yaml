@@ -21,3 +21,5 @@ services:
         sync: false
       - key: SITE_URL
         sync: false
+      - key: FRONTEND_URL
+        sync: false
