@@ -122,3 +122,28 @@ button{color:inherit}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+.card.featured{min-height:340px;border-color:#444}
+.card-price{display:block;margin-top:24px;color:#fff;font-size:14px;font-weight:600}
+.price-note{max-width:820px;border:1px solid var(--line);background:#0b0b0b;padding:18px 20px;margin-top:28px;color:#aaa;line-height:1.7}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.price-card{background:var(--bg);padding:30px;min-height:310px;display:flex;flex-direction:column;align-items:flex-start}
+.price-card strong{font-size:38px;line-height:1;margin:20px 0 4px;color:#fff}
+.price-card>small{color:#777}
+.price-card p{margin:20px 0 28px}
+.price-card .btn{margin-top:auto}
+.pricing-method{max-width:900px}
+.kos-list{border-top:1px solid var(--line)}
+.kos-row{display:grid;grid-template-columns:60px 1fr 220px 40px;align-items:center;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);transition:.2s}
+.kos-row:hover{padding-left:10px;background:#080808}
+.kos-row>span,.kos-row>small{color:#666}
+.kos-row strong{font-size:20px}
+.kos-row small{text-transform:uppercase;letter-spacing:.08em}
+.kos-row em{font-style:normal;color:#777}
+.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:1px}
+.detail-panel{background:var(--bg);padding:32px}
+.feature-list{margin:24px 0 0;padding:0;list-style:none}
+.feature-list li{padding:14px 0;border-bottom:1px solid var(--line);color:#aaa;line-height:1.55}
+.feature-list li::before{content:"— ";color:#666}
+@media(max-width:900px){.pricing-grid{grid-template-columns:1fr 1fr}.detail-grid{grid-template-columns:1fr}.kos-row{grid-template-columns:40px 1fr 40px}.kos-row small{display:none}}
+@media(max-width:600px){.pricing-grid{grid-template-columns:1fr}.kos-row strong{font-size:17px}.card.featured{min-height:260px}}
