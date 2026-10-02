@@ -153,6 +153,11 @@ function checkoutState(kind){
   const success=kind==="sucesso";
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Checkout · '+(success?"Concluído":"Cancelado")+'</span><h2>'+(success?"Pagamento processado.":"Pagamento cancelado.")+'</h2><p class="section-lead">'+(success?"Seu checkout foi concluído pelo Stripe. O status do pedido pode ser consultado na sua conta.":"Nenhuma cobrança foi concluída nesta etapa. Você pode voltar ao catálogo e tentar novamente.")+'</p><div class="actions"><a class="btn" href="#/conta">Minha conta</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></div></main>';
 }
+function authPage(mode="login",message=""){
+  const loginMode=mode==="login";
+  return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-brand"><img src="./assets/mark.svg" alt="" aria-hidden="true"><span>KORCZAK TECHNOLOGY</span></div><div class="auth-copy"><span class="eyebrow">Acesso seguro</span><h1>'+(loginMode?"Entre no seu ecossistema.":"Crie sua conta Korczak.")+'</h1><p>'+(loginMode?"Entre para acessar produtos, orçamento, pedidos e seu perfil.":"Crie sua conta para acessar o ecossistema Korczak, acompanhar solicitações e utilizar os recursos disponíveis.")+'</p></div><div class="auth-card"><div class="auth-tabs"><button class="'+(loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="login">Entrar</button><button class="'+(!loginMode?"active":"")+'" type="button" data-action="auth-mode" data-mode="register">Criar conta</button></div><form class="auth-form" id="auth-form" data-mode="'+(loginMode?"login":"register")+'">'+(!loginMode?'<label><span>Nome</span><input class="field" name="name" autocomplete="name" placeholder="Seu nome" required></label>':"")+'<label><span>Email</span><input class="field" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required></label><label><span>Senha</span><input class="field" name="password" type="password" autocomplete="'+(loginMode?"current-password":"new-password")+'" placeholder="Mínimo de 8 caracteres" minlength="8" required></label><button class="btn auth-submit" type="submit">'+(loginMode?"Entrar":"Criar minha conta")+' '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status">'+esc(message)+'</small></form><p class="auth-terms">Ao continuar, você concorda com as <a href="#/privacidade">informações de privacidade</a> e as <a href="#/uso">regras de uso</a>.</p></div></section></main>';
+}
+
 function account(){
   if(!state.token)return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Entre na sua conta.</h2><form class="form" id="login-form"><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Senha</span><input class="field" name="password" type="password" placeholder="Senha" autocomplete="current-password" required></label><button class="btn" type="submit">Entrar</button><button type="button" class="btn ghost" data-action="register">Criar conta</button><small id="auth" class="muted form-note" role="status"></small></form></main>';
   const u=state.user||{},initial=esc((u.name||"K").slice(0,1).toUpperCase());
@@ -225,7 +230,9 @@ function render(){
     ])
   };
   let c;
-  if(h==="/")c=home();
+  if(h==="/acesso")c=authPage(state.authMode||"login",state.authMessage||"");
+  else if(!state.authenticated)c=authPage(state.authMode||"login");
+  else if(h==="/")c=home();
   else if(h==="/portfolio")c=portfolio();
   else if(h==="/produtos")c=products();
   else if(h==="/empresa")c=company();
@@ -245,7 +252,7 @@ function render(){
     c=product(productId);
   }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
-  root.innerHTML=nav()+c+footer();initMoon();
+  root.innerHTML=state.authenticated?nav()+c+footer():c;initMoon();
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
   const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
@@ -326,6 +333,7 @@ function handleAction(target){
   if(action==="close-menu"){closeMenu();return false}
   if(action==="logout"){logout();return true}
   if(action==="register"){register();return true}
+  if(action==="auth-mode"){state.authMode=target.closest("[data-action]").dataset.mode;state.authMessage="";render();return true}
   if(action==="reload"){location.reload();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
   if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
@@ -333,9 +341,21 @@ function handleAction(target){
 }
 
 document.addEventListener("click",e=>{if(handleAction(e.target))e.preventDefault()});
+async function submitAuth(e){
+  e.preventDefault();
+  const form=e.currentTarget,mode=form.dataset.mode,button=form.querySelector("button[type=submit]"),msg=form.querySelector("#auth-message");
+  button.disabled=true;msg.textContent=mode==="login"?"Entrando…":"Criando conta…";
+  try{
+    const payload=Object.fromEntries(new FormData(form));
+    const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",body:JSON.stringify(payload)});
+    state.token=d.token;state.user=d.user;state.authenticated=true;state.authMode="login";state.authMessage="";
+    localStorage.setItem("kz_token",d.token);render();toast(mode==="login"?"Login realizado.":"Conta criada com sucesso.");
+  }catch(x){msg.textContent=x.message||"Não foi possível concluir o acesso.";button.disabled=false}
+}
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
   if(e.target.id==="login-form")login(e);
+  if(e.target.id==="auth-form")submitAuth(e);
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
@@ -345,7 +365,19 @@ addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();windo
 async function load(){
   if(!root)return;
   document.body.classList.add("loading");
+  state.authenticated=false;
+  state.authMode="login";
   render();
+  if(state.token){
+    try{
+      state.user=state.user||await api("/api/me");
+      state.authenticated=true;
+    }catch{
+      state.token=null;state.user=null;localStorage.removeItem("kz_token");
+    }
+  }
+  render();
+  if(!state.authenticated){document.body.classList.remove("loading");return;}
   try{
     const products=await api("/api/products");
     if(Array.isArray(products)&&products.length)state.products=products;
