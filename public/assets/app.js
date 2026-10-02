@@ -1,6 +1,6 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
-const APP_VERSION="2026.10.02.40";
+const APP_VERSION="2026.10.02.41";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
   {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
@@ -136,6 +136,31 @@ function money(v){return new Intl.NumberFormat("pt-BR",{style:"currency",currenc
   return prices;
 }
 
+function beginnerExplanation(o){
+  const label=String(o[1]||"");
+  const detail=String(o[3]||o[2]||"");
+  const map={
+    "Dashboard":"É um painel de controle onde você consegue ver informações importantes e administrar partes do sistema em um só lugar.",
+    "API":"É uma ponte que permite que dois sistemas troquem informações e comandos automaticamente.",
+    "Autenticação":"É o sistema de login que confirma quem é o usuário antes de permitir acesso.",
+    "Banco de dados":"É onde as informações do sistema ficam organizadas e podem ser salvas e consultadas.",
+    "Analytics":"Mostra dados sobre acessos e uso para entender o que está acontecendo no sistema.",
+    "SEO":"Ajuda páginas e conteúdos a serem encontrados e entendidos por mecanismos de busca.",
+    "Performance":"É o trabalho de deixar o sistema carregar e responder mais rapidamente.",
+    "Acessibilidade":"Adapta a interface para que mais pessoas consigam usar o sistema, inclusive com teclado ou leitores de tela.",
+    "Segurança":"Adiciona proteções para reduzir riscos de acesso indevido, dados expostos e uso abusivo.",
+    "Backup":"Cria cópias de segurança para que informações possam ser recuperadas depois de uma falha.",
+    "Monitoramento":"Acompanha o funcionamento do sistema e ajuda a identificar erros ou indisponibilidade.",
+    "Permissões":"Define o que cada tipo de usuário pode ver ou fazer.",
+    "Notificações":"Envia avisos automaticamente quando determinadas ações ou acontecimentos ocorrem.",
+    "Integrações":"Faz o sistema conversar com outros serviços, aplicativos ou plataformas.",
+    "Webhooks":"Permite que um sistema avise outro automaticamente quando um evento acontece.",
+    "Pagamentos":"Conecta o projeto a meios de cobrança para receber pagamentos.",
+    "Chat":"Cria uma área para troca de mensagens entre pessoas ou com atendimento.",
+    "Multilíngue":"Permite apresentar o mesmo sistema em diferentes idiomas."
+  };
+  return map[label]||detail;
+}
 function servicePage(id){
   const s=READY_SERVICES[id]||READY_SERVICES.site;
   const prices=serviceOptionPrices(s);
