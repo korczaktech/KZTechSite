@@ -11,7 +11,9 @@ const PORT=Number(process.env.PORT||3000);
 const isProd=process.env.NODE_ENV==="production";
 const SECRET=process.env.JWT_SECRET||"";
 const SITE_URL=(process.env.SITE_URL||"").replace(/\/$/,"");
-const API_ORIGINS=(process.env.FRONTEND_URL||SITE_URL||"").split(",").map(v=>v.trim()).filter(Boolean);
+const DEFAULT_FRONTEND_ORIGINS=["https://korczaktechnology-tech.github.io"];
+const API_ORIGINS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim()).filter(Boolean);
+const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...API_ORIGINS])];
 
 if(isProd&&(!SECRET||SECRET.length<32))throw new Error("JWT_SECRET must be configured with at least 32 characters in production.");
 if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.");
@@ -56,7 +58,7 @@ app.use(helmet({
 }));
 app.use(cors({
   origin(origin,callback){
-    if(!origin||API_ORIGINS.length===0||API_ORIGINS.includes(origin))return callback(null,true);
+    if(!origin||ALLOWED_ORIGINS.includes(origin))return callback(null,true);
     return callback(new Error("Origin not allowed by CORS"));
   },
   methods:["GET","POST","OPTIONS"],
@@ -107,7 +109,7 @@ app.post("/api/contact",async(req,res)=>{
 app.post("/api/auth/register",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const name=String(req.body?.name||"").trim(),mail=email(req.body?.email),pass=String(req.body?.password||"");
-  if(name.length<2||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(mail)||pass.length<8)
+  if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8)
     return res.status(400).json({error:"Dados inválidos"});
   try{
     const r=await db.collection("users").insertOne({
