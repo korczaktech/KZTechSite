@@ -24,6 +24,8 @@ const products=[
 ].map(x=>({id:x[0],name:x[1],type:x[2],description:x[3],status:x[4]}));
 app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:false}));
 app.use(express.json({limit:"100kb"}));
+const rate=new Map();
+app.use((req,res,next)=>{if(!req.path.startsWith("/api/"))return next();const key=req.ip||"unknown",now=Date.now(),v=rate.get(key)||{n:0,t:now};if(now-v.t>60000){v.n=0;v.t=now}v.n++;rate.set(key,v);if(v.n>120)return res.status(429).json({error:"Muitas requisições"});next()});
 const email=v=>String(v||"").trim().toLowerCase();
 const token=u=>jwt.sign({sub:String(u._id),email:u.email,role:u.role||"user"},SECRET,{expiresIn:"7d"});
 function auth(req,res,next){try{const h=req.headers.authorization||"";if(!h.startsWith("Bearer "))throw 0;req.user=jwt.verify(h.slice(7),SECRET);next()}catch{res.status(401).json({error:"Não autenticado"})}}
