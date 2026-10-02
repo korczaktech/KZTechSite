@@ -175,13 +175,20 @@ function render(){
   else if(h==="/privacidade")c=legal("privacidade");
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
-  else if(h.startsWith("produto/"))c=product(decodeURIComponent(h.split("/")[1]));
+  else if(h.startsWith("produto/")){
+    let productId="";
+    try{productId=decodeURIComponent(h.split("/")[1]||"")}catch{}
+    c=product(productId);
+  }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
   root.innerHTML=nav()+c+footer();
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
   const titleMap={"/":"KORCZAK TECHNOLOGY","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
-  const detail=h.startsWith("produto/")?state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]))?.name:null;
+  let detail=null;
+  if(h.startsWith("produto/")){
+    try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[1]||""))?.name||null}catch{}
+  }
   document.title="KORCZAK TECHNOLOGY"+(detail?" · "+detail:(titleMap[h]?" · "+titleMap[h]:""));
   if(state.menu)document.querySelector(".sidebar")?.focus?.();
 }
@@ -248,7 +255,7 @@ function handleAction(target){
   const action=target.closest("[data-action]")?.dataset.action;
   if(!action)return false;
   if(action==="toggle-menu"){state.menu=!state.menu;render();return true}
-  if(action==="close-menu"){closeMenu();return true}
+  if(action==="close-menu"){closeMenu();return false}
   if(action==="logout"){logout();return true}
   if(action==="register"){register();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
@@ -273,12 +280,18 @@ async function load(){
   try{
     const products=await api("/api/products");
     if(Array.isArray(products)&&products.length)state.products=products;
-    if(state.token){state.user=await api("/api/me");state.quotes=await api("/api/quotes");state.orders=await api("/api/orders");}
-  }catch(e){
-    if(state.token){
+  }catch{}
+  if(state.token){
+    try{
+      state.user=await api("/api/me");
+      state.quotes=await api("/api/quotes");
+      state.orders=await api("/api/orders");
+    }catch{
       localStorage.removeItem("kz_token");
       state.token=null;
       state.user=null;
+      state.quotes=[];
+      state.orders=[];
     }
   }
   render();
