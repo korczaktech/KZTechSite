@@ -111,6 +111,7 @@ app.post("/api/stripe/webhook",express.raw({type:"application/json",limit:"256kb
   }
 });
 app.use(express.json({limit:"100kb"}));
+app.use(express.urlencoded({extended:false,limit:"100kb"}));
 
 const rate=new Map();
 app.use((req,res,next)=>{
