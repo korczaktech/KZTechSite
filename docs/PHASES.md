@@ -33,14 +33,16 @@
 - privacidade, uso e serviço
 - catálogo completo do ecossistema
 
-## Fase 3 — Comercial
+## Fase 3 — Comercial — CONCLUÍDA
 - cadastro/login
-- perfil
-- solicitação de orçamento
-- histórico comercial (estrutura API)
-- Stripe Checkout (servidor)
-- produtos/preços configuráveis
+- perfil autenticado
+- solicitação e histórico de orçamento
+- histórico de pedidos
+- Stripe Checkout no servidor
+- preços configuráveis por produto
+- preços resolvidos exclusivamente no backend
 - estados de sucesso/cancelamento
+- consulta autenticada de sessão Stripe
 
 ## Fase 4 — Segurança e administração
 - autenticação JWT
