@@ -6,6 +6,7 @@ import {execFileSync} from "node:child_process";
 const app=fs.readFileSync("public/assets/app.js","utf8");
 const server=fs.readFileSync("server/index.mjs","utf8");
 const render=fs.readFileSync("render.yaml","utf8");
+const content=fs.readFileSync("public/data/content.json","utf8");
 
 test("runtime: backend e frontend são JavaScript sintaticamente válidos",()=>{
   execFileSync(process.execPath,["--check","server/index.mjs"]);
@@ -25,6 +26,8 @@ test("runtime: shell e assets principais existem",()=>{
 test("runtime: frontend não depende do backend para o primeiro render",()=>{
   const app=fs.readFileSync("public/assets/app.js","utf8");
   assert.match(app,/FALLBACK_PRODUCTS/);
+  assert.match(app,/data\/content\.json/);
+  assert.match(content,/"products"/);
   assert.match(app,/render\(\);/);
   assert.ok(app.includes('api("/api/products")'));
 });
