@@ -937,6 +937,7 @@ async function load(){
   }
   render();
   try{
+    try{const pricing=await fetch("./data/pricing.json?"+APP_VERSION).then(r=>r.ok?r.json():null);if(pricing?.plans)Object.assign(PLAN_CATALOG,pricing.plans);if(pricing?.modules)for(const [id,rows] of Object.entries(pricing.modules)){if(MODULAR_CATALOG[id])for(const row of rows){const m=MODULAR_CATALOG[id].find(x=>x.id===row[0]);if(m){m.price=Number(row[2]);m.monthly=Number(row[3]);}}}}catch{}
     const products=await api("/api/products");
     if(Array.isArray(products)&&products.length)state.products=products;
     try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...PLAN_CATALOG,...plans};}catch{}
