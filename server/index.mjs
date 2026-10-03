@@ -529,6 +529,24 @@ app.get("/api/quotes",auth,async(req,res)=>{
   res.json(rows);
 });
 
+app.post("/api/presales",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const productId=String(req.body?.productId||"").trim();
+  const planId=String(req.body?.planId||"").trim();
+  const moduleIds=String(req.body?.moduleIds||"").trim().slice(0,2000);
+  const name=String(req.body?.name||"").trim();
+  const mail=email(req.body?.email);
+  const phone=String(req.body?.phone||"").trim();
+  const company=String(req.body?.company||"").trim().slice(0,180);
+  if(!products.some(p=>p.id===productId)||name.length<2||!emailValida(mail)||phone.length<8)
+    return res.status(400).json({error:"Preencha nome, email, telefone e produto para registrar a pré-venda"});
+  const agora=new Date();
+  const row={userId:req.user?.sub||null,productId,planId:planId||null,moduleIds,name,email:mail,phone,company,status:"pending",createdAt:agora};
+  const result=await db.collection("presales").insertOne(row);
+  await registrarEventoAnalitico({tipo:"presale",categoria:"comercial",subcategoria:"pre-venda",acao:"Pré-venda registrada",descricao:"Intenção de compra registrada na pré-venda.",pagina:"/pre-venda",usuarioId:req.user?.sub||null,nome:name,email:mail,entidade:"produto",entidadeId:productId,metadados:{planId:planId||null,moduleIds}});
+  res.status(201).json({ok:true,id:String(result.insertedId)});
+});
+
 app.get("/api/orders",auth,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const rows=await db.collection("orders").find({userId:req.user.sub}).sort({createdAt:-1}).limit(100).toArray();
@@ -694,6 +712,8 @@ async function start(){
     await db.collection("contacts").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({userId:1,createdAt:-1});
+    await db.collection("presales").createIndex({createdAt:-1});
+    await db.collection("presales").createIndex({userId:1,createdAt:-1});
     await db.collection("orders").createIndex({userId:1,createdAt:-1});
     await db.collection("orders").createIndex({sessionId:1},{unique:true,sparse:true});
     console.log("MongoDB connected");
