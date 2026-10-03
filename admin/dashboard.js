@@ -58,7 +58,7 @@ async function contas(){
 async function comercial(){
  const x=await api("/admin/comercial");
  E("comercialKpis").innerHTML=[["Orçamentos",x.orcamentos?.length||0,"Solicitações recebidas"],["Compras",x.compras?.length||0,"Checkouts/pedidos"],["Contatos",x.contatos?.length||0,"Mensagens recebidas"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+a[1]+'</strong><small>'+a[2]+'</small></div>').join("");
- const row=(r,t)=>'<article class="comercial-row"><div><strong>'+esc(r.nome||"Visitante")+'</strong><span>'+esc(r.email||"")+'</span></div><div><b>'+esc(t)+'</b><small>'+esc(r.productId||r.status||r.message||"")+'</small></div><time>'+fmtDate(r.createdAt)+'</time></article>';
+ const row=(r,t)=>'<article class="comercial-row"><div><strong>'+esc(r.nome||"Visitante")+'</strong><span>'+esc(r.email||"")+'</span></div><div><b>'+esc(t)+'</b><small>'+esc(r.productId||r.serviceId||r.objective||r.status||"")+(r.scope?"<br>"+esc(r.scope).slice(0,220):"")+'</small></div><time>'+fmtDate(r.createdAt)+'</time></article>';
  E("orcamentosLista").innerHTML=(x.orcamentos||[]).map(r=>row(r,"Orçamento")).join("")||'<p class="vazio">Nenhum orçamento.</p>';
  E("comprasLista").innerHTML=(x.compras||[]).map(r=>row(r,"Compra")).join("")||'<p class="vazio">Nenhuma compra.</p>';
  E("contatosLista").innerHTML=(x.contatos||[]).map(r=>'<article class="comercial-row"><div><strong>'+esc(r.name||"Sem nome")+'</strong><span>'+esc(r.email||"")+'</span></div><div><b>Contato</b><small>'+esc(r.message||"").slice(0,220)+'</small></div><time>'+fmtDate(r.createdAt)+'</time></article>').join("")||'<p class="vazio">Nenhum contato.</p>';
