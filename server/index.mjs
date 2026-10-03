@@ -457,6 +457,7 @@ app.post("/api/checkout",auth,async(req,res)=>{
     {$setOnInsert:{userId:req.user.sub,productId:p.id,sessionId:s.id,status:"checkout_created",amount,currency,createdAt:new Date(),updatedAt:new Date()}},
     {upsert:true}
   );
+  await registrarEventoAnalitico({tipo:"compra",categoria:"comercial",subcategoria:"compras",acao:"Compra iniciada",descricao:"Checkout criado para o produto.",pagina:"/produto/"+p.id,usuarioId:req.user.sub,nome:req.user?.name,email:req.user?.email,entidade:"produto",entidadeId:p.id,metadados:{valor:amount,currency,sessionId:s.id}});
   res.json({url:s.url});
 });
 
