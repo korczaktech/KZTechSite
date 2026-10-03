@@ -26,7 +26,7 @@ test("Fase 2: catálogo completo contém os produtos do KOS",()=>{
 test("Fase 2: conteúdo dinâmico é escapado e handlers inline não são usados",()=>{
   assert.ok(app.includes("const esc="));
   assert.doesNotMatch(app,/onclick\s*=/i);
-  assert.ok(app.includes('data-action="quote"'));
+  assert.ok(app.includes('async function quote(id)'));\n  assert.ok(app.includes('#/orcamento?produto='));
 });
 
 test("Fase 2: documentação declara os critérios",()=>{
