@@ -2,7 +2,7 @@ const API="https://kztechsite.onrender.com";const T=sessionStorage.getItem("adm"
 const E=id=>document.getElementById(id);
 async function api(path,opt={}){
  const h=new Headers(opt.headers||{});h.set("Authorization","Bearer "+T);if(opt.body&&!h.has("Content-Type"))h.set("Content-Type","application/json");
- const c=new AbortController(),timer=setTimeout(()=>c.abort(),15000);try{const r=await fetch(API+path,{...opt,headers:h,signal:c.signal});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||"Erro de comunicação");return d}catch(x){if(x.name==="AbortError")throw Error("O servidor demorou demais para responder.");throw x}finally{clearTimeout(timer)}
+ const c=new AbortController(),timer=setTimeout(()=>c.abort(),15000);try{const url=API+(path.startsWith("/api/")?path:"/api"+path);const r=await fetch(url,{...opt,headers:h,signal:c.signal});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||"Erro de comunicação");return d}catch(x){if(x.name==="AbortError")throw Error("O servidor demorou demais para responder.");throw x}finally{clearTimeout(timer)}
 }
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const fmtDate=x=>x?new Date(x).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"medium"}):"—";
