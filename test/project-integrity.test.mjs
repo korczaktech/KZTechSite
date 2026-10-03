@@ -7,26 +7,20 @@ const app=await readFile("public/assets/app.js","utf8");
 const readme=await readFile("README.md","utf8");
 
 test("catalogo real do ecossistema",()=>{
-  for(const id of ["korczak-ai","ide","morok","erp","documents"]) assert.match(server,new RegExp('\\["'+id+'"'));
+  for(const id of ["korczak-ai","ide","morok","erp","hub","nexus"]) assert.match(server,new RegExp('\\["'+id+'"'));
   for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\\n]*"Planejado"'));
-  assert.match(server,/Korczak Documents/);
-  assert.match(app,/Único aplicativo do Workspace iniciado atualmente/);
+  assert.match(server,/["]hub["],"HUB"/);\n  assert.match(server,/["]nexus["],"Nexus"/);
+  assert.match(app,/Núcleo documental do HUB/);
 });
 
-test("workspace não apresenta módulos futuros como iniciados",()=>{
-  assert.match(app,/name:"Korczak Sheets",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Slides",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Drive",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Mail",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Calendar",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Meet",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Chat",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Forms",type:"Workspace",status:"Planejado"/);
-  assert.match(app,/name:"Korczak Sites",type:"Workspace",status:"Planejado"/);
+test("HUB não apresenta módulos futuros como iniciados",()=>{
+  for(const [id,name] of [["hubvault","HUBVault"],["nexa","Nexa"],["veya","Veya"],["formly","Formly"],["korvo","Korvo"],["chrona","Chrona"],["meet","Meet"],["pulse","Pulse"],["acta","Acta"],["memo","Memo"],["people","People"],["web","Web"],["klash","Klash"]]){
+    assert.match(app,new RegExp('id:"'+id+'",name:"'+name+'",type:"Workspace",status:"Planejado"'));
+  }
 });
 
 test("documentação não promete módulos futuros como implementados",()=>{
-  assert.match(readme,/O único produto do Workspace iniciado atualmente é o Korczak Documents/);
+  assert.match(readme,/HUB|Nexus/);
   assert.match(readme,/FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE permanecem planejados/);
 });
 
