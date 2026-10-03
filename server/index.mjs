@@ -312,7 +312,7 @@ app.delete("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
   res.json({ok:true});
 });
 
-const CMS_SOURCE_FILES=new Set(["public/index.html","public/assets/styles.css","public/assets/app.js","public/assets/cms.js","public/data/pricing.json","public/data/content.json","server/index.mjs"]);
+const CMS_SOURCE_FILES=new Set(["public/index.html","public/assets/styles.css","public/assets/app.js","public/assets/cms.js","public/data/content.json","server/index.mjs"]);
 const CMS_PAGES=[
 {id:"home",name:"Página inicial",route:"#/"},
 {id:"comercial",name:"Comercial",route:"#/comercial"},
@@ -356,7 +356,7 @@ const CMS_FILE_TYPES={
 "public/assets/styles.css":{type:"CSS",label:"CSS"},
 "public/assets/app.js":{type:"JS",label:"JavaScript"},
 "public/assets/cms.js":{type:"CMS",label:"CMS"},
-"public/data/pricing.json":{type:"DATA",label:"Catálogo central de preços"},"public/data/content.json":{type:"DATA",label:"Conteúdo central do site"},
+"public/data/content.json":{type:"DATA",label:"Conteúdo, catálogo e preços centrais"},
 "server/index.mjs":{type:"BACKEND",label:"Backend / API"}
 };
 function cmsFileForPage(page){const p=CMS_PAGES.find(x=>x.id===page)||CMS_PAGES[0];return Object.entries(CMS_FILE_TYPES).map(([path,x])=>({...x,path,page:p.id,pageName:p.name,route:p.route,editable:true}));}
@@ -564,7 +564,7 @@ app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
 
 async function lerCatalogoCentral(){
   try{
-    const d=await githubRequest("public/data/pricing.json");
+    const d=await githubRequest("public/data/content.json");
     return JSON.parse(Buffer.from(String(d.content||"").replace(/\\s/g,""),"base64").toString("utf8"));
   }catch{return {plans:PLANOS_PADRAO,modules:{}}}
 }
@@ -588,10 +588,10 @@ app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(
   }
   if(!GITHUB_TOKEN)return res.status(503).json({error:"CMS de fonte ainda não está conectado ao GitHub. Configure GITHUB_TOKEN no Render."});
   try{
-    const d=await githubRequest("public/data/pricing.json");
+    const d=await githubRequest("public/data/content.json");
     const catalogo=JSON.parse(Buffer.from(String(d.content||"").replace(/\\s/g,""),"base64").toString("utf8"));
     catalogo.plans=dados;
-    const commit=await githubRequest("public/data/pricing.json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:"CMS: atualizar preços e planos",content:Buffer.from(JSON.stringify(catalogo,null,2),"utf8").toString("base64"),sha:d.sha,branch:GITHUB_BRANCH})});
+    const commit=await githubRequest("public/data/content.json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:"CMS: atualizar preços e catálogo central",content:Buffer.from(JSON.stringify(catalogo,null,2),"utf8").toString("base64"),sha:d.sha,branch:GITHUB_BRANCH})});
     await registrarAuditoria(req,"Atualização de preços","Catálogo central de preços atualizado pelo CMS. Commit "+(commit.commit?.sha||""));
     res.json(dados);
   }catch(e){const conflict=e.status===409||e.status===422;res.status(conflict?409:502).json({error:conflict?"O catálogo mudou no GitHub. Recarregue e tente novamente.":"Não foi possível salvar o catálogo central.",details:e.message});}
