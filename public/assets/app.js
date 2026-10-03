@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.08";
+const APP_VERSION="2026.10.03.09";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
@@ -388,13 +388,32 @@ function product(id){
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
-  else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a><a class="btn ghost" href="https://github.com/korczaktech/kzdoc/archive/refs/heads/main.zip" download="KZDoc-Nexus-main.zip">Baixar Nexus '+icon("arrow")+'</a>';
+  else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar Nexus '+icon("arrow")+'</a>';
   else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Iniciado") action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver condições '+icon("arrow")+'</a>';
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>'+planBlock;
+}
+
+function nexusDownloadPage(){
+  return '<main id="main-content" class="section shell nexus-download-page"><div class="portfolio-hero"><span class="eyebrow">NEXUS · DOWNLOAD</span><h2>Baixe o Nexus.</h2><p class="section-lead">Escolha a plataforma. O Android baixa sempre o APK da versão mais recente publicada no GitHub Releases do KZDoc.</p></div><section class="nexus-download-grid"><article class="nexus-download-card"><span class="eyebrow">ANDROID</span><h3>Nexus para Android</h3><p class="muted">Baixe e instale diretamente o APK da última release disponível.</p><div class="nexus-release" id="nexus-release"><span class="release-state">Consultando última versão…</span></div><a class="btn" id="nexus-android-download" href="#" hidden>Baixar APK '+icon("arrow")+'</a></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">DESKTOP</span><h3>Nexus para Desktop</h3><p class="muted">A versão para desktop ainda não está publicada.</p><span class="download-soon">Em breve</span></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">IOS</span><h3>Nexus para iOS</h3><p class="muted">A versão para iOS ainda não está publicada.</p><span class="download-soon">Em breve</span></article></section><div class="actions"><a class="btn ghost" href="#/produto/nexus">Voltar ao Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></main>';
+}
+async function loadNexusRelease(){
+  const box=document.querySelector("#nexus-release"),button=document.querySelector("#nexus-android-download");
+  if(!box||!button)return;
+  try{
+    const release=await fetch("https://api.github.com/repos/korczaktech/kzdoc/releases/latest",{headers:{"Accept":"application/vnd.github+json"}}).then(r=>{if(!r.ok)throw Error("GitHub não respondeu.");return r.json()});
+    const apk=(release.assets||[]).find(a=>/\.apk$/i.test(a.name));
+    if(!apk)throw Error("Nenhum APK foi publicado na última release.");
+    box.innerHTML='<span class="release-label">Última versão</span><strong>'+esc(release.tag_name||release.name||"Release atual")+'</strong><small>'+esc(apk.name)+'</small>';
+    button.href=apk.browser_download_url;
+    button.setAttribute("download",apk.name);
+    button.hidden=false;
+  }catch(error){
+    box.innerHTML='<span class="release-error">Não foi possível consultar a última release agora.</span><small>Tente novamente em alguns instantes.</small>';
+  }
 }
 
 function company(){return cmsPage("company")}
@@ -589,13 +608,14 @@ function render(){
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
   else if(h.startsWith("/planos/")){let productId="";try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}c=MODULAR_CATALOG[productId]?modularProductPage(productId):productPlansPage(productId);}
+  else if(h==="/download/nexus")c=nexusDownloadPage();
   else if(h.startsWith("/produto/")){
     let productId="";
     try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}
     c=product(productId);
   }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
-  root.innerHTML=(h!=="/conta"||state.authenticated)?nav()+c+footer():c;initMoon();
+  root.innerHTML=(h!=="/conta"||state.authenticated)?nav()+c+footer():c;initMoon();if(h==="/download/nexus")loadNexusRelease();
   const authForm=root.querySelector("#auth-form");
   if(authForm)authForm.addEventListener("submit",submitAuth);
   root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));root.querySelectorAll("[data-module-toggle]").forEach(el=>el.addEventListener("change",()=>updateKOSModules(el)));
