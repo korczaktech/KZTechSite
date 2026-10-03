@@ -1,4 +1,4 @@
-const API="https://kztechsite.onrender.com";const T=sessionStorage.getItem("adm");
+const API="https://kztechsite.onrender.com";const T=sessionStorage.getItem("adm")||localStorage.getItem("kz_admin_session");if(T)sessionStorage.setItem("adm",T);
 const E=id=>document.getElementById(id);
 async function api(path,opt={}){
  const h=new Headers(opt.headers||{});h.set("Authorization","Bearer "+T);if(opt.body&&!h.has("Content-Type"))h.set("Content-Type","application/json");
@@ -82,7 +82,7 @@ async function load(){
  }
 }
 async function atualizarTudo(){const b=E("atualizarTudo");if(!b)return;b.disabled=true;b.textContent="↻ Atualizando…";try{await load();b.textContent="✓ Atualizado";setTimeout(()=>b.textContent="↻ Atualizar informações",1600)}catch{b.textContent="⚠ Erro";setTimeout(()=>b.textContent="↻ Atualizar informações",2200)}finally{b.disabled=false}}
-E("atualizarTudo")?.addEventListener("click",atualizarTudo);E("out").onclick=()=>{sessionStorage.removeItem("adm");location.href="./"};
+E("atualizarTudo")?.addEventListener("click",atualizarTudo);E("out").onclick=()=>{sessionStorage.removeItem("adm");localStorage.removeItem("kz_admin_session");location.href=new URL("./",location.href).href};
 document.querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");document.querySelectorAll(".aba").forEach(x=>x.hidden=true);E(b.dataset.a).hidden=false;if(b.dataset.a==="analytics")await analytics();if(b.dataset.a==="contas")await contas();if(b.dataset.a==="comercial")await comercial();if(b.dataset.a==="interacoes")await interacoes()});
 document.querySelectorAll("[data-dias]").forEach(b=>b.onclick=async()=>{diasAnalytics=Number(b.dataset.dias)||30;document.querySelectorAll("[data-dias]").forEach(x=>x.classList.remove("selecionado"));b.classList.add("selecionado");await analytics()});
 E("atualizarAnalytics").onclick=analytics;E("atualizarContas").onclick=contas;E("atualizarInteracoes").onclick=interacoes;
