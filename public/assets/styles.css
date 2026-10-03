@@ -1240,3 +1240,19 @@ img,svg,video,canvas,iframe{max-width:100%}
 .download-soon{margin-top:auto;border:1px solid #292929;border-radius:999px;padding:8px 12px;color:#777;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 @media(max-width:900px){.nexus-download-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.nexus-download-card{min-height:0;padding:22px}.nexus-download-card h3{font-size:23px}}
+
+/* Korczak AI alpha interest list */
+.interest-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(360px,1.2fr);gap:28px;align-items:start;margin-top:28px}
+.interest-copy,.interest-form{border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(10,10,14,.72);padding:30px}
+.interest-copy h3{font-size:30px;margin:18px 0 12px}
+.interest-note{display:grid;gap:5px;margin-top:32px;padding:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.interest-note strong{font-size:18px}
+.interest-note span{color:#777;font-size:13px}
+.interest-form{display:grid;gap:16px}
+.interest-form label{display:grid;gap:8px;font-size:12px;letter-spacing:.04em}
+.interest-form input,.interest-form textarea{width:100%;box-sizing:border-box;padding:13px 14px;border:1px solid #292929;border-radius:10px;background:#080808;color:#fff;font:inherit;resize:vertical}
+.interest-form input:focus,.interest-form textarea:focus{outline:0;border-color:#666}
+.interest-check{display:grid!important;grid-template-columns:20px 1fr;align-items:start;gap:10px!important;letter-spacing:0!important;color:#aaa;line-height:1.5}
+.interest-check input{width:18px;height:18px;margin:2px 0}
+.interest-form .form-message{min-height:20px;margin:0;color:#aaa;font-size:13px}
+@media(max-width:800px){.interest-layout{grid-template-columns:1fr}.interest-copy,.interest-form{padding:22px}.interest-copy h3{font-size:25px}}
