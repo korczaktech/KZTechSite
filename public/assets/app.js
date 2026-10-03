@@ -44,7 +44,7 @@ function cmsInfoPage(id){const p=state.content?.pages?.info?.[id];if(!p)return i
 
 
 const links=[
-  ["/","Início"],["/mentoria","Mentoria"],["/comercial","Comercial"],["/institucional","Institucional"],
+  ["/","Início"],["/mentoria","Mentoria"],["/comercial","Comercial"],["/pre-venda","Pré-venda"],["/institucional","Institucional"],
   ["/produtos","Produtos"],["/historia","História"],["/visao","Visão"],["/valores","Valores"],["/parcerias","Parcerias"],
   ["/carreiras","Carreiras"],["/faq","FAQ"],["/contato","Contato"],["/conta","Meu perfil"]
 ];
@@ -521,6 +521,7 @@ function render(){
   else if(h==="/conta"&&!state.authenticated)c=authPage(state.authMode||"login");
   else if(h==="/")c=home();
   else if(h==="/comercial")c=commercial();
+  else if(h.startsWith("/pre-venda"))c=presalePage();
   else if(h==="/mentoria")c=mentorshipPage();
   else if(h==="/mentoria/precos")c=mentorshipPrices();
   else if(h.startsWith("/mentoria/"))c=mentorshipDetail(decodeURIComponent(h.split("/")[2]||""));
@@ -554,7 +555,7 @@ function render(){
   root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>{updateMentorTotal(el);if(el.checked)registrarAnalitica("interacao","Tecnologia selecionada",{categoria:"comercial",subcategoria:"mentorias",acao:"Selecionou tecnologia para a mentoria",descricao:"Selecionou uma tecnologia na grade personalizada da Mentoria.",entidade:"tecnologia",entidadeId:el.closest(".mentor-tech-row")?.querySelector("b")?.textContent||""});}));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/hub":"HUB","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/orcamento":"Solicitar orçamento","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/pre-venda":"Pré-venda","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/hub":"HUB","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/orcamento":"Solicitar orçamento","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
   let detail=null;
   if(h.startsWith("/produto/")){
     try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[2]||""))?.name||null}catch{}
