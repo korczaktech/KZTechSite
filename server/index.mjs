@@ -43,7 +43,7 @@ const PLANOS_PADRAO={
     {id:"business",name:"Business",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Equipes",description:"Gestão e governança para equipes.",features:["Tudo do Pro","Controle de acesso","Governança"]},
     {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações em escala.",features:["Tudo do Business","Recursos corporativos","Gestão ampliada"]}
   ],
-  "workspace":[
+  "hub":[
     {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps HUB"]},
     {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e colaboração.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados"]},
     {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança avançada"]},
@@ -81,7 +81,7 @@ const products=[
 ["korvo","Korvo","HUB","E-mail.","Planejado"],
 ["chrona","Chrona","HUB","Calendário.","Planejado"],
 ["meet","Meet","HUB","Videoconferências.","Planejado"],
-["pulse","Pulse","HUB","Pulse e comunicação.","Planejado"],
+["pulse","Pulse","HUB","Chat e comunicação.","Planejado"],
 ["acta","Acta","HUB","Tarefas.","Planejado"],
 ["memo","Memo","HUB","Anotações.","Planejado"],
 ["people","People","HUB","Contatos.","Planejado"],
@@ -218,19 +218,23 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
       {$set:{_analyticsDate:{$convert:{input:"$criadoEm",to:"date",onError:null,onNull:null}}}},
       {$match:{_analyticsDate:{$gte:desde}}}
     ];
+    const safeAgg=async(pipeline,fallback=[])=>{
+      try{return await eventos.aggregate([...base,...pipeline]).toArray();}
+      catch(error){console.error("Analytics section error:",error?.message||error);return fallback;}
+    };
     const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos]=await Promise.all([
-      eventos.aggregate([...base,{$count:"total"}]).toArray(),
-      eventos.aggregate([...base,{$match:{referencia:{$nin:["",null]}}},{$group:{_id:"$referencia"}},{$count:"total"}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$pagina",total:{$sum:1}}},{$sort:{total:-1}},{$limit:20}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$dispositivo",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$navegador",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$tipo",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%Y-%m-%d"}},total:{$sum:1}}},{$sort:{_id:1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%H:%M"}},total:{$sum:1}}},{$sort:{_id:1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-      eventos.aggregate([...base,{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
-      eventos.aggregate([...base,{$sort:{_analyticsDate:-1}},{$limit:100},{$unset:"_analyticsDate"}]).toArray()
+      safeAgg([{$count:"total"}]),
+      safeAgg([{$match:{referencia:{$nin:["",null]}}},{$group:{_id:"$referencia"}},{$count:"total"}]),
+      safeAgg([{$group:{_id:"$pagina",total:{$sum:1}}},{$sort:{total:-1}},{$limit:20}]),
+      safeAgg([{$group:{_id:"$dispositivo",total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:"$navegador",total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:"$tipo",total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%Y-%m-%d"}},total:{$sum:1}}},{$sort:{_id:1}}]),
+      safeAgg([{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%H:%M"}},total:{$sum:1}}},{$sort:{_id:1}}]),
+      safeAgg([{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]),
+      safeAgg([{$sort:{_analyticsDate:-1}},{$limit:100},{$unset:"_analyticsDate"}])
     ]);
     res.json({
       dias,
@@ -478,9 +482,30 @@ app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
-app.get("/api/planos",async(req,res)=>{if(!db)return res.json(PLANOS_PADRAO);const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(row?.dados&&typeof row.dados==="object"?row.dados:PLANOS_PADRAO);});
-app.get("/api/admin/planos",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(row?.dados&&typeof row.dados==="object"?row.dados:PLANOS_PADRAO);});
+function normalizarPlanos(dados){
+  const out=dados&&typeof dados==="object"&&!Array.isArray(dados)?{...dados}:{...PLANOS_PADRAO};
+  if(!out.hub&&out.workspace)out.hub=out.workspace;
+  delete out.workspace;
+  return out;
+}
+app.get("/api/planos",async(req,res)=>{if(!db)return res.json(PLANOS_PADRAO);const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(normalizarPlanos(row?.dados||PLANOS_PADRAO));});
+app.get("/api/admin/planos",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(normalizarPlanos(row?.dados||PLANOS_PADRAO));});
 app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const dados=req.body&&typeof req.body==="object"?req.body:null;if(!dados||Array.isArray(dados)||Object.keys(dados).length>30)return res.status(400).json({error:"Catálogo de planos inválido"});for(const [chave,lista] of Object.entries(dados)){if(!Array.isArray(lista)||lista.length>20)return res.status(400).json({error:"Lista de planos inválida em "+chave});for(const p of lista){if(!p||typeof p!=="object"||!String(p.id||"").trim()||!String(p.name||"").trim())return res.status(400).json({error:"Plano inválido em "+chave});for(const k of ["price","preSalePrice","monthly","preSaleMonthly"])if(p[k]!==null&&p[k]!==undefined&&(!Number.isFinite(Number(p[k]))||Number(p[k])<0))return res.status(400).json({error:"Preço inválido em "+chave+"/"+p.id});}}await db.collection("configuracoes").updateOne({_id:"planos"},{$set:{dados,atualizadoEm:new Date(),atualizadoPor:req.user?.email||"admin"}},{upsert:true});await registrarAuditoria(req,"Atualização de planos","Catálogo comercial de planos atualizado pelo administrador.");res.json(dados);});
+app.get("/api/admin/comercial",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  try{
+    const [orcamentos,compras,contatos]=await Promise.all([
+      db.collection("quotes").find().sort({createdAt:-1}).limit(500).toArray(),
+      db.collection("orders").find().sort({createdAt:-1}).limit(500).toArray(),
+      db.collection("contacts").find().sort({createdAt:-1}).limit(500).toArray()
+    ]);
+    const normalizar=r=>({...r,_id:String(r._id),nome:r.nome||r.name||"Visitante"});
+    res.json({orcamentos:orcamentos.map(normalizar),compras:compras.map(normalizar),contatos:contatos.map(normalizar)});
+  }catch(error){
+    console.error("Commercial admin error:",error?.message||error);
+    res.status(500).json({error:"Não foi possível carregar os dados comerciais."});
+  }
+});
 app.get("/api/admin/contacts",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   res.json(await db.collection("contacts").find().sort({createdAt:-1}).limit(100).toArray());
