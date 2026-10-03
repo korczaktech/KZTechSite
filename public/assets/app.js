@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.09";
+const APP_VERSION="2026.10.03.10";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
@@ -387,7 +387,8 @@ function product(id){
   const isHubApp=p.type==="HUB";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
-  if(["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
+  if(p.id==="korczak-ai") action='<a class="btn" href="#/interesse/korczak-ai">Entrar na lista de interessados '+icon("arrow")+'</a>';
+  else if(p.id==="ide") action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
   else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar Nexus '+icon("arrow")+'</a>';
   else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
@@ -419,6 +420,21 @@ async function loadNexusRelease(){
 function company(){return cmsPage("company")}
 function historyPage(){return cmsPage("historyPage")}
 
+function korczakAiInterestPage(){
+  return '<main id="main-content" class="section shell interest-page"><div class="portfolio-hero"><span class="eyebrow">KORCZAK AI · ALPHA</span><h2>Entre na lista de interessados.</h2><p class="section-lead">A Korczak AI está em alpha e ainda passa por testes. Deixe seus dados para receber informações sobre disponibilidade, testes e próximos acessos.</p></div><section class="interest-layout"><div class="interest-copy"><span class="eyebrow">ACESSO ANTECIPADO</span><h3>Seja avisado quando houver novidades.</h3><p class="muted">O cadastro não cria uma conta nem garante acesso imediato à alpha. Ele registra seu interesse para que a equipe possa entrar em contato.</p><div class="interest-note"><strong>Alpha</strong><span>Produto em testes · vagas e disponibilidade podem variar.</span></div></div><form class="interest-form" id="korczak-ai-interest-form"><label>Nome<input name="nome" autocomplete="name" required maxlength="120" placeholder="Seu nome"></label><label>Email<input name="email" type="email" autocomplete="email" required maxlength="180" placeholder="voce@exemplo.com"></label><label>WhatsApp <span class="muted">opcional</span><input name="whatsapp" autocomplete="tel" maxlength="40" placeholder="(11) 99999-9999"></label><label>Como pretende usar a Korczak AI? <span class="muted">opcional</span><textarea name="uso" maxlength="500" rows="4" placeholder="Conte brevemente o que você gostaria de fazer com a Korczak AI."></textarea></label><label class="interest-check"><input name="consentimento" type="checkbox" value="true" required><span>Autorizo a Korczak Technology a entrar em contato comigo sobre a Korczak AI e sua alpha.</span></label><button class="btn" type="submit">Entrar na lista '+icon("arrow")+'</button><p class="form-message" id="korczak-ai-interest-msg" role="status" aria-live="polite"></p></form></section></main>';
+}
+async function sendKorczakAiInterest(e){
+  e.preventDefault();
+  const form=e.target,msg=form.querySelector("#korczak-ai-interest-msg"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Registrando…";
+  try{
+    const data=Object.fromEntries(new FormData(form));
+    data.consentimento=form.querySelector('[name="consentimento"]').checked;
+    await api("/api/interessados/korczak-ai",{method:"POST",body:JSON.stringify(data)});
+    form.reset();msg.textContent="Seu interesse foi registrado. A equipe poderá entrar em contato quando houver novidades da alpha.";toast("Interesse registrado.");
+  }catch(x){msg.textContent=x?.message||"Não foi possível registrar seu interesse.";toast(msg.textContent)}
+  finally{button.disabled=false}
+}
 function contact(){return cmsPage("contact")}
 
 async function sendQuote(e){
@@ -599,6 +615,7 @@ function render(){
   else if(h==="/hub")c=hub();
   else if(h==="/kos")c=kos();
   else if(pages[h])c=pages[h]();
+  else if(h==="/interesse/korczak-ai")c=korczakAiInterestPage();
   else if(h==="/contato")c=contact();
   else if(h.startsWith("/orcamento"))c=quotePage();
   else if(h==="/conta")c=account();
@@ -725,6 +742,7 @@ document.addEventListener("submit",e=>{
   if(e.target.id==="quote-form")sendQuote(e);
   if(e.target.id==="presale-form")sendPresale(e);
   if(e.target.id==="subscription-form")sendSubscription(e);
+  if(e.target.id==="korczak-ai-interest-form")sendKorczakAiInterest(e);
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
