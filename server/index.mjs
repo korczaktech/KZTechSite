@@ -32,29 +32,31 @@ const PLANOS_PADRAO={
   "korczak-ai":[
     {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Recursos essenciais para conhecer e usar o Korczak AI.",features:["Acesso gratuito","Recursos essenciais","Limites de uso"]},
     {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente.",features:["Tudo do Free","Mais capacidade","Recursos ampliados"]},
-    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para uso frequente de inteligência e criação.",features:["Tudo do Go","Mais ferramentas","Uso mais amplo"]},
-    {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Para trabalho profissional e tarefas intensas.",features:["Tudo do Plus","Limites maiores","Recursos profissionais"]},
-    {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Para cargas de trabalho intensas.",features:["Tudo do Pro","Maior capacidade","Uso intensivo"]}
+    {id:"plus",name:"Plus",price:26,preSalePrice:22,billing:"mês",tag:"Uso diário",description:"Para uso frequente de inteligência e criação.",features:["Tudo do Go","Mais ferramentas","Uso mais amplo"]},
+    {id:"pro",name:"Pro",price:521,preSalePrice:443,billing:"mês",tag:"Profissional",description:"Para trabalho profissional e tarefas intensas.",features:["Tudo do Plus","Limites maiores","Recursos profissionais"]}
   ],
   "ide":[
     {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Ambiente de desenvolvimento para começar.",features:["Editor essencial","Uso individual","Sem mensalidade"]},
     {id:"pro",name:"Pro",price:52,preSalePrice:44,billing:"mês",tag:"Individual",description:"Desenvolvimento diário com assistência ampliada.",features:["Tudo do Free","Assistência avançada","Mais uso"]},
     {id:"pro-plus",name:"Pro+",price:203,preSalePrice:173,billing:"mês",tag:"Avançado",description:"Projetos complexos e modelos premium.",features:["Tudo do Pro","Modelos premium","Maior capacidade"]},
-    {id:"max",name:"Max",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Fluxos de desenvolvimento contínuos e de alto volume.",features:["Tudo do Pro+","Alto volume","Prioridade"]},
+    {id:"max",name:"Max",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Fluxos de desenvolvimento de alto volume.",features:["Tudo do Pro+","Alto volume","Prioridade"]},
     {id:"business",name:"Business",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Equipes",description:"Gestão e governança para equipes.",features:["Tudo do Pro","Controle de acesso","Governança"]},
     {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações em escala.",features:["Tudo do Business","Recursos corporativos","Gestão ampliada"]}
   ],
   "workspace":[
-    {id:"starter",name:"Starter",price:37,preSalePrice:31,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps Workspace"]},
-    {id:"standard",name:"Standard",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e colaboração.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados"]},
-    {id:"plus",name:"Plus",price:116,preSalePrice:99,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança avançada"]},
+    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps Workspace"]},
+    {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e colaboração.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados"]},
+    {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança avançada"]},
     {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração corporativa sob escopo.",features:["Recursos Enterprise","Controles corporativos","Preço sob consulta"]}
   ],
-  "erp":[{id:"erp-standard",name:"KORCZAK ERP",price:48750,preSalePrice:41438,billing:"implantação",monthly:940,preSaleMonthly:799,tag:"Compra + mensal",description:"ERP empresarial com implantação e operação contínua.",features:["Implantação","Gestão integrada","Mensalidade"]}],
-  "flow":[{id:"flow-standard",name:"KORCZAK FLOW",price:26250,preSalePrice:22313,billing:"implantação",monthly:1553,preSaleMonthly:1320,tag:"Compra + mensal",description:"Fluxos, aprovações e automações.",features:["Implantação","Workflows","Mensalidade"]}],
-  "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:185635,preSalePrice:157790,billing:"implantação",monthly:4494,preSaleMonthly:3820,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
+  "erp":[{id:"erp-standard",name:"KORCZAK ERP",price:75000,preSalePrice:63750,billing:"implantação",monthly:1500,preSaleMonthly:1275,tag:"Compra + mensal",description:"ERP empresarial com implantação e operação contínua.",features:["Implantação","Gestão integrada","Mensalidade"]}],
+  "flow":[{id:"flow-standard",name:"KORCZAK FLOW",price:22500,preSalePrice:19125,billing:"implantação",monthly:1125,preSaleMonthly:956,tag:"Compra + mensal",description:"Fluxos, aprovações e automações.",features:["Implantação","Workflows","Mensalidade"]}],
+  "vision":[{id:"vision-standard",name:"KORCZAK VISION",price:22500,preSalePrice:19125,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Business intelligence e painéis operacionais.",features:["Implantação","Dashboards e indicadores","Mensalidade"]}],
+  "ops":[{id:"ops-standard",name:"KORCZAK OPS",price:45000,preSalePrice:38250,billing:"implantação",monthly:3000,preSaleMonthly:2550,tag:"Compra + mensal",description:"Operações, administração e observabilidade.",features:["Implantação","Operação e administração","Mensalidade"]}],
+  "connect":[{id:"connect-standard",name:"KORCZAK CONNECT",price:37500,preSalePrice:31875,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Integrações entre pessoas, sistemas e serviços.",features:["Implantação","Integrações","Mensalidade"]}],
+  "mobile":[{id:"mobile-standard",name:"KORCZAK MOBILE",price:45000,preSalePrice:38250,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Aplicativo móvel empresarial.",features:["Implantação","Experiência mobile","Mensalidade"]}],
+  "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
 };
-
 const commercialProducts=Object.fromEntries([
   ["erp",{amount:0,currency:"brl",priceId:""}]
 ]);
