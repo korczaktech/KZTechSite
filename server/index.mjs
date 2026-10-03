@@ -617,13 +617,14 @@ app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(
 app.get("/api/admin/comercial",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   try{
-    const [orcamentos,compras,contatos]=await Promise.all([
+    const [orcamentos,compras,contatos,preVendas]=await Promise.all([
       db.collection("quotes").find().sort({createdAt:-1}).limit(500).toArray(),
       db.collection("orders").find().sort({createdAt:-1}).limit(500).toArray(),
-      db.collection("contacts").find().sort({createdAt:-1}).limit(500).toArray()
+      db.collection("contacts").find().sort({createdAt:-1}).limit(500).toArray(),
+      db.collection("presales").find().sort({createdAt:-1}).limit(500).toArray()
     ]);
     const normalizar=r=>({...r,_id:String(r._id),nome:r.nome||r.name||"Visitante"});
-    res.json({orcamentos:orcamentos.map(normalizar),compras:compras.map(normalizar),contatos:contatos.map(normalizar)});
+    res.json({orcamentos:orcamentos.map(normalizar),compras:compras.map(normalizar),contatos:contatos.map(normalizar),preVendas:preVendas.map(normalizar)});
   }catch(error){
     console.error("Commercial admin error:",error?.message||error);
     res.status(500).json({error:"Não foi possível carregar os dados comerciais."});
