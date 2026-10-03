@@ -561,15 +561,40 @@ app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
+async function lerCatalogoCentral(){
+  try{
+    const d=await githubRequest("public/data/pricing.json");
+    return JSON.parse(Buffer.from(String(d.content||"").replace(/\\s/g,""),"base64").toString("utf8"));
+  }catch{return {plans:PLANOS_PADRAO,modules:{}}}
+}
 function normalizarPlanos(dados){
   const out=dados&&typeof dados==="object"&&!Array.isArray(dados)?{...dados}:{...PLANOS_PADRAO};
   if(!out.hub&&out.workspace)out.hub=out.workspace;
   delete out.workspace;
   return out;
 }
-app.get("/api/planos",async(req,res)=>{if(!db)return res.json(PLANOS_PADRAO);const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(normalizarPlanos(row?.dados||PLANOS_PADRAO));});
-app.get("/api/admin/planos",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(normalizarPlanos(row?.dados||PLANOS_PADRAO));});
-app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const dados=req.body&&typeof req.body==="object"?req.body:null;if(!dados||Array.isArray(dados)||Object.keys(dados).length>30)return res.status(400).json({error:"Catálogo de planos inválido"});for(const [chave,lista] of Object.entries(dados)){if(!Array.isArray(lista)||lista.length>20)return res.status(400).json({error:"Lista de planos inválida em "+chave});for(const p of lista){if(!p||typeof p!=="object"||!String(p.id||"").trim()||!String(p.name||"").trim())return res.status(400).json({error:"Plano inválido em "+chave});for(const k of ["price","preSalePrice","monthly","preSaleMonthly"])if(p[k]!==null&&p[k]!==undefined&&(!Number.isFinite(Number(p[k]))||Number(p[k])<0))return res.status(400).json({error:"Preço inválido em "+chave+"/"+p.id});}}await db.collection("configuracoes").updateOne({_id:"planos"},{$set:{dados,atualizadoEm:new Date(),atualizadoPor:req.user?.email||"admin"}},{upsert:true});await registrarAuditoria(req,"Atualização de planos","Catálogo comercial de planos atualizado pelo administrador.");res.json(dados);});
+app.get("/api/planos",async(req,res)=>{const catalogo=await lerCatalogoCentral();res.json(normalizarPlanos(catalogo.plans||PLANOS_PADRAO));});
+app.get("/api/admin/planos",auth,admin,async(req,res)=>{const catalogo=await lerCatalogoCentral();res.json(normalizarPlanos(catalogo.plans||PLANOS_PADRAO));});
+app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(req,res)=>{
+  const dados=req.body&&typeof req.body==="object"?req.body:null;
+  if(!dados||Array.isArray(dados)||Object.keys(dados).length>30)return res.status(400).json({error:"Catálogo de planos inválido"});
+  for(const [chave,lista] of Object.entries(dados)){
+    if(!Array.isArray(lista)||lista.length>20)return res.status(400).json({error:"Lista de planos inválida em "+chave});
+    for(const p of lista){
+      if(!p||typeof p!=="object"||!String(p.id||"").trim()||!String(p.name||"").trim())return res.status(400).json({error:"Plano inválido em "+chave});
+      for(const k of ["price","preSalePrice","monthly","preSaleMonthly"])if(p[k]!==null&&p[k]!==undefined&&(!Number.isFinite(Number(p[k]))||Number(p[k])<0))return res.status(400).json({error:"Preço inválido em "+chave+"/"+p.id});
+    }
+  }
+  if(!GITHUB_TOKEN)return res.status(503).json({error:"CMS de fonte ainda não está conectado ao GitHub. Configure GITHUB_TOKEN no Render."});
+  try{
+    const d=await githubRequest("public/data/pricing.json");
+    const catalogo=JSON.parse(Buffer.from(String(d.content||"").replace(/\\s/g,""),"base64").toString("utf8"));
+    catalogo.plans=dados;
+    const commit=await githubRequest("public/data/pricing.json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:"CMS: atualizar preços e planos",content:Buffer.from(JSON.stringify(catalogo,null,2),"utf8").toString("base64"),sha:d.sha,branch:GITHUB_BRANCH})});
+    await registrarAuditoria(req,"Atualização de preços","Catálogo central de preços atualizado pelo CMS. Commit "+(commit.commit?.sha||""));
+    res.json(dados);
+  }catch(e){const conflict=e.status===409||e.status===422;res.status(conflict?409:502).json({error:conflict?"O catálogo mudou no GitHub. Recarregue e tente novamente.":"Não foi possível salvar o catálogo central.",details:e.message});}
+});
 app.get("/api/admin/comercial",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   try{
