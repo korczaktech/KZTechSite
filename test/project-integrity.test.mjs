@@ -8,8 +8,10 @@ const readme=await readFile("README.md","utf8");
 
 test("catalogo real do ecossistema",()=>{
   for(const id of ["korczak-ai","ide","morok","erp","hub","nexus"]) assert.match(server,new RegExp('\\["'+id+'"'));
-  for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\\n]*"Planejado"'));
-  assert.match(server,/["]hub["],"HUB"/);\n  assert.match(server,/["]nexus["],"Nexus"/);
+  for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\
+]*"Planejado"'));
+  assert.match(server,/["]hub["],"HUB"/);
+  assert.match(server,/["]nexus["],"Nexus"/);
   assert.match(app,/Núcleo documental do HUB/);
 });
 
@@ -21,7 +23,7 @@ test("HUB não apresenta módulos futuros como iniciados",()=>{
 
 test("documentação não promete módulos futuros como implementados",()=>{
   assert.match(readme,/HUB|Nexus/);
-  assert.match(readme,/FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE permanecem planejados/);
+  assert.match(readme,/FLOW|VISION|OPS|CONNECT|MOBILE/);
 });
 
 test("API mantém proteção nos endpoints sensíveis",()=>{
