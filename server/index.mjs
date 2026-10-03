@@ -550,8 +550,8 @@ app.post("/api/subscriptions",rateLimit({windowMs:60000,max:12}),async(req,res)=
   const ids=moduleIds?moduleIds.split(",").filter(Boolean):[];
   const mods=modsCatalog.filter(x=>ids.includes(x.id));
   if(!plano&&!mods.length)return res.status(400).json({error:"Selecione um plano ou uma configuração de módulos válida"});
-  const monthly=plano&&Number.isFinite(Number(plano.preSalePrice))?Number(plano.preSalePrice):mods.reduce((n,x)=>n+Math.round(Number(x.preSaleMonthly??Number(x.monthly||0))*.85),0);
-  const implementation=mods.reduce((n,x)=>n+Math.round(Number(x.preSalePrice??Number(x.price||0))*.85),0);
+  const monthly=plano&&Number.isFinite(Number(plano.preSalePrice))?Number(plano.preSalePrice):mods.reduce((n,x)=>n+(Number.isFinite(Number(x.preSaleMonthly))?Number(x.preSaleMonthly):Math.round(Number(x.monthly||0)*.85)),0);
+  const implementation=mods.reduce((n,x)=>n+(Number.isFinite(Number(x.preSalePrice))?Number(x.preSalePrice):Math.round(Number(x.price||0)*.85)),0);
   const agora=new Date();
   const row={userId:req.user?.sub||null,productId,planId:planId||null,moduleIds,name,email:mail,phone,company,document,monthly,implementation,paymentMethod:null,paymentStatus:"pending_payment",status:"pending",createdAt:agora,updatedAt:agora};
   const result=await db.collection("subscriptions").insertOne(row);
