@@ -37,8 +37,10 @@ let diasAnalytics=30,lastAnalytics=null;
 async function analytics(){
  const x=await api("/admin/analiticas?dias="+diasAnalytics);lastAnalytics=x;
  E("atualizado").textContent="Atualizado em "+new Date().toLocaleTimeString("pt-BR");E("totalPeriodo").textContent=x.total+" eventos";
- const views=x.diarios||[],max=Math.max(...views.map(v=>Number(v.total)||0),1);
- E("grafico").innerHTML=views.length?views.map(v=>'<div class="coluna" title="'+esc(v._id)+': '+esc(v.total)+'"><i style="height:'+Math.max(5,Math.round((Number(v.total)||0)/max*100))+'%"></i><span>'+esc(v._id.slice(5))+'</span></div>').join(""):'<p class="vazio">Ainda não há dados.</p>';
+ const views=x.mercado||x.diarios||[],vals=views.map(v=>Number(v.total)||0),max=Math.max(...vals,1);
+ const W=900,H=300,pad=28,step=vals.length>1?(W-pad*2)/(vals.length-1):0;
+ const points=vals.map((v,i)=>((pad+i*step).toFixed(1))+','+(H-pad-(v/max)*(H-pad*2)).toFixed(1)).join(' ');
+ E("grafico").innerHTML=views.length?'<svg class="stock-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><path d="M'+points.replace(/ /g,' L')+'" fill="none" stroke="currentColor" stroke-width="2.5" vector-effect="non-scaling-stroke"/><polyline points="'+points+'" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="10" vector-effect="non-scaling-stroke"/></svg><div class="stock-labels"><span>'+esc(views[0]?views[0]._id:"")+'</span><span>'+esc(views[Math.floor(views.length/2)]?._id||"")+'</span><span>'+esc(views[views.length-1]?._id:"")+'</span></div>':'<p class="vazio">Ainda não há dados.</p>';
  const visitors=Number(x.visitantes)||0,catTotal=(x.categorias||[]).reduce((n,a)=>n+Number(a.total||0),0);
  E("kpis").innerHTML=[["Eventos",x.total,"Todas as atividades"],["Visitantes",visitors,"Identificadores únicos"],["Cadastros",(x.subcategorias||[]).filter(a=>a._id?.subcategoria==="cadastros").reduce((n,a)=>n+a.total,0),"Contas criadas"],["Comercial",(x.categorias||[]).find(a=>a._id==="comercial")?.total||0,"Atividade comercial"],["Período",diasAnalytics+" dias","Janela analisada"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+esc(a[1])+'</strong><small>'+a[2]+'</small></div>').join("");
  barras(x.categorias,"categorias","cat");barras(x.subcategorias,"subcategorias","sub");barras(x.acoes,"acoes");barras(x.paginas,"paginas");barras(x.dispositivos,"dispositivos");barras(x.navegadores,"navegadores");
