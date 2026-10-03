@@ -657,7 +657,9 @@ function handleAction(target){
   if(action==="logout"){logout();return true}
   if(action==="register"){state.authMode="register";state.authMessage="";location.hash="#/acesso";render();return true}
   if(action==="auth-mode"){state.authMode=target.closest("[data-action]").dataset.mode;state.authMessage="";render();return true}
-  if(action==="reload"){location.reregistrarPaginaAtual();\nload();return true}
+  if(action==="reload"){location.reload();
+registrarPaginaAtual();
+load();return true}
   if(action==="quote"){quote(target.closest("[data-action]").dataset.product);return true}
   if(action==="checkout"){checkout(target.closest("[data-action]").dataset.product);return true}
   return false;
