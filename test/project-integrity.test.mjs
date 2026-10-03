@@ -9,7 +9,7 @@ const readme=await readFile("README.md","utf8");
 test("catalogo real do ecossistema",()=>{
   for(const id of ["korczak-ai","ide","morok","erp","documents"]) assert.match(server,new RegExp('\\["'+id+'"'));
   for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\\n]*"Planejado"'));
-  assert.match(server,/KORCZAK DOCUMENTS/);
+  assert.match(server,/Korczak Documents/);
   assert.match(app,/Único produto iniciado atualmente dentro do Workspace/);
 });
 
