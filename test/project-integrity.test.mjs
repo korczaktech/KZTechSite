@@ -11,7 +11,7 @@ test("catalogo real do ecossistema",()=>{
   for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\\n]*"Planejado"'));
   assert.match(server,/["]hub["],"HUB"/);
   assert.match(server,/["]nexus["],"Nexus"/);
-  assert.match(app,/Núcleo documental do HUB/);
+  assert.match(app,/id:"nexus",name:"Nexus"/);
 });
 
 test("HUB não apresenta módulos futuros como iniciados",()=>{
