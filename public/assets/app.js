@@ -12,7 +12,7 @@ const FALLBACK_PRODUCTS=[
 {id:"vision",name:"KORCZAK VISION",type:"KOS",status:"Planejado",description:"Visão operacional."},
 {id:"ops",name:"KORCZAK OPS",type:"KOS",status:"Planejado",description:"Operações."},
 {id:"connect",name:"KORCZAK CONNECT",type:"KOS",status:"Planejado",description:"Integrações."},
-{id:"mobile",name:"KORCZAK MOBILE",type:"KOS",status:"Planejado",description:"Mobilidade."},
+{id:"mobile",name:"KORCZAK MOBILE",type:"KOS",status:"Planejado",description:"Mobilidade."},{id:"wms",name:"KORCZAK WMS",type:"KOS",status:"Planejado",description:"Gestão de armazém."},
 {id:"workspace",name:"Korczak Workspace",type:"Workspace",status:"Em construção",description:"Marca que reúne os aplicativos de produtividade."},
 {id:"documents",name:"Korczak Documents",type:"Workspace",status:"Em construção",description:"Único aplicativo do Workspace iniciado atualmente."},
 {id:"sheets",name:"Korczak Sheets",type:"Workspace",status:"Planejado",description:"Planilhas."},
@@ -485,7 +485,7 @@ function institutional(){
 }
 
 function products(){
- const kosIds=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"];
+ const kosIds=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"];
  const wsIds=["documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"];
  const kos=kosIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  const ws=wsIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
@@ -497,7 +497,7 @@ function workspace(){
  return '<main id="main-content" class="section shell workspace-page"><div class="portfolio-hero"><span class="eyebrow">KORCZAK WORKSPACE · SUÍTE DE PRODUTIVIDADE</span><h2>Seu trabalho, em um único espaço.</h2><p class="section-lead">O Workspace reúne documentos, planilhas, arquivos, nuvem, email, agenda, reuniões, comunicação e outros aplicativos. Apenas o Documents está em construção.</p></div><section class="workspace-grid">'+apps.map((a,i)=>'<article class="workspace-app '+(a.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(a.status)+'</span><h3>'+esc(a.name)+'</h3><p class="muted">'+esc(a.description)+'</p>'+(a.id==="documents"?'<a class="btn ghost" href="#/produto/documents">Ver planos</a>':a.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':"")+'</article>').join("")+'</section></main>';
 }
 function kos(){
- const ids=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"];
+ const ids=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"];
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell workspace-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="workspace-grid">'+items.map((p,i)=>'<article class="workspace-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
@@ -525,16 +525,18 @@ function product(id){
     "vision":["Visão operacional","Painéis e camadas de informação para acompanhar indicadores, contexto e atividade.","O VISION transforma dados operacionais em uma visão mais clara para acompanhamento e análise."],
     "ops":["Operações e administração","Controle técnico e operacional do ecossistema empresarial.","O OPS concentra rotinas de administração, acompanhamento e observabilidade dos serviços."],
     "connect":["Conectividade","Integração entre pessoas, sistemas, serviços e canais.","O CONNECT funciona como camada de comunicação e integração entre partes do ecossistema."],
-    "mobile":["Operação em mobilidade","Experiência móvel para acessar e operar recursos empresariais.","O MOBILE leva recursos selecionados do ecossistema para contextos em que a operação acontece fora do desktop."]
+    "mobile":["Operação em mobilidade","Experiência móvel para acessar e operar recursos empresariais.","O MOBILE leva recursos selecionados do ecossistema para contextos em que a operação acontece fora do desktop."],
+    "wms":["Gestão de armazém","Sistema para controlar estoque, entradas, saídas e movimentação dentro de armazéns.","O WMS será desenvolvido para operações logísticas com maior volume e necessidade de rastreabilidade."]
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
   const planBlock=(["korczak-ai","ide","documents"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="Workspace";
-  const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"].includes(p.id);
+  const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
   else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>'+planBlock;
