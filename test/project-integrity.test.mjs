@@ -10,19 +10,19 @@ test("catalogo real do ecossistema",()=>{
   for(const id of ["korczak-ai","ide","morok","erp","documents"]) assert.match(server,new RegExp('\\["'+id+'"'));
   for(const id of ["flow","vision","ops","connect","mobile"]) assert.match(server,new RegExp('\\["'+id+'"[^\\n]*"Planejado"'));
   assert.match(server,/Korczak Documents/);
-  assert.match(app,/Único produto iniciado atualmente dentro do Workspace/);
+  assert.match(app,/Único aplicativo do Workspace iniciado atualmente/);
 });
 
 test("workspace não apresenta módulos futuros como iniciados",()=>{
-  assert.match(app,/Korczak Sheets","Planejado/);
-  assert.match(app,/Korczak Slides","Planejado/);
-  assert.match(app,/Korczak Drive","Planejado/);
-  assert.match(app,/Korczak Mail","Planejado/);
-  assert.match(app,/Korczak Calendar","Planejado/);
-  assert.match(app,/Korczak Meet","Planejado/);
-  assert.match(app,/Korczak Chat","Planejado/);
-  assert.match(app,/Korczak Forms","Planejado/);
-  assert.match(app,/Korczak Sites","Planejado/);
+  assert.match(app,/name:"Korczak Sheets",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Slides",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Drive",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Mail",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Calendar",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Meet",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Chat",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Forms",type:"Workspace",status:"Planejado"/);
+  assert.match(app,/name:"Korczak Sites",type:"Workspace",status:"Planejado"/);
 });
 
 test("documentação não promete módulos futuros como implementados",()=>{
