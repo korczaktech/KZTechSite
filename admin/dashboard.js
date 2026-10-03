@@ -40,7 +40,7 @@ async function analytics(){
  lastAnalytics=x;
  E("atualizado").textContent="Atualizado em "+new Date().toLocaleTimeString("pt-BR");
  E("totalPeriodo").textContent=x.total+" eventos";
- const views=x.mercado||x.diarios||[];
+ const views=x.diarios||x.mercado||[];
  const vals=views.map(v=>Number(v.total)||0);
  const max=Math.max(...vals,1);
  const W=900,H=300,pad=28;
