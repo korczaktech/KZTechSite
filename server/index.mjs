@@ -312,7 +312,7 @@ app.delete("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
   res.json({ok:true});
 });
 
-const CMS_SOURCE_FILES=new Set(["public/index.html","public/assets/styles.css","public/assets/app.js","public/assets/cms.js","public/data/pricing.json","server/index.mjs"]);
+const CMS_SOURCE_FILES=new Set(["public/index.html","public/assets/styles.css","public/assets/app.js","public/assets/cms.js","public/data/pricing.json","public/data/content.json","server/index.mjs"]);
 const CMS_PAGES=[
 {id:"home",name:"Página inicial",route:"#/"},
 {id:"comercial",name:"Comercial",route:"#/comercial"},
@@ -356,7 +356,7 @@ const CMS_FILE_TYPES={
 "public/assets/styles.css":{type:"CSS",label:"CSS"},
 "public/assets/app.js":{type:"JS",label:"JavaScript"},
 "public/assets/cms.js":{type:"CMS",label:"CMS"},
-"public/data/pricing.json":{type:"DATA",label:"Catálogo central de preços"},
+"public/data/pricing.json":{type:"DATA",label:"Catálogo central de preços"},"public/data/content.json":{type:"DATA",label:"Conteúdo central do site"},
 "server/index.mjs":{type:"BACKEND",label:"Backend / API"}
 };
 function cmsFileForPage(page){const p=CMS_PAGES.find(x=>x.id===page)||CMS_PAGES[0];return Object.entries(CMS_FILE_TYPES).map(([path,x])=>({...x,path,page:p.id,pageName:p.name,route:p.route,editable:true}));}
