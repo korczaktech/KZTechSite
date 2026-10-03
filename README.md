@@ -19,7 +19,7 @@ Atualmente, os produtos em desenvolvimento ativo são:
 
 O **HUB** é a suíte central de produtividade e colaboração. Seus aplicativos são:
 
-- **HUBVault** — arquivos e armazenamento
+- **Vault** — arquivos e armazenamento
 - **Nexus** — documentos
 - **Nexa** — planilhas
 - **Veya** — apresentações
@@ -47,7 +47,7 @@ O KOS reúne os produtos empresariais planejados e iniciados conforme o estado r
 - Página institucional e navegação responsiva.
 - Catálogo de produtos com status real.
 - Páginas de produto.
-- Página do Workspace com separação entre iniciado e planejado.
+- Página do HUB com separação entre iniciado e planejado.
 - Páginas institucionais: história, visão, valores, parcerias, carreiras, FAQ e contato.
 - Cadastro e login de usuários.
 - Perfil do usuário.
@@ -76,7 +76,7 @@ O checkout fica restrito aos produtos iniciados que possuem configuração comer
 - Korczak IDE
 - MOROK
 - KORCZAK ERP
-- Korczak Documents
+- Korczak Nexus
 
 Produtos planejados não são aceitos pelo endpoint de checkout mesmo que alguém tente enviar o ID manualmente.
 
