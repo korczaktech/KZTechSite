@@ -440,8 +440,8 @@ function requestServiceQuote(btn){
   const total=selected.reduce((n,x)=>n+x.price,0);
   try{sessionStorage.setItem("kz_quote_request",JSON.stringify({service:s[0],total,selected}))}catch{}
   registrarAnalitica("interacao","Orçamento de serviço",{categoria:"comercial",subcategoria:"orcamentos",acao:"Preparou orçamento de serviço",descricao:"Configurou recursos opcionais para solicitar um orçamento.",entidade:"servico",entidadeId:btn.dataset.serviceId,metadados:{servico:s[0],total,recursos:selected}});
-  location.hash="#/contato";
-  toast("Configuração preparada para o contato.");
+  location.hash="#/orcamento?servico="+encodeURIComponent(btn.dataset.serviceId);
+  toast("Configuração preparada para o orçamento.");
 }
 
 function commercial(){return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">01 · Área comercial</span><h2>Para quem quer conhecer, escolher e avançar.</h2><p class="section-lead">Escolha uma solução pronta e monte exatamente o que você precisa. Quanto mais recursos forem adicionados, maior será o orçamento estimado.</p><div class="actions"><a class="btn" href="#/produtos">Ver nosso portfólio '+icon("arrow")+'</a><a class="btn ghost" href="#/contato">Falar com a equipe</a></div></div><div class="section-heading commercial-services-heading"><span class="eyebrow">Serviços prontos</span><h3>Comece com uma base. Configure o restante.</h3><p class="section-lead">Cada serviço abre um painel próprio para escolher páginas, dashboards, termos, integrações, autenticação e outros recursos.</p></div><div class="service-grid"><article class="service-card"><span class="service-number">01</span><span class="eyebrow">Configuração personalizada</span><h4>Landing Page</h4><p class="muted">Página de campanha.</p><a class="text-link" href="#/servicos/landing-page">Configurar serviço →</a></article><article class="service-card"><span class="service-number">02</span><span class="eyebrow">Configuração personalizada</span><h4>Site Profissional</h4><p class="muted">Site institucional ou comercial.</p><a class="text-link" href="#/servicos/site">Configurar serviço →</a></article><article class="service-card"><span class="service-number">03</span><span class="eyebrow">Configuração personalizada</span><h4>E-commerce</h4><p class="muted">Loja virtual.</p><a class="text-link" href="#/servicos/ecommerce">Configurar serviço →</a></article><article class="service-card"><span class="service-number">04</span><span class="eyebrow">Configuração personalizada</span><h4>Aplicação Web / SaaS</h4><p class="muted">Sistema web personalizado.</p><a class="text-link" href="#/servicos/web-app">Configurar serviço →</a></article><article class="service-card"><span class="service-number">05</span><span class="eyebrow">Configuração personalizada</span><h4>Aplicativo Mobile</h4><p class="muted">Android e iOS.</p><a class="text-link" href="#/servicos/mobile">Configurar serviço →</a></article><article class="service-card"><span class="service-number">06</span><span class="eyebrow">Configuração personalizada</span><h4>API / Backend</h4><p class="muted">API ou backend próprio.</p><a class="text-link" href="#/servicos/api">Configurar serviço →</a></article><article class="service-card"><span class="service-number">07</span><span class="eyebrow">Configuração personalizada</span><h4>Integração de Sistemas</h4><p class="muted">Conexão entre sistemas.</p><a class="text-link" href="#/servicos/integration">Configurar serviço →</a></article><article class="service-card"><span class="service-number">08</span><span class="eyebrow">Configuração personalizada</span><h4>Automação de Processos</h4><p class="muted">Fluxos automatizados.</p><a class="text-link" href="#/servicos/automation">Configurar serviço →</a></article><article class="service-card"><span class="service-number">09</span><span class="eyebrow">Configuração personalizada</span><h4>Bot / Chatbot</h4><p class="muted">Atendimento e processos.</p><a class="text-link" href="#/servicos/bot">Configurar serviço →</a></article><article class="service-card"><span class="service-number">10</span><span class="eyebrow">Configuração personalizada</span><h4>Customização</h4><p class="muted">Alterações em sistema existente.</p><a class="text-link" href="#/servicos/customization">Configurar serviço →</a></article></div><div class="pricing-note"><span class="eyebrow">Como funciona</span><p class="muted">Os valores exibidos são referências iniciais. A configuração gera uma estimativa; a proposta final depende da análise técnica do escopo.</p></div></main>'}
@@ -486,7 +486,14 @@ function product(id){
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
-  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions"><button class="btn" type="button" data-action="quote" data-product="'+esc(p.id)+'">Solicitar orçamento '+icon("arrow")+'</button><button class="btn ghost" type="button" data-action="checkout" data-product="'+esc(p.id)+'">Comprar</button><a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>';
+  const isWorkspace=p.type==="Workspace";
+  const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"].includes(p.id);
+  let action="";
+  if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · condições em definição</span>';
+  else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>';
 }
 
 function company(){
@@ -500,6 +507,21 @@ function contact(){
   return '<main id="main-content" class="section shell"><span class="eyebrow">Contato</span><h2>Vamos conversar.</h2><p class="section-lead">Envie uma mensagem para a equipe Korczak Technology.</p><form class="form" id="contact-form"><label><span class="sr-only">Nome</span><input class="field" name="name" placeholder="Nome" autocomplete="name" required></label><label><span class="sr-only">Email</span><input class="field" name="email" type="email" placeholder="Email" autocomplete="email" required></label><label><span class="sr-only">Telefone</span><input class="field" name="phone" placeholder="Telefone" autocomplete="tel"></label><label><span class="sr-only">Mensagem</span><textarea class="field" name="message" rows="7" placeholder="Como podemos ajudar?" required></textarea></label><button class="btn" type="submit">Enviar mensagem '+icon("arrow")+'</button><small id="msg" class="muted form-note" role="status"></small></form></main>';
 }
 
+async function sendQuote(e){
+  e.preventDefault();
+  const form=e.target.closest("#quote-form");
+  if(!form)return;
+  const msg=form.querySelector("#quote-msg"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Enviando…";
+  try{await api("/api/quotes",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});form.reset();msg.textContent="Solicitação enviada. A equipe retornará pelo contato informado.";toast("Orçamento enviado.");}
+  catch(x){msg.textContent=x.message;toast(x.message)}
+  finally{button.disabled=false}
+}
+function quotePage(){
+  const qs=new URLSearchParams((location.hash.split("?")[1]||""));
+  const productId=qs.get("produto")||"",serviceId=qs.get("servico")||"";
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">ORÇAMENTO · SOLICITAÇÃO TÉCNICA</span><h2>Quero fazer o meu.</h2><p class="section-lead">Este formulário é diferente do contato: aqui coletamos objetivo, escopo, prazo e faixa de investimento para preparar um orçamento.</p></div><form id="quote-form" class="form quote-form"><input type="hidden" name="productId" value="'+esc(productId)+'"><input type="hidden" name="serviceId" value="'+esc(serviceId)+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><label>O que você quer fazer?<select class="field" name="objective" required><option value="">Selecione</option><option>Site ou aplicação</option><option>Produto digital</option><option>Integração</option><option>Automação</option><option>Melhoria de sistema existente</option><option>Outro</option></select></label><label>Escopo / funcionalidades<textarea class="field" name="scope" rows="6" required placeholder="Explique o que precisa ser desenvolvido."></textarea></label><label>Prazo desejado<input class="field" name="deadline" placeholder="Ex.: 30 dias, 3 meses"></label><label>Faixa de investimento (opcional)<select class="field" name="budget"><option>Prefiro não informar</option><option>Até R$ 5.000</option><option>R$ 5.000 a R$ 15.000</option><option>R$ 15.000 a R$ 50.000</option><option>Acima de R$ 50.000</option></select></label><label>Detalhes adicionais<textarea class="field" name="details" rows="5"></textarea></label><button class="btn" type="submit">Solicitar orçamento '+icon("arrow")+'</button><small id="quote-msg" class="muted form-note"></small></form></main>';
+}
 function checkoutState(kind){
   const success=kind==="sucesso";
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Checkout · '+(success?"Concluído":"Cancelado")+'</span><h2>'+(success?"Pagamento processado.":"Pagamento cancelado.")+'</h2><p class="section-lead">'+(success?"Seu checkout foi concluído pelo Stripe. O status do pedido pode ser consultado na sua conta.":"Nenhuma cobrança foi concluída nesta etapa. Você pode voltar ao catálogo e tentar novamente.")+'</p><div class="actions"><a class="btn" href="#/conta">Minha conta</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></div></main>';
@@ -593,6 +615,7 @@ function render(){
   else if(h==="/kos")c=kos();
   else if(pages[h])c=pages[h]();
   else if(h==="/contato")c=contact();
+  else if(h.startsWith("/orcamento"))c=quotePage();
   else if(h==="/conta")c=account();
   else if(h==="/checkout/sucesso")c=checkoutState("sucesso");
   else if(h==="/checkout/cancelado")c=checkoutState("cancelado");
@@ -612,7 +635,7 @@ function render(){
   root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>{updateMentorTotal(el);if(el.checked)registrarAnalitica("interacao","Tecnologia selecionada",{categoria:"comercial",subcategoria:"mentorias",acao:"Selecionou tecnologia para a mentoria",descricao:"Selecionou uma tecnologia na grade personalizada da Mentoria.",entidade:"tecnologia",entidadeId:el.closest(".mentor-tech-row")?.querySelector("b")?.textContent||""});}));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/orcamento":"Solicitar orçamento","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
   let detail=null;
   if(h.startsWith("/produto/")){
     try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[2]||""))?.name||null}catch{}
@@ -634,7 +657,7 @@ function toast(message){
 
 async function sendContact(e){
   e.preventDefault();
-  const form=e.currentTarget,msg=form.querySelector("#msg"),button=form.querySelector("button[type=submit]");
+  const form=e.target.closest("#contact-form"),msg=form.querySelector("#msg"),button=form.querySelector("button[type=submit]");
   button.disabled=true;msg.textContent="Enviando…";
   try{await api("/api/contact",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});form.reset();msg.textContent="Mensagem enviada.";toast("Mensagem enviada com sucesso.");}
   catch(x){msg.textContent=x.message;toast(x.message)}
@@ -650,10 +673,7 @@ async function checkout(id){
 }
 async function quote(id){
   if(!state.token){location.hash="#/conta";toast("Entre na sua conta para solicitar um orçamento.");return}
-  const message=prompt("Descreva o que você precisa:");
-  if(message===null)return;
-  try{await api("/api/quotes",{method:"POST",body:JSON.stringify({productId:id,message})});toast("Solicitação enviada.");}
-  catch(x){toast(x.message)}
+  location.hash="#/orcamento?produto="+encodeURIComponent(id);
 }
 
 function logout(){
@@ -715,6 +735,7 @@ async function submitAuth(e){
 }
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
+  if(e.target.id==="quote-form")sendQuote(e);
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
