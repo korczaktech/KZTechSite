@@ -478,7 +478,7 @@ function product(id){
     "workspace":["Produtividade e colaboração","Uma suíte para documentos, planilhas, apresentações, arquivos, email, agenda, reuniões, chat, formulários e sites.","Uma conta e um contexto de trabalho reúnem as ferramentas usadas diariamente por pessoas e equipes."],
     "erp":["Gestão empresarial","Núcleo de gestão para clientes, processos, financeiro e rotinas empresariais.","O ERP organiza informações centrais da empresa e cria uma base para acompanhar operações e resultados."],
     "flow":["Automação de processos","Fluxos para tarefas, aprovações, rotinas e automações.","O FLOW transforma processos repetitivos em etapas rastreáveis, com responsáveis e estados definidos."],
-    "documents":["Gestão documental empresarial","Organização, criação, consulta e histórico de documentos ligados à operação.","No KOS, o DOCUMENTS atende ao contexto empresarial e aos processos que precisam de rastreabilidade."],
+    "documents":["Documentos do Workspace","Aplicativo de documentos para criar, editar, organizar e colaborar.","O Documents pertence ao Korczak Workspace e está em construção."],
     "vision":["Visão operacional","Painéis e camadas de informação para acompanhar indicadores, contexto e atividade.","O VISION transforma dados operacionais em uma visão mais clara para acompanhamento e análise."],
     "ops":["Operações e administração","Controle técnico e operacional do ecossistema empresarial.","O OPS concentra rotinas de administração, acompanhamento e observabilidade dos serviços."],
     "connect":["Conectividade","Integração entre pessoas, sistemas, serviços e canais.","O CONNECT funciona como camada de comunicação e integração entre partes do ecossistema."],
