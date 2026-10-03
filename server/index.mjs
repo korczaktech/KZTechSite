@@ -141,12 +141,14 @@ app.get("/api/conteudo-publicado",async(req,res)=>{
   res.json(rows.map(r=>({_id:String(r._id),pagina:r.pagina,seletor:r.seletor,tipo:r.tipo,valor:r.valor,atributo:r.atributo||"",propriedade:r.propriedade||"",publicado:true,ordem:r.ordem||0})));
 });
 
+async function registrarEventoAnalitico(d={}){if(!db)return;await db.collection("analiticas").insertOne({pagina:String(d.pagina||"/").slice(0,300),tipo:String(d.tipo||"interacao").slice(0,60),categoria:String(d.categoria||"interacoes").slice(0,60),subcategoria:String(d.subcategoria||"geral").slice(0,80),acao:String(d.acao||"").slice(0,160),descricao:String(d.descricao||"").slice(0,500),referencia:String(d.referencia||"").slice(0,500),usuarioId:String(d.usuarioId||"").slice(0,100),nome:String(d.nome||"").slice(0,120),email:String(d.email||"").slice(0,180),entidade:String(d.entidade||"").slice(0,120),entidadeId:String(d.entidadeId||"").slice(0,120),metadados:d.metadados&&typeof d.metadados==="object"?d.metadados:{},dispositivo:"servidor",navegador:"",sistema:"",idioma:"pt-BR",largura:0,altura:0,evento:String(d.acao||"").slice(0,120),criadoEm:new Date()});}
 app.post("/api/analiticas/evento",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const b=req.body||{},pagina=String(b.pagina||"/").slice(0,300),tipo=String(b.tipo||"visualizacao").slice(0,60);
   if(!pagina)return res.status(400).json({error:"Página inválida"});
   await db.collection("analiticas").insertOne({
     pagina,tipo,
+    categoria:String(b.categoria||"interacoes").slice(0,60),subcategoria:String(b.subcategoria||"geral").slice(0,80),acao:String(b.acao||b.evento||"").slice(0,160),descricao:String(b.descricao||"").slice(0,500),usuarioId:String(b.usuarioId||"").slice(0,100),nome:String(b.nome||"").slice(0,120),email:String(b.email||"").slice(0,180),entidade:String(b.entidade||"").slice(0,120),entidadeId:String(b.entidadeId||"").slice(0,120),metadados:b.metadados&&typeof b.metadados==="object"?b.metadados:{},
     caminho:String(b.caminho||pagina).slice(0,500),
     titulo:String(b.titulo||"").slice(0,300),
     referencia:String(b.referencia||"").slice(0,500),
@@ -164,7 +166,7 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
   const desde=new Date(Date.now()-dias*86400000);
-  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,ultimos]=await Promise.all([
+  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,categorias,subcategorias,acoes,ultimos]=await Promise.all([
     db.collection("analiticas").countDocuments({criadoEm:{$gte:desde}}),
     db.collection("analiticas").aggregate([
       {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
@@ -191,10 +193,15 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
       {$group:{_id:{$dateToString:{format:"%Y-%m-%d",date:"$criadoEm"}},total:{$sum:1}}},
       {$sort:{_id:1}}
     ]).toArray(),
-    db.collection("analiticas").find({}).sort({criadoEm:-1}).limit(20).project({referencia:1,pagina:1,tipo:1,evento:1,dispositivo:1,criadoEm:1}).toArray()
+    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde}}},{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde}}},{$group:{_id:{categoria:"$categoria",subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
+    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde},acao:{$ne:""}}},{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
+    db.collection("analiticas").find({criadoEm:{$gte:desde}}).sort({criadoEm:-1}).limit(100).project({referencia:1,pagina:1,tipo:1,categoria:1,subcategoria:1,acao:1,descricao:1,nome:1,email:1,usuarioId:1,entidade:1,entidadeId:1,metadados:1,dispositivo:1,criadoEm:1}).toArray()
   ]);
-  res.json({dias,total,visitantes:(unicos[0]?.total||0),paginas,dispositivos,navegadores,tipos,diarios,ultimos});
+  res.json({dias,total,visitantes:(unicos[0]?.total||0),paginas,dispositivos,navegadores,tipos,diarios,categorias,subcategorias,acoes,ultimos});
 });
+app.get("/api/admin/comercial",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [orcamentos,compras,contatos]=await Promise.all([db.collection("quotes").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("orders").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("contacts").find().sort({createdAt:-1}).limit(300).toArray()]);const ids=[...new Set([...orcamentos,...compras].map(x=>String(x.userId||"")).filter(Boolean))].map(idMongo).filter(Boolean);const users=ids.length?await db.collection("users").find({_id:{$in:ids}},{projection:{passwordHash:0}}).toArray():[];const porId=new Map(users.map(u=>[String(u._id),u]));const enriquecer=x=>{const u=porId.get(String(x.userId||""));return {...x,_id:String(x._id),nome:u?.name||x.nome||"",email:u?.email||x.email||""}};res.json({orcamentos:orcamentos.map(enriquecer),compras:compras.map(enriquecer),contatos:contatos.map(x=>({...x,_id:String(x._id)}))});});
+app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos]=await Promise.all([
@@ -361,6 +368,8 @@ app.post("/api/auth/register",async(req,res)=>{
       verified:false,createdAt:new Date()
     });
     const u={_id:r.insertedId,name,email:mail,role:"user"};
+    await db.collection("atividade_contas").insertOne({usuarioId:String(r.insertedId),nome:name,email:mail,tipo:"cadastro",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",criadoEm:new Date()});
+    await registrarEventoAnalitico({tipo:"cadastro",categoria:"contas",subcategoria:"cadastros",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",usuarioId:r.insertedId,nome,email:mail,entidade:"conta",entidadeId:r.insertedId});
     res.status(201).json({user:u,token:token(u)});
   }catch(e){
     res.status(e.code===11000?409:500).json({error:e.code===11000?"Email já cadastrado":"Falha ao criar conta"});
@@ -373,6 +382,8 @@ app.post("/api/auth/login",async(req,res)=>{
   if(!u||!(await bcrypt.compare(String(req.body?.password||""),u.passwordHash)))
     return res.status(401).json({error:"Email ou senha inválidos"});
   const safe={_id:u._id,name:u.name,email:u.email,role:u.role};
+  await db.collection("atividade_contas").insertOne({usuarioId:String(u._id),nome:u.name||"",email:u.email||"",tipo:"login",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",criadoEm:new Date()});
+  await registrarEventoAnalitico({tipo:"login",categoria:"contas",subcategoria:"logins",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",usuarioId:u._id,nome:u.name,email:u.email,entidade:"conta",entidadeId:u._id});
   res.json({user:safe,token:token(safe)});
 });
 
@@ -401,10 +412,10 @@ app.post("/api/quotes",auth,async(req,res)=>{
   const productId=String(req.body?.productId||"");
   const message=String(req.body?.message||"").trim();
   if(!products.some(p=>p.id===productId)||!message)return res.status(400).json({error:"Produto e mensagem são obrigatórios"});
-  await db.collection("quotes").insertOne({
-    userId:req.user.sub,productId,message:message.slice(0,4000),
-    status:"pending",createdAt:new Date()
-  });
+  const agora=new Date();
+  await db.collection("quotes").insertOne({userId:req.user.sub,productId,message:message.slice(0,4000),status:"pending",createdAt:agora});
+  const u=await db.collection("users").findOne({_id:idMongo(req.user.sub)},{projection:{passwordHash:0}});
+  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:"/produto/"+productId,usuarioId:req.user.sub,nome:u?.name,email:u?.email,entidade:"produto",entidadeId:productId,metadados:{mensagem:message.slice(0,500)}});
   res.status(201).json({ok:true});
 });
 
@@ -479,6 +490,10 @@ async function start(){
     await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
   await db.collection("analiticas").createIndex({criadoEm:-1});
   await db.collection("analiticas").createIndex({pagina:1,criadoEm:-1});
+    await db.collection("analiticas").createIndex({categoria:1,subcategoria:1,criadoEm:-1});
+    await db.collection("analiticas").createIndex({usuarioId:1,criadoEm:-1});
+    await db.collection("atividade_contas").createIndex({criadoEm:-1});
+    await db.collection("atividade_contas").createIndex({usuarioId:1,criadoEm:-1});
     await db.collection("conteudo").createIndex({seletor:1,pagina:1},{unique:true});
     await db.collection("midias").createIndex({criadoEm:-1});
     await db.collection("usuarios_administradores").createIndex({email:1},{unique:true});
