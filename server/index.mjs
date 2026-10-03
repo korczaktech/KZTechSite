@@ -27,6 +27,9 @@ const rateBuckets=new Map();
 function rateLimit({windowMs=60000,max=60}={}){return (req,res,next)=>{const now=Date.now(),key=req.ip||"unknown",old=rateBuckets.get(key);if(!old||now-old.started>=windowMs){rateBuckets.set(key,{started:now,count:1});return next()}old.count++;if(old.count>max){res.set("Retry-After",String(Math.ceil((windowMs-(now-old.started))/1000)));return res.status(429).json({error:"Muitas solicitações. Aguarde alguns segundos e tente novamente."})}next()}}
 setInterval(()=>{const now=Date.now();for(const [k,v] of rateBuckets)if(now-v.started>900000)rateBuckets.delete(k)},900000).unref();
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
+const GITHUB_REPO=String(process.env.GITHUB_REPO||"korczaktechnology-tech/KZTechSite").replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/^\/+|\/+$/g,"");
+const GITHUB_BRANCH=String(process.env.GITHUB_BRANCH||"main").trim()||"main";
+const GITHUB_TOKEN=String(process.env.GITHUB_TOKEN||"").trim();
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
 const PLANOS_PADRAO={
   "korczak-ai":[
@@ -309,6 +312,59 @@ app.delete("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
   res.json({ok:true});
 });
 
+const CMS_SOURCE_FILES=new Set(["public/index.html","public/assets/styles.css","public/assets/app.js","public/assets/cms.js","server/index.mjs"]);
+const CMS_PAGES=[
+{id:"home",name:"Página inicial",route:"#/"},
+{id:"produtos",name:"Produtos",route:"#/produtos"},
+{id:"hub",name:"HUB",route:"#/hub"},
+{id:"kos",name:"KOS",route:"#/kos"},
+{id:"servicos",name:"Serviços",route:"#/servico"},
+{id:"mentoria",name:"Mentoria",route:"#/mentoria"},
+{id:"institucional",name:"Institucional",route:"#/institucional"},
+{id:"portfolio",name:"Portfólio",route:"#/portfolio"},
+{id:"contato",name:"Contato",route:"#/contato"},
+{id:"orcamento",name:"Orçamento",route:"#/orcamento"},
+{id:"conta",name:"Conta",route:"#/conta"},
+{id:"legal",name:"Privacidade e uso",route:"#/privacidade"},
+{id:"acesso",name:"Acesso",route:"#/acesso"}
+];
+const CMS_FILE_TYPES={
+"public/index.html":{type:"HTML",label:"HTML"},
+"public/assets/styles.css":{type:"CSS",label:"CSS"},
+"public/assets/app.js":{type:"JS",label:"JavaScript"},
+"public/assets/cms.js":{type:"CMS",label:"CMS"},
+"server/index.mjs":{type:"BACKEND",label:"Backend / API"}
+};
+function cmsFileForPage(page){const p=CMS_PAGES.find(x=>x.id===page)||CMS_PAGES[0];return Object.entries(CMS_FILE_TYPES).map(([path,x])=>({...x,path,page:p.id,pageName:p.name,route:p.route,editable:true}));}
+function githubApiUrl(path){return "https://api.github.com/repos/"+GITHUB_REPO+"/contents/"+path.split("/").map(encodeURIComponent).join("/");}
+async function githubRequest(path,options={}){
+ const headers={Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",...(options.headers||{})};
+ if(GITHUB_TOKEN)headers.Authorization="Bearer "+GITHUB_TOKEN;
+ const r=await fetch(githubApiUrl(path),{...options,headers});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw Object.assign(new Error(d.message||"Falha na comunicação com o GitHub"),{status:r.status,data:d});
+ return d;
+}
+app.get("/api/admin/cms/pages",auth,admin,async(req,res)=>res.json({repository:GITHUB_REPO,branch:GITHUB_BRANCH,pages:CMS_PAGES,react:false,files:Object.values(CMS_FILE_TYPES).map(x=>x.label)}));
+app.get("/api/admin/cms/files",auth,admin,async(req,res)=>{const page=String(req.query.page||"home");res.json({page:CMS_PAGES.find(x=>x.id===page)?.id||"home",files:cmsFileForPage(page)});});
+app.get("/api/admin/cms/file",auth,admin,async(req,res)=>{
+ const path=String(req.query.path||"");if(!CMS_SOURCE_FILES.has(path))return res.status(400).json({error:"Arquivo não permitido pelo CMS."});
+ try{const d=await githubRequest(path);const content=Buffer.from(String(d.content||"").replace(/\s/g,""),"base64").toString("utf8");res.json({path,content,sha:d.sha,branch:GITHUB_BRANCH,size:content.length});}
+ catch(e){console.error("CMS read error:",e?.message||e);res.status(e.status===404?404:502).json({error:"Não foi possível ler o arquivo-fonte no GitHub.",details:e.message});}
+});
+app.put("/api/admin/cms/file",auth,admin,async(req,res)=>{
+ const path=String(req.body?.path||""),content=String(req.body?.content??""),sha=String(req.body?.sha||"");
+ if(!CMS_SOURCE_FILES.has(path))return res.status(400).json({error:"Arquivo não permitido pelo CMS."});
+ if(!sha)return res.status(400).json({error:"SHA do arquivo ausente. Recarregue o editor antes de salvar."});
+ if(content.length>2000000)return res.status(413).json({error:"Arquivo muito grande para edição pelo CMS."});
+ if(!GITHUB_TOKEN)return res.status(503).json({error:"CMS de fonte ainda não está conectado ao GitHub. Configure GITHUB_TOKEN no Render."});
+ try{
+  const message=String(req.body?.message||("CMS: atualizar "+path)).slice(0,200);
+  const d=await githubRequest(path,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,content:Buffer.from(content,"utf8").toString("base64"),sha,branch:GITHUB_BRANCH})});
+  await registrarAuditoria(req,"cms_salvar_fonte","Arquivo "+path+" atualizado no GitHub. Commit "+(d.commit?.sha||""));
+  res.json({ok:true,path,sha:d.content?.sha||null,commit:d.commit?.sha||null});
+ }catch(e){console.error("CMS write error:",e?.message||e);const conflict=e.status===409||e.status===422;res.status(conflict?409:502).json({error:conflict?"O arquivo mudou no GitHub antes do salvamento. Recarregue e tente novamente.":"Não foi possível salvar o arquivo no GitHub.",details:e.message});}
+});
 app.get("/api/admin/midias",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const rows=await db.collection("midias").find({}, {projection:{dados:0}}).sort({criadoEm:-1}).limit(300).toArray();
