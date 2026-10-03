@@ -728,3 +728,76 @@ button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4)
   .quote-form{padding:20px;border-radius:16px}
   .quote-form .btn{width:100%}
 }
+
+
+/* Catalog / institutional container refinement */
+.section-group{
+  position:relative;
+  margin-top:34px;
+  padding:26px 0 4px;
+  background:transparent;
+  border:0;
+  border-top:1px solid rgba(255,255,255,.08);
+  box-shadow:none;
+  overflow:visible;
+}
+.section-group:first-of-type{margin-top:26px}
+.product-catalog-section{padding-top:28px}
+.product-catalog-section .split-head{margin-bottom:20px}
+.product-hub-grid,.product-kos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:0;
+  background:transparent;
+  border:0;
+}
+.product-hub-grid .hub-app{
+  position:relative;
+  min-height:230px;
+  padding:28px;
+  border:1px solid #292929;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  box-shadow:0 18px 55px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.04);
+  transition:transform .28s var(--ease),border-color .28s ease,box-shadow .28s ease;
+}
+.product-hub-grid .hub-app:hover{
+  transform:translateY(-5px);
+  border-color:#444;
+  box-shadow:0 24px 65px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.05);
+}
+.product-hub-grid .hub-app.planned{opacity:1}
+.product-hub-grid .hub-app h3{margin:24px 0 8px;font-size:23px}
+.product-hub-grid .hub-app .btn{margin-top:18px}
+.product-kos-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.product-kos-grid .card{
+  min-height:230px;
+  border:1px solid #292929;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  padding:28px;
+}
+.product-kos-grid .card:hover{
+  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(141,108,255,.035));
+}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin-top:0;
+  background:transparent;
+  border:0;
+}
+.section-group .info-grid{margin-top:0}
+.section-group .info-card{min-height:230px}
+@media(max-width:1000px){
+  .product-hub-grid,.product-kos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .section-group{padding-top:22px;margin-top:26px}
+  .product-hub-grid,.product-kos-grid,.info-grid{grid-template-columns:1fr}
+  .product-hub-grid .hub-app,.product-kos-grid .card{min-height:0;padding:24px;border-radius:16px}
+}
