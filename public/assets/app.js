@@ -4,17 +4,17 @@ window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app
 const APP_VERSION="2026.10.02.24";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
-  {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Em evolução",description:"Inteligência e automação para o ecossistema Korczak."},
-  {id:"morok",name:"MOROK",type:"Assistente",status:"Em desenvolvimento",description:"Assistente pessoal e operacional multiplataforma."},
-  {id:"ide",name:"Korczak IDE",type:"Developer Tool",status:"Em desenvolvimento",description:"Ambiente de desenvolvimento para projetos Korczak."},
-  {id:"workspace",name:"Korczak Workspace",type:"Produtividade",status:"Em evolução",description:"Suíte de produtividade e colaboração para documentos, arquivos, agenda, comunicação e trabalho em equipe."},
-  {id:"flow",name:"KORCZAK FLOW",type:"Operations",status:"Em desenvolvimento",description:"Fluxos e automações para operações digitais."},
-  {id:"documents",name:"KORCZAK DOCUMENTS",type:"Documents",status:"Em desenvolvimento",description:"Documentos e organização de informação."},
-  {id:"vision",name:"KORCZAK VISION",type:"Intelligence",status:"Em desenvolvimento",description:"Visão e inteligência para decisões digitais."},
-  {id:"ops",name:"KORCZAK OPS",type:"Operations",status:"Em desenvolvimento",description:"Operações e administração do ecossistema."},
-  {id:"connect",name:"KORCZAK CONNECT",type:"Connectivity",status:"Em desenvolvimento",description:"Conectividade entre pessoas, sistemas e serviços."},
-  {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Em desenvolvimento",description:"Experiências móveis para o ecossistema Korczak."},
-  {id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Em desenvolvimento",description:"Gestão empresarial para clientes, processos, financeiro e operação."}
+  {id:"korczak-ai",name:"Korczak AI",type:"AI",status:"Iniciado",description:"Produto em desenvolvimento ativo de inteligência e automação."},
+  {id:"ide",name:"Korczak IDE",type:"Developer Tool",status:"Iniciado",description:"Ambiente de desenvolvimento em construção ativa."},
+  {id:"morok",name:"MOROK",type:"Assistente",status:"Iniciado",description:"Assistente pessoal e operacional em desenvolvimento ativo."},
+  {id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Iniciado",description:"Sistema de gestão empresarial em desenvolvimento ativo."},
+  {id:"workspace",name:"Korczak Workspace",type:"Produtividade",status:"Em construção",description:"Suíte em construção; atualmente apenas o Korczak Documents está iniciado."},
+  {id:"documents",name:"KORCZAK DOCUMENTS",type:"Documents",status:"Iniciado",description:"Único produto iniciado atualmente dentro do Workspace."},
+  {id:"flow",name:"KORCZAK FLOW",type:"Operations",status:"Planejado",description:"Produto planejado para automação de processos."},
+  {id:"vision",name:"KORCZAK VISION",type:"Intelligence",status:"Planejado",description:"Produto planejado para visão operacional."},
+  {id:"ops",name:"KORCZAK OPS",type:"Operations",status:"Planejado",description:"Produto planejado para operações."},
+  {id:"connect",name:"KORCZAK CONNECT",type:"Connectivity",status:"Planejado",description:"Produto planejado para integração."},
+  {id:"mobile",name:"KORCZAK MOBILE",type:"Mobile",status:"Planejado",description:"Produto planejado para mobilidade."}
 ];
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
@@ -444,8 +444,8 @@ function products(){
  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Produtos · Catálogo</span><h2>Do trabalho diário à operação empresarial.</h2><p class="section-lead">Explore os produtos da Korczak Technology. O Workspace é a suíte de produtividade; o KOS é a suíte voltada à operação de empresas.</p><div class="actions"><a class="btn ghost" href="#/workspace">Abrir Korczak Workspace '+icon("arrow")+'</a><a class="btn ghost" href="#/kos">Explorar KOS '+icon("arrow")+'</a></div></div>'+groups.map(g=>'<section class="section-group"><div class="split-head"><div><span class="eyebrow">'+esc(g[0])+'</span><h3>'+g[0]+'</h3></div><span class="muted">'+g[1].length+' produto(s)</span></div><div class="grid">'+g[1].map((p,i)=>card(p,i)).join("")+'</div></section>').join("")+'</main>';
 }
 function workspace(){
- const apps=[["documents","Korczak Documents","Documentos de texto, edição e colaboração."],["sheets","Korczak Sheets","Planilhas, dados, fórmulas e análises."],["slides","Korczak Slides","Apresentações e materiais visuais."],["drive","Korczak Drive","Arquivos, pastas e armazenamento organizado."],["mail","Korczak Mail","Comunicação por email para o trabalho."],["calendar","Korczak Calendar","Agenda, eventos, reuniões e compromissos."],["meet","Korczak Meet","Reuniões e comunicação por vídeo."],["chat","Korczak Chat","Comunicação rápida entre pessoas e equipes."],["forms","Korczak Forms","Formulários, coleta de informações e respostas."],["sites","Korczak Sites","Páginas internas e espaços compartilhados."]];
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Korczak Workspace</span><h2>A suíte de produtividade da Korczak.</h2><p class="section-lead">O Workspace reúne ferramentas para o trabalho diário, seguindo a mesma categoria de necessidades atendidas por suítes como o Google Workspace: criar, armazenar, comunicar, organizar e colaborar.</p></div><div class="grid">'+apps.map((a,i)=>'<article class="card"><span class="status">Workspace</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><h3>'+esc(a[1])+'</h3><p class="muted">'+esc(a[2])+'</p><span class="card-arrow">'+icon("arrow")+'</span></article>').join("")+'</div><div class="rule"></div><span class="eyebrow">Como funciona</span><h3>Uma conta, várias ferramentas.</h3><p class="section-lead">O usuário trabalha em um espaço comum, com documentos, arquivos, comunicação e agenda conectados ao contexto de sua equipe.</p></main>';
+ const apps=[["documents","Korczak Documents","Documentos de texto, edição e colaboração.","Iniciado"],["sheets","Korczak Sheets","Planejado — ainda não iniciado.","Planejado"],["slides","Korczak Slides","Planejado — ainda não iniciado.","Planejado"],["drive","Korczak Drive","Planejado — ainda não iniciado.","Planejado"],["mail","Korczak Mail","Planejado — ainda não iniciado.","Planejado"],["calendar","Korczak Calendar","Planejado — ainda não iniciado.","Planejado"],["meet","Korczak Meet","Planejado — ainda não iniciado.","Planejado"],["chat","Korczak Chat","Planejado — ainda não iniciado.","Planejado"],["forms","Korczak Forms","Planejado — ainda não iniciado.","Planejado"],["sites","Korczak Sites","Planejado — ainda não iniciado.","Planejado"]];
+ return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Korczak Workspace</span><h2>Produtividade em construção.</h2><p class="section-lead">O Workspace está sendo construído por etapas. Atualmente, o único produto iniciado é o Korczak Documents. Os demais módulos abaixo são planejamento futuro.</p></div><section class="workspace-grid">'+apps.map((a,i)=>'<article class="workspace-app '+(a[3]==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(a[3])+'</span><h3>'+esc(a[1])+'</h3><p class="muted">'+esc(a[2])+'</p>'+(a[0]==="documents"?'<a class="text-link" href="#/produto/documents">Abrir produto →</a>':"")+'</article>').join("")+'</section></main>';
 }
 function kos(){
  const ids=["erp","flow","documents","vision","ops","connect","mobile"];
