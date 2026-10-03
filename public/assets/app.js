@@ -32,7 +32,7 @@ const PLAN_CATALOG={
   "korczak-ai":[
     {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Para conhecer o Korczak AI e usar os recursos essenciais.",features:["Acesso gratuito","Recursos essenciais","Limites de uso para começar"]},
     {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente sem chegar ao nível profissional.",features:["Tudo do Free","Mais capacidade de uso","Recursos ampliados"]},
-    {id:"plus",name:"Plus",price:26,preSalePrice:22,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
+    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
     {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Mais capacidade para tarefas intensas, projetos e trabalho profissional.",features:["Tudo do Plus","Limites muito maiores","Recursos profissionais"]},
     {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Camada de maior utilização para cargas de trabalho intensas.",features:["Tudo do Pro","Capacidade máxima da linha","Uso intensivo"]},
   ],
@@ -514,6 +514,11 @@ function planSectionFor(id){
     return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(hasPrice?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(pre!==null&&pre!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(pre)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/orcamento?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Quero este plano '+icon("arrow")+'</a></article>';
   }).join("")+'</div><p class="muted plan-footnote">A pré-venda aplica 15% de desconto sobre o preço comercial já ajustado. Valores empresariais podem depender de quantidade de usuários e escopo.</p></section>';
 }
+function productPlansPage(id){
+  const p=state.products.find(x=>x.id===id),key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
+  if(!p||!plans.length)return product(id);
+  return '<main id="main-content" class="mentor-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KORCZAK TECHNOLOGY · PLANOS</span><h1>'+esc(p.name)+'<br><span>Planos e condições</span></h1><p>Escolha o nível de uso adequado. Os preços abaixo já refletem a política comercial definida para o produto.</p><div class="actions"><a class="btn ghost" href="#/produto/'+encodeURIComponent(id)+'">Conhecer produto →</a><a class="btn" href="#/orcamento?produto='+encodeURIComponent(id)+'">Quero este produto →</a></div></div><div class="mentor-price-hero"><small>Pré-venda</small><strong>-15%</strong></div></section><section class="section shell"><div class="split-head"><div><span class="eyebrow">01 · PLANOS</span><h2>Compare as opções.</h2></div><span class="muted">'+esc(key==="workspace"?"Por usuário/mês · apps da suíte compartilham o catálogo":"Planos do produto")+'</span></div><div class="mentor-track-grid product-plan-grid">'+plans.map(plan=>{const price=plan.price,pre=plan.preSalePrice;return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(price===null?'<strong>Sob consulta</strong>':'<strong>'+money(price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>')+'</div>'+(pre!==null&&pre!==undefined&&pre!==price?'<div class="plan-presale"><span>Pré-venda · 15% OFF</span><b>'+money(pre)+'</b></div>':"")+(plan.monthly!==undefined?'<div class="plan-monthly"><span>Mensalidade</span><b>'+money(plan.monthly)+'</b><small>/ mês</small></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/orcamento?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Solicitar →</a></article>'}).join("")+'</div></section><section class="section shell split"><span class="eyebrow">02 · PRÉ-VENDA</span><div><h2>Condição antecipada.</h2><p>A pré-venda aplica 15% de desconto sobre o preço comercial já convertido e ajustado. O desconto aparece separadamente para deixar claro o valor normal e o valor promocional.</p><p>Para produtos com implantação e mensalidade, o desconto é aplicado aos dois componentes.</p></div></section></main>';
+}
 function product(id){
   const p=state.products.find(x=>x.id===id);
   if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>'+planBlock;
@@ -538,7 +543,7 @@ function product(id){
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
-  else if(isKOS&&["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&["korczak-ai","ide","workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
   else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
@@ -671,6 +676,7 @@ function render(){
   else if(h==="/privacidade")c=legal("privacidade");
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
+  else if(h.startsWith("/planos/")){let productId="";try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}c=productPlansPage(productId);}
   else if(h.startsWith("/produto/")){
     let productId="";
     try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}
