@@ -6,7 +6,7 @@ const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[
 {id:"korczak-ai",name:"Korczak AI",type:"KOS",status:"Iniciado",description:"Inteligência e automação para o ecossistema Korczak."},
 {id:"ide",name:"Korczak IDE",type:"KOS",status:"Iniciado",description:"Ambiente de desenvolvimento em construção ativa."},
-{id:"morok",name:"MOROK",type:"KOS",status:"Iniciado",description:"Assistente pessoal e operacional."},
+{id:"morok",name:"MOROK",type:"KOS",status:"Em desenvolvimento",description:"Assistente pessoal e operacional em desenvolvimento."},
 {id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Iniciado",description:"Gestão empresarial."},
 {id:"flow",name:"KORCZAK FLOW",type:"KOS",status:"Planejado",description:"Fluxos e automações."},
 {id:"vision",name:"KORCZAK VISION",type:"KOS",status:"Planejado",description:"Visão operacional."},
@@ -28,7 +28,40 @@ const FALLBACK_PRODUCTS=[
 {id:"tasks",name:"Korczak Tasks",type:"Workspace",status:"Planejado",description:"Tarefas."},
 {id:"keep",name:"Korczak Keep",type:"Workspace",status:"Planejado",description:"Notas."}
 ];
-const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
+const PLAN_CATALOG={
+  "korczak-ai":[
+    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Para conhecer o Korczak AI e usar os recursos essenciais.",features:["Acesso gratuito","Recursos essenciais","Limites de uso para começar"]},
+    {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente sem chegar ao nível profissional.",features:["Tudo do Free","Mais capacidade de uso","Recursos ampliados"]},
+    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
+    {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Mais capacidade para tarefas intensas, projetos e trabalho profissional.",features:["Tudo do Plus","Limites muito maiores","Recursos profissionais"]},
+    {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Camada de maior utilização para cargas de trabalho intensas.",features:["Tudo do Pro","Capacidade máxima da linha","Uso intensivo"]},
+  ],
+  "ide":[
+    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Ambiente de desenvolvimento para começar sem custo.",features:["Editor e recursos essenciais","Uso individual","Sem mensalidade"]},
+    {id:"pro",name:"Pro",price:52,preSalePrice:44,billing:"mês",tag:"Individual",description:"Para desenvolvimento diário com recursos de assistência ampliados.",features:["Tudo do Free","Assistência avançada","Mais uso mensal"]},
+    {id:"pro-plus",name:"Pro+",price:203,preSalePrice:173,billing:"mês",tag:"Avançado",description:"Para projetos mais complexos e uso intenso de modelos premium.",features:["Tudo do Pro","Modelos premium","Maior capacidade"]},
+    {id:"max",name:"Max",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Para fluxos de desenvolvimento contínuos e de alto volume.",features:["Tudo do Pro+","Uso de alto volume","Prioridade em recursos avançados"]},
+    {id:"business",name:"Business",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Equipes",description:"Gestão e governança para equipes de desenvolvimento.",features:["Tudo do Pro","Controle de acesso e orçamento","Governança e privacidade"]},
+    {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações que precisam de implantação em escala.",features:["Tudo do Business","Recursos corporativos","Maior capacidade organizacional"]},
+  ],
+  "workspace":[
+    {id:"starter",name:"Starter",price:37,preSalePrice:31,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Sheets, Drive, Meet e mais"]},
+    {id:"standard",name:"Standard",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e recursos para equipes em crescimento.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados de colaboração e IA"]},
+    {id:"plus",name:"Plus",price:116,preSalePrice:99,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança e administração avançadas"]},
+    {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração para organizações com necessidades corporativas específicas.",features:["Recursos Enterprise","Controles corporativos","Preço definido conforme escopo"]},
+  ],
+  "erp":[
+    {id:"erp-standard",name:"KORCZAK ERP",price:48750,preSalePrice:41438,billing:"implantação",monthly:940,preSaleMonthly:799,tag:"Compra + mensal",description:"Implantação de um ERP completo com mensalidade de operação e suporte.",features:["Implantação do sistema","Gestão empresarial integrada","Mensalidade de operação e manutenção"]}
+  ],
+  "flow":[
+    {id:"flow-standard",name:"KORCZAK FLOW",price:26250,preSalePrice:22313,billing:"implantação",monthly:1553,preSaleMonthly:1320,tag:"Compra + mensal",description:"Implantação de plataforma de fluxos, aprovações e automações.",features:["Mapeamento e implantação","Fluxos e aprovações","Mensalidade de operação e manutenção"]}
+  ],
+  "wms":[
+    {id:"wms-standard",name:"KORCZAK WMS",price:185635,preSalePrice:157790,billing:"implantação",monthly:4494,preSaleMonthly:3820,tag:"Compra + mensal",description:"Implantação de gestão de armazém para operações de maior complexidade.",features:["Implantação do WMS","Gestão de estoque e movimentação","Mensalidade de operação e manutenção"]}
+  ]
+};
+
+const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const money=value=>{const n=Number(value);return Number.isFinite(n)?n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2,maximumFractionDigits:2}):"R$ 0,00"};
@@ -468,6 +501,16 @@ function kos(){
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell workspace-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="workspace-grid">'+items.map((p,i)=>'<article class="workspace-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
+function planKeyForProduct(id){return id==="documents"?"workspace":id;}
+function planSectionFor(id){
+  const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
+  if(!plans.length)return "";
+  const title=key==="workspace"?"Planos do Korczak Workspace":"Planos do "+(id==="korczak-ai"?"Korczak AI":"Korczak IDE");
+  return '<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS · INVESTIMENTO</span><h3>'+title+'</h3><p class="section-lead">Preços mensais definidos a partir das referências de mercado escolhidas, convertidos para reais e ajustados pela política comercial da Korczak.</p><div class="mentor-track-grid product-plan-grid">'+plans.map(plan=>{
+    const hasPrice=Number.isFinite(Number(plan.price)),pre=Number.isFinite(Number(plan.preSalePrice))?plan.preSalePrice:null;
+    return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(hasPrice?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(pre!==null&&pre!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(pre)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/orcamento?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Quero este plano '+icon("arrow")+'</a></article>';
+  }).join("")+'</div><p class="muted plan-footnote">A pré-venda aplica 15% de desconto sobre o preço comercial já ajustado. Valores empresariais podem depender de quantidade de usuários e escopo.</p></section>';
+}
 function product(id){
   const p=state.products.find(x=>x.id===id);
   if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>'+planBlock;
@@ -485,14 +528,14 @@ function product(id){
     "mobile":["Operação em mobilidade","Experiência móvel para acessar e operar recursos empresariais.","O MOBILE leva recursos selecionados do ecossistema para contextos em que a operação acontece fora do desktop."]
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
-  const planBlock=(["korczak-ai","ide","documents"].includes(p.id))?'<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS</span><h3>Escolha conforme seu uso.</h3><p class="section-lead">Os valores e recursos comerciais serão definidos antes da abertura das assinaturas.</p><div class="grid"><article class="detail-panel"><h3>Inicial</h3><p class="muted">Recursos essenciais para começar.</p><strong>Plano a definir</strong></article><article class="detail-panel"><h3>Profissional</h3><p class="muted">Mais recursos e capacidade.</p><strong>Plano a definir</strong></article><article class="detail-panel"><h3>Empresarial</h3><p class="muted">Para equipes e uso ampliado.</p><strong>Plano a definir</strong></article></div></section>':"";
+  const planBlock=(["korczak-ai","ide","documents"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="Workspace";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
-  else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · condições em definição</span>';
+  else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
   else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>'+planBlock;
 }
@@ -807,6 +850,7 @@ async function load(){
   try{
     const products=await api("/api/products");
     if(Array.isArray(products)&&products.length)state.products=products;
+    try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...PLAN_CATALOG,...plans};}catch{}
   }catch{}
   if(state.token){
     try{
