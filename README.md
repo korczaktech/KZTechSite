@@ -15,15 +15,30 @@ Atualmente, os produtos em desenvolvimento ativo são:
 - **MOROK**
 - **KORCZAK ERP**
 
-### Korczak Workspace
+### HUB
 
-O Workspace está em construção. **O único produto do Workspace iniciado atualmente é o Korczak Documents.**
+O **HUB** é a suíte central de produtividade e colaboração. Seus aplicativos são:
 
-Os demais conceitos do Workspace — Sheets, Slides, Drive, Mail, Calendar, Meet, Chat, Forms e Sites — permanecem planejados e são exibidos no site explicitamente como planejados.
+- **HUBVault** — arquivos e armazenamento
+- **Nexus** — documentos
+- **Nexa** — planilhas
+- **Veya** — apresentações
+- **Formly** — formulários
+- **Korvo** — e-mail
+- **Chrona** — calendário
+- **Meet** — videoconferências
+- **Pulse** — chat e comunicação
+- **Acta** — tarefas
+- **Memo** — anotações
+- **People** — contatos
+- **Web** — criação de sites
+- **Klash** — notas rápidas e lembretes
+
+O HUB está em construção e os aplicativos são apresentados separadamente conforme seu estágio real.
 
 ### KOS
 
-O KOS reúne os produtos empresariais planejados e iniciados conforme o estado real do projeto. Neste momento, **KORCZAK ERP é o produto do KOS em desenvolvimento ativo**. FLOW, DOCUMENTS, VISION, OPS, CONNECT e MOBILE permanecem planejados; o KORCZAK DOCUMENTS do Workspace é um produto separado do KOS.
+O KOS reúne os produtos empresariais planejados e iniciados conforme o estado real do projeto. Neste momento, **KORCZAK ERP é o produto do KOS em desenvolvimento ativo**. FLOW, VISION, OPS, CONNECT, MOBILE e WMS permanecem planejados.
 
 > KORCZAK AI, Korczak IDE e MOROK são produtos próprios do ecossistema Korczak e não devem ser apresentados como módulos já implementados do KOS.
 
