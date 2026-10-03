@@ -290,7 +290,7 @@ app.get("/api/admin/interessados",auth,admin,async(req,res)=>{
 app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
-  const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos]=await Promise.all([
+  const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos,interessadosAI]=await Promise.all([
     db.collection("conteudo").countDocuments(),
     db.collection("midias").countDocuments(),
     db.collection("usuarios_administradores").countDocuments(),
@@ -298,9 +298,10 @@ app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
     db.collection("users").countDocuments(),
     db.collection("contacts").countDocuments(),
     db.collection("quotes").countDocuments(),
-    db.collection("orders").countDocuments()
+    db.collection("orders").countDocuments(),
+    db.collection("interessados").countDocuments({produto:"korczak-ai"})
   ]);
-  res.json({"Regras de conteúdo":conteudo,"Mídias":midias,"Administradores":admins,"Registros de auditoria":auditoria,"Usuários":usuarios,"Contatos":contatos,"Orçamentos":orcamentos,"Pedidos":pedidos});
+  res.json({"Regras de conteúdo":conteudo,"Mídias":midias,"Administradores":admins,"Registros de auditoria":auditoria,"Usuários":usuarios,"Contatos":contatos,"Orçamentos":orcamentos,"Pedidos":pedidos,"Interessados Korczak AI":interessadosAI});
 });
 app.get("/api/admin/conteudo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
