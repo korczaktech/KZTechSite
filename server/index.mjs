@@ -146,9 +146,19 @@ app.post("/api/analiticas/evento",async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const b=req.body||{},pagina=String(b.pagina||"/").slice(0,300),tipo=String(b.tipo||"visualizacao").slice(0,60);
   if(!pagina)return res.status(400).json({error:"Página inválida"});
+  let usuarioId=String(b.usuarioId||"").slice(0,100);
+  let nome=String(b.nome||"").slice(0,120);
+  let emailEvento=String(b.email||"").slice(0,180);
+  if(usuarioId){
+    const u=idMongo(usuarioId)?await db.collection("users").findOne({_id:idMongo(usuarioId)},{projection:{name:1,email:1}}):null;
+    if(u){nome=String(u.name||nome).slice(0,120);emailEvento=String(u.email||emailEvento).slice(0,180);}
+  }else if(emailEvento){
+    const u=await db.collection("users").findOne({email:email(emailEvento)},{projection:{name:1,email:1}});
+    if(u){usuarioId=String(u._id);nome=String(u.name||nome).slice(0,120);emailEvento=String(u.email||emailEvento).slice(0,180);}
+  }
   await db.collection("analiticas").insertOne({
     pagina,tipo,
-    categoria:String(b.categoria||"interacoes").slice(0,60),subcategoria:String(b.subcategoria||"geral").slice(0,80),acao:String(b.acao||b.evento||"").slice(0,160),descricao:String(b.descricao||"").slice(0,500),usuarioId:String(b.usuarioId||"").slice(0,100),nome:String(b.nome||"").slice(0,120),email:String(b.email||"").slice(0,180),entidade:String(b.entidade||"").slice(0,120),entidadeId:String(b.entidadeId||"").slice(0,120),metadados:b.metadados&&typeof b.metadados==="object"?b.metadados:{},
+    categoria:String(b.categoria||"interacoes").slice(0,60),subcategoria:String(b.subcategoria||"geral").slice(0,80),acao:String(b.acao||b.evento||"").slice(0,160),descricao:String(b.descricao||"").slice(0,500),usuarioId,nome,email:emailEvento,entidade:String(b.entidade||"").slice(0,120),entidadeId:String(b.entidadeId||"").slice(0,120),metadados:b.metadados&&typeof b.metadados==="object"?b.metadados:{},
     caminho:String(b.caminho||pagina).slice(0,500),
     titulo:String(b.titulo||"").slice(0,300),
     referencia:String(b.referencia||"").slice(0,500),
