@@ -29,12 +29,8 @@ setInterval(()=>{const now=Date.now();for(const [k,v] of rateBuckets)if(now-v.st
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
 const commercialProducts=Object.fromEntries([
-  ["korczak-ai",{amount:4990,currency:"brl",priceId:process.env.STRIPE_PRICE_KORCZAK_AI||""}],
-   ["ide",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_IDE||""}],
-  ["morok",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOROK||""}],
-  ["erp",{amount:9990,currency:"brl",priceId:process.env.STRIPE_PRICE_ERP||""}],
-   ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}],
- ]);
+  ["erp",{amount:0,currency:"brl",priceId:""}]
+]);
 
 const products=[
 ["korczak-ai","KORCZAK AI","Inteligência","Produto iniciado: inteligência e automação para o ecossistema Korczak.","Iniciado"],
@@ -43,7 +39,6 @@ const products=[
 ["morok","MOROK","Assistente","Produto iniciado: assistente pessoal e operacional multiplataforma.","Iniciado"],
 ["erp","KORCZAK ERP","Gestão","Produto iniciado: gestão empresarial para clientes, processos, financeiro e operação.","Iniciado"],
 ["flow","KORCZAK FLOW","Operations","Produto planejado para fluxos e automações operacionais.","Planejado"],
-["documents","KORCZAK DOCUMENTS","Documents","Único produto iniciado atualmente dentro do Workspace.","Iniciado"],
 ["vision","KORCZAK VISION","Intelligence","Produto planejado para visão e inteligência operacional.","Planejado"],
 ["ops","KORCZAK OPS","Operations","Produto planejado para operações e administração do ecossistema.","Planejado"],
 ["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
@@ -426,12 +421,18 @@ app.get("/api/me",auth,async(req,res)=>{
 app.post("/api/quotes",auth,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const productId=String(req.body?.productId||"");
-  const message=String(req.body?.message||"").trim();
-  if(!products.some(p=>p.id===productId)||!message)return res.status(400).json({error:"Produto e mensagem são obrigatórios"});
+  const objective=String(req.body?.objective||"").trim();
+  const scope=String(req.body?.scope||"").trim();
+  const name=String(req.body?.name||"").trim();
+  const mail=email(req.body?.email);
+  const phone=String(req.body?.phone||"").trim();
+  const serviceId=String(req.body?.serviceId||"").trim();
+  if((!products.some(p=>p.id===productId)&&!serviceId)||name.length<2||!emailValida(mail)||phone.length<8||objective.length<2||scope.length<10)
+    return res.status(400).json({error:"Preencha os campos obrigatórios do orçamento"});
   const agora=new Date();
-  await db.collection("quotes").insertOne({userId:req.user.sub,productId,message:message.slice(0,4000),status:"pending",createdAt:agora});
+  await db.collection("quotes").insertOne({userId:req.user.sub,productId:productId||null,serviceId:serviceId||null,name,email:mail,phone,company:String(req.body?.company||"").slice(0,180),objective,scope:scope.slice(0,8000),deadline:String(req.body?.deadline||"").slice(0,180),budget:String(req.body?.budget||"").slice(0,180),details:String(req.body?.details||"").slice(0,5000),status:"pending",createdAt:agora});
   const u=await db.collection("users").findOne({_id:idMongo(req.user.sub)},{projection:{passwordHash:0}});
-  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:"/produto/"+productId,usuarioId:req.user.sub,nome:u?.name,email:u?.email,entidade:"produto",entidadeId:productId,metadados:{mensagem:message.slice(0,500)}});
+  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:"/produto/"+productId,usuarioId:req.user.sub,nome:u?.name,email:u?.email,entidade:"produto",entidadeId:productId,metadados:{objetivo:objective,escopo:scope.slice(0,500),servico:serviceId||null,produto:productId||null}});
   res.status(201).json({ok:true});
 });
 
@@ -448,7 +449,7 @@ app.post("/api/checkout",rateLimit({windowMs:60000,max:12}),auth,async(req,res)=
   if(!stripe)return res.status(503).json({error:"Stripe não configurado"});
   const p=products.find(x=>x.id===req.body?.productId);
   const config=p&&commercialProducts[p.id];
-  if(!p||!config)return res.status(400).json({error:"Produto não disponível para compra"});
+  if(!p||!config||!config.priceId)return res.status(409).json({error:"O modelo comercial deste produto ainda está em definição. Não há compra automática disponível."});
   let amount=config.amount;
   let currency=config.currency;
   if(config.priceId){
