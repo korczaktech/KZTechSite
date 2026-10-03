@@ -11,7 +11,7 @@ const PORT=Number(process.env.PORT||3000);
 const isProd=process.env.NODE_ENV==="production";
 const SECRET=process.env.JWT_SECRET||"";
 const SITE_URL=(process.env.SITE_URL||"").replace(/\/$/,"");
-const DEFAULT_FRONTEND_ORIGINS=["https://korczaktechnology-tech.github.io"];
+const DEFAULT_FRONTEND_ORIGINS=["https://korczaktech.github.io"];
 const FRONTEND_URLS=(process.env.FRONTEND_URL||"").split(",").map(v=>v.trim().replace(/\/$/,"")).filter(Boolean);
 const FRONTEND_ORIGINS=FRONTEND_URLS.map(v=>{try{return new URL(v).origin}catch{return v}}).filter(Boolean);
 const ALLOWED_ORIGINS=[...new Set([...DEFAULT_FRONTEND_ORIGINS,...FRONTEND_ORIGINS,SITE_URL,"https://kztechsite.onrender.com"].filter(Boolean))];
@@ -27,7 +27,7 @@ const rateBuckets=new Map();
 function rateLimit({windowMs=60000,max=60}={}){return (req,res,next)=>{const now=Date.now(),key=req.ip||"unknown",old=rateBuckets.get(key);if(!old||now-old.started>=windowMs){rateBuckets.set(key,{started:now,count:1});return next()}old.count++;if(old.count>max){res.set("Retry-After",String(Math.ceil((windowMs-(now-old.started))/1000)));return res.status(429).json({error:"Muitas solicitações. Aguarde alguns segundos e tente novamente."})}next()}}
 setInterval(()=>{const now=Date.now();for(const [k,v] of rateBuckets)if(now-v.started>900000)rateBuckets.delete(k)},900000).unref();
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
-const GITHUB_REPO=String(process.env.GITHUB_REPO||"korczaktechnology-tech/KZTechSite").replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/^\/+|\/+$/g,"");
+const GITHUB_REPO=String(process.env.GITHUB_REPO||"korczaktech/KZTechSite").replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/^\/+|\/+$/g,"");
 const GITHUB_BRANCH=String(process.env.GITHUB_BRANCH||"main").trim()||"main";
 const GITHUB_TOKEN=String(process.env.GITHUB_TOKEN||"").trim();
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
