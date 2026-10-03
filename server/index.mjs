@@ -210,44 +210,54 @@ app.post("/api/analiticas/evento",rateLimit({windowMs:60000,max:120}),async(req,
 });
 app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
-  const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
-  const desde=new Date(Date.now()-dias*86400000);
-  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos]=await Promise.all([
-    db.collection("analiticas").countDocuments({criadoEm:{$gte:desde}}),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
-      {$group:{_id:"$referencia"}},{$count:"total"}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
-      {$group:{_id:"$pagina",total:{$sum:1}}},{$sort:{total:-1}},{$limit:12}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde}}},
-      {$group:{_id:"$dispositivo",total:{$sum:1}}},{$sort:{total:-1}}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde}}},
-      {$group:{_id:"$navegador",total:{$sum:1}}},{$sort:{total:-1}},{$limit:8}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde}}},
-      {$group:{_id:"$tipo",total:{$sum:1}}},{$sort:{total:-1}}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([
-      {$match:{criadoEm:{$gte:desde}}},
-      {$group:{_id:{$dateToString:{format:"%Y-%m-%d",date:"$criadoEm"}},total:{$sum:1}}},
-      {$sort:{_id:1}}
-    ]).toArray(),
-    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:new Date(Date.now()-86400000)}}},{$group:{_id:{$dateTrunc:{date:"$criadoEm",unit:"minute"}},total:{$sum:1}}},{$sort:{_id:1}}]).toArray(),
-    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde}}},{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
-    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde}}},{$group:{_id:{categoria:"$categoria",subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
-    db.collection("analiticas").aggregate([{$match:{criadoEm:{$gte:desde},acao:{$ne:""}}},{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
-    db.collection("analiticas").find({criadoEm:{$gte:desde}}).sort({criadoEm:-1}).limit(100).project({referencia:1,pagina:1,tipo:1,categoria:1,subcategoria:1,acao:1,descricao:1,nome:1,email:1,usuarioId:1,entidade:1,entidadeId:1,metadados:1,dispositivo:1,criadoEm:1}).toArray()
-  ]);
-  res.json({dias,total,visitantes:(unicos[0]?.total||0),paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos});
-});
-app.get("/api/admin/comercial",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [orcamentos,compras,contatos]=await Promise.all([db.collection("quotes").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("orders").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("contacts").find().sort({createdAt:-1}).limit(300).toArray()]);const ids=[...new Set([...orcamentos,...compras].map(x=>String(x.userId||"")).filter(Boolean))].map(idMongo).filter(Boolean);const users=ids.length?await db.collection("users").find({_id:{$in:ids}},{projection:{passwordHash:0}}).toArray():[];const porId=new Map(users.map(u=>[String(u._id),u]));const enriquecer=x=>{const u=porId.get(String(x.userId||""));return {...x,_id:String(x._id),nome:u?.name||x.nome||"",email:u?.email||x.email||""}};res.json({orcamentos:orcamentos.map(enriquecer),compras:compras.map(enriquecer),contatos:contatos.map(x=>({...x,_id:String(x._id)}))});});
+  try{
+    const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
+    const desde=new Date(Date.now()-dias*86400000);
+    const base={criadoEm:{$gte:desde}};
+    const eventos=await db.collection("analiticas").find(base).project({
+      referencia:1,pagina:1,tipo:1,categoria:1,subcategoria:1,acao:1,descricao:1,nome:1,email:1,usuarioId:1,entidade:1,entidadeId:1,metadados:1,dispositivo:1,navegador:1,criadoEm:1
+    }).sort({criadoEm:-1}).limit(5000).toArray();
+
+    const countBy=(field,limit=Infinity)=>{
+      const m=new Map();
+      for(const x of eventos){const k=x?.[field]||"Não informado";m.set(k,(m.get(k)||0)+1);}
+      return [...m.entries()].map(([k,total])=>({_id:k,total})).sort((a,b)=>b.total-a.total).slice(0,limit);
+    };
+    const paginas=countBy("pagina",12);
+    const dispositivos=countBy("dispositivo");
+    const navegadores=countBy("navegador",8);
+    const tipos=countBy("tipo");
+    const categorias=countBy("categoria");
+    const subMap=new Map();
+    const acoesMap=new Map();
+    const diariosMap=new Map();
+    const mercadoMap=new Map();
+
+    for(const x of eventos){
+      const d=x?.criadoEm instanceof Date?x.criadoEm:new Date(x?.criadoEm);
+      if(Number.isNaN(d.getTime()))continue;
+      const dia=d.toISOString().slice(0,10);
+      diariosMap.set(dia,(diariosMap.get(dia)||0)+1);
+      const subKey=(x?.categoria||"Não informado")+" / "+(x?.subcategoria||"Não informado");
+      subMap.set(subKey,(subMap.get(subKey)||0)+1);
+      if(x?.acao)acoesMap.set(x.acao,(acoesMap.get(x.acao)||0)+1);
+      if(d>=new Date(Date.now()-86400000)){
+        const minuto=new Date(Math.floor(d.getTime()/60000)*60000).toISOString();
+        mercadoMap.set(minuto,(mercadoMap.get(minuto)||0)+1);
+      }
+    }
+    const subcategorias=[...subMap.entries()].map(([k,total])=>{const [categoria,subcategoria]=k.split(" / ");return{_id:{categoria,subcategoria},total};}).sort((a,b)=>b.total-a.total).slice(0,30);
+    const acoes=[...acoesMap.entries()].map(([k,total])=>({_id:k,total})).sort((a,b)=>b.total-a.total).slice(0,30);
+    const diarios=[...diariosMap.entries()].map(([_id,total])=>({_id,total})).sort((a,b)=>a._id.localeCompare(b._id));
+    const mercado=[...mercadoMap.entries()].map(([_id,total])=>({_id,total})).sort((a,b)=>a._id.localeCompare(b._id));
+    const visitantes=new Set(eventos.filter(x=>x?.tipo==="visualizacao"&&x?.referencia).map(x=>String(x.referencia))).size;
+    const ultimos=eventos.slice(0,100);
+    res.json({dias,total:eventos.length,visitantes,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos});
+  }catch(error){
+    console.error("Admin analytics error:",error);
+    res.status(500).json({error:"Erro interno ao carregar analytics"});
+  }
+});app.get("/api/admin/comercial",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [orcamentos,compras,contatos]=await Promise.all([db.collection("quotes").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("orders").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("contacts").find().sort({createdAt:-1}).limit(300).toArray()]);const ids=[...new Set([...orcamentos,...compras].map(x=>String(x.userId||"")).filter(Boolean))].map(idMongo).filter(Boolean);const users=ids.length?await db.collection("users").find({_id:{$in:ids}},{projection:{passwordHash:0}}).toArray():[];const porId=new Map(users.map(u=>[String(u._id),u]));const enriquecer=x=>{const u=porId.get(String(x.userId||""));return {...x,_id:String(x._id),nome:u?.name||x.nome||"",email:u?.email||x.email||""}};res.json({orcamentos:orcamentos.map(enriquecer),compras:compras.map(enriquecer),contatos:contatos.map(x=>({...x,_id:String(x._id)}))});});
 app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
