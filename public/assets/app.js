@@ -431,37 +431,38 @@ function subscriptionPage(){
   const requestedProduct=state.products.find(x=>x.id===requestedProductId);
   const catalog=state.content?.plans||PLAN_CATALOG||{};
   const mergedPlans={};
-  for(const [key,list] of Object.entries(catalog)){
-    if(Array.isArray(list))mergedPlans[key]=list;
-  }
-  for(const [key,list] of Object.entries(state.plans||{})){
-    if(Array.isArray(list)&&list.length)mergedPlans[key]=list;
-  }
-  const planGroups=Object.entries(mergedPlans).filter(([,list])=>list.length);
-  const findProductForKey=key=>state.products.find(x=>planKeyForProduct(x.id)===key)||state.products.find(x=>x.id===key)||null;
-  const selectedGroupKey=planId?planGroups.find(([,list])=>list.some(x=>x.id===planId))?.[0]:"";
-  const selectedPlan=selectedGroupKey?mergedPlans[selectedGroupKey].find(x=>x.id===planId):null;
-  const selectedProduct=requestedProduct||findProductForKey(selectedGroupKey);
+  for(const [key,list] of Object.entries(catalog))if(Array.isArray(list)&&list.length)mergedPlans[key]=list;
+  for(const [key,list] of Object.entries(state.plans||{}))if(Array.isArray(list)&&list.length)mergedPlans[key]=list;
+
+  // A assinatura desta página é exclusiva do KORCZAK WORKSPACE.
+  // Os aplicativos do Workspace compartilham o catálogo de planos do HUB.
+  const workspacePlans=Array.isArray(mergedPlans.hub)?mergedPlans.hub:[];
+  const planGroups=workspacePlans.length?[["hub",workspacePlans]]:[];
+
+  const selectedPlan=workspacePlans.find(x=>x.id===planId)||null;
+  const selectedProduct=state.products.find(x=>x.id==="hub")||requestedProduct||null;
   const allMods=MODULAR_CATALOG[selectedProduct?.id]||[];
   const effectiveModuleIds=moduleIds||allMods.filter(x=>x.required).map(x=>x.id).join(",");
   const mods=allMods.filter(x=>effectiveModuleIds.split(",").includes(x.id));
+
   const groupCards=planGroups.map(([key,plans])=>{
-    const groupProduct=findProductForKey(key);
-    const groupName=groupProduct?.name||(key==="hub"?"KORCZAK HUB":key);
-    return '<section class="subscription-plan-group"><div class="section-heading"><span class="eyebrow">ASSINATURAS · '+esc(groupName)+'</span><h3>Planos de '+esc(groupName)+'</h3><p class="muted">Escolha qualquer plano abaixo para avançar para a assinatura de pré-venda.</p></div><div class="presale-choice-grid">'+plans.map(pl=>{
-      const active=selectedPlan?.id===pl.id&&selectedGroupKey===key;
-      const targetProduct=groupProduct?.id||requestedProductId||key;
-      return '<a class="presale-choice '+(active?"selected":"")+'" href="#/assinatura?produto='+encodeURIComponent(targetProduct)+'&plano='+encodeURIComponent(pl.id)+'&modulos='+encodeURIComponent(key==="hub"?effectiveModuleIds:"")+'"><span class="eyebrow">'+esc(pl.tag||"PLANO")+'</span><h3>'+esc(pl.name)+'</h3><strong>'+((Number.isFinite(Number(pl.preSalePrice)))?money(pl.preSalePrice):"Sob consulta")+'</strong><small>/ '+esc(pl.billing||"mês")+'</small><span>'+esc(pl.description||"Condição especial de pré-venda")+'</span><span class="btn ghost">Escolher plano '+icon("arrow")+'</span></a>';
+    return '<section class="subscription-plan-group workspace-subscription-group"><div class="section-heading"><span class="eyebrow">WORKSPACE · ASSINATURAS</span><h3>Planos do KORCZAK WORKSPACE</h3><p class="muted">Escolha o plano do Workspace que melhor corresponde ao seu uso.</p></div><div class="workspace-plan-grid">'+plans.map(pl=>{
+      const active=selectedPlan?.id===pl.id;
+      return '<a class="workspace-plan-card '+(active?"selected":"")+'" href="#/assinatura?produto=hub&plano='+encodeURIComponent(pl.id)+'"><div class="workspace-plan-top"><span class="eyebrow">'+esc(pl.tag||"PLANO")+'</span>'+(active?'<span class="workspace-plan-selected">Selecionado</span>':"")+'</div><h3>'+esc(pl.name)+'</h3><p class="muted">'+esc(pl.description||"Condição especial de pré-venda")+'</p><div class="workspace-plan-price"><strong>'+((Number.isFinite(Number(pl.preSalePrice)))?money(pl.preSalePrice):"Sob consulta")+'</strong><small>/ '+esc(pl.billing||"mês")+'</small></div><ul class="feature-list">'+(Array.isArray(pl.features)?pl.features.map(f=>'<li>'+esc(f)+'</li>').join(""):"")+'</ul><span class="btn ghost">Escolher plano '+icon("arrow")+'</span></a>';
     }).join("")+'</div></section>';
   }).join("");
-  if(!planGroups.length)return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">PRÉ-VENDA · ASSINATURA</span><h2>Nenhum plano disponível.</h2><p class="section-lead">O catálogo de assinaturas ainda não foi carregado.</p><a class="btn" href="#/pre-venda">Voltar à pré-venda '+icon("arrow")+'</a></div></main>';
+
+  if(!planGroups.length)return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">WORKSPACE · PRÉ-VENDA</span><h2>Nenhum plano disponível.</h2><p class="section-lead">O catálogo de assinaturas do Workspace ainda não foi carregado.</p><a class="btn" href="#/pre-venda">Voltar à pré-venda '+icon("arrow")+'</a></div></main>';
+
   const implementation=mods.reduce((n,x)=>n+(Number.isFinite(Number(x.preSalePrice))?Number(x.preSalePrice):Math.round(Number(x.price||0)*.85)),0);
-  const monthly=selectedPlan?(Number.isFinite(Number(selectedPlan.preSaleMonthly))?Number(selectedPlan.preSaleMonthly):Number.isFinite(Number(selectedPlan.monthly))?Number(selectedPlan.monthly):Number.isFinite(Number(selectedPlan.preSalePrice))?Number(selectedPlan.preSalePrice):0):mods.reduce((n,x)=>n+(Number.isFinite(Number(x.preSaleMonthly))?Number(x.preSaleMonthly):Math.round(Number(x.monthly||0)*.85)),0);
-  const hasSelection=!!selectedPlan||mods.length>0;
+  const monthly=selectedPlan?(Number.isFinite(Number(selectedPlan.preSaleMonthly))?Number(selectedPlan.preSaleMonthly):Number.isFinite(Number(selectedPlan.monthly))?Number(selectedPlan.monthly):Number.isFinite(Number(selectedPlan.preSalePrice))?Number(selectedPlan.preSalePrice):0):0;
+  const hasSelection=!!selectedPlan;
   const setup=implementation>0;
-  const summaryName=selectedPlan?(selectedProduct?.name||"Produto")+" · "+selectedPlan.name:(selectedProduct?.name||"Produto")+(mods.length?" · "+mods.map(x=>x.name).join(", "):"");
-  const form=hasSelection?'<section class="subscription-layout"><div class="subscription-summary"><span class="eyebrow">RESUMO DA ASSINATURA</span><h3>'+esc(summaryName)+'</h3>'+(selectedPlan?'<div class="subscription-price-row"><span>Mensalidade</span><strong>'+money(monthly)+'</strong><small>/ mês</small></div>':"")+(setup?'<div class="subscription-price-row"><span>Implantação</span><strong>'+money(implementation)+'</strong><small>pagamento único</small></div>':"")+(mods.length?'<div class="subscription-modules"><span>Módulos</span><ul class="feature-list">'+mods.map(x=>'<li>'+esc(x.name)+'</li>').join("")+'</ul></div>':"")+'<div class="subscription-pix"><span class="eyebrow">PAGAMENTO</span><strong>Pagamento conectado em breve</strong><p class="muted">A assinatura será registrada agora. A cobrança será conectada posteriormente.</p><div class="pix-placeholder">PAGAMENTO · aguardando conexão</div></div></div><form id="subscription-form" class="form subscription-form"><input type="hidden" name="productId" value="'+esc(selectedProduct?.id||requestedProductId)+'"><input type="hidden" name="planId" value="'+esc(planId)+'"><input type="hidden" name="moduleIds" value="'+esc(effectiveModuleIds)+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><label>CPF/CNPJ (opcional)<input class="field" name="document"></label><button class="btn" type="submit">Avançar com esta assinatura '+icon("arrow")+'</button><small id="subscription-msg" class="muted form-note" role="status"></small></form></section>':'<section class="info-deep"><span class="eyebrow">ESCOLHA UMA ASSINATURA</span><h3>Selecione qualquer plano para avançar.</h3><p class="muted">Todos os planos cadastrados estão disponíveis nesta página. Depois da escolha, o resumo e o formulário de assinatura aparecerão abaixo.</p></section>';
-  return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">PRÉ-VENDA · ASSINATURA</span><h2>Escolha sua assinatura.</h2><p class="section-lead">Todos os planos disponíveis estão reunidos nesta página. Escolha um plano para avançar para o cadastro da pré-venda.</p></div>'+groupCards+form+'</main>';
+  const summaryName=selectedPlan?"KORCZAK WORKSPACE · "+selectedPlan.name:"KORCZAK WORKSPACE";
+
+  const form=hasSelection?'<section class="subscription-layout"><div class="subscription-summary"><span class="eyebrow">RESUMO DA ASSINATURA</span><h3>'+esc(summaryName)+'</h3><div class="subscription-price-row"><span>Mensalidade</span><strong>'+money(monthly)+'</strong><small>/ mês</small></div>'+(setup?'<div class="subscription-price-row"><span>Implantação</span><strong>'+money(implementation)+'</strong><small>pagamento único</small></div>':"")+'<div class="subscription-pix"><span class="eyebrow">PAGAMENTO</span><strong>Pagamento conectado em breve</strong><p class="muted">A assinatura será registrada agora. A cobrança será conectada posteriormente.</p><div class="pix-placeholder">PAGAMENTO · aguardando conexão</div></div></div><form id="subscription-form" class="form subscription-form"><input type="hidden" name="productId" value="hub"><input type="hidden" name="planId" value="'+esc(planId)+'"><input type="hidden" name="moduleIds" value="'+esc(effectiveModuleIds)+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><label>CPF/CNPJ (opcional)<input class="field" name="document"></label><button class="btn" type="submit">Avançar com esta assinatura '+icon("arrow")+'</button><small id="subscription-msg" class="muted form-note" role="status"></small></form></section>':'<section class="info-deep"><span class="eyebrow">ESCOLHA UMA ASSINATURA</span><h3>Selecione um plano do Workspace para avançar.</h3><p class="muted">Os planos do KORCZAK WORKSPACE estão acima. Escolha um deles para abrir o resumo e o cadastro da pré-venda.</p></section>';
+
+  return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">WORKSPACE · PRÉ-VENDA · ASSINATURA</span><h2>Escolha seu plano do Workspace.</h2><p class="section-lead">Os planos do KORCZAK WORKSPACE ficam nesta página em cards verticais para você comparar e escolher antes de avançar.</p></div>'+groupCards+form+'</main>';
 }
 function presalePage(){
   const cms=state.content?.presale||{};
