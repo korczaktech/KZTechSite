@@ -214,65 +214,27 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
   const desde=new Date(Date.now()-dias*86400000);
   try{
     const eventos=db.collection("analiticas");
+    const base=[
+      {$set:{_analyticsDate:{$convert:{input:"$criadoEm",to:"date",onError:null,onNull:null}}}},
+      {$match:{_analyticsDate:{$gte:desde}}}
+    ];
     const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos]=await Promise.all([
-      eventos.countDocuments({criadoEm:{$gte:desde}}),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$referencia"}},
-        {$match:{_id:{$nin:["",null]}}},
-        {$count:"total"}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$pagina",total:{$sum:1}}},
-        {$sort:{total:-1}},
-        {$limit:20}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$dispositivo",total:{$sum:1}}},
-        {$sort:{total:-1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$navegador",total:{$sum:1}}},
-        {$sort:{total:-1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$tipo",total:{$sum:1}}},
-        {$sort:{total:-1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:{$dateToString:{date:"$criadoEm",format:"%Y-%m-%d"}},total:{$sum:1}}},
-        {$sort:{_id:1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:{$dateToString:{date:"$criadoEm",format:"%H:%M"}},total:{$sum:1}}},
-        {$sort:{_id:1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$categoria",total:{$sum:1}}},
-        {$sort:{total:-1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},
-        {$sort:{total:-1}}
-      ]).toArray(),
-      eventos.aggregate([
-        {$match:{criadoEm:{$gte:desde}}},
-        {$group:{_id:"$acao",total:{$sum:1}}},
-        {$sort:{total:-1}},
-        {$limit:30}
-      ]).toArray(),
-      eventos.find({criadoEm:{$gte:desde}}).sort({criadoEm:-1}).limit(100).toArray()
+      eventos.aggregate([...base,{$count:"total"}]).toArray(),
+      eventos.aggregate([...base,{$match:{referencia:{$nin:["",null]}}},{$group:{_id:"$referencia"}},{$count:"total"}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$pagina",total:{$sum:1}}},{$sort:{total:-1}},{$limit:20}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$dispositivo",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$navegador",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$tipo",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%Y-%m-%d"}},total:{$sum:1}}},{$sort:{_id:1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%H:%M"}},total:{$sum:1}}},{$sort:{_id:1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}}]).toArray(),
+      eventos.aggregate([...base,{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]).toArray(),
+      eventos.aggregate([...base,{$sort:{_analyticsDate:-1}},{$limit:100},{$unset:"_analyticsDate"}]).toArray()
     ]);
     res.json({
-      dias,total,
+      dias,
+      total:total[0]?.total||0,
       visitantes:unicos[0]?.total||0,
       paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,
       ultimos:ultimos.map(r=>({...r,_id:String(r._id)}))
