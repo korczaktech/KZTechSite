@@ -28,6 +28,33 @@ function rateLimit({windowMs=60000,max=60}={}){return (req,res,next)=>{const now
 setInterval(()=>{const now=Date.now();for(const [k,v] of rateBuckets)if(now-v.started>900000)rateBuckets.delete(k)},900000).unref();
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
+const PLANOS_PADRAO={
+  "korczak-ai":[
+    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Recursos essenciais para conhecer e usar o Korczak AI.",features:["Acesso gratuito","Recursos essenciais","Limites de uso"]},
+    {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente.",features:["Tudo do Free","Mais capacidade","Recursos ampliados"]},
+    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para uso frequente de inteligência e criação.",features:["Tudo do Go","Mais ferramentas","Uso mais amplo"]},
+    {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Para trabalho profissional e tarefas intensas.",features:["Tudo do Plus","Limites maiores","Recursos profissionais"]},
+    {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Para cargas de trabalho intensas.",features:["Tudo do Pro","Maior capacidade","Uso intensivo"]}
+  ],
+  "ide":[
+    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Ambiente de desenvolvimento para começar.",features:["Editor essencial","Uso individual","Sem mensalidade"]},
+    {id:"pro",name:"Pro",price:52,preSalePrice:44,billing:"mês",tag:"Individual",description:"Desenvolvimento diário com assistência ampliada.",features:["Tudo do Free","Assistência avançada","Mais uso"]},
+    {id:"pro-plus",name:"Pro+",price:203,preSalePrice:173,billing:"mês",tag:"Avançado",description:"Projetos complexos e modelos premium.",features:["Tudo do Pro","Modelos premium","Maior capacidade"]},
+    {id:"max",name:"Max",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Fluxos de desenvolvimento contínuos e de alto volume.",features:["Tudo do Pro+","Alto volume","Prioridade"]},
+    {id:"business",name:"Business",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Equipes",description:"Gestão e governança para equipes.",features:["Tudo do Pro","Controle de acesso","Governança"]},
+    {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações em escala.",features:["Tudo do Business","Recursos corporativos","Gestão ampliada"]}
+  ],
+  "workspace":[
+    {id:"starter",name:"Starter",price:37,preSalePrice:31,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps Workspace"]},
+    {id:"standard",name:"Standard",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e colaboração.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados"]},
+    {id:"plus",name:"Plus",price:116,preSalePrice:99,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança avançada"]},
+    {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração corporativa sob escopo.",features:["Recursos Enterprise","Controles corporativos","Preço sob consulta"]}
+  ],
+  "erp":[{id:"erp-standard",name:"KORCZAK ERP",price:48750,preSalePrice:41438,billing:"implantação",monthly:940,preSaleMonthly:799,tag:"Compra + mensal",description:"ERP empresarial com implantação e operação contínua.",features:["Implantação","Gestão integrada","Mensalidade"]}],
+  "flow":[{id:"flow-standard",name:"KORCZAK FLOW",price:26250,preSalePrice:22313,billing:"implantação",monthly:1553,preSaleMonthly:1320,tag:"Compra + mensal",description:"Fluxos, aprovações e automações.",features:["Implantação","Workflows","Mensalidade"]}],
+  "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:185635,preSalePrice:157790,billing:"implantação",monthly:4494,preSaleMonthly:3820,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
+};
+
 const commercialProducts=Object.fromEntries([
   ["erp",{amount:0,currency:"brl",priceId:""}]
 ]);
@@ -36,13 +63,14 @@ const products=[
 ["korczak-ai","KORCZAK AI","Inteligência","Produto iniciado: inteligência e automação para o ecossistema Korczak.","Iniciado"],
 ["workspace","Korczak Workspace","Workspace","Suíte em construção. No momento, apenas o Korczak Documents está iniciado.","Em construção"],
 ["ide","Korczak IDE","Desenvolvimento","Produto iniciado: ambiente de desenvolvimento para projetos Korczak.","Iniciado"],
-["morok","MOROK","Assistente","Produto iniciado: assistente pessoal e operacional multiplataforma.","Iniciado"],
+["morok","MOROK","Assistente","Assistente pessoal e operacional em desenvolvimento.","Em desenvolvimento"],
 ["erp","KORCZAK ERP","Gestão","Produto iniciado: gestão empresarial para clientes, processos, financeiro e operação.","Iniciado"],
 ["flow","KORCZAK FLOW","Operations","Produto planejado para fluxos e automações operacionais.","Planejado"],
 ["vision","KORCZAK VISION","Intelligence","Produto planejado para visão e inteligência operacional.","Planejado"],
 ["ops","KORCZAK OPS","Operations","Produto planejado para operações e administração do ecossistema.","Planejado"],
 ["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
 ["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"],
+["wms","KORCZAK WMS","Operations","Sistema de gestão de armazém planejado para operações logísticas.","Planejado"],
 ["workspace","Korczak Workspace","Workspace","Marca que reúne os aplicativos de produtividade.","Em construção"],
 ["documents","Korczak Documents","Workspace","Único aplicativo do Workspace iniciado atualmente.","Em construção"],
 ["sheets","Korczak Sheets","Workspace","Planilhas e análise de dados.","Planejado"],
@@ -451,6 +479,9 @@ app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
+app.get("/api/planos",async(req,res)=>{if(!db)return res.json(PLANOS_PADRAO);const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(row?.dados&&typeof row.dados==="object"?row.dados:PLANOS_PADRAO);});
+app.get("/api/admin/planos",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const row=await db.collection("configuracoes").findOne({_id:"planos"});res.json(row?.dados&&typeof row.dados==="object"?row.dados:PLANOS_PADRAO);});
+app.put("/api/admin/planos",rateLimit({windowMs:60000,max:20}),auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const dados=req.body&&typeof req.body==="object"?req.body:null;if(!dados||Array.isArray(dados)||Object.keys(dados).length>30)return res.status(400).json({error:"Catálogo de planos inválido"});for(const [chave,lista] of Object.entries(dados)){if(!Array.isArray(lista)||lista.length>20)return res.status(400).json({error:"Lista de planos inválida em "+chave});for(const p of lista){if(!p||typeof p!=="object"||!String(p.id||"").trim()||!String(p.name||"").trim())return res.status(400).json({error:"Plano inválido em "+chave});for(const k of ["price","preSalePrice","monthly","preSaleMonthly"])if(p[k]!==null&&p[k]!==undefined&&(!Number.isFinite(Number(p[k]))||Number(p[k])<0))return res.status(400).json({error:"Preço inválido em "+chave+"/"+p.id});}}await db.collection("configuracoes").updateOne({_id:"planos"},{$set:{dados,atualizadoEm:new Date(),atualizadoPor:req.user?.email||"admin"}},{upsert:true});await registrarAuditoria(req,"Atualização de planos","Catálogo comercial de planos atualizado pelo administrador.");res.json(dados);});
 app.get("/api/admin/contacts",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   res.json(await db.collection("contacts").find().sort({createdAt:-1}).limit(100).toArray());
