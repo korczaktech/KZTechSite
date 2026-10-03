@@ -1256,3 +1256,5 @@ img,svg,video,canvas,iframe{max-width:100%}
 .interest-check input{width:18px;height:18px;margin:2px 0}
 .interest-form .form-message{min-height:20px;margin:0;color:#aaa;font-size:13px}
 @media(max-width:800px){.interest-layout{grid-template-columns:1fr}.interest-copy,.interest-form{padding:22px}.interest-copy h3{font-size:25px}}
+
+.interest-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.interest-form select{width:100%;box-sizing:border-box;padding:13px 14px;border:1px solid #292929;border-radius:10px;background:#080808;color:#fff;font:inherit}.interest-form select:focus{outline:0;border-color:#666}@media(max-width:600px){.interest-form-row{grid-template-columns:1fr}}
