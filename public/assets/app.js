@@ -32,7 +32,7 @@ const PLAN_CATALOG={
   "korczak-ai":[
     {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Para conhecer o Korczak AI e usar os recursos essenciais.",features:["Acesso gratuito","Recursos essenciais","Limites de uso para começar"]},
     {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente sem chegar ao nível profissional.",features:["Tudo do Free","Mais capacidade de uso","Recursos ampliados"]},
-    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
+    {id:"plus",name:"Plus",price:26,preSalePrice:22,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
     {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Mais capacidade para tarefas intensas, projetos e trabalho profissional.",features:["Tudo do Plus","Limites muito maiores","Recursos profissionais"]},
     {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Camada de maior utilização para cargas de trabalho intensas.",features:["Tudo do Pro","Capacidade máxima da linha","Uso intensivo"]},
   ],
@@ -45,19 +45,19 @@ const PLAN_CATALOG={
     {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações que precisam de implantação em escala.",features:["Tudo do Business","Recursos corporativos","Maior capacidade organizacional"]},
   ],
   "workspace":[
-    {id:"starter",name:"Starter",price:37,preSalePrice:31,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Sheets, Drive, Meet e mais"]},
-    {id:"standard",name:"Standard",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e recursos para equipes em crescimento.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados de colaboração e IA"]},
-    {id:"plus",name:"Plus",price:116,preSalePrice:99,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança e administração avançadas"]},
+    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Sheets, Drive, Meet e mais"]},
+    {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e recursos para equipes em crescimento.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados de colaboração e IA"]},
+    {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança e administração avançadas"]},
     {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração para organizações com necessidades corporativas específicas.",features:["Recursos Enterprise","Controles corporativos","Preço definido conforme escopo"]},
   ],
   "erp":[
-    {id:"erp-standard",name:"KORCZAK ERP",price:48750,preSalePrice:41438,billing:"implantação",monthly:940,preSaleMonthly:799,tag:"Compra + mensal",description:"Implantação de um ERP completo com mensalidade de operação e suporte.",features:["Implantação do sistema","Gestão empresarial integrada","Mensalidade de operação e manutenção"]}
+    {id:"erp-standard",name:"KORCZAK ERP",price:75000,preSalePrice:63750,billing:"implantação",monthly:1500,preSaleMonthly:1275,tag:"Compra + mensal",description:"Implantação de um ERP completo com mensalidade de operação e suporte.",features:["Implantação do sistema","Gestão empresarial integrada","Mensalidade de operação e manutenção"]}
   ],
   "flow":[
-    {id:"flow-standard",name:"KORCZAK FLOW",price:26250,preSalePrice:22313,billing:"implantação",monthly:1553,preSaleMonthly:1320,tag:"Compra + mensal",description:"Implantação de plataforma de fluxos, aprovações e automações.",features:["Mapeamento e implantação","Fluxos e aprovações","Mensalidade de operação e manutenção"]}
+    {id:"flow-standard",name:"KORCZAK FLOW",price:22500,preSalePrice:19125,billing:"implantação",monthly:1125,preSaleMonthly:956,tag:"Compra + mensal",description:"Implantação de plataforma de fluxos, aprovações e automações.",features:["Mapeamento e implantação","Fluxos e aprovações","Mensalidade de operação e manutenção"]}
   ],
   "wms":[
-    {id:"wms-standard",name:"KORCZAK WMS",price:185635,preSalePrice:157790,billing:"implantação",monthly:4494,preSaleMonthly:3820,tag:"Compra + mensal",description:"Implantação de gestão de armazém para operações de maior complexidade.",features:["Implantação do WMS","Gestão de estoque e movimentação","Mensalidade de operação e manutenção"]}
+    {id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Implantação de gestão de armazém para operações de maior complexidade.",features:["Implantação do WMS","Gestão de estoque e movimentação","Mensalidade de operação e manutenção"]}
   ]
 };
 
@@ -501,11 +501,12 @@ function kos(){
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell workspace-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="workspace-grid">'+items.map((p,i)=>'<article class="workspace-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
-function planKeyForProduct(id){return id==="documents"?"workspace":id;}
+function money(v){return Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});}
+function planKeyForProduct(id){return ["workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"].includes(id)?"workspace":id;}
 function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
-  const title=key==="workspace"?"Planos do Korczak Workspace":"Planos do "+(id==="korczak-ai"?"Korczak AI":"Korczak IDE");
+  const title=key==="workspace"?"Planos do Korczak Workspace":id==="korczak-ai"?"Planos do Korczak AI":id==="ide"?"Planos do Korczak IDE":"Planos do "+(state.products.find(x=>x.id===id)?.name||id);
   return '<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS · INVESTIMENTO</span><h3>'+title+'</h3><p class="section-lead">Preços mensais definidos a partir das referências de mercado escolhidas, convertidos para reais e ajustados pela política comercial da Korczak.</p><div class="mentor-track-grid product-plan-grid">'+plans.map(plan=>{
     const hasPrice=Number.isFinite(Number(plan.price)),pre=Number.isFinite(Number(plan.preSalePrice))?plan.preSalePrice:null;
     return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(hasPrice?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(pre!==null&&pre!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(pre)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/orcamento?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Quero este plano '+icon("arrow")+'</a></article>';
@@ -529,7 +530,7 @@ function product(id){
     "wms":["Gestão de armazém","Sistema para controlar estoque, entradas, saídas e movimentação dentro de armazéns.","O WMS será desenvolvido para operações logísticas com maior volume e necessidade de rastreabilidade."]
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
-  const planBlock=(["korczak-ai","ide","documents"].includes(p.id))?planSectionFor(p.id):"";
+  const planBlock=(["korczak-ai","ide","workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="Workspace";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
