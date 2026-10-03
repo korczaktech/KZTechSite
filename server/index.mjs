@@ -44,7 +44,7 @@ const PLANOS_PADRAO={
     {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações em escala.",features:["Tudo do Business","Recursos corporativos","Gestão ampliada"]}
   ],
   "workspace":[
-    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps Workspace"]},
+    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Produtividade e colaboração essenciais.",features:["Email profissional","30 GB por usuário","Apps HUB"]},
     {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e colaboração.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados"]},
     {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança avançada"]},
     {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração corporativa sob escopo.",features:["Recursos Enterprise","Controles corporativos","Preço sob consulta"]}
@@ -72,21 +72,21 @@ const products=[
 ["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
 ["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"],
 ["wms","KORCZAK WMS","Operations","Sistema de gestão de armazém planejado para operações logísticas.","Planejado"],
-["hub","HUB","Workspace","Suíte central que reúne os aplicativos de produtividade e colaboração.","Em construção"],
-["hubvault","HUBVault","Workspace","Arquivos e armazenamento.","Planejado"],
-["nexus","Nexus","Workspace","Documentos.","Em construção"],
-["nexa","Nexa","Workspace","Planilhas.","Planejado"],
-["veya","Veya","Workspace","Apresentações.","Planejado"],
-["formly","Formly","Workspace","Formulários.","Planejado"],
-["korvo","Korvo","Workspace","E-mail.","Planejado"],
-["chrona","Chrona","Workspace","Calendário.","Planejado"],
-["meet","Meet","Workspace","Videoconferências.","Planejado"],
-["pulse","Pulse","Workspace","Chat e comunicação.","Planejado"],
-["acta","Acta","Workspace","Tarefas.","Planejado"],
-["memo","Memo","Workspace","Anotações.","Planejado"],
-["people","People","Workspace","Contatos.","Planejado"],
-["web","Web","Workspace","Criação de sites.","Planejado"],
-["klash","Klash","Workspace","Notas rápidas e lembretes.","Planejado"]
+["hub","HUB","HUB","Suíte central que reúne os aplicativos de produtividade e colaboração.","Em construção"],
+["vault","Vault","HUB","Arquivos e armazenamento.","Planejado"],
+["nexus","Nexus","HUB","Documentos.","Em construção"],
+["nexa","Nexa","HUB","Planilhas.","Planejado"],
+["veya","Veya","HUB","Apresentações.","Planejado"],
+["formly","Formly","HUB","Formulários.","Planejado"],
+["korvo","Korvo","HUB","E-mail.","Planejado"],
+["chrona","Chrona","HUB","Calendário.","Planejado"],
+["meet","Meet","HUB","Videoconferências.","Planejado"],
+["pulse","Pulse","HUB","Pulse e comunicação.","Planejado"],
+["acta","Acta","HUB","Tarefas.","Planejado"],
+["memo","Memo","HUB","Anotações.","Planejado"],
+["people","People","HUB","Contatos.","Planejado"],
+["web","Web","HUB","Criação de sites.","Planejado"],
+["klash","Klash","HUB","Notas rápidas e lembretes.","Planejado"]
 ].map(x=>({id:x[0],name:x[1],type:x[2],description:x[3],status:x[4]}));
 
 app.disable("x-powered-by");
@@ -210,54 +210,78 @@ app.post("/api/analiticas/evento",rateLimit({windowMs:60000,max:120}),async(req,
 });
 app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
+  const desde=new Date(Date.now()-dias*86400000);
   try{
-    const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
-    const desde=new Date(Date.now()-dias*86400000);
-    const base={criadoEm:{$gte:desde}};
-    const eventos=await db.collection("analiticas").find(base).project({
-      referencia:1,pagina:1,tipo:1,categoria:1,subcategoria:1,acao:1,descricao:1,nome:1,email:1,usuarioId:1,entidade:1,entidadeId:1,metadados:1,dispositivo:1,navegador:1,criadoEm:1
-    }).sort({criadoEm:-1}).limit(5000).toArray();
-
-    const countBy=(field,limit=Infinity)=>{
-      const m=new Map();
-      for(const x of eventos){const k=x?.[field]||"Não informado";m.set(k,(m.get(k)||0)+1);}
-      return [...m.entries()].map(([k,total])=>({_id:k,total})).sort((a,b)=>b.total-a.total).slice(0,limit);
-    };
-    const paginas=countBy("pagina",12);
-    const dispositivos=countBy("dispositivo");
-    const navegadores=countBy("navegador",8);
-    const tipos=countBy("tipo");
-    const categorias=countBy("categoria");
-    const subMap=new Map();
-    const acoesMap=new Map();
-    const diariosMap=new Map();
-    const mercadoMap=new Map();
-
-    for(const x of eventos){
-      const d=x?.criadoEm instanceof Date?x.criadoEm:new Date(x?.criadoEm);
-      if(Number.isNaN(d.getTime()))continue;
-      const dia=d.toISOString().slice(0,10);
-      diariosMap.set(dia,(diariosMap.get(dia)||0)+1);
-      const subKey=(x?.categoria||"Não informado")+" / "+(x?.subcategoria||"Não informado");
-      subMap.set(subKey,(subMap.get(subKey)||0)+1);
-      if(x?.acao)acoesMap.set(x.acao,(acoesMap.get(x.acao)||0)+1);
-      if(d>=new Date(Date.now()-86400000)){
-        const minuto=new Date(Math.floor(d.getTime()/60000)*60000).toISOString();
-        mercadoMap.set(minuto,(mercadoMap.get(minuto)||0)+1);
-      }
-    }
-    const subcategorias=[...subMap.entries()].map(([k,total])=>{const [categoria,subcategoria]=k.split(" / ");return{_id:{categoria,subcategoria},total};}).sort((a,b)=>b.total-a.total).slice(0,30);
-    const acoes=[...acoesMap.entries()].map(([k,total])=>({_id:k,total})).sort((a,b)=>b.total-a.total).slice(0,30);
-    const diarios=[...diariosMap.entries()].map(([_id,total])=>({_id,total})).sort((a,b)=>a._id.localeCompare(b._id));
-    const mercado=[...mercadoMap.entries()].map(([_id,total])=>({_id,total})).sort((a,b)=>a._id.localeCompare(b._id));
-    const visitantes=new Set(eventos.filter(x=>x?.tipo==="visualizacao"&&x?.referencia).map(x=>String(x.referencia))).size;
-    const ultimos=eventos.slice(0,100);
-    res.json({dias,total:eventos.length,visitantes,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos});
+    const eventos=db.collection("analiticas");
+    const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos]=await Promise.all([
+      eventos.countDocuments({criadoEm:{$gte:desde}}),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$referencia"}},
+        {$match:{_id:{$nin:["",null]}}},
+        {$count:"total"}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$pagina",total:{$sum:1}}},
+        {$sort:{total:-1}},
+        {$limit:20}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$dispositivo",total:{$sum:1}}},
+        {$sort:{total:-1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$navegador",total:{$sum:1}}},
+        {$sort:{total:-1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$tipo",total:{$sum:1}}},
+        {$sort:{total:-1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:{$dateToString:{date:"$criadoEm",format:"%Y-%m-%d"}},total:{$sum:1}}},
+        {$sort:{_id:1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:{$dateToString:{date:"$criadoEm",format:"%H:%M"}},total:{$sum:1}}},
+        {$sort:{_id:1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$categoria",total:{$sum:1}}},
+        {$sort:{total:-1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},
+        {$sort:{total:-1}}
+      ]).toArray(),
+      eventos.aggregate([
+        {$match:{criadoEm:{$gte:desde}}},
+        {$group:{_id:"$acao",total:{$sum:1}}},
+        {$sort:{total:-1}},
+        {$limit:30}
+      ]).toArray(),
+      eventos.find({criadoEm:{$gte:desde}}).sort({criadoEm:-1}).limit(100).toArray()
+    ]);
+    res.json({
+      dias,total,
+      visitantes:unicos[0]?.total||0,
+      paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,
+      ultimos:ultimos.map(r=>({...r,_id:String(r._id)}))
+    });
   }catch(error){
-    console.error("Admin analytics error:",error);
-    res.status(500).json({error:"Erro interno ao carregar analytics"});
+    console.error("Analytics aggregation error:",error?.message||error);
+    res.status(500).json({error:"Não foi possível carregar as analytics."});
   }
-});app.get("/api/admin/comercial",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [orcamentos,compras,contatos]=await Promise.all([db.collection("quotes").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("orders").find().sort({createdAt:-1}).limit(300).toArray(),db.collection("contacts").find().sort({createdAt:-1}).limit(300).toArray()]);const ids=[...new Set([...orcamentos,...compras].map(x=>String(x.userId||"")).filter(Boolean))].map(idMongo).filter(Boolean);const users=ids.length?await db.collection("users").find({_id:{$in:ids}},{projection:{passwordHash:0}}).toArray():[];const porId=new Map(users.map(u=>[String(u._id),u]));const enriquecer=x=>{const u=porId.get(String(x.userId||""));return {...x,_id:String(x._id),nome:u?.name||x.nome||"",email:u?.email||x.email||""}};res.json({orcamentos:orcamentos.map(enriquecer),compras:compras.map(enriquecer),contatos:contatos.map(x=>({...x,_id:String(x._id)}))});});
+});
 app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
