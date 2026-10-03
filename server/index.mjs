@@ -229,7 +229,8 @@ app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
 app.get("/api/admin/conteudo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const rows=await db.collection("conteudo").find().sort({atualizadoEm:-1}).limit(1000).toArray();
-  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+  const nomes=await nomesPorEmails(rows.flatMap(r=>[r.criadoPor,r.atualizadoPor]));
+  res.json(rows.map(r=>({...r,_id:String(r._id),criadoPorNome:nomes.get(email(r.criadoPor))||r.criadoPor||"Sistema",atualizadoPorNome:nomes.get(email(r.atualizadoPor))||r.atualizadoPor||"Sistema"})));
 });
 app.post("/api/admin/conteudo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
@@ -274,7 +275,8 @@ app.delete("/api/admin/conteudo/:id",auth,admin,async(req,res)=>{
 app.get("/api/admin/midias",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const rows=await db.collection("midias").find({}, {projection:{dados:0}}).sort({criadoEm:-1}).limit(300).toArray();
-  res.json(rows.map(r=>({...r,_id:String(r._id),url:`/api/midia/${r._id}`})));
+  const nomes=await nomesPorEmails(rows.map(r=>r.criadoPor));
+  res.json(rows.map(r=>({...r,_id:String(r._id),criadoPorNome:nomes.get(email(r.criadoPor))||r.criadoPor||"Sistema",url:`/api/midia/${r._id}`})));
 });
 app.post("/api/admin/midias",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
@@ -319,7 +321,8 @@ app.post("/api/admin/administradores",auth,admin,async(req,res)=>{
 app.get("/api/admin/auditoria",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const rows=await db.collection("auditoria").find().sort({criadoEm:-1}).limit(300).toArray();
-  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+  const nomes=await nomesPorEmails(rows.map(r=>r.email));
+  res.json(rows.map(r=>({...r,_id:String(r._id),nome:nomes.get(email(r.email))||r.email||"Sistema"})));
 });
 
 const rate=new Map();
@@ -338,6 +341,14 @@ const email=v=>String(v||"").trim().toLowerCase();
 const token=u=>jwt.sign({sub:String(u._id),email:u.email,role:u.role||"user"},SECRET,{expiresIn:"7d"});
 function auth(req,res,next){try{const h=req.headers.authorization||"";if(!h.startsWith("Bearer "))throw 0;req.user=jwt.verify(h.slice(7),SECRET);next()}catch{res.status(401).json({error:"Não autenticado"})}}
 function admin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Acesso restrito"});next()}
+async function nomesPorEmails(emails){
+  if(!db)return new Map();
+  const lista=[...new Set((emails||[]).map(v=>email(v)).filter(Boolean))];
+  if(!lista.length)return new Map();
+  const usuarios=await db.collection("users").find({email:{$in:lista}},{projection:{name:1,email:1}}).toArray();
+  return new Map(usuarios.map(u=>[email(u.email),u.name||""]));
+}
+
 
 app.get("/health",(req,res)=>res.status(200).json({
   ok:true,service:"kztechsite",database:Boolean(db),stripe:Boolean(stripe),
