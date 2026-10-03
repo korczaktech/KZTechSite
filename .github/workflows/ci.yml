@@ -15,4 +15,5 @@ jobs:
       - run: npm install
       - run: node --check server/index.mjs
       - run: node --check public/assets/app.js
+      - run: node --check admin/dashboard.js
       - run: npm test
