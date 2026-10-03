@@ -600,13 +600,15 @@ function product(id){
     "wms":["Gestão de armazém","Sistema para controlar estoque, entradas, saídas e movimentação dentro de armazéns.","O WMS será desenvolvido para operações logísticas com maior volume e necessidade de rastreabilidade."]
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
-  const planBlock=(["korczak-ai","ide","workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
+  const isModular=Boolean(MODULAR_CATALOG[p.id]);
+  const planBlock=(!isModular&&["korczak-ai","ide","workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="Workspace";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
-  else if(isKOS&&["korczak-ai","ide","workspace","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
+  else if(isKOS&&["korczak-ai","ide","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
   else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
