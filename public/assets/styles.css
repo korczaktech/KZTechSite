@@ -1224,3 +1224,19 @@ img,svg,video,canvas,iframe{max-width:100%}
   .workspace-plan-card>p{min-height:0}
   .workspace-plan-price{margin-top:20px}
 }
+
+/* Nexus downloads */
+.nexus-download-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.nexus-download-card{min-height:330px;padding:30px;border:1px solid #292929;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));display:flex;flex-direction:column;align-items:flex-start}
+.nexus-download-card h3{font-size:26px;margin:30px 0 10px}
+.nexus-download-card p{max-width:420px}
+.nexus-release{display:grid;gap:4px;margin:24px 0 18px;padding:16px;width:100%;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nexus-release .release-label{color:#777;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.nexus-release strong{font-size:22px}
+.nexus-release small{color:#777;overflow-wrap:anywhere}
+.release-state,.release-error{color:#aaa}
+.nexus-download-card>.btn{margin-top:auto}
+.nexus-download-disabled{opacity:.58}
+.download-soon{margin-top:auto;border:1px solid #292929;border-radius:999px;padding:8px 12px;color:#777;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:900px){.nexus-download-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.nexus-download-card{min-height:0;padding:22px}.nexus-download-card h3{font-size:23px}}
