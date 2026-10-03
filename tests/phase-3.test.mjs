@@ -14,7 +14,7 @@ test("Fase 3: preços são resolvidos no servidor",()=>{
 });
 test("Fase 3: Stripe Checkout e estados",()=>{
   assert.ok(server.includes("stripe.checkout.sessions.create")); assert.ok(server.includes("success_url")); assert.ok(server.includes("cancel_url"));
-  assert.ok(app.includes("/checkout/sucesso")); assert.ok(app.includes("/checkout/cancelado")); assert.ok(app.includes('data-action="checkout"'));
+  assert.ok(app.includes("/checkout/sucesso")); assert.ok(app.includes("/checkout/cancelado"));\n  assert.ok(app.includes("async function checkout(id)"));
 });
 test("Fase 3: configuração Stripe documentada",()=>{
   for(const id of ["KORCZAK_AI","MOROK","ERP","IDE","WORKSPACE","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE"])assert.ok(env.includes("STRIPE_PRICE_"+id));
