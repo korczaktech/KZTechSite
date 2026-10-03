@@ -6,7 +6,7 @@ async function api(path,opt={}){
 }
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const fmtDate=x=>x?new Date(x).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"medium"}):"—";
-const labels={visualizacao:"Visualização",interacao:"Interação",cadastro:"Cadastro",login:"Login",orcamento:"Orçamento",compra:"Compra"};
+const labels={visualizacao:"Visualização",interacao:"Interação",cadastro:"Cadastro",login:"Login",orcamento:"Orçamento",compra:"Compra",presale:"Pré-venda"};
 const catLabels={institucional:"Institucional",comercial:"Comercial",contas:"Contas",interacoes:"Interações"};
 const subLabels={orcamentos:"Orçamentos",compras:"Compras",mentorias:"Mentorias",cadastros:"Cadastros",logins:"Log-ins",perfil:"Perfil",produtos:"Produtos",servicos:"Serviços",contato:"Contato",navegacao:"Navegação",geral:"Geral"};
 function humanEvent(r){
@@ -76,10 +76,10 @@ async function contas(){
 }
 async function comercial(){
  const x=await api("/admin/comercial");
- E("comercialKpis").innerHTML=[["Orçamentos",x.orcamentos?.length||0,"Solicitações recebidas"],["Compras",x.compras?.length||0,"Checkouts/pedidos"],["Contatos",x.contatos?.length||0,"Mensagens recebidas"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+a[1]+'</strong><small>'+a[2]+'</small></div>').join("");
+ E("comercialKpis").innerHTML=[["Orçamentos",x.orcamentos?.length||0,"Solicitações recebidas"],["Pré-vendas",x.preVendas?.length||0,"Intenções de compra"],["Compras",x.compras?.length||0,"Checkouts/pedidos"],["Contatos",x.contatos?.length||0,"Mensagens recebidas"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+a[1]+'</strong><small>'+a[2]+'</small></div>').join("");
  const row=(r,t)=>'<article class="comercial-row"><div><strong>'+esc(r.nome||"Visitante")+'</strong><span>'+esc(r.email||"")+'</span></div><div><b>'+esc(t)+'</b><small>'+esc(r.productId||r.serviceId||r.objective||r.status||"")+(r.scope?"<br>"+esc(r.scope).slice(0,220):"")+'</small></div><time>'+fmtDate(r.createdAt)+'</time></article>';
  E("orcamentosLista").innerHTML=(x.orcamentos||[]).map(r=>row(r,"Orçamento")).join("")||'<p class="vazio">Nenhum orçamento.</p>';
- E("comprasLista").innerHTML=(x.compras||[]).map(r=>row(r,"Compra")).join("")||'<p class="vazio">Nenhuma compra.</p>';
+ E("comprasLista").innerHTML=(x.compras||[]).map(r=>row(r,"Compra")).join("")||'<p class="vazio">Nenhuma compra.</p>'; E("preVendasLista").innerHTML=(x.preVendas||[]).map(r=>row(r,"Pré-venda")).join("")||'<p class="vazio">Nenhuma pré-venda.</p>';
  E("contatosLista").innerHTML=(x.contatos||[]).map(r=>'<article class="comercial-row"><div><strong>'+esc(r.name||"Sem nome")+'</strong><span>'+esc(r.email||"")+'</span></div><div><b>Contato</b><small>'+esc(r.message||"").slice(0,220)+'</small></div><time>'+fmtDate(r.createdAt)+'</time></article>').join("")||'<p class="vazio">Nenhum contato.</p>';
 }
 async function interacoes(){const x=lastAnalytics||await api("/admin/analiticas?dias="+diasAnalytics);E("interacoesLista").innerHTML=(x.ultimos||[]).filter(r=>r.tipo==="interacao"||r.tipo==="visualizacao").map(eventCard).join("")||'<p class="vazio">Nenhuma interação registrada.</p>'}
