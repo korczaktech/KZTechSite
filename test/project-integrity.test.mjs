@@ -15,8 +15,8 @@ test("catalogo real do ecossistema",()=>{
 });
 
 test("HUB não apresenta módulos futuros como iniciados",()=>{
-  for(const [id,name] of [["hubvault","HUBVault"],["nexa","Nexa"],["veya","Veya"],["formly","Formly"],["korvo","Korvo"],["chrona","Chrona"],["meet","Meet"],["pulse","Pulse"],["acta","Acta"],["memo","Memo"],["people","People"],["web","Web"],["klash","Klash"]]){
-    assert.match(app,new RegExp('id:"'+id+'",name:"'+name+'",type:"Workspace",status:"Planejado"'));
+  for(const [id,name] of [["vault","Vault"],["nexa","Nexa"],["veya","Veya"],["formly","Formly"],["korvo","Korvo"],["chrona","Chrona"],["meet","Meet"],["pulse","Pulse"],["acta","Acta"],["memo","Memo"],["people","People"],["web","Web"],["klash","Klash"]]){
+    assert.match(app,new RegExp('id:"'+id+'",name:"'+name+'",type:"HUB",status:"Planejado"'));
   }
 });
 
