@@ -31,7 +31,7 @@ function eventCard(r){
 }
 function barras(rows,target,mode="normal"){
  const el=E(target),max=Math.max(...(rows||[]).map(x=>Number(x.total)||0),1);
- el.innerHTML=rows?.length?rows.map(x=>{let name=mode==="sub"?(subLabels[x._id?.subcategoria]||x._id?.subcategoria||"Geral"):mode==="cat"?(catLabels[x._id]||x._id):String(x._id||"Sem informação");return '<div class="metric"><div><span>'+esc(name)+'</span><b>'+esc(x.total)+'</b></div><div class="barra"><i style="width:'+Math.round((Number(x.total)||0)/max*100)+'%"></i></div></div>'}).join(""):'<p class="vazio">Sem dados no período.</p>';
+ el.innerHTML=rows?.length?rows.map(x=>{let raw=mode==="sub"?(typeof x._id==="object"?(x._id?.subcategoria||""):x._id):x._id;let name=mode==="sub"?(subLabels[raw]||raw||"Geral"):mode==="cat"?(catLabels[raw]||raw):String(raw||"Sem informação");return '<div class="metric"><div><span>'+esc(name)+'</span><b>'+esc(x.total)+'</b></div><div class="barra"><i style="width:'+Math.round((Number(x.total)||0)/max*100)+'%"></i></div></div>'}).join(""):'<p class="vazio">Sem dados no período.</p>';
 }
 let diasAnalytics=30,lastAnalytics=null;
 async function analytics(){
