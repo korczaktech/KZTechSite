@@ -349,11 +349,9 @@ app.post("/api/contact",async(req,res)=>{
   const cleanName=String(name||"").trim(),cleanMessage=String(message||"").trim(),cleanPhone=String(phone||"").trim();
   if(cleanName.length<2||cleanName.length>120||!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(mail)||cleanMessage.length<1||cleanMessage.length>5000||cleanPhone.length>40)
     return res.status(400).json({error:"Dados de contato inválidos"});
-  await db.collection("contacts").insertOne({
-    name:cleanName,email:mail.slice(0,180),
-    phone:cleanPhone,message:cleanMessage,
-    createdAt:new Date(),status:"new"
-  });
+  const agora=new Date();
+  await db.collection("contacts").insertOne({name:cleanName,email:mail.slice(0,180),phone:cleanPhone,message:cleanMessage,createdAt:agora,status:"new"});
+  await registrarEventoAnalitico({tipo:"contato",categoria:"comercial",subcategoria:"contato",acao:"Contato enviado",descricao:"Mensagem enviada pelo formulário de contato.",pagina:"/contato",nome:cleanName,email:mail,entidade:"contato",metadados:{telefone:cleanPhone}});
   res.status(201).json({ok:true});
 });
 
