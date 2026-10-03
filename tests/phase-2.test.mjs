@@ -5,6 +5,7 @@ import fs from "node:fs";
 const html=fs.readFileSync("public/index.html","utf8");
 const app=fs.readFileSync("public/assets/app.js","utf8");
 const phases=fs.readFileSync("docs/PHASE-2.md","utf8");
+const content=fs.readFileSync("public/data/content.json","utf8");
 
 test("Fase 2: shell frontend existe e usa assets versionados",()=>{
   assert.ok(html.includes('id="app"'));
@@ -19,7 +20,7 @@ test("Fase 2: rotas institucionais completas",()=>{
 
 test("Fase 2: catálogo completo contém os produtos do KOS",()=>{
   for(const id of ["korczak-ai","morok","ide","hub","erp","flow","nexus","vision","ops","connect","mobile"]){
-    assert.ok(app.includes('id:"'+id+'"'),"Produto ausente: "+id);
+    assert.ok(content.includes('"id": "'+id+'"'),"Produto ausente: "+id);
   }
 });
 
@@ -37,4 +38,4 @@ test("Fase 2: documentação declara os critérios",()=>{
 
 
 test("Painel: supercategorias Analytics e Administração existem",()=>{const dashboard=fs.readFileSync("admin/dashboard.html","utf8");assert.match(dashboard,/data-super="analytics"/);assert.match(dashboard,/data-super="administracao"/);assert.match(dashboard,/id="administracao"[^>]*hidden/);assert.match(dashboard,/id="analyticsNav"/);});
-test("Painel: não usa HUBVault e mantém Vault",()=>{assert.doesNotMatch(app,/HUBVault/i);assert.ok(app.includes('id:"vault"'));});
+test("Painel: não usa HUBVault e mantém Vault",()=>{assert.doesNotMatch(content,/HUBVault/i);assert.match(content,/"id":\s*"vault"/);});
