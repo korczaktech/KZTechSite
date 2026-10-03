@@ -35,6 +35,7 @@ function barras(rows,target,mode="normal"){
 }
 let diasAnalytics=30,lastAnalytics=null;
 async function analytics(){
+ try{
  const x=await api("/admin/analiticas?dias="+diasAnalytics);
  lastAnalytics=x;
  E("atualizado").textContent="Atualizado em "+new Date().toLocaleTimeString("pt-BR");
@@ -61,6 +62,9 @@ async function analytics(){
  barras(x.navegadores,"navegadores");
  E("ultimos").innerHTML=(x.ultimos||[]).map(eventCard).join("")||'<p class="vazio">Nenhuma atividade registrada.</p>';
  renderCategoryFilters(x.categorias||[]);
+ }catch(e){
+  const msg=e?.message||"Não foi possível carregar as analytics."; const el=E("atualizado"); if(el)el.textContent="Analytics indisponível: "+msg; const g=E("grafico"); if(g)g.innerHTML='<p class="vazio">Não foi possível carregar os dados de analytics.</p>';
+ }
 }
 function renderCategoryFilters(rows){E("filtrosCategorias").innerHTML='<button class="filtro ativo" data-cat="">Todas</button>'+rows.map(x=>'<button class="filtro" data-cat="'+esc(x._id)+'">'+esc(catLabels[x._id]||x._id)+' <b>'+x.total+'</b></button>').join("");document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-cat]").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");const cat=b.dataset.cat;const rows=(lastAnalytics?.ultimos||[]).filter(x=>!cat||humanEvent(x).cat===cat);E("ultimos").innerHTML=rows.map(eventCard).join("")||'<p class="vazio">Nenhuma atividade nessa categoria.</p>'})}
 async function contas(){
@@ -138,4 +142,4 @@ E("novoAdmin").onclick=()=>E("ad").showModal();E("ac").onclick=()=>E("ad").close
   if(el)el.textContent="Sessão/API: "+(e?.message||"não foi possível validar a sessão")+" — o painel foi mantido aberto para diagnóstico.";
  }
 })();
-setInterval(()=>{const a=E("analytics");if(a&&!a.hidden)analytics()},60000);
+setInterval(()=>{const a=E("analytics");if(a&&!a.hidden)analytics().catch(()=>{})},60000);
