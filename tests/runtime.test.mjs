@@ -46,7 +46,7 @@ test("runtime: API e Mongo têm configuração resiliente",()=>{
 
 test("runtime: Pages é uma origem CORS permitida por padrão",()=>{
   const server=fs.readFileSync("server/index.mjs","utf8");
-  assert.match(server,/https:\/\/korczaktechnology-tech\.github\.io/);
+  assert.match(server,/https:\/\/korczaktech\.github\.io/);
   assert.match(server,/ALLOWED_ORIGINS/);
 });
 
