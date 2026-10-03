@@ -34,3 +34,53 @@
 /* Supercategorias do painel */
 .dashboard-supernav{display:flex;gap:10px;padding:14px 25px 8px;border-bottom:1px solid #ffffff12;background:#070709;position:sticky;top:73px;z-index:2}.dashboard-supernav button{background:#ffffff06;border-color:#ffffff12;font-weight:700}.dashboard-supernav button.super-ativo{background:linear-gradient(135deg,#8c39ff,#d20c52);border-color:transparent}.dashboard-nav{border-bottom:1px solid #ffffff12;padding-top:10px}.super-aba{animation:f .2s}.empty-super{min-height:260px;align-items:center}.empty-super h1{margin-top:6px}.empty-super p{color:#999;max-width:650px}@media(max-width:700px){.dashboard-supernav{top:68px;padding-left:16px;padding-right:16px}.dashboard-supernav button{flex:1}.dashboard-nav{padding-left:16px;padding-right:16px}}
 .admin-module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:20px}.admin-module-card{display:flex;align-items:center;gap:16px;min-height:130px;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(145deg,rgba(18,23,35,.92),rgba(9,12,20,.92));color:inherit;text-decoration:none;transition:.18s ease}.admin-module-card:hover{transform:translateY(-2px);border-color:rgba(135,100,255,.45);background:linear-gradient(145deg,rgba(25,29,45,.96),rgba(10,13,22,.96))}.admin-module-card.disabled{opacity:.55;cursor:default}.admin-module-icon{display:grid;place-items:center;min-width:54px;height:54px;border-radius:14px;background:rgba(116,76,255,.14);border:1px solid rgba(116,76,255,.32);font-size:12px;font-weight:800;letter-spacing:.08em}.admin-module-card strong{display:block;font-size:17px}.admin-module-card p{margin:5px 0;color:#9ca8ba}.admin-module-card small{color:#68758b}.admin-module-arrow{margin-left:auto;font-size:22px;color:#a98dff}@media(max-width:700px){.admin-module-grid{grid-template-columns:1fr}.admin-module-card{min-width:0}}#analyticsSuper[hidden],#administracao[hidden]{display:none!important}.super-section{width:100%}#administracao{max-width:1400px;margin:0 auto;padding:28px}.dashboard-supernav{display:flex;gap:8px;padding:14px 25px;border-bottom:1px solid #ffffff12}.dashboard-supernav button{background:#ffffff08}.dashboard-supernav .super-ativo{background:linear-gradient(135deg,#8c39ff,#d20c52)}
+
+/* Responsive administration layer v2026.10.03 */
+html,body,#painel{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
+button,.button,input,textarea,select{max-width:100%}
+@media(max-width:700px){
+  header{position:sticky;top:0;padding:12px 14px;gap:10px;align-items:flex-start;flex-wrap:wrap}
+  header>div:first-child{min-width:0;flex:1}
+  header b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .header-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .header-actions>*{min-width:0;text-align:center}
+  .dashboard-supernav{position:sticky;top:75px;z-index:4;display:grid;grid-template-columns:1fr 1fr;padding:10px 12px}
+  .dashboard-supernav button{width:100%;min-height:42px}
+  nav.dashboard-nav{padding:10px 12px;display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  nav.dashboard-nav::-webkit-scrollbar{display:none}
+  nav.dashboard-nav button{flex:0 0 auto;white-space:nowrap}
+  main{padding:16px 12px}
+  .hero{padding:18px;border-radius:15px;overflow:hidden}
+  .hero h1{font-size:clamp(28px,9vw,38px);overflow-wrap:anywhere}
+  .hero p{font-size:14px;line-height:1.5}
+  .periodos{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+  .periodos button{min-width:0;padding:9px 7px}
+  .kpis{grid-template-columns:1fr!important}
+  .analytics-grid{grid-template-columns:1fr!important}
+  .panel{padding:15px;border-radius:14px;overflow:hidden}
+  .panel-title{align-items:flex-start;flex-wrap:wrap}
+  .panel-title h2{font-size:16px}
+  .grafico{height:180px;overflow:hidden;gap:3px}
+  .coluna span{font-size:7px}
+  .conta-detalhes{grid-template-columns:1fr!important}
+  .evento-card{grid-template-columns:34px minmax(0,1fr);padding:13px}
+  .evento-icone{width:34px;height:34px}
+  .atividade,.comercial-row{grid-template-columns:1fr!important}
+  .status-grid{grid-template-columns:1fr!important}
+  .plan-admin-card{grid-template-columns:1fr!important}
+  .plan-admin-card>div,.plan-admin-meta{grid-column:auto}
+  .plan-admin-card .actions{display:grid}
+  .plan-admin-card button{width:100%}
+  .stock-svg{height:220px}
+  .admin-module-grid{grid-template-columns:1fr!important}
+  .admin-module-card{min-height:110px;padding:16px}
+  #administracao{padding:16px 12px}
+  .top{align-items:stretch;flex-direction:column}
+  dialog{width:calc(100% - 20px);max-width:none;max-height:90dvh;overflow:auto}
+}
+@media(max-width:420px){
+  .header-actions{grid-template-columns:1fr}
+  .dashboard-supernav{top:112px}
+  .hero{padding:15px}
+  main{padding:12px 10px}
+}
