@@ -427,6 +427,7 @@ function requestServiceQuote(btn){
   const selected=[...panel.querySelectorAll("[data-service-option]:checked")].map(x=>({label:x.dataset.label,price:Number(x.dataset.price)||0}));
   const total=selected.reduce((n,x)=>n+x.price,0);
   try{sessionStorage.setItem("kz_quote_request",JSON.stringify({service:s[0],total,selected}))}catch{}
+  registrarAnalitica("interacao","Orçamento de serviço",{categoria:"comercial",subcategoria:"orcamentos",acao:"Preparou orçamento de serviço",descricao:"Configurou recursos opcionais para solicitar um orçamento.",entidade:"servico",entidadeId:btn.dataset.serviceId,metadados:{servico:s[0],total,recursos:selected}});
   location.hash="#/contato";
   toast("Configuração preparada para o contato.");
 }
@@ -593,7 +594,7 @@ function render(){
   const authForm=root.querySelector("#auth-form");
   if(authForm)authForm.addEventListener("submit",submitAuth);
   root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));
-  root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>updateMentorTotal(el)));
+  root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>{updateMentorTotal(el);if(el.checked)registrarAnalitica("interacao","Tecnologia selecionada",{categoria:"comercial",subcategoria:"mentorias",acao:"Selecionou tecnologia para a mentoria",descricao:"Selecionou uma tecnologia na grade personalizada da Mentoria.",entidade:"tecnologia",entidadeId:el.closest(".mentor-tech-row")?.querySelector("b")?.textContent||""});}));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
   const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/workspace":"Korczak Workspace","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
@@ -703,19 +704,36 @@ document.addEventListener("submit",e=>{
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
 });
-function registrarAnalitica(tipo="visualizacao",evento=""){
+function classificarInteracao(alvo,texto){
+  const href=String(alvo?.getAttribute?.("href")||""),t=texto.toLowerCase();
+  if(/criar minha conta|criar conta/.test(t))return ["contas","cadastros","Criar conta","Iniciou o fluxo de criação de conta."];
+  if(/^entrar\b/.test(t)||t==="login")return ["contas","logins","Entrar","Iniciou o fluxo de login."];
+  if(/meu perfil/.test(t))return ["contas","perfil","Abrir perfil","Abriu o perfil da conta."];
+  if(/quero me inscrever|inscrever-se/.test(t))return ["comercial","mentorias","Inscrição na mentoria","Demonstrou interesse em se inscrever na Mentoria."];
+  if(/solicitar orçamento|fazer orçamento|orçamento/.test(t))return ["comercial","orcamentos","Solicitar orçamento","Iniciou uma solicitação de orçamento."];
+  if(/\bcomprar\b/.test(t))return ["comercial","compras","Comprar","Iniciou uma compra."];
+  if(/contato|falar com a equipe/.test(t))return ["comercial","contato","Falar com a equipe","Abriu um canal de contato comercial."];
+  if(/mentoria/.test(href)||/mentoria/.test(t))return ["comercial","mentorias","Mentoria","Navegou pela Mentoria."];
+  if(/servicos/.test(href)||/configurar serviço/.test(t))return ["comercial","servicos","Configurar serviço","Abriu a configuração de um serviço."];
+  if(/produto/.test(href)||/portfólio|catálogo/.test(t))return ["comercial","produtos","Explorar produto","Explorou produtos do catálogo."];
+  if(/institucional|empresa|história|visão|valores|parcerias|carreiras|faq/.test(href))return ["institucional","navegacao","Navegação institucional","Navegou por uma página institucional."];
+  return ["interacoes","geral",texto||"Interação","Interagiu com um elemento do site."];
+}
+function categoriaPagina(pagina){
+  if(/\/mentoria/.test(pagina)||/\/produto|\/comercial|\/servicos|\/workspace|\/kos/.test(pagina))return "comercial";
+  if(/\/conta|\/acesso/.test(pagina))return "contas";
+  if(/\/sobre|\/historia|\/visao|\/valores|\/parcerias|\/carreiras|\/faq|\/institucional|\/empresa/.test(pagina))return "institucional";
+  return "interacoes";
+}
+function registrarAnalitica(tipo="visualizacao",evento="",extra={}){
   try{
-    const id=localStorage.getItem("kz_visitante")||crypto.randomUUID();
-    localStorage.setItem("kz_visitante",id);
-    const pagina=location.hash.replace(/^#/, "")||"/";
-    const ua=navigator.userAgent;
+    const id=localStorage.getItem("kz_visitante")||crypto.randomUUID();localStorage.setItem("kz_visitante",id);
+    const pagina=location.hash.replace(/^#/,"")||"/",ua=navigator.userAgent;
     const navegador=/Edg/i.test(ua)?"Edge":/Chrome/i.test(ua)?"Chrome":/Firefox/i.test(ua)?"Firefox":/Safari/i.test(ua)?"Safari":"Outro";
     const sistema=/Android/i.test(ua)?"Android":/iPhone|iPad|iPod/i.test(ua)?"iOS":/Windows/i.test(ua)?"Windows":/Mac OS/i.test(ua)?"macOS":/Linux/i.test(ua)?"Linux":"Outro";
     const dispositivo=/Mobi|Android/i.test(ua)?"mobile":"desktop";
-    fetch("https://kztechsite.onrender.com/api/analiticas/evento",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-      pagina,tipo,caminho:location.href,titulo:document.title,referencia:id,dispositivo,navegador,sistema,
-      idioma:navigator.language,largura:innerWidth,altura:innerHeight,evento
-    }),keepalive:true}).catch(()=>{});
+    const payload={pagina,tipo,categoria:extra.categoria||categoriaPagina(pagina),subcategoria:extra.subcategoria||"geral",acao:extra.acao||evento,descricao:extra.descricao||"",usuarioId:String(state.user?._id||""),nome:state.user?.name||"",email:state.user?.email||"",entidade:extra.entidade||"",entidadeId:extra.entidadeId||"",metadados:extra.metadados||{},caminho:location.href,titulo:document.title,referencia:id,dispositivo,navegador,sistema,idioma:navigator.language,largura:innerWidth,altura:innerHeight,evento};
+    fetch("https://kztechsite.onrender.com/api/analiticas/evento",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
   }catch{}
 }
 addEventListener("hashchange",()=>{if(state.menu)state.menu=false;render();window.scrollTo({top:0,behavior:"smooth"});registrarPaginaAtual()});
@@ -727,10 +745,10 @@ function registrarPaginaAtual(){
   setTimeout(()=>registrarAnalitica("visualizacao"),150);
 }
 document.addEventListener("click",e=>{
-  const alvo=e.target.closest("a,button,[data-action]");
-  if(!alvo)return;
-  const texto=(alvo.textContent||"").trim().slice(0,100);
-  if(texto)registrarAnalitica("interacao",texto);
+  const alvo=e.target.closest("a,button,[data-action]");if(!alvo)return;
+  const texto=(alvo.textContent||"").replace(/\s+/g," ").trim().slice(0,100);if(!texto)return;
+  const [categoria,subcategoria,acao,descricao]=classificarInteracao(alvo,texto);
+  registrarAnalitica("interacao",acao,{categoria,subcategoria,acao,descricao});
 });
 
 
