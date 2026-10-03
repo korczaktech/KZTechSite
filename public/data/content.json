@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.03.06-central",
+  "version": "2026.10.03.08-subscription-isolation",
   "products": [
     {
       "id": "korczak-ai",
@@ -518,6 +518,818 @@
         "preSalePrice": 99450,
         "monthly": 5860,
         "preSaleMonthly": 4981
+      }
+    ],
+    "vault": [
+      {
+        "id": "starter",
+        "name": "Vault Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Vault.",
+        "features": [
+          "Recursos de Vault",
+          "30 GB por usuário",
+          "Recursos de Vault"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Vault Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Vault.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Vault"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Vault Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Vault.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Vault"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Vault Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Vault.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "nexus": [
+      {
+        "id": "starter",
+        "name": "Nexus Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Nexus.",
+        "features": [
+          "Recursos de Nexus",
+          "30 GB por usuário",
+          "Recursos de Nexus"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Nexus Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Nexus.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Nexus"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Nexus Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Nexus.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Nexus"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Nexus Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Nexus.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "nexa": [
+      {
+        "id": "starter",
+        "name": "Nexa Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Nexa.",
+        "features": [
+          "Recursos de Nexa",
+          "30 GB por usuário",
+          "Recursos de Nexa"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Nexa Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Nexa.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Nexa"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Nexa Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Nexa.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Nexa"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Nexa Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Nexa.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "veya": [
+      {
+        "id": "starter",
+        "name": "Veya Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Veya.",
+        "features": [
+          "Recursos de Veya",
+          "30 GB por usuário",
+          "Recursos de Veya"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Veya Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Veya.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Veya"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Veya Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Veya.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Veya"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Veya Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Veya.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "formly": [
+      {
+        "id": "starter",
+        "name": "Formly Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Formly.",
+        "features": [
+          "Recursos de Formly",
+          "30 GB por usuário",
+          "Recursos de Formly"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Formly Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Formly.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Formly"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Formly Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Formly.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Formly"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Formly Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Formly.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "korvo": [
+      {
+        "id": "starter",
+        "name": "Korvo Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Korvo.",
+        "features": [
+          "Recursos de Korvo",
+          "30 GB por usuário",
+          "Recursos de Korvo"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Korvo Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Korvo.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Korvo"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Korvo Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Korvo.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Korvo"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Korvo Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Korvo.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "chrona": [
+      {
+        "id": "starter",
+        "name": "Chrona Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Chrona.",
+        "features": [
+          "Recursos de Chrona",
+          "30 GB por usuário",
+          "Recursos de Chrona"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Chrona Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Chrona.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Chrona"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Chrona Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Chrona.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Chrona"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Chrona Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Chrona.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "meet": [
+      {
+        "id": "starter",
+        "name": "Meet Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Meet.",
+        "features": [
+          "Recursos de Meet",
+          "30 GB por usuário",
+          "Recursos de Meet"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Meet Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Meet.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Meet"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Meet Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Meet.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Meet"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Meet Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Meet.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "pulse": [
+      {
+        "id": "starter",
+        "name": "Pulse Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Pulse.",
+        "features": [
+          "Recursos de Pulse",
+          "30 GB por usuário",
+          "Recursos de Pulse"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Pulse Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Pulse.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Pulse"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Pulse Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Pulse.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Pulse"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Pulse Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Pulse.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "acta": [
+      {
+        "id": "starter",
+        "name": "Acta Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Acta.",
+        "features": [
+          "Recursos de Acta",
+          "30 GB por usuário",
+          "Recursos de Acta"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Acta Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Acta.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Acta"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Acta Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Acta.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Acta"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Acta Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Acta.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "memo": [
+      {
+        "id": "starter",
+        "name": "Memo Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Memo.",
+        "features": [
+          "Recursos de Memo",
+          "30 GB por usuário",
+          "Recursos de Memo"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Memo Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Memo.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Memo"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Memo Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Memo.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Memo"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Memo Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Memo.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "people": [
+      {
+        "id": "starter",
+        "name": "People Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para People.",
+        "features": [
+          "Recursos de People",
+          "30 GB por usuário",
+          "Recursos de People"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "People Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para People.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de People"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "People Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para People.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de People"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "People Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para People.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "web": [
+      {
+        "id": "starter",
+        "name": "Web Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Web.",
+        "features": [
+          "Recursos de Web",
+          "30 GB por usuário",
+          "Recursos de Web"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Web Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Web.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Web"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Web Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Web.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Web"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Web Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Web.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "klash": [
+      {
+        "id": "starter",
+        "name": "Klash Starter",
+        "billing": "usuário/mês",
+        "tag": "Entrada",
+        "description": "Plano Starter para Klash.",
+        "features": [
+          "Recursos de Klash",
+          "30 GB por usuário",
+          "Recursos de Klash"
+        ],
+        "price": 27,
+        "preSalePrice": 23
+      },
+      {
+        "id": "standard",
+        "name": "Klash Standard",
+        "billing": "usuário/mês",
+        "tag": "Mais usado",
+        "description": "Plano Standard para Klash.",
+        "features": [
+          "Tudo do Starter",
+          "2 TB por usuário",
+          "Recursos de Klash"
+        ],
+        "price": 55,
+        "preSalePrice": 47
+      },
+      {
+        "id": "plus",
+        "name": "Klash Plus",
+        "billing": "usuário/mês",
+        "tag": "Avançado",
+        "description": "Plano Plus para Klash.",
+        "features": [
+          "Tudo do Standard",
+          "5 TB por usuário",
+          "Recursos de Klash"
+        ],
+        "price": 86,
+        "preSalePrice": 73
+      },
+      {
+        "id": "enterprise",
+        "name": "Klash Enterprise",
+        "billing": "sob consulta",
+        "tag": "Empresarial",
+        "description": "Plano Enterprise para Klash.",
+        "features": [
+          "Recursos Enterprise",
+          "Controles corporativos",
+          "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ]
   },
