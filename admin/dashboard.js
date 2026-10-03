@@ -70,7 +70,17 @@ window.edit=id=>{fill(cache.find(x=>x._id===id));E("dlg").showModal()};window.pu
 async function media(){const x=await api("/admin/midias");E("media").innerHTML=x.map(r=>'<div class="item"><img src="'+esc(r.url)+'" style="max-width:100%;max-height:180px"><p>'+esc(r.nome)+'</p><input readonly value="'+esc(r.url)+'"></div>').join("")}
 async function admins(){const x=await api("/admin/administradores");E("adminLista").innerHTML=x.map(r=>'<div class="item"><b>'+esc(r.nome)+'</b><div>'+esc(r.email)+' · '+esc(r.papel)+'</div></div>').join("")}
 async function logs(){const x=await api("/admin/auditoria");E("logs").innerHTML=x.map(r=>'<div class="item"><b>'+esc(r.acao)+'</b><div class="meta">'+esc(r.email)+' · '+fmtDate(r.criadoEm)+'</div><p>'+esc(r.detalhes)+'</p></div>').join("")}
-async function load(){await Promise.all([analytics(),contas(),comercial(),rules(),media(),admins(),logs()])}
+async function load(){
+ const tarefas=[
+  ["analytics",analytics],["contas",contas],["comercial",comercial],["conteúdo",rules],["mídias",media],["administradores",admins],["auditoria",logs]
+ ];
+ const erros=[];
+ await Promise.all(tarefas.map(async([nome,fn])=>{try{await fn()}catch(e){erros.push(nome+": "+(e?.message||"erro desconhecido"))}}));
+ if(erros.length){
+  const el=E("atualizado");
+  if(el)el.textContent="Painel carregado com avisos: "+erros.join(" · ");
+ }
+}
 async function atualizarTudo(){const b=E("atualizarTudo");if(!b)return;b.disabled=true;b.textContent="↻ Atualizando…";try{await load();b.textContent="✓ Atualizado";setTimeout(()=>b.textContent="↻ Atualizar informações",1600)}catch{b.textContent="⚠ Erro";setTimeout(()=>b.textContent="↻ Atualizar informações",2200)}finally{b.disabled=false}}
 E("atualizarTudo")?.addEventListener("click",atualizarTudo);E("out").onclick=()=>{sessionStorage.removeItem("adm");location.href="./"};
 document.querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");document.querySelectorAll(".aba").forEach(x=>x.hidden=true);E(b.dataset.a).hidden=false;if(b.dataset.a==="analytics")await analytics();if(b.dataset.a==="contas")await contas();if(b.dataset.a==="comercial")await comercial();if(b.dataset.a==="interacoes")await interacoes()});
@@ -79,5 +89,16 @@ E("atualizarAnalytics").onclick=analytics;E("atualizarContas").onclick=contas;E(
 E("novo").onclick=()=>{fill();E("dlg").showModal()};E("cancel").onclick=()=>E("dlg").close();E("rf").onsubmit=async e=>{e.preventDefault();const b={pagina:E("pg").value,seletor:E("sel").value,tipo:E("tipo").value,atributo:E("atr").value,propriedade:E("prop").value,valor:E("val").value,publicado:E("pub").checked},id=E("id").value;await api(id?"/admin/conteudo/"+id:"/admin/conteudo",{method:id?"PUT":"POST",body:JSON.stringify(b)});E("dlg").close();rules()};
 E("file").onchange=e=>{const f=e.target.files[0];if(!f||f.size>8388608)return alert("Imagem máxima: 8 MB");const q=new FileReader();q.onload=async()=>{try{await api("/admin/midias",{method:"POST",body:JSON.stringify({nome:f.name,tipo:f.type,tamanho:f.size,dados:q.result})});media()}catch(x){alert(x.message)}};q.readAsDataURL(f)};
 E("novoAdmin").onclick=()=>E("ad").showModal();E("ac").onclick=()=>E("ad").close();E("af").onsubmit=async e=>{e.preventDefault();try{await api("/admin/administradores",{method:"POST",body:JSON.stringify({nome:E("an").value,email:E("ae").value,senha:E("ap").value})});E("ad").close();e.target.reset();admins()}catch(x){alert(x.message)}};
-(async()=>{if(!T){location.href="./";return}try{const u=await api("/api/me");if(u.role!=="admin")throw Error("Conta sem permissão de administrador");await load()}catch(e){sessionStorage.removeItem("adm");location.href="./"}})();
+(async()=>{
+ if(!T){location.href="./?sessao=ausente";return}
+ try{
+  const u=await api("/api/me");
+  if(u.role!=="admin")throw Error("Conta sem permissão de administrador");
+ }catch(e){
+  sessionStorage.removeItem("adm");
+  location.href="./?sessao=invalida";
+  return;
+ }
+ await load();
+})();
 setInterval(()=>{const a=E("analytics");if(a&&!a.hidden)analytics()},60000);
