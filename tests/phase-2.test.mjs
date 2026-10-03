@@ -34,3 +34,7 @@ test("Fase 2: documentação declara os critérios",()=>{
   assert.ok(phases.includes("## Critério de conclusão"));
   assert.match(phases,/catálogo completo/i);
 });
+
+
+test("Painel: supercategorias Analytics e Administração existem",()=>{const dashboard=fs.readFileSync("admin/dashboard.html","utf8");assert.match(dashboard,/data-super="analytics"/);assert.match(dashboard,/data-super="administracao"/);assert.match(dashboard,/id="administracao"[^>]*hidden/);assert.match(dashboard,/id="analyticsNav"/);});
+test("Painel: não usa HUBVault e mantém Vault",()=>{assert.doesNotMatch(app,/HUBVault/i);assert.ok(app.includes('id:"vault"'));});
