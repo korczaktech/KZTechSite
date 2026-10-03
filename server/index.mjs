@@ -34,8 +34,7 @@ const commercialProducts=Object.fromEntries([
   ["morok",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOROK||""}],
   ["erp",{amount:9990,currency:"brl",priceId:process.env.STRIPE_PRICE_ERP||""}],
    ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}],
-     ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}]
-]);
+ ]);
 
 const products=[
 ["korczak-ai","KORCZAK AI","Inteligência","Produto iniciado: inteligência e automação para o ecossistema Korczak.","Iniciado"],
