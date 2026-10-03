@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.02";
+const APP_VERSION="2026.10.03.06";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
@@ -690,9 +690,6 @@ async function load(){
       Object.assign(OPTION_NEED,content.services.need||{});
       normalizeServiceCatalog();
     }
-    const pricing=await fetch("./data/pricing.json?"+APP_VERSION).then(r=>r.ok?r.json():null);
-    if(pricing?.plans)for(const [key,list] of Object.entries(pricing.plans)){const base=PLAN_CATALOG[key]||[];PLAN_CATALOG[key]=list.map(p=>({...((base.find(x=>x.id===p.id)||{})),...p}));}
-    if(pricing?.modules)for(const [id,rows] of Object.entries(pricing.modules)){const list=MODULAR_CATALOG[id]||[];for(const row of rows){const m=list.find(x=>x.id===row[0]);if(m){m.price=Number(row[2]);m.monthly=Number(row[3]);m.required=Boolean(row[4]||m.required);}}}
     state.plans={...PLAN_CATALOG};
     try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...state.plans,...plans};}catch{}
   }catch{}
