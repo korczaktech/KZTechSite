@@ -90,15 +90,19 @@ E("novo").onclick=()=>{fill();E("dlg").showModal()};E("cancel").onclick=()=>E("d
 E("file").onchange=e=>{const f=e.target.files[0];if(!f||f.size>8388608)return alert("Imagem máxima: 8 MB");const q=new FileReader();q.onload=async()=>{try{await api("/admin/midias",{method:"POST",body:JSON.stringify({nome:f.name,tipo:f.type,tamanho:f.size,dados:q.result})});media()}catch(x){alert(x.message)}};q.readAsDataURL(f)};
 E("novoAdmin").onclick=()=>E("ad").showModal();E("ac").onclick=()=>E("ad").close();E("af").onsubmit=async e=>{e.preventDefault();try{await api("/admin/administradores",{method:"POST",body:JSON.stringify({nome:E("an").value,email:E("ae").value,senha:E("ap").value})});E("ad").close();e.target.reset();admins()}catch(x){alert(x.message)}};
 (async()=>{
- if(!T){location.href="./?sessao=ausente";return}
+ if(!T){
+  const el=E("atualizado");
+  if(el)el.textContent="Sessão administrativa ausente. Faça login novamente.";
+  return;
+ }
  try{
   const u=await api("/api/me");
   if(u.role!=="admin")throw Error("Conta sem permissão de administrador");
+  await load();
  }catch(e){
-  sessionStorage.removeItem("adm");
-  location.href="./?sessao=invalida";
-  return;
+  const el=E("atualizado");
+  if(el)el.textContent="Sessão/API: "+(e?.message||"não foi possível validar a sessão")+" — o painel foi mantido aberto para diagnóstico.";
+  try{await load()}catch{}
  }
- await load();
 })();
 setInterval(()=>{const a=E("analytics");if(a&&!a.hidden)analytics()},60000);
