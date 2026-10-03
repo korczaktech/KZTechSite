@@ -257,15 +257,21 @@ app.post("/api/interessados/korczak-ai",rateLimit({windowMs:60000,max:10}),async
   const nome=String(b.nome||"").trim().slice(0,120);
   const emailInformado=String(b.email||"").trim().toLowerCase().slice(0,180);
   const whatsapp=String(b.whatsapp||"").trim().slice(0,40);
+  const cidade=String(b.cidade||"").trim().slice(0,100);
+  const estado=String(b.estado||"").trim().slice(0,100);
+  const pais=String(b.pais||"").trim().slice(0,100);
+  const ondeConheceu=String(b.ondeConheceu||"").trim().slice(0,120);
   const uso=String(b.uso||"").trim().slice(0,500);
   const consentimento=b.consentimento===true;
   if(nome.length<2)return res.status(400).json({error:"Informe seu nome."});
   if(!emailValida(emailInformado))return res.status(400).json({error:"Informe um email válido."});
+  if(!cidade||!estado||!pais)return res.status(400).json({error:"Informe cidade, estado e país."});
+  if(!ondeConheceu)return res.status(400).json({error:"Informe onde conheceu a Korczak AI."});
   if(!consentimento)return res.status(400).json({error:"É necessário autorizar o contato sobre a Korczak AI."});
   const agora=new Date();
   const doc={
     produto:"korczak-ai",
-    nome,email:emailInformado,whatsapp,uso,
+    nome,email:emailInformado,whatsapp,cidade,estado,pais,ondeConheceu,uso,
     consentimento:true,
     origem:String(b.origem||"site").slice(0,80),
     status:"interessado",
