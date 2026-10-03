@@ -121,7 +121,6 @@ E("novoAdmin").onclick=()=>E("ad").showModal();E("ac").onclick=()=>E("ad").close
  }catch(e){
   const el=E("atualizado");
   if(el)el.textContent="Sessão/API: "+(e?.message||"não foi possível validar a sessão")+" — o painel foi mantido aberto para diagnóstico.";
-  try{await load()}catch{}
  }
 })();
 setInterval(()=>{const a=E("analytics");if(a&&!a.hidden)analytics()},60000);
