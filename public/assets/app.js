@@ -56,9 +56,11 @@ const PLAN_CATALOG={
   "flow":[
     {id:"flow-standard",name:"KORCZAK FLOW",price:22500,preSalePrice:19125,billing:"implantação",monthly:1125,preSaleMonthly:956,tag:"Compra + mensal",description:"Implantação de plataforma de fluxos, aprovações e automações.",features:["Mapeamento e implantação","Fluxos e aprovações","Mensalidade de operação e manutenção"]}
   ],
-  "wms":[
-    {id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Implantação de gestão de armazém para operações de maior complexidade.",features:["Implantação do WMS","Gestão de estoque e movimentação","Mensalidade de operação e manutenção"]}
-  ]
+  "vision":[{id:"vision-standard",name:"KORCZAK VISION",price:22500,preSalePrice:19125,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Business intelligence e painéis operacionais.",features:["Implantação","Dashboards e indicadores","Mensalidade"]}],
+  "ops":[{id:"ops-standard",name:"KORCZAK OPS",price:45000,preSalePrice:38250,billing:"implantação",monthly:3000,preSaleMonthly:2550,tag:"Compra + mensal",description:"Operações, administração e observabilidade.",features:["Implantação","Operação e administração","Mensalidade"]}],
+  "connect":[{id:"connect-standard",name:"KORCZAK CONNECT",price:37500,preSalePrice:31875,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Integrações entre pessoas, sistemas e serviços.",features:["Implantação","Integrações","Mensalidade"]}],
+  "mobile":[{id:"mobile-standard",name:"KORCZAK MOBILE",price:45000,preSalePrice:38250,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Aplicativo móvel empresarial.",features:["Implantação","Experiência mobile","Mensalidade"]}],
+  "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
 };
 
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
