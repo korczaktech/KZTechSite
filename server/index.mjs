@@ -42,7 +42,21 @@ const products=[
 ["vision","KORCZAK VISION","Intelligence","Produto planejado para visão e inteligência operacional.","Planejado"],
 ["ops","KORCZAK OPS","Operations","Produto planejado para operações e administração do ecossistema.","Planejado"],
 ["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
-["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"]
+["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"],
+["workspace","Korczak Workspace","Workspace","Marca que reúne os aplicativos de produtividade.","Em construção"],
+["documents","Korczak Documents","Workspace","Único aplicativo do Workspace iniciado atualmente.","Em construção"],
+["sheets","Korczak Sheets","Workspace","Planilhas e análise de dados.","Planejado"],
+["slides","Korczak Slides","Workspace","Apresentações e colaboração visual.","Planejado"],
+["drive","Korczak Drive","Workspace","Arquivos e armazenamento em nuvem.","Planejado"],
+["cloud","Korczak Cloud","Workspace","Serviços e recursos de nuvem.","Planejado"],
+["mail","Korczak Mail","Workspace","Email profissional.","Planejado"],
+["calendar","Korczak Calendar","Workspace","Agenda e compromissos.","Planejado"],
+["meet","Korczak Meet","Workspace","Videoconferências.","Planejado"],
+["chat","Korczak Chat","Workspace","Comunicação de equipes.","Planejado"],
+["forms","Korczak Forms","Workspace","Formulários e coleta de dados.","Planejado"],
+["sites","Korczak Sites","Workspace","Sites internos e páginas colaborativas.","Planejado"],
+["tasks","Korczak Tasks","Workspace","Tarefas e acompanhamento.","Planejado"],
+["keep","Korczak Keep","Workspace","Notas e organização pessoal.","Planejado"]
 ].map(x=>({id:x[0],name:x[1],type:x[2],description:x[3],status:x[4]}));
 
 app.disable("x-powered-by");
