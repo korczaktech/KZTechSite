@@ -23,34 +23,32 @@ if(isProd&&!FRONTEND_URLS.length)throw new Error("FRONTEND_URL must be configure
 let db=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
 const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_KEY):null;
+const rateBuckets=new Map();
+function rateLimit({windowMs=60000,max=60}={}){return (req,res,next)=>{const now=Date.now(),key=req.ip||"unknown",old=rateBuckets.get(key);if(!old||now-old.started>=windowMs){rateBuckets.set(key,{started:now,count:1});return next()}old.count++;if(old.count>max){res.set("Retry-After",String(Math.ceil((windowMs-(now-old.started))/1000)));return res.status(429).json({error:"Muitas solicitações. Aguarde alguns segundos e tente novamente."})}next()}}
+setInterval(()=>{const now=Date.now();for(const [k,v] of rateBuckets)if(now-v.started>900000)rateBuckets.delete(k)},900000).unref();
 const FRONTEND_URL=FRONTEND_URLS[0]||"";
 const checkoutBase=FRONTEND_URL||SITE_URL||"http://localhost:3000";
 const commercialProducts=Object.fromEntries([
   ["korczak-ai",{amount:4990,currency:"brl",priceId:process.env.STRIPE_PRICE_KORCZAK_AI||""}],
-  ["workspace",{amount:6990,currency:"brl",priceId:process.env.STRIPE_PRICE_WORKSPACE||""}],
-  ["ide",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_IDE||""}],
+   ["ide",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_IDE||""}],
   ["morok",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOROK||""}],
   ["erp",{amount:9990,currency:"brl",priceId:process.env.STRIPE_PRICE_ERP||""}],
-  ["flow",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_FLOW||""}],
-  ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}],
-  ["vision",{amount:3990,currency:"brl",priceId:process.env.STRIPE_PRICE_VISION||""}],
-  ["ops",{amount:4990,currency:"brl",priceId:process.env.STRIPE_PRICE_OPS||""}],
-  ["connect",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_CONNECT||""}],
-  ["mobile",{amount:2990,currency:"brl",priceId:process.env.STRIPE_PRICE_MOBILE||""}]
+   ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}],
+     ["documents",{amount:2490,currency:"brl",priceId:process.env.STRIPE_PRICE_DOCUMENTS||""}]
 ]);
 
 const products=[
-["korczak-ai","KORCZAK AI","Inteligência","Camada de inteligência para assistência, análise e automação.","Em evolução"],
-["workspace","Korczak Workspace","Workspace","Ambiente unificado para reunir produtos, documentos, operações e fluxos.","Em evolução"],
-["ide","Korczak IDE","Desenvolvimento","Ambiente para criar, testar, organizar e evoluir software.","Em desenvolvimento"],
-["morok","MOROK","Assistente","Assistente pessoal e operacional com interface web, desktop e mobile.","Em desenvolvimento"],
-["erp","KORCZAK ERP","Gestão","Núcleo de gestão para organizar clientes, operações, financeiro e processos.","Em desenvolvimento"],
-["flow","KORCZAK FLOW","Automação","Criação e acompanhamento de fluxos, tarefas e automações.","Em evolução"],
-["documents","KORCZAK DOCUMENTS","Documentos","Criação, organização, consulta e gestão do ciclo de documentos.","Em evolução"],
-["vision","KORCZAK VISION","Inteligência operacional","Painéis e visão operacional para acompanhar informação e contexto.","Em evolução"],
-["ops","KORCZAK OPS","Operações","Controle técnico e operacional do ecossistema Korczak.","Em evolução"],
-["connect","KORCZAK CONNECT","Conectividade","Integração entre pessoas, produtos, serviços e canais.","Planejado"],
-["mobile","KORCZAK MOBILE","Mobile","Experiência móvel para acessar e operar o ecossistema.","Planejado"]
+["korczak-ai","KORCZAK AI","Inteligência","Produto iniciado: inteligência e automação para o ecossistema Korczak.","Iniciado"],
+["workspace","Korczak Workspace","Workspace","Suíte em construção. No momento, apenas o Korczak Documents está iniciado.","Em construção"],
+["ide","Korczak IDE","Desenvolvimento","Produto iniciado: ambiente de desenvolvimento para projetos Korczak.","Iniciado"],
+["morok","MOROK","Assistente","Produto iniciado: assistente pessoal e operacional multiplataforma.","Iniciado"],
+["erp","KORCZAK ERP","Gestão","Produto iniciado: gestão empresarial para clientes, processos, financeiro e operação.","Iniciado"],
+["flow","KORCZAK FLOW","Operations","Produto planejado para fluxos e automações operacionais.","Planejado"],
+["documents","KORCZAK DOCUMENTS","Documents","Único produto iniciado atualmente dentro do Workspace.","Iniciado"],
+["vision","KORCZAK VISION","Intelligence","Produto planejado para visão e inteligência operacional.","Planejado"],
+["ops","KORCZAK OPS","Operations","Produto planejado para operações e administração do ecossistema.","Planejado"],
+["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
+["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"]
 ].map(x=>({id:x[0],name:x[1],type:x[2],description:x[3],status:x[4]}));
 
 app.disable("x-powered-by");
@@ -59,7 +57,7 @@ app.use(helmet({
   contentSecurityPolicy:{
     directives:{
       defaultSrc:["'self'"],
-      scriptSrc:["'self'"],
+      scriptSrc:["'self'","https://ajax.googleapis.com","https://cdn.jsdelivr.net"],
       styleSrc:["'self'","'unsafe-inline'"],
       imgSrc:["'self'","data:"],
       connectSrc:["'self'","https://kztechsite.onrender.com"],
@@ -142,7 +140,7 @@ app.get("/api/conteudo-publicado",async(req,res)=>{
 });
 
 async function registrarEventoAnalitico(d={}){if(!db)return;await db.collection("analiticas").insertOne({pagina:String(d.pagina||"/").slice(0,300),tipo:String(d.tipo||"interacao").slice(0,60),categoria:String(d.categoria||"interacoes").slice(0,60),subcategoria:String(d.subcategoria||"geral").slice(0,80),acao:String(d.acao||"").slice(0,160),descricao:String(d.descricao||"").slice(0,500),referencia:String(d.referencia||"").slice(0,500),usuarioId:String(d.usuarioId||"").slice(0,100),nome:String(d.nome||"").slice(0,120),email:String(d.email||"").slice(0,180),entidade:String(d.entidade||"").slice(0,120),entidadeId:String(d.entidadeId||"").slice(0,120),metadados:d.metadados&&typeof d.metadados==="object"?d.metadados:{},dispositivo:"servidor",navegador:"",sistema:"",idioma:"pt-BR",largura:0,altura:0,evento:String(d.acao||"").slice(0,120),criadoEm:new Date()});}
-app.post("/api/analiticas/evento",async(req,res)=>{
+app.post("/api/analiticas/evento",rateLimit({windowMs:60000,max:120}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const b=req.body||{},pagina=String(b.pagina||"/").slice(0,300),tipo=String(b.tipo||"visualizacao").slice(0,60);
   if(!pagina)return res.status(400).json({error:"Página inválida"});
@@ -364,7 +362,7 @@ app.get("/api/ready",(req,res)=>{
 });
 app.get("/api/products",(req,res)=>res.json(products.map(p=>({...p,commercial:Boolean(commercialProducts[p.id]),price:commercialProducts[p.id]?.amount||null,currency:commercialProducts[p.id]?.currency||"brl"}))));
 
-app.post("/api/contact",async(req,res)=>{
+app.post("/api/contact",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const {name,phone,message}=req.body||{},mail=email(req.body?.email);
   const cleanName=String(name||"").trim(),cleanMessage=String(message||"").trim(),cleanPhone=String(phone||"").trim();
@@ -376,7 +374,7 @@ app.post("/api/contact",async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
-app.post("/api/auth/register",async(req,res)=>{
+app.post("/api/auth/register",rateLimit({windowMs:60000,max:8}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const name=String(req.body?.name||"").trim(),mail=email(req.body?.email),pass=String(req.body?.password||"");
   if(name.length<2||name.length>120||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8||pass.length>128)
@@ -395,7 +393,7 @@ app.post("/api/auth/register",async(req,res)=>{
   }
 });
 
-app.post("/api/auth/login",async(req,res)=>{
+app.post("/api/auth/login",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const u=await db.collection("users").findOne({email:email(req.body?.email)});
   if(!u||!(await bcrypt.compare(String(req.body?.password||""),u.passwordHash)))
@@ -447,7 +445,7 @@ app.get("/api/admin/quotes",auth,admin,async(req,res)=>{
   res.json(await db.collection("quotes").find().sort({createdAt:-1}).limit(100).toArray());
 });
 
-app.post("/api/checkout",auth,async(req,res)=>{
+app.post("/api/checkout",rateLimit({windowMs:60000,max:12}),auth,async(req,res)=>{
   if(!stripe)return res.status(503).json({error:"Stripe não configurado"});
   const p=products.find(x=>x.id===req.body?.productId);
   const config=p&&commercialProducts[p.id];
