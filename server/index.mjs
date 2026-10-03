@@ -418,7 +418,7 @@ app.get("/api/me",auth,async(req,res)=>{
   u?res.json(u):res.status(404).json({error:"Usuário não encontrado"});
 });
 
-app.post("/api/quotes",auth,async(req,res)=>{
+app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const productId=String(req.body?.productId||"");
   const objective=String(req.body?.objective||"").trim();
@@ -430,9 +430,9 @@ app.post("/api/quotes",auth,async(req,res)=>{
   if((!products.some(p=>p.id===productId)&&!serviceId)||name.length<2||!emailValida(mail)||phone.length<8||objective.length<2||scope.length<10)
     return res.status(400).json({error:"Preencha os campos obrigatórios do orçamento"});
   const agora=new Date();
-  await db.collection("quotes").insertOne({userId:req.user.sub,productId:productId||null,serviceId:serviceId||null,name,email:mail,phone,company:String(req.body?.company||"").slice(0,180),objective,scope:scope.slice(0,8000),deadline:String(req.body?.deadline||"").slice(0,180),budget:String(req.body?.budget||"").slice(0,180),details:String(req.body?.details||"").slice(0,5000),status:"pending",createdAt:agora});
-  const u=await db.collection("users").findOne({_id:idMongo(req.user.sub)},{projection:{passwordHash:0}});
-  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:"/produto/"+productId,usuarioId:req.user.sub,nome:u?.name,email:u?.email,entidade:"produto",entidadeId:productId,metadados:{objetivo:objective,escopo:scope.slice(0,500),servico:serviceId||null,produto:productId||null}});
+  await db.collection("quotes").insertOne({userId:req.user?.sub||null,productId:productId||null,serviceId:serviceId||null,name,email:mail,phone,company:String(req.body?.company||"").slice(0,180),objective,scope:scope.slice(0,8000),deadline:String(req.body?.deadline||"").slice(0,180),budget:String(req.body?.budget||"").slice(0,180),details:String(req.body?.details||"").slice(0,5000),status:"pending",createdAt:agora});
+  const u=req.user?.sub?await db.collection("users").findOne({_id:idMongo(req.user.sub)},{projection:{passwordHash:0}}):null;
+  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:productId?"/produto/"+productId:serviceId?"/servicos/"+serviceId:"/orcamento",usuarioId:req.user?.sub||null,nome:u?.name||name,email:u?.email||mail,entidade:"produto",entidadeId:productId,metadados:{objetivo:objective,escopo:scope.slice(0,500),servico:serviceId||null,produto:productId||null}});
   res.status(201).json({ok:true});
 });
 
