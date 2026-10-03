@@ -529,6 +529,35 @@ app.get("/api/quotes",auth,async(req,res)=>{
   res.json(rows);
 });
 
+function planKeyForProductServer(id){return ["hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(id)?"hub":id;}
+app.post("/api/subscriptions",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const productId=String(req.body?.productId||"").trim();
+  const planId=String(req.body?.planId||"").trim();
+  const moduleIds=String(req.body?.moduleIds||"").trim().slice(0,2000);
+  const name=String(req.body?.name||"").trim();
+  const mail=email(req.body?.email);
+  const phone=String(req.body?.phone||"").trim();
+  const company=String(req.body?.company||"").trim().slice(0,180);
+  const document=String(req.body?.document||"").trim().slice(0,40);
+  const p=products.find(x=>x.id===productId);
+  if(!p||name.length<2||!emailValida(mail)||phone.length<8)return res.status(400).json({error:"Preencha nome, email e telefone para iniciar a assinatura"});
+  const catalogo=await lerCatalogoCentral();
+  const planos=normalizarPlanos(catalogo.plans||PLANOS_PADRAO);
+  const lista=planos[planKeyForProductServer(productId)]||[];
+  const plano=lista.find(x=>x.id===planId);
+  const modsCatalog=catalogo.modules?.[productId]||[];
+  const ids=moduleIds?moduleIds.split(",").filter(Boolean):[];
+  const mods=modsCatalog.filter(x=>ids.includes(x.id));
+  if(!plano&&!mods.length)return res.status(400).json({error:"Selecione um plano ou uma configuração de módulos válida"});
+  const monthly=plano&&Number.isFinite(Number(plano.price))?Number(plano.price):mods.reduce((n,x)=>n+Number(x.monthly||0),0);
+  const implementation=mods.reduce((n,x)=>n+Number(x.price||0),0);
+  const agora=new Date();
+  const row={userId:req.user?.sub||null,productId,planId:planId||null,moduleIds,name,email:mail,phone,company,document,monthly,implementation,paymentMethod:"pix",paymentStatus:"pending_pix",status:"pending",createdAt:agora,updatedAt:agora};
+  const result=await db.collection("subscriptions").insertOne(row);
+  await registrarEventoAnalitico({tipo:"assinatura",categoria:"comercial",subcategoria:"assinaturas",acao:"Assinatura iniciada",descricao:"Fluxo de assinatura iniciado com pagamento por PIX.",pagina:"/assinatura",usuarioId:req.user?.sub||null,nome:name,email:mail,entidade:"produto",entidadeId:productId,metadados:{planId:planId||null,moduleIds,monthly,implementation,paymentMethod:"pix"}});
+  res.status(201).json({ok:true,id:String(result.insertedId),status:"pending_pix",pix:{method:"pix",qrCode:null,copyPaste:null}});
+});
 app.post("/api/presales",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const productId=String(req.body?.productId||"").trim();
@@ -714,6 +743,9 @@ async function start(){
     await db.collection("quotes").createIndex({createdAt:-1});
     await db.collection("quotes").createIndex({userId:1,createdAt:-1});
     await db.collection("presales").createIndex({createdAt:-1});
+    await db.collection("subscriptions").createIndex({createdAt:-1});
+    await db.collection("subscriptions").createIndex({userId:1,createdAt:-1});
+    await db.collection("subscriptions").createIndex({productId:1,planId:1,createdAt:-1});
     await db.collection("presales").createIndex({userId:1,createdAt:-1});
     await db.collection("orders").createIndex({userId:1,createdAt:-1});
     await db.collection("orders").createIndex({sessionId:1},{unique:true,sparse:true});
