@@ -425,6 +425,50 @@ function updateKOSModules(el){
   const ids=selected.map(m=>m.id).join(",");
   page.querySelectorAll("[data-module-quote]").forEach(a=>a.href="#/orcamento?produto="+encodeURIComponent(product)+"&modulos="+encodeURIComponent(ids));
 }
+function presalePage(){
+  const qs=new URLSearchParams((location.hash.split("?")[1]||""));
+  const selectedId=qs.get("produto")||"";
+  const selectedPlan=qs.get("plano")||"";
+  const selectedModules=qs.get("modulos")||"";
+  const all=Array.isArray(state.products)?state.products:[];
+  const kos=all.filter(p=>p.type==="KOS"),hub=all.filter(p=>p.type==="HUB");
+  const priceLabel=(p)=>{
+    const key=planKeyForProduct(p.id);
+    const plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
+    const prices=plans.map(x=>Number(x.preSalePrice)).filter(Number.isFinite);
+    if(prices.length)return "A partir de "+money(Math.min(...prices))+" / "+(plans[0].billing||"mês");
+    const mods=MODULAR_CATALOG[p.id];
+    if(mods?.length){
+      const base=mods.filter(x=>x.required).reduce((n,x)=>n+Number(x.price||0),0);
+      return "A partir de "+money(Math.round(base*.85))+" de implantação";
+    }
+    return "Condição especial de pré-venda";
+  };
+  const card=(p,i)=>'<article class="presale-card '+(p.id===selectedId?"selected":"")+'"><div class="presale-card-top"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Produto")+'</span></div><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description||"")+'</p><strong class="presale-card-price">'+esc(priceLabel(p))+'</strong><a class="btn '+(p.id===selectedId?"":"ghost")+'" href="#/pre-venda?produto='+encodeURIComponent(p.id)+'">Comprar na pré-venda '+icon("arrow")+'</a></article>';
+  const productRows=(items)=>items.map((p,i)=>card(p,i)).join("");
+  const selected=all.find(p=>p.id===selectedId);
+  const selectedPlans=selected?(state.plans?.[planKeyForProduct(selected.id)]||PLAN_CATALOG[planKeyForProduct(selected.id)]||[]):[];
+  const selectedMods=selected?(MODULAR_CATALOG[selected.id]||[]):[];
+  const selectedPlanObj=selectedPlans.find(x=>x.id===selectedPlan);
+  const selectedModuleIds=selectedModules?selectedModules.split(",").filter(Boolean):selectedMods.filter(x=>x.required).map(x=>x.id);
+  const chosenMods=selectedMods.filter(x=>selectedModuleIds.includes(x.id));
+  const selectedPrice=selectedPlanObj&&Number.isFinite(Number(selectedPlanObj.preSalePrice))?Number(selectedPlanObj.preSalePrice):chosenMods.length?Math.round(chosenMods.reduce((n,x)=>n+Number(x.price||0),0)*.85):null;
+  const selectedMonthly=selectedPlanObj&&Number.isFinite(Number(selectedPlanObj.preSaleMonthly))?Number(selectedPlanObj.preSaleMonthly):chosenMods.length?Math.round(chosenMods.reduce((n,x)=>n+Number(x.monthly||0),0)*.85):null;
+  return '<main id="main-content" class="section shell presale-page"><div class="portfolio-hero"><span class="eyebrow">PRÉ-VENDA · ECOSSISTEMA KORCZAK</span><h2>Garanta seu acesso antecipado.</h2><p class="section-lead">A pré-venda reúne todos os aplicativos do catálogo, inclusive produtos em desenvolvimento e planejados. Escolha um produto, confira a condição antecipada e registre sua intenção de compra.</p></div><section class="presale-intro"><div><span class="eyebrow">01 · TODOS OS APLICATIVOS</span><h3>Escolha o que você quer receber primeiro.</h3><p class="muted">A condição de pré-venda é registrada separadamente de um orçamento. Ela não substitui propostas para serviços personalizados.</p></div><a class="btn ghost" href="#/produtos">Ver catálogo '+icon("arrow")+'</a></section><section class="section-group presale-group"><div class="split-head"><div><span class="eyebrow">KOS</span><h3>Produtos operacionais</h3></div><span class="muted">'+kos.length+' aplicativos</span></div><div class="presale-grid">'+productRows(kos)+'</div></section><section class="section-group presale-group"><div class="split-head"><div><span class="eyebrow">HUB</span><h3>Aplicativos do HUB</h3></div><span class="muted">'+hub.length+' aplicativos</span></div><div class="presale-grid">'+productRows(hub)+'</div></section>'+(selected?'<section class="section presale-checkout"><div class="presale-selected-head"><div><span class="eyebrow">02 · PRODUTO SELECIONADO</span><h2>'+esc(selected.name)+'</h2><p class="section-lead">'+esc(selected.description||"")+'</p></div><span class="status">'+esc(selected.status||"Pré-venda")+'</span></div>'+(selectedPlans.length?'<div class="presale-choice-grid">'+selectedPlans.map(pl=>'<a class="presale-choice '+(pl.id===selectedPlan?"selected":"")+'" href="#/pre-venda?produto='+encodeURIComponent(selected.id)+'&plano='+encodeURIComponent(pl.id)+'"><span class="eyebrow">'+esc(pl.tag||"PLANO")+'</span><h3>'+esc(pl.name)+'</h3><strong>'+((Number.isFinite(Number(pl.preSalePrice)))?money(pl.preSalePrice):"Sob consulta")+'</strong><small>/ '+esc(pl.billing||"mês")+'</small><span>Pré-venda · 15% OFF</span></a>').join("")+'</div>':selectedMods.length?'<div class="presale-choice-grid">'+selectedMods.map(m=>'<a class="presale-choice '+(selectedModuleIds.includes(m.id)?"selected":"")+'" href="#/pre-venda?produto='+encodeURIComponent(selected.id)+'&modulos='+encodeURIComponent(selectedModuleIds.includes(m.id)?selectedModuleIds.filter(x=>x!==m.id).concat(m.required?[m.id]:[]).join(","):selectedModuleIds.concat(m.id).join(","))+'"><span class="eyebrow">'+esc(m.required?"BASE OBRIGATÓRIA":m.tag||"MÓDULO")+'</span><h3>'+esc(m.name)+'</h3><strong>'+money(Math.round(Number(m.price||0)*.85))+'</strong><small>implantação · pré-venda</small></a>').join("")+'</div>':"")+'<div class="presale-summary"><div><span>Condição de pré-venda</span><strong>'+(selectedPrice!==null?money(selectedPrice):"Definida no lançamento")+'</strong></div>'+(selectedMonthly!==null?'<div><span>Mensalidade</span><strong>'+money(selectedMonthly)+'</strong><small>/ mês</small></div>':"")+'<div><span>Produto</span><strong>'+esc(selected.name)+'</strong></div></div><form id="presale-form" class="form presale-form"><input type="hidden" name="productId" value="'+esc(selected.id)+'"><input type="hidden" name="planId" value="'+esc(selectedPlan)+'"><input type="hidden" name="moduleIds" value="'+esc(selectedModuleIds.join(","))+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><button class="btn" type="submit">Confirmar pré-venda '+icon("arrow")+'</button><small id="presale-msg" class="muted form-note" role="status"></small></form></section>':"")+'</main>';
+}
+
+async function sendPresale(e){
+  e.preventDefault();
+  const form=e.target,msg=form.querySelector("#presale-msg"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Registrando…";
+  try{
+    await api("/api/presales",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form)))});
+    msg.textContent="Pré-venda registrada. A equipe enviará as instruções de pagamento quando a oferta estiver disponível.";
+    toast("Pré-venda registrada com sucesso.");
+    registrarAnalitica("presale","Pré-venda registrada",{categoria:"comercial",subcategoria:"pre-venda",acao:"Pré-venda registrada",descricao:"Intenção de compra registrada na página de pré-venda.",entidade:"produto",entidadeId:form.productId.value});
+  }catch(x){msg.textContent=x.message;toast(x.message)}
+  finally{button.disabled=false}
+}
 function quotePage(){
   const qs=new URLSearchParams((location.hash.split("?")[1]||""));
   const productId=qs.get("produto")||"",serviceId=qs.get("servico")||"",planId=qs.get("plano")||"",moduleIds=qs.get("modulos")||"";
@@ -611,6 +655,7 @@ async function submitAuth(e){
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
   if(e.target.id==="quote-form")sendQuote(e);
+  if(e.target.id==="presale-form")sendPresale(e);
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&state.menu)closeMenu();
