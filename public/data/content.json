@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.03.05-pages",
+  "version": "2026.10.03.06-central",
   "products": [
     {
       "id": "korczak-ai",
@@ -189,7 +189,9 @@
           "Acesso gratuito",
           "Recursos essenciais",
           "Limites de uso para começar"
-        ]
+        ],
+        "price": 0,
+        "preSalePrice": 0
       },
       {
         "id": "go",
@@ -201,7 +203,9 @@
           "Tudo do Free",
           "Mais capacidade de uso",
           "Recursos ampliados"
-        ]
+        ],
+        "price": 21,
+        "preSalePrice": 18
       },
       {
         "id": "plus",
@@ -213,7 +217,9 @@
           "Tudo do Go",
           "Mais ferramentas e capacidade",
           "Uso mais amplo"
-        ]
+        ],
+        "price": 52,
+        "preSalePrice": 44
       },
       {
         "id": "pro",
@@ -225,7 +231,9 @@
           "Tudo do Plus",
           "Limites muito maiores",
           "Recursos profissionais"
-        ]
+        ],
+        "price": 261,
+        "preSalePrice": 222
       },
       {
         "id": "pro-max",
@@ -237,7 +245,9 @@
           "Tudo do Pro",
           "Capacidade máxima da linha",
           "Uso intensivo"
-        ]
+        ],
+        "price": 521,
+        "preSalePrice": 443
       }
     ],
     "ide": [
@@ -251,7 +261,9 @@
           "Editor e recursos essenciais",
           "Uso individual",
           "Sem mensalidade"
-        ]
+        ],
+        "price": 0,
+        "preSalePrice": 0
       },
       {
         "id": "pro",
@@ -263,7 +275,9 @@
           "Tudo do Free",
           "Assistência avançada",
           "Mais uso mensal"
-        ]
+        ],
+        "price": 52,
+        "preSalePrice": 44
       },
       {
         "id": "pro-plus",
@@ -275,7 +289,9 @@
           "Tudo do Pro",
           "Modelos premium",
           "Maior capacidade"
-        ]
+        ],
+        "price": 203,
+        "preSalePrice": 173
       },
       {
         "id": "max",
@@ -287,7 +303,9 @@
           "Tudo do Pro+",
           "Uso de alto volume",
           "Prioridade em recursos avançados"
-        ]
+        ],
+        "price": 521,
+        "preSalePrice": 443
       },
       {
         "id": "business",
@@ -299,7 +317,9 @@
           "Tudo do Pro",
           "Controle de acesso e orçamento",
           "Governança e privacidade"
-        ]
+        ],
+        "price": 74,
+        "preSalePrice": 63
       },
       {
         "id": "enterprise",
@@ -311,7 +331,9 @@
           "Tudo do Business",
           "Recursos corporativos",
           "Maior capacidade organizacional"
-        ]
+        ],
+        "price": 152,
+        "preSalePrice": 129
       }
     ],
     "hub": [
@@ -325,7 +347,9 @@
           "Email profissional",
           "30 GB por usuário",
           "Docs, Nexa, Vault, Meet e mais"
-        ]
+        ],
+        "price": 27,
+        "preSalePrice": 23
       },
       {
         "id": "standard",
@@ -337,7 +361,9 @@
           "Tudo do Starter",
           "2 TB por usuário",
           "Recursos avançados de colaboração e IA"
-        ]
+        ],
+        "price": 55,
+        "preSalePrice": 47
       },
       {
         "id": "plus",
@@ -349,7 +375,9 @@
           "Tudo do Standard",
           "5 TB por usuário",
           "Segurança e administração avançadas"
-        ]
+        ],
+        "price": 86,
+        "preSalePrice": 73
       },
       {
         "id": "enterprise",
@@ -361,7 +389,9 @@
           "Recursos Enterprise",
           "Controles corporativos",
           "Preço definido conforme escopo"
-        ]
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "erp": [
@@ -375,7 +405,11 @@
           "Implantação do sistema",
           "Gestão empresarial integrada",
           "Mensalidade de operação e manutenção"
-        ]
+        ],
+        "price": 75000,
+        "preSalePrice": 63750,
+        "monthly": 1500,
+        "preSaleMonthly": 1275
       }
     ],
     "flow": [
@@ -389,7 +423,11 @@
           "Mapeamento e implantação",
           "Fluxos e aprovações",
           "Mensalidade de operação e manutenção"
-        ]
+        ],
+        "price": 22500,
+        "preSalePrice": 19125,
+        "monthly": 1125,
+        "preSaleMonthly": 956
       }
     ],
     "vision": [
@@ -403,7 +441,11 @@
           "Implantação",
           "Dashboards e indicadores",
           "Mensalidade"
-        ]
+        ],
+        "price": 22500,
+        "preSalePrice": 19125,
+        "monthly": 2250,
+        "preSaleMonthly": 1913
       }
     ],
     "ops": [
@@ -417,7 +459,11 @@
           "Implantação",
           "Operação e administração",
           "Mensalidade"
-        ]
+        ],
+        "price": 45000,
+        "preSalePrice": 38250,
+        "monthly": 3000,
+        "preSaleMonthly": 2550
       }
     ],
     "connect": [
@@ -431,7 +477,11 @@
           "Implantação",
           "Integrações",
           "Mensalidade"
-        ]
+        ],
+        "price": 37500,
+        "preSalePrice": 31875,
+        "monthly": 2250,
+        "preSaleMonthly": 1913
       }
     ],
     "mobile": [
@@ -445,7 +495,11 @@
           "Implantação",
           "Experiência mobile",
           "Mensalidade"
-        ]
+        ],
+        "price": 45000,
+        "preSalePrice": 38250,
+        "monthly": 2250,
+        "preSaleMonthly": 1913
       }
     ],
     "wms": [
@@ -459,7 +513,11 @@
           "Implantação",
           "Estoque e movimentação",
           "Mensalidade"
-        ]
+        ],
+        "price": 117000,
+        "preSalePrice": 99450,
+        "monthly": 5860,
+        "preSaleMonthly": 4981
       }
     ]
   },
@@ -475,7 +533,9 @@
           "Cadastros centrais",
           "Usuários e permissões",
           "Configurações da empresa"
-        ]
+        ],
+        "price": 6000,
+        "monthly": 350
       },
       {
         "id": "erp-financeiro",
@@ -486,7 +546,10 @@
           "Contas a pagar e receber",
           "Fluxo de caixa",
           "Relatórios financeiros"
-        ]
+        ],
+        "price": 5000,
+        "monthly": 350,
+        "required": false
       },
       {
         "id": "erp-crm",
@@ -497,7 +560,10 @@
           "Cadastro de clientes",
           "Funil de vendas",
           "Acompanhamento comercial"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 250,
+        "required": false
       },
       {
         "id": "erp-estoque",
@@ -508,7 +574,10 @@
           "Saldo de estoque",
           "Entradas e saídas",
           "Movimentações"
-        ]
+        ],
+        "price": 4000,
+        "monthly": 300,
+        "required": false
       },
       {
         "id": "erp-fiscal",
@@ -519,7 +588,10 @@
           "Regras fiscais",
           "Documentos fiscais",
           "Integração fiscal"
-        ]
+        ],
+        "price": 5000,
+        "monthly": 350,
+        "required": false
       },
       {
         "id": "erp-rh",
@@ -530,7 +602,10 @@
           "Cadastro de colaboradores",
           "Dados internos",
           "Rotinas administrativas"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 200,
+        "required": false
       },
       {
         "id": "erp-bi",
@@ -541,7 +616,10 @@
           "Dashboards",
           "Indicadores",
           "Relatórios gerenciais"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 250,
+        "required": false
       }
     ],
     "flow": [
@@ -555,7 +633,9 @@
           "Processos",
           "Etapas",
           "Responsáveis"
-        ]
+        ],
+        "price": 2000,
+        "monthly": 250
       },
       {
         "id": "flow-aprovacoes",
@@ -566,7 +646,10 @@
           "Alçadas",
           "Aprovação por etapa",
           "Histórico"
-        ]
+        ],
+        "price": 1500,
+        "monthly": 200,
+        "required": false
       },
       {
         "id": "flow-automacoes",
@@ -577,7 +660,10 @@
           "Gatilhos",
           "Ações automáticas",
           "Regras condicionais"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 350,
+        "required": false
       },
       {
         "id": "flow-formularios",
@@ -588,7 +674,10 @@
           "Formulários",
           "Campos personalizados",
           "Validações"
-        ]
+        ],
+        "price": 1500,
+        "monthly": 200,
+        "required": false
       },
       {
         "id": "flow-integracoes",
@@ -599,7 +688,10 @@
           "APIs",
           "Webhooks",
           "Sincronização"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 350,
+        "required": false
       }
     ],
     "vision": [
@@ -613,7 +705,9 @@
           "Modelo analítico",
           "Indicadores",
           "Painel base"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 600
       },
       {
         "id": "vision-dashboards",
@@ -624,7 +718,10 @@
           "Dashboards",
           "Filtros",
           "Visões por perfil"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 600,
+        "required": false
       },
       {
         "id": "vision-bi",
@@ -635,7 +732,10 @@
           "Análises avançadas",
           "Cruzamento de dados",
           "Indicadores compostos"
-        ]
+        ],
+        "price": 4500,
+        "monthly": 900,
+        "required": false
       },
       {
         "id": "vision-fontes",
@@ -646,7 +746,10 @@
           "Conectores",
           "Importação",
           "Atualização de dados"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 700,
+        "required": false
       },
       {
         "id": "vision-alertas",
@@ -657,7 +760,10 @@
           "Alertas",
           "Regras",
           "Acompanhamento"
-        ]
+        ],
+        "price": 2000,
+        "monthly": 350,
+        "required": false
       }
     ],
     "ops": [
@@ -671,7 +777,9 @@
           "Painel operacional",
           "Usuários e acessos",
           "Status de serviços"
-        ]
+        ],
+        "price": 4500,
+        "monthly": 700
       },
       {
         "id": "ops-monitoramento",
@@ -682,7 +790,10 @@
           "Métricas",
           "Health checks",
           "Alertas"
-        ]
+        ],
+        "price": 4500,
+        "monthly": 700,
+        "required": false
       },
       {
         "id": "ops-admin",
@@ -693,7 +804,10 @@
           "Configurações",
           "Gestão de acessos",
           "Rotinas administrativas"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 600,
+        "required": false
       },
       {
         "id": "ops-incidentes",
@@ -704,7 +818,10 @@
           "Chamados",
           "Prioridades",
           "Histórico"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 500,
+        "required": false
       },
       {
         "id": "ops-auditoria",
@@ -715,7 +832,10 @@
           "Logs",
           "Histórico",
           "Rastreabilidade"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 500,
+        "required": false
       },
       {
         "id": "ops-infra",
@@ -726,7 +846,10 @@
           "Recursos",
           "Ambientes",
           "Indicadores técnicos"
-        ]
+        ],
+        "price": 4500,
+        "monthly": 700,
+        "required": false
       }
     ],
     "connect": [
@@ -740,7 +863,9 @@
           "Conexões",
           "Credenciais",
           "Logs"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 500
       },
       {
         "id": "connect-api",
@@ -751,7 +876,10 @@
           "APIs",
           "Autenticação",
           "Controle de acesso"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 500,
+        "required": false
       },
       {
         "id": "connect-webhooks",
@@ -762,7 +890,10 @@
           "Eventos",
           "Disparos",
           "Recebimento"
-        ]
+        ],
+        "price": 2000,
+        "monthly": 300,
+        "required": false
       },
       {
         "id": "connect-conectores",
@@ -773,7 +904,10 @@
           "Conectores",
           "Mapeamento",
           "Sincronização"
-        ]
+        ],
+        "price": 4500,
+        "monthly": 600,
+        "required": false
       },
       {
         "id": "connect-identidade",
@@ -784,7 +918,10 @@
           "SSO",
           "Autenticação",
           "Controle de acesso"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 450,
+        "required": false
       }
     ],
     "mobile": [
@@ -798,7 +935,9 @@
           "Shell do app",
           "Navegação",
           "Arquitetura mobile"
-        ]
+        ],
+        "price": 5000,
+        "monthly": 700
       },
       {
         "id": "mobile-auth",
@@ -809,7 +948,10 @@
           "Login",
           "Sessões",
           "Permissões"
-        ]
+        ],
+        "price": 2500,
+        "monthly": 350,
+        "required": false
       },
       {
         "id": "mobile-notificacoes",
@@ -820,7 +962,10 @@
           "Push",
           "Preferências",
           "Eventos"
-        ]
+        ],
+        "price": 2000,
+        "monthly": 300,
+        "required": false
       },
       {
         "id": "mobile-offline",
@@ -831,7 +976,10 @@
           "Cache local",
           "Fila de sincronização",
           "Recuperação de conexão"
-        ]
+        ],
+        "price": 3500,
+        "monthly": 500,
+        "required": false
       },
       {
         "id": "mobile-publicacao",
@@ -842,7 +990,10 @@
           "Builds",
           "Distribuição",
           "Atualizações"
-        ]
+        ],
+        "price": 3000,
+        "monthly": 400,
+        "required": false
       }
     ],
     "wms": [
@@ -856,7 +1007,9 @@
           "Estrutura do armazém",
           "Usuários",
           "Regras operacionais"
-        ]
+        ],
+        "price": 7000,
+        "monthly": 900
       },
       {
         "id": "wms-estoque",
@@ -867,7 +1020,10 @@
           "Endereçamento",
           "Saldos",
           "Movimentações"
-        ]
+        ],
+        "price": 9000,
+        "monthly": 1200,
+        "required": false
       },
       {
         "id": "wms-recebimento",
@@ -878,7 +1034,10 @@
           "Recebimento",
           "Conferência",
           "Divergências"
-        ]
+        ],
+        "price": 6000,
+        "monthly": 900,
+        "required": false
       },
       {
         "id": "wms-picking",
@@ -889,7 +1048,10 @@
           "Ondas de picking",
           "Separação",
           "Conferência"
-        ]
+        ],
+        "price": 8000,
+        "monthly": 1100,
+        "required": false
       },
       {
         "id": "wms-expedicao",
@@ -900,7 +1062,10 @@
           "Expedição",
           "Conferência",
           "Rastreabilidade"
-        ]
+        ],
+        "price": 6000,
+        "monthly": 900,
+        "required": false
       },
       {
         "id": "wms-barcodes",
@@ -911,7 +1076,10 @@
           "Leitura",
           "Etiquetas",
           "Identificação"
-        ]
+        ],
+        "price": 5000,
+        "monthly": 750,
+        "required": false
       },
       {
         "id": "wms-bi",
@@ -922,7 +1090,10 @@
           "KPIs",
           "Dashboards",
           "Relatórios"
-        ]
+        ],
+        "price": 5000,
+        "monthly": 700,
+        "required": false
       }
     ]
   },
@@ -2212,6 +2383,115 @@
       "knowledge": 8,
       "report": 6,
       "notification": 5
+    },
+    "explanations": {
+      "sections": "Adiciona novas seções à página para apresentar mais informações, serviços ou conteúdos.",
+      "form": "Cria um formulário para visitantes enviarem dados, mensagens, pedidos ou contatos.",
+      "analytics": "Registra e apresenta dados de acesso e uso para ajudar a entender o desempenho da página ou sistema.",
+      "seo": "Prepara páginas e conteúdos para serem melhor encontrados e interpretados pelos mecanismos de busca.",
+      "animations": "Adiciona movimentos e microinterações para tornar a interface mais dinâmica e clara.",
+      "integration": "Conecta o projeto a outro sistema ou serviço, permitindo troca de dados ou ações automáticas.",
+      "dashboard": "Cria um painel central para visualizar informações e administrar recursos do sistema.",
+      "terms": "Adiciona uma página com as condições e regras de utilização do serviço.",
+      "privacy": "Adiciona uma página explicando como os dados pessoais são tratados e utilizados.",
+      "pages": "Cria páginas adicionais além da estrutura principal do projeto.",
+      "blog": "Cria uma área para publicar, organizar e apresentar artigos e conteúdos.",
+      "cms": "Permite administrar conteúdos do site por uma área de gerenciamento, sem precisar editar o código a cada alteração.",
+      "auth": "Cria o sistema de entrada de usuários, com cadastro, login e controle de sessão.",
+      "multilang": "Disponibiliza o conteúdo do projeto em diferentes idiomas.",
+      "integrations": "Conecta o sistema a APIs, plataformas e outros serviços necessários ao projeto.",
+      "products": "Cria um catálogo com produtos, categorias e variações para organizar uma loja.",
+      "payments": "Conecta o projeto a um meio de pagamento para processar cobranças.",
+      "shipping": "Calcula ou organiza opções de entrega e seus respectivos valores.",
+      "coupons": "Permite criar códigos ou regras de desconto para compras.",
+      "customers": "Cria uma área onde clientes podem acessar sua conta e acompanhar informações e pedidos.",
+      "roles": "Define diferentes níveis de acesso para determinar o que cada usuário pode visualizar ou alterar.",
+      "database": "Cria a estrutura usada para armazenar, organizar e consultar os dados do sistema.",
+      "api": "Cria uma interface de comunicação para outros sistemas enviarem e receberem dados do projeto.",
+      "notifications": "Envia avisos ao usuário quando eventos ou ações importantes acontecem.",
+      "files": "Permite enviar, armazenar, acessar ou administrar arquivos dentro do sistema.",
+      "offline": "Permite continuar usando determinadas funções sem conexão e sincronizar os dados quando a conexão voltar.",
+      "maps": "Adiciona mapas e recursos de localização ao projeto.",
+      "camera": "Permite utilizar câmera e recursos de mídia do dispositivo quando autorizados.",
+      "store": "Prepara o aplicativo para publicação e distribuição nas lojas correspondentes.",
+      "admin": "Cria ferramentas para administradores gerenciarem o sistema e seus dados.",
+      "docs": "Organiza uma documentação para explicar como utilizar ou integrar a API ou serviço.",
+      "webhooks": "Permite que o sistema envie ou receba avisos automáticos quando eventos acontecem.",
+      "storage": "Adiciona armazenamento para arquivos ou outros dados que precisam ficar disponíveis no sistema.",
+      "monitoring": "Acompanha disponibilidade, erros e funcionamento do sistema para facilitar a identificação de problemas.",
+      "webhook": "Cria uma conexão baseada em eventos para avisar outro sistema automaticamente.",
+      "crm": "Conecta o projeto a uma ferramenta de relacionamento e gestão de clientes.",
+      "erp": "Conecta o projeto a um sistema de gestão empresarial para compartilhar informações e processos.",
+      "workflow": "Define a sequência de etapas que um processo automatizado deve executar.",
+      "n8n": "Integra o projeto ao n8n para criar e executar automações entre serviços.",
+      "schedules": "Executa tarefas automaticamente em horários ou intervalos definidos.",
+      "email": "Permite enviar emails automáticos ou transacionais a partir do projeto.",
+      "sheets": "Conecta o sistema a planilhas para consultar, registrar ou atualizar informações.",
+      "faq": "Cria uma área de perguntas e respostas para orientar usuários sobre dúvidas frequentes.",
+      "buttons": "Cria opções e caminhos de interação para que o usuário escolha ações dentro do bot.",
+      "whatsapp": "Conecta o projeto ao WhatsApp para comunicação, atendimento ou automações.",
+      "telegram": "Conecta o projeto ao Telegram para comunicação e automações.",
+      "scheduling": "Permite organizar horários, reservas ou agendamentos dentro do sistema.",
+      "handoff": "Permite encaminhar a conversa do bot para uma pessoa quando o atendimento automático não for suficiente.",
+      "ui": "Altera ou cria elementos visuais da interface para adequá-los ao projeto.",
+      "page": "Cria uma nova página ou tela com conteúdo e funções específicas.",
+      "module": "Adiciona um conjunto de funcionalidades organizado como um novo módulo do sistema.",
+      "automation": "Automatiza uma tarefa ou processo que anteriormente precisaria ser executado manualmente.",
+      "deployment": "Publica o projeto em um ambiente onde os usuários possam acessá-lo.",
+      "responsive": "Adapta a interface para funcionar corretamente em diferentes tamanhos de tela.",
+      "tracking": "Registra ações importantes, como cliques ou envios, para acompanhar conversões e comportamento.",
+      "cookie": "Adiciona o aviso e o controle de preferências relacionados ao uso de cookies.",
+      "domain": "Configura o projeto para funcionar com um domínio personalizado.",
+      "accessibility": "Melhora a utilização do projeto por pessoas com diferentes necessidades de acesso, incluindo teclado e tecnologias assistivas.",
+      "performance": "Otimiza carregamento, processamento e uso de recursos para tornar o projeto mais rápido e eficiente.",
+      "security": "Adiciona mecanismos de proteção para reduzir riscos de acesso indevido, abuso e exposição de dados.",
+      "search": "Adiciona uma ferramenta para pesquisar conteúdos ou registros dentro do projeto.",
+      "forms": "Cria formulários estruturados para coleta de informações e solicitações.",
+      "backup": "Cria cópias de segurança para permitir recuperação de dados em caso de falha ou perda.",
+      "support": "Estrutura informações e canais para ajudar usuários a obter atendimento e suporte.",
+      "inventory": "Permite controlar a quantidade e disponibilidade dos produtos.",
+      "orders": "Organiza pedidos, seus estados e informações necessárias para acompanhar a venda.",
+      "reviews": "Permite que clientes enviem e consultem avaliações sobre produtos ou serviços.",
+      "abandoned": "Cria um fluxo para identificar e tentar recuperar compras que não foram finalizadas.",
+      "wishlist": "Permite que usuários salvem produtos ou itens para consultar posteriormente.",
+      "shipping-tracking": "Permite acompanhar o andamento de uma entrega depois que o pedido foi enviado.",
+      "multi-store": "Permite administrar mais de uma loja, operação ou catálogo dentro da mesma estrutura.",
+      "reviews-admin": "Permite moderar, aprovar, ocultar ou administrar avaliações enviadas por usuários.",
+      "filters": "Permite filtrar informações para encontrar registros ou resultados específicos.",
+      "audit": "Registra ações importantes realizadas no sistema para permitir consulta e rastreamento posterior.",
+      "admin-area": "Cria uma área interna para administradores gerenciarem dados, usuários e configurações.",
+      "realtime": "Atualiza informações em tempo real sem exigir que o usuário recarregue a página.",
+      "queue": "Organiza tarefas para processamento em segundo plano, evitando que operações demoradas bloqueiem o usuário.",
+      "cache": "Guarda temporariamente informações usadas com frequência para reduzir processamento e acelerar respostas.",
+      "biometric": "Permite usar recursos biométricos compatíveis do dispositivo para autenticação.",
+      "deep-links": "Permite abrir diretamente uma tela ou função específica do aplicativo por meio de um link.",
+      "sharing": "Permite compartilhar conteúdos usando os recursos disponíveis no dispositivo.",
+      "location": "Permite utilizar a localização do dispositivo, mediante autorização do usuário.",
+      "chat": "Cria uma área de conversa para troca de mensagens entre usuários ou com atendimento.",
+      "crash": "Registra falhas do aplicativo para ajudar a identificar e corrigir problemas.",
+      "rate-limit": "Limita a quantidade de requisições em determinado período para proteger a API contra excesso de chamadas.",
+      "queues": "Organiza tarefas e eventos para processamento assíncrono e controlado.",
+      "cron": "Executa tarefas automaticamente em horários ou intervalos programados.",
+      "api-version": "Organiza versões da API para permitir mudanças sem interromper integrações existentes.",
+      "sso": "Permite que usuários utilizem uma identidade centralizada para acessar o sistema.",
+      "mapping": "Converte e relaciona campos de dados entre sistemas com estruturas diferentes.",
+      "sync": "Mantém informações correspondentes atualizadas entre dois ou mais sistemas.",
+      "retry": "Tenta novamente uma operação que falhou temporariamente.",
+      "logs": "Registra acontecimentos e operações do sistema para consulta e diagnóstico.",
+      "alerts": "Envia avisos quando uma condição importante, erro ou falha é detectada.",
+      "scheduler": "Programa execuções automáticas de tarefas em datas ou horários definidos.",
+      "conditions": "Define regras que escolhem caminhos diferentes dentro de uma automação.",
+      "transform": "Converte, limpa ou reorganiza dados antes que sejam usados por outra etapa.",
+      "http": "Permite fazer requisições HTTP para conversar com APIs e serviços externos.",
+      "approval": "Inclui uma etapa em que uma pessoa precisa aprovar algo antes que o fluxo continue.",
+      "reports": "Gera informações organizadas para acompanhar resultados, operações ou indicadores.",
+      "commands": "Define comandos que o bot reconhece para executar ações ou responder aos usuários.",
+      "media": "Permite receber, enviar ou trabalhar com imagens, vídeos e outros arquivos de mídia.",
+      "multichannel": "Permite utilizar uma estrutura de bot em diferentes canais de comunicação.",
+      "knowledge": "Organiza conteúdos e informações que o bot pode utilizar para responder ou orientar usuários.",
+      "report": "Cria relatórios ou consultas específicas para as necessidades do sistema.",
+      "notification": "Adiciona avisos por email ou outros canais disponíveis no projeto.",
+      "migration": "Move ou adapta dados e estruturas de um sistema ou versão para outra."
     }
   },
   "productsDetails": {
@@ -2532,5 +2812,21 @@
       "Recursos em desenvolvimento ou planejados podem sofrer alterações. Serviços comerciais específicos podem possuir condições, preços, prazos e responsabilidades definidos em proposta ou contrato.",
       "Pagamentos processados por terceiros seguem também as condições do respectivo provedor. Informações comerciais definitivas devem ser verificadas antes da contratação."
     ]
+  },
+  "pricingSource": "central",
+  "ui": {
+    "error": {
+      "eyebrow": "KZ Tech",
+      "title": "Não foi possível carregar esta página.",
+      "lead": "O conteúdo encontrou um erro inesperado. Recarregue a página ou volte ao início.",
+      "home": "Voltar ao início",
+      "reload": "Recarregar"
+    },
+    "admin": {
+      "cms": "CMS",
+      "source": "Fonte central de conteúdo",
+      "pricing": "Preços e catálogo",
+      "singleSource": "Fonte única do site"
+    }
   }
 }
