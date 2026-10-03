@@ -470,7 +470,7 @@ function kos(){
 }
 function product(id){
   const p=state.products.find(x=>x.id===id);
-  if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>';
+  if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>'+planBlock;
   const details={
     "korczak-ai":["Inteligência aplicada","Camada de inteligência para assistência, análise, geração e automação dentro do ecossistema Korczak.","Centraliza recursos inteligentes, contexto e automações para reduzir trabalho repetitivo e apoiar decisões."],
     "morok":["Assistente pessoal e operacional","Um assistente multiplataforma pensado para comandos, automações e interação por voz e interface.","O MOROK conecta comandos predefinidos, experiências web, desktop e mobile e novas integrações conforme evolui."],
@@ -485,6 +485,7 @@ function product(id){
     "mobile":["Operação em mobilidade","Experiência móvel para acessar e operar recursos empresariais.","O MOBILE leva recursos selecionados do ecossistema para contextos em que a operação acontece fora do desktop."]
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
+  const planBlock=(["korczak-ai","ide","documents"].includes(p.id))?'<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS</span><h3>Escolha conforme seu uso.</h3><p class="section-lead">Os valores e recursos comerciais serão definidos antes da abertura das assinaturas.</p><div class="grid"><article class="detail-panel"><h3>Inicial</h3><p class="muted">Recursos essenciais para começar.</p><strong>Plano a definir</strong></article><article class="detail-panel"><h3>Profissional</h3><p class="muted">Mais recursos e capacidade.</p><strong>Plano a definir</strong></article><article class="detail-panel"><h3>Empresarial</h3><p class="muted">Para equipes e uso ampliado.</p><strong>Plano a definir</strong></article></div></section>':"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="Workspace";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile"].includes(p.id);
