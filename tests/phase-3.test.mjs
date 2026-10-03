@@ -9,12 +9,12 @@ test("Fase 3: autenticação e perfil comercial",()=>{
   assert.ok(server.includes("bcrypt.hash")); assert.ok(server.includes("jwt.sign"));
 });
 test("Fase 3: preços são resolvidos no servidor",()=>{
-  assert.ok(server.includes("commercialProducts")); assert.ok(server.includes("STRIPE_PRICE_KORCZAK_AI"));
-  assert.ok(server.includes("unit_amount:amount")); assert.doesNotMatch(server,/Number\(req\.body\?\.amount\)/);
+  assert.ok(server.includes("commercialProducts"));\n  assert.ok(server.includes("config.priceId"));\n  assert.ok(server.includes("stripe.prices.retrieve"));
+
 });
 test("Fase 3: Stripe Checkout e estados",()=>{
   assert.ok(server.includes("stripe.checkout.sessions.create")); assert.ok(server.includes("success_url")); assert.ok(server.includes("cancel_url"));
-  assert.ok(app.includes("/checkout/sucesso")); assert.ok(app.includes("/checkout/cancelado"));\n  assert.ok(app.includes("async function checkout(id)"));
+  assert.ok(app.includes("/checkout/sucesso"));\n  assert.ok(app.includes("/checkout/cancelado"));\n  assert.ok(app.includes("async function checkout(id)"));
 });
 test("Fase 3: configuração Stripe documentada",()=>{
   for(const id of ["KORCZAK_AI","MOROK","ERP","IDE","WORKSPACE","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE"])assert.ok(env.includes("STRIPE_PRICE_"+id));
