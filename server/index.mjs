@@ -550,13 +550,13 @@ app.post("/api/subscriptions",rateLimit({windowMs:60000,max:12}),async(req,res)=
   const ids=moduleIds?moduleIds.split(",").filter(Boolean):[];
   const mods=modsCatalog.filter(x=>ids.includes(x.id));
   if(!plano&&!mods.length)return res.status(400).json({error:"Selecione um plano ou uma configuração de módulos válida"});
-  const monthly=plano&&Number.isFinite(Number(plano.price))?Number(plano.price):mods.reduce((n,x)=>n+Number(x.monthly||0),0);
-  const implementation=mods.reduce((n,x)=>n+Number(x.price||0),0);
+  const monthly=plano&&Number.isFinite(Number(plano.preSalePrice))?Number(plano.preSalePrice):mods.reduce((n,x)=>n+Math.round(Number(x.preSaleMonthly??Number(x.monthly||0))*.85),0);
+  const implementation=mods.reduce((n,x)=>n+Math.round(Number(x.preSalePrice??Number(x.price||0))*.85),0);
   const agora=new Date();
-  const row={userId:req.user?.sub||null,productId,planId:planId||null,moduleIds,name,email:mail,phone,company,document,monthly,implementation,paymentMethod:"pix",paymentStatus:"pending_pix",status:"pending",createdAt:agora,updatedAt:agora};
+  const row={userId:req.user?.sub||null,productId,planId:planId||null,moduleIds,name,email:mail,phone,company,document,monthly,implementation,paymentMethod:null,paymentStatus:"pending_payment",status:"pending",createdAt:agora,updatedAt:agora};
   const result=await db.collection("subscriptions").insertOne(row);
-  await registrarEventoAnalitico({tipo:"assinatura",categoria:"comercial",subcategoria:"assinaturas",acao:"Assinatura iniciada",descricao:"Fluxo de assinatura iniciado com pagamento por PIX.",pagina:"/assinatura",usuarioId:req.user?.sub||null,nome:name,email:mail,entidade:"produto",entidadeId:productId,metadados:{planId:planId||null,moduleIds,monthly,implementation,paymentMethod:"pix"}});
-  res.status(201).json({ok:true,id:String(result.insertedId),status:"pending_pix",pix:{method:"pix",qrCode:null,copyPaste:null}});
+  await registrarEventoAnalitico({tipo:"assinatura",categoria:"comercial",subcategoria:"assinaturas",acao:"Assinatura iniciada",descricao:"Fluxo de assinatura de pré-venda iniciado; pagamento será conectado posteriormente.",pagina:"/assinatura",usuarioId:req.user?.sub||null,nome:name,email:mail,entidade:"produto",entidadeId:productId,metadados:{planId:planId||null,moduleIds,monthly,implementation,paymentMethod:"pix"}});
+  res.status(201).json({ok:true,id:String(result.insertedId),status:"pending_payment",payment:{method:null,qrCode:null,copyPaste:null}});
 });
 app.post("/api/presales",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
