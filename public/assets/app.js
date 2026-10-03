@@ -603,10 +603,10 @@ function product(id){
   const isModular=Boolean(MODULAR_CATALOG[p.id]);
   const planBlock=(!isModular&&["korczak-ai","ide","hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
-  const isWorkspace=p.type==="HUB";
+  const isHubApp=p.type==="HUB";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
-  if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  if(isHubApp) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
   else if(isKOS&&["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
