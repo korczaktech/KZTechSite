@@ -108,21 +108,11 @@ async function salvarPlanosAdmin(){
  catch(e){alert(e.message);if(b)b.textContent="Salvar alterações"}
  finally{if(b)b.disabled=false}
 }
-async function load(){
- const tarefas=[
-  ["analytics",analytics],["planos",planosAdmin],["contas",contas],["comercial",comercial],["conteúdo",rules],["mídias",media],["administradores",admins],["auditoria",logs]
- ];
- const erros=[];
- await Promise.all(tarefas.map(async([nome,fn])=>{try{await fn()}catch(e){erros.push(nome+": "+(e?.message||"erro desconhecido"))}}));
- if(erros.length){
-  const el=E("atualizado");
-  if(el)el.textContent="Painel carregado com avisos: "+erros.join(" · ");
- }
-}
+async function load(){try{await analytics()}catch(e){const el=E("atualizado");if(el)el.textContent="Analytics indisponível: "+(e?.message||"erro desconhecido")}}
 async function atualizarTudo(){const b=E("atualizarTudo");if(!b)return;b.disabled=true;b.textContent="↻ Atualizando…";try{await load();b.textContent="✓ Atualizado";setTimeout(()=>b.textContent="↻ Atualizar informações",1600)}catch{b.textContent="⚠ Erro";setTimeout(()=>b.textContent="↻ Atualizar informações",2200)}finally{b.disabled=false}}
 E("atualizarTudo")?.addEventListener("click",atualizarTudo);E("out").onclick=()=>{sessionStorage.removeItem("adm");localStorage.removeItem("kz_admin_session");location.href=new URL("./",location.href).href};
-document.querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");document.querySelectorAll(".aba").forEach(x=>x.hidden=true);E(b.dataset.a).hidden=false;if(b.dataset.a==="analytics")await analytics();if(b.dataset.a==="planos")await planosAdmin();if(b.dataset.a==="contas")await contas();if(b.dataset.a==="comercial")await comercial();if(b.dataset.a==="interacoes")await interacoes()});
-document.querySelectorAll("[data-dias]").forEach(b=>b.onclick=async()=>{diasAnalytics=Number(b.dataset.dias)||30;document.querySelectorAll("[data-dias]").forEach(x=>x.classList.remove("selecionado"));b.classList.add("selecionado");await analytics()});
+document.querySelectorAll("[data-super]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-super]").forEach(x=>x.classList.remove("super-ativo"));b.classList.add("super-ativo");const analyticsAtivo=b.dataset.super==="analytics";E("analyticsNav").hidden=!analyticsAtivo;document.querySelectorAll(".aba").forEach(x=>x.hidden=true);E("administracao").hidden=analyticsAtivo;if(analyticsAtivo){E("analytics").hidden=false;document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));document.querySelector('[data-a="analytics"]')?.classList.add("ativo");await analytics()}});
+document.querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));b.classList.add("ativo");document.querySelectorAll(".aba").forEach(x=>x.hidden=true);E("administracao").hidden=true;E(b.dataset.a).hidden=false;if(b.dataset.a==="analytics")await analytics();if(b.dataset.a==="planos")await planosAdmin();if(b.dataset.a==="contas")await contas();if(b.dataset.a==="comercial")await comercial();if(b.dataset.a==="interacoes")await interacoes()});
 E("atualizarAnalytics").onclick=analytics;E("salvarPlanos").onclick=salvarPlanosAdmin;E("atualizarContas").onclick=contas;E("atualizarInteracoes").onclick=interacoes;
 E("novo").onclick=()=>{fill();E("dlg").showModal()};E("cancel").onclick=()=>E("dlg").close();E("rf").onsubmit=async e=>{e.preventDefault();const b={pagina:E("pg").value,seletor:E("sel").value,tipo:E("tipo").value,atributo:E("atr").value,propriedade:E("prop").value,valor:E("val").value,publicado:E("pub").checked},id=E("id").value;await api(id?"/admin/conteudo/"+id:"/admin/conteudo",{method:id?"PUT":"POST",body:JSON.stringify(b)});E("dlg").close();rules()};
 E("file").onchange=e=>{const f=e.target.files[0];if(!f||f.size>8388608)return alert("Imagem máxima: 8 MB");const q=new FileReader();q.onload=async()=>{try{await api("/admin/midias",{method:"POST",body:JSON.stringify({nome:f.name,tipo:f.type,tamanho:f.size,dados:q.result})});media()}catch(x){alert(x.message)}};q.readAsDataURL(f)};
