@@ -382,17 +382,18 @@ function product(id){
   const details=state.content?.productsDetails||{};
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
   const isModular=Boolean(MODULAR_CATALOG[p.id]);
-  const planBlock=(!isModular&&["korczak-ai","ide","hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
+  const planBlock="";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isHubApp=p.type==="HUB";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
-  if(isHubApp) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  if(["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
+  else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a>';
+  else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/orcamento?produto='+encodeURIComponent(p.id)+'&pre-venda=1">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
-  else if(isKOS&&["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
-  else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
-  else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
+  else if(isKOS&&p.status==="Planejado") action='<a class="btn" href="#/orcamento?produto='+encodeURIComponent(p.id)+'&pre-venda=1">Assinar pré-venda '+icon("arrow")+'</a>';
+  else if(isKOS&&p.status==="Iniciado") action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver condições '+icon("arrow")+'</a>';
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>'+planBlock;
 }
 
