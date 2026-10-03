@@ -63,6 +63,63 @@ const PLAN_CATALOG={
   "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
 };
 
+const MODULAR_CATALOG={
+erp:[
+{id:"erp-base",name:"Base de Gestão",price:18000,monthly:350,required:true,tag:"Obrigatório",description:"Núcleo do ERP: empresas, usuários, permissões, cadastros e estrutura central.",features:["Cadastros centrais","Usuários e permissões","Configurações da empresa"]},
+{id:"erp-financeiro",name:"Financeiro",price:15000,monthly:350,tag:"Alta utilidade",description:"Contas a pagar e receber, fluxo financeiro e acompanhamento das movimentações.",features:["Contas a pagar e receber","Fluxo de caixa","Relatórios financeiros"]},
+{id:"erp-crm",name:"CRM e Vendas",price:10000,monthly:250,tag:"Comercial",description:"Clientes, oportunidades, funil comercial e acompanhamento de vendas.",features:["Cadastro de clientes","Funil de vendas","Acompanhamento comercial"]},
+{id:"erp-estoque",name:"Estoque",price:12000,monthly:300,tag:"Operacional",description:"Controle de produtos, entradas, saídas, saldos e movimentações.",features:["Saldo de estoque","Entradas e saídas","Movimentações"]},
+{id:"erp-fiscal",name:"Fiscal",price:15000,monthly:350,tag:"Complexidade alta",description:"Regras fiscais e rotinas de documentos fiscais integradas ao ERP.",features:["Regras fiscais","Documentos fiscais","Integração fiscal"]},
+{id:"erp-rh",name:"RH",price:8000,monthly:200,tag:"Gestão de pessoas",description:"Cadastros e rotinas internas relacionadas à equipe.",features:["Cadastro de colaboradores","Dados internos","Rotinas administrativas"]},
+{id:"erp-bi",name:"BI e Indicadores",price:10000,monthly:250,tag:"Análise",description:"Indicadores, painéis e relatórios gerenciais para acompanhar a operação.",features:["Dashboards","Indicadores","Relatórios gerenciais"]}
+],
+flow:[
+{id:"flow-base",name:"Base de Processos",price:6000,monthly:250,required:true,tag:"Obrigatório",description:"Núcleo para cadastrar, acompanhar e organizar processos.",features:["Processos","Etapas","Responsáveis"]},
+{id:"flow-aprovacoes",name:"Aprovações",price:4000,monthly:200,tag:"Governança",description:"Aprovações por etapas, responsáveis e regras.",features:["Alçadas","Aprovação por etapa","Histórico"]},
+{id:"flow-automacoes",name:"Automações",price:8000,monthly:350,tag:"Complexidade alta",description:"Regras automáticas para disparar tarefas, ações e transições.",features:["Gatilhos","Ações automáticas","Regras condicionais"]},
+{id:"flow-formularios",name:"Formulários",price:4000,monthly:200,tag:"Entrada de dados",description:"Formulários internos e externos conectados aos processos.",features:["Formulários","Campos personalizados","Validações"]},
+{id:"flow-integracoes",name:"Integrações",price:8000,monthly:350,tag:"Integração",description:"Conexão com APIs e sistemas externos para alimentar ou executar fluxos.",features:["APIs","Webhooks","Sincronização"]}
+],
+vision:[
+{id:"vision-base",name:"Base Analítica",price:8000,monthly:600,required:true,tag:"Obrigatório",description:"Núcleo para organizar fontes, métricas e visualizações.",features:["Modelo analítico","Indicadores","Painel base"]},
+{id:"vision-dashboards",name:"Dashboards",price:8000,monthly:600,tag:"Visualização",description:"Painéis operacionais e executivos personalizados.",features:["Dashboards","Filtros","Visões por perfil"]},
+{id:"vision-bi",name:"BI Avançado",price:12000,monthly:900,tag:"Complexidade alta",description:"Camadas analíticas para cruzamentos e exploração de dados.",features:["Análises avançadas","Cruzamento de dados","Indicadores compostos"]},
+{id:"vision-fontes",name:"Fontes de Dados",price:8000,monthly:700,tag:"Integração",description:"Conectores e ingestão de dados de sistemas externos.",features:["Conectores","Importação","Atualização de dados"]},
+{id:"vision-alertas",name:"Alertas e Monitoramento",price:5000,monthly:350,tag:"Operacional",description:"Alertas baseados em indicadores e condições definidas.",features:["Alertas","Regras","Acompanhamento"]}
+],
+ops:[
+{id:"ops-base",name:"Base Operacional",price:12000,monthly:700,required:true,tag:"Obrigatório",description:"Núcleo de operação, usuários, serviços e acompanhamento técnico.",features:["Painel operacional","Usuários e acessos","Status de serviços"]},
+{id:"ops-monitoramento",name:"Monitoramento",price:12000,monthly:700,tag:"Alta utilidade",description:"Acompanhamento de disponibilidade, métricas e eventos.",features:["Métricas","Health checks","Alertas"]},
+{id:"ops-admin",name:"Administração",price:10000,monthly:600,tag:"Gestão",description:"Rotinas administrativas, configurações e controles internos.",features:["Configurações","Gestão de acessos","Rotinas administrativas"]},
+{id:"ops-incidentes",name:"Incidentes e Suporte",price:8000,monthly:500,tag:"Operacional",description:"Registro, acompanhamento e resolução de incidentes.",features:["Chamados","Prioridades","Histórico"]},
+{id:"ops-auditoria",name:"Auditoria",price:8000,monthly:500,tag:"Governança",description:"Rastreamento de ações e alterações importantes.",features:["Logs","Histórico","Rastreabilidade"]},
+{id:"ops-infra",name:"Infraestrutura",price:12000,monthly:700,tag:"Complexidade alta",description:"Camada de infraestrutura e acompanhamento de recursos técnicos.",features:["Recursos","Ambientes","Indicadores técnicos"]}
+],
+connect:[
+{id:"connect-base",name:"Base de Integrações",price:10000,monthly:500,required:true,tag:"Obrigatório",description:"Núcleo para administrar conexões, credenciais e integrações.",features:["Conexões","Credenciais","Logs"]},
+{id:"connect-api",name:"API Gateway",price:10000,monthly:500,tag:"Integração",description:"Exposição e organização de APIs para sistemas e aplicações.",features:["APIs","Autenticação","Controle de acesso"]},
+{id:"connect-webhooks",name:"Webhooks",price:6000,monthly:300,tag:"Automação",description:"Eventos em tempo real entre o ecossistema e serviços externos.",features:["Eventos","Disparos","Recebimento"]},
+{id:"connect-conectores",name:"Conectores",price:12000,monthly:600,tag:"Complexidade alta",description:"Integrações específicas com serviços e plataformas externas.",features:["Conectores","Mapeamento","Sincronização"]},
+{id:"connect-identidade",name:"Identidade e SSO",price:8000,monthly:450,tag:"Segurança",description:"Integração de identidade, autenticação e acesso centralizado.",features:["SSO","Autenticação","Controle de acesso"]}
+],
+mobile:[
+{id:"mobile-base",name:"Base do Aplicativo",price:15000,monthly:700,required:true,tag:"Obrigatório",description:"Estrutura principal do aplicativo e navegação.",features:["Shell do app","Navegação","Arquitetura mobile"]},
+{id:"mobile-auth",name:"Autenticação",price:7000,monthly:350,tag:"Segurança",description:"Login, sessão e controle de acesso no aplicativo.",features:["Login","Sessões","Permissões"]},
+{id:"mobile-notificacoes",name:"Notificações",price:6000,monthly:300,tag:"Comunicação",description:"Notificações push e eventos para usuários.",features:["Push","Preferências","Eventos"]},
+{id:"mobile-offline",name:"Modo Offline",price:10000,monthly:500,tag:"Complexidade alta",description:"Uso parcial sem conexão e sincronização posterior.",features:["Cache local","Fila de sincronização","Recuperação de conexão"]},
+{id:"mobile-publicacao",name:"Publicação e Distribuição",price:8000,monthly:400,tag:"Operação",description:"Preparação, distribuição e manutenção dos canais móveis.",features:["Builds","Distribuição","Atualizações"]}
+],
+wms:[
+{id:"wms-base",name:"Base WMS",price:20000,monthly:900,required:true,tag:"Obrigatório",description:"Núcleo de armazém, endereços, usuários e regras de operação.",features:["Estrutura do armazém","Usuários","Regras operacionais"]},
+{id:"wms-estoque",name:"Estoque e Endereçamento",price:25000,monthly:1200,tag:"Alta utilidade",description:"Controle detalhado de estoque, posições e movimentações.",features:["Endereçamento","Saldos","Movimentações"]},
+{id:"wms-recebimento",name:"Recebimento",price:18000,monthly:900,tag:"Operacional",description:"Entrada, conferência e organização de mercadorias recebidas.",features:["Recebimento","Conferência","Divergências"]},
+{id:"wms-picking",name:"Picking",price:22000,monthly:1100,tag:"Complexidade alta",description:"Separação de pedidos com regras e acompanhamento operacional.",features:["Ondas de picking","Separação","Conferência"]},
+{id:"wms-expedicao",name:"Expedição",price:18000,monthly:900,tag:"Operacional",description:"Conferência, despacho e rastreabilidade de saídas.",features:["Expedição","Conferência","Rastreabilidade"]},
+{id:"wms-barcodes",name:"Código de Barras",price:15000,monthly:750,tag:"Integração",description:"Operação com leitores, códigos e identificação de produtos.",features:["Leitura","Etiquetas","Identificação"]},
+{id:"wms-bi",name:"Painel Logístico",price:14000,monthly:700,tag:"Análise",description:"Indicadores de produtividade, estoque e operação do armazém.",features:["KPIs","Dashboards","Relatórios"]}
+]
+};
+
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
@@ -514,6 +571,12 @@ function planSectionFor(id){
     return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(hasPrice?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(pre!==null&&pre!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(pre)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/orcamento?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Quero este plano '+icon("arrow")+'</a></article>';
   }).join("")+'</div><p class="muted plan-footnote">A pré-venda aplica 15% de desconto sobre o preço comercial já ajustado. Valores empresariais podem depender de quantidade de usuários e escopo.</p></section>';
 }
+function modularProductPage(id){
+  const p=state.products.find(x=>x.id===id),mods=MODULAR_CATALOG[id];
+  if(!p||!mods)return productPlansPage(id);
+  const required=mods.filter(m=>m.required),total=required.reduce((a,m)=>a+m.price,0),monthly=required.reduce((a,m)=>a+m.monthly,0);
+  return '<main id="main-content" class="mentor-page modular-product-page"><section class="hero shell mentor-hero"><div><span class="eyebrow">KOS · '+esc(p.status)+'</span><h1>'+esc(p.name)+'<br><span>Monte sua solução.</span></h1><p>Escolha somente os módulos que fazem sentido para sua operação. Cada módulo possui preço próprio de implantação e mensalidade. O valor considera utilidade, dificuldade de desenvolvimento, integração, testes e implantação.</p><div class="actions"><a class="btn ghost" href="#/produto/'+encodeURIComponent(id)+'">Conhecer produto →</a><a class="btn" data-module-quote href="#/orcamento?produto='+encodeURIComponent(id)+'">Solicitar configuração →</a></div></div><div class="mentor-price-hero"><small>Modelo comercial</small><strong>Modular</strong></div></section><section class="section shell"><div class="split-head"><div><span class="eyebrow">01 · MÓDULOS</span><h2>Escolha os módulos.</h2></div><span class="muted">Implantação + mensalidade por módulo</span></div><p class="section-lead">A base é obrigatória para garantir o funcionamento do produto. Os demais módulos são opcionais.</p><div class="kos-module-layout"><div class="kos-module-grid">'+mods.map((m,i)=>'<label class="kos-module-card '+(m.required?"required":"")+'"><input type="checkbox" data-module-toggle data-product="'+esc(id)+'" data-module="'+esc(m.id)+'" '+(m.required?"checked disabled":"")+'><span class="module-check">'+(m.required?"BASE OBRIGATÓRIA":"ADICIONAR")+'</span><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="eyebrow">'+esc(m.tag)+'</span><h3>'+esc(m.name)+'</h3><p>'+esc(m.description)+'</p><div class="module-prices"><div><small>Implantação</small><strong>'+money(m.price)+'</strong></div><div><small>Mensal</small><strong>'+money(m.monthly)+'</strong><span>/ mês</span></div></div><ul class="feature-list">'+m.features.map(f=>'<li>'+esc(f)+'</li>').join("")+'</ul></label>').join("")+'</div><aside class="kos-module-summary"><span class="eyebrow">02 · SUA CONFIGURAÇÃO</span><h3>'+esc(p.name)+'</h3><div class="module-summary-row"><span>Módulos selecionados</span><strong data-module-count>'+required.length+'</strong></div><div class="module-summary-row"><span>Implantação</span><strong data-module-total>'+money(total)+'</strong></div><div class="module-summary-row"><span>Mensalidade</span><strong data-module-monthly>'+money(monthly)+'</strong></div><div class="module-presale"><span>Pré-venda · -15%</span><strong data-module-presale>'+money(Math.round(total*.85))+'</strong><small data-module-presale-monthly>'+money(Math.round(monthly*.85))+' / mês</small></div><p class="muted">A pré-venda aplica 15% de desconto sobre os valores da configuração escolhida.</p><a class="btn" data-module-quote href="#/orcamento?produto='+encodeURIComponent(id)+'&modulos='+encodeURIComponent(required.map(m=>m.id).join(","))+'">Solicitar esta configuração '+icon("arrow")+'</a></aside></div></section><section class="section shell split"><span class="eyebrow">03 · CRITÉRIO DE PREÇO</span><div><h2>O preço acompanha a complexidade.</h2><p>Não é um preço igual para todos os módulos. Recursos mais úteis ou mais difíceis de construir e implantar têm valores maiores. Integrações, regras de negócio, volume de dados, testes, segurança e manutenção também entram no cálculo.</p><p>Assim, você paga pela configuração que realmente pretende usar e pode acrescentar novos módulos conforme a operação crescer.</p></div></section></main>';
+}
 function productPlansPage(id){
   const p=state.products.find(x=>x.id===id),key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!p||!plans.length)return product(id);
@@ -571,10 +634,23 @@ async function sendQuote(e){
   catch(x){msg.textContent=x.message;toast(x.message)}
   finally{button.disabled=false}
 }
+function updateKOSModules(el){
+  const product=el.dataset.product,page=el.closest(".modular-product-page"),mods=MODULAR_CATALOG[product]||[];
+  if(!page)return;
+  const selected=mods.filter(m=>m.required||page.querySelector('[data-module-toggle][data-module="'+m.id+'"]')?.checked);
+  const total=selected.reduce((a,m)=>a+Number(m.price||0),0),monthly=selected.reduce((a,m)=>a+Number(m.monthly||0),0);
+  page.querySelector("[data-module-count]").textContent=String(selected.length);
+  page.querySelector("[data-module-total]").textContent=money(total);
+  page.querySelector("[data-module-monthly]").textContent=money(monthly);
+  page.querySelector("[data-module-presale]").textContent=money(Math.round(total*.85));
+  page.querySelector("[data-module-presale-monthly]").textContent=money(Math.round(monthly*.85))+" / mês";
+  const ids=selected.map(m=>m.id).join(",");
+  page.querySelectorAll("[data-module-quote]").forEach(a=>a.href="#/orcamento?produto="+encodeURIComponent(product)+"&modulos="+encodeURIComponent(ids));
+}
 function quotePage(){
   const qs=new URLSearchParams((location.hash.split("?")[1]||""));
-  const productId=qs.get("produto")||"",serviceId=qs.get("servico")||"",planId=qs.get("plano")||"";
-  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">ORÇAMENTO · SOLICITAÇÃO TÉCNICA</span><h2>Quero fazer o meu.</h2><p class="section-lead">Este formulário é diferente do contato: aqui coletamos objetivo, escopo, prazo e faixa de investimento para preparar um orçamento.</p></div><form id="quote-form" class="form quote-form"><input type="hidden" name="productId" value="'+esc(productId)+'"><input type="hidden" name="serviceId" value="'+esc(serviceId)+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><label>O que você quer fazer?<select class="field" name="objective" required><option value="">Selecione</option><option>Site ou aplicação</option><option>Produto digital</option><option>Integração</option><option>Automação</option><option>Melhoria de sistema existente</option><option>Outro</option></select></label><label>Escopo / funcionalidades<textarea class="field" name="scope" rows="6" required placeholder="Explique o que precisa ser desenvolvido."></textarea></label><label>Prazo desejado<input class="field" name="deadline" placeholder="Ex.: 30 dias, 3 meses"></label><label>Faixa de investimento (opcional)<select class="field" name="budget"><option>Prefiro não informar</option><option>Até R$ 5.000</option><option>R$ 5.000 a R$ 15.000</option><option>R$ 15.000 a R$ 50.000</option><option>Acima de R$ 50.000</option></select></label><label>Detalhes adicionais<textarea class="field" name="details" rows="5"></textarea></label><button class="btn" type="submit">Solicitar orçamento '+icon("arrow")+'</button><small id="quote-msg" class="muted form-note"></small></form></main>';
+  const productId=qs.get("produto")||"",serviceId=qs.get("servico")||"",planId=qs.get("plano")||"",moduleIds=qs.get("modulos")||"";
+  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">ORÇAMENTO · SOLICITAÇÃO TÉCNICA</span><h2>Quero fazer o meu.</h2><p class="section-lead">Este formulário é diferente do contato: aqui coletamos objetivo, escopo, prazo e faixa de investimento para preparar um orçamento.</p></div><form id="quote-form" class="form quote-form"><input type="hidden" name="productId" value="'+esc(productId)+'"><input type="hidden" name="serviceId" value="'+esc(serviceId)+'"><input type="hidden" name="moduleIds" value="'+esc(moduleIds)+'"><label>Nome<input class="field" name="name" required value="'+esc(state.user?.name||"")+'"></label><label>Email<input class="field" type="email" name="email" required value="'+esc(state.user?.email||"")+'"></label><label>Telefone<input class="field" name="phone" required></label><label>Empresa (opcional)<input class="field" name="company"></label><label>O que você quer fazer?<select class="field" name="objective" required><option value="">Selecione</option><option>Site ou aplicação</option><option>Produto digital</option><option>Integração</option><option>Automação</option><option>Melhoria de sistema existente</option><option>Outro</option></select></label><label>Escopo / funcionalidades<textarea class="field" name="scope" rows="6" required placeholder="Explique o que precisa ser desenvolvido."></textarea></label><label>Prazo desejado<input class="field" name="deadline" placeholder="Ex.: 30 dias, 3 meses"></label><label>Faixa de investimento (opcional)<select class="field" name="budget"><option>Prefiro não informar</option><option>Até R$ 5.000</option><option>R$ 5.000 a R$ 15.000</option><option>R$ 15.000 a R$ 50.000</option><option>Acima de R$ 50.000</option></select></label><label>Detalhes adicionais<textarea class="field" name="details" rows="5"></textarea></label><button class="btn" type="submit">Solicitar orçamento '+icon("arrow")+'</button><small id="quote-msg" class="muted form-note"></small></form></main>';
 }
 function checkoutState(kind){
   const success=kind==="sucesso";
@@ -676,7 +752,7 @@ function render(){
   else if(h==="/privacidade")c=legal("privacidade");
   else if(h==="/uso")c=legal("uso");
   else if(h==="/servico")c=legal("servico");
-  else if(h.startsWith("/planos/")){let productId="";try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}c=productPlansPage(productId);}
+  else if(h.startsWith("/planos/")){let productId="";try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}c=MODULAR_CATALOG[productId]?modularProductPage(productId):productPlansPage(productId);}
   else if(h.startsWith("/produto/")){
     let productId="";
     try{productId=decodeURIComponent(h.split("/")[2]||"")}catch{}
@@ -686,7 +762,7 @@ function render(){
   root.innerHTML=(h!=="/conta"||state.authenticated)?nav()+c+footer():c;initMoon();
   const authForm=root.querySelector("#auth-form");
   if(authForm)authForm.addEventListener("submit",submitAuth);
-  root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));
+  root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));root.querySelectorAll("[data-module-toggle]").forEach(el=>el.addEventListener("change",()=>updateKOSModules(el)));
   root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>{updateMentorTotal(el);if(el.checked)registrarAnalitica("interacao","Tecnologia selecionada",{categoria:"comercial",subcategoria:"mentorias",acao:"Selecionou tecnologia para a mentoria",descricao:"Selecionou uma tecnologia na grade personalizada da Mentoria.",entidade:"tecnologia",entidadeId:el.closest(".mentor-tech-row")?.querySelector("b")?.textContent||""});}));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
