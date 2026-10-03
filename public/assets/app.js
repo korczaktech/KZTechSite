@@ -99,117 +99,24 @@ function initMoon(){
 function home(){
  return '<main id="main-content"><section class="hero shell"><div class="hero-copy"><span class="eyebrow">KORCZAK TECHNOLOGY · PORTA DE ENTRADA</span><h1>Encontre o caminho certo para conhecer a Korczak.</h1><p>Comece pela área que faz sentido para você: conheça o que fazemos comercialmente ou entenda quem somos, nossa história e nossa visão.</p></div><div class="moon-stage" aria-label="Identidade visual Korczak"><div class="moon-3d-wrap"><canvas id="moon-canvas"></canvas></div></div></section><section class="section shell gateway-section"><div class="section-heading"><span class="eyebrow">Comece por aqui</span><h2>Duas portas. Um ecossistema.</h2><p class="section-lead">Não sabe por onde começar? Escolha a área que corresponde ao que você procura. Você poderá voltar à página inicial a qualquer momento.</p></div><div class="gateway-grid"><a class="gateway-card gateway-commercial" href="#/comercial"><span class="gateway-number">01</span><span class="eyebrow">Comercial</span><h3>Quero conhecer soluções e possibilidades.</h3><p>Para você que quer ver nosso portfólio, conhecer nossos desenvolvimentos, entender o que cada solução faz, solicitar um orçamento ou falar com a equipe.</p><span class="gateway-link">Entrar na área comercial '+icon("arrow")+'</span></a><a class="gateway-card gateway-institutional" href="#/institucional"><span class="gateway-number">02</span><span class="eyebrow">Institucional</span><h3>Quero conhecer a Korczak.</h3><p>Para você que quer entender quem somos, nossa história, visão, valores, atuação e como organizamos nosso ecossistema de tecnologia.</p><span class="gateway-link">Entrar na área institucional '+icon("arrow")+'</span></a></div></section><section class="section shell"><span class="eyebrow">Em destaque</span><h2>Conheça o que estamos construindo.</h2><p class="section-lead">Alguns dos produtos que representam diferentes frentes da Korczak Technology.</p><div class="grid featured-home-grid"><a class="card featured" href="#/produto/korczak-ai"><span class="status">Inteligência</span><span class="card-index">01</span><h3>Korczak AI</h3><p class="muted">Inteligência e automação para o ecossistema Korczak.</p><span class="card-arrow">Explorar '+icon("arrow")+'</span></a><a class="card featured" href="#/hub"><span class="status">Produtividade</span><span class="card-index">02</span><h3>HUB</h3><p class="muted">Uma suíte para documentos, arquivos, agenda, comunicação e colaboração em um único ambiente.</p><span class="card-arrow">Conhecer '+icon("arrow")+'</span></a><a class="card featured" href="#/produto/ide"><span class="status">Developer Tool</span><span class="card-index">03</span><h3>Korczak IDE</h3><p class="muted">Ambiente de desenvolvimento para projetos Korczak.</p><span class="card-arrow">Explorar '+icon("arrow")+'</span></a></div></section><section class="section shell home-kos"><div class="info-deep"><div><span class="eyebrow">Também em destaque</span><h3>KOS · Korczak Operations System</h3></div><div><p class="muted">A suíte empresarial para organizar processos, gestão, documentos, indicadores, integrações e mobilidade.</p><a class="text-link" href="#/kos">Conhecer o KOS '+icon("arrow")+'</a></div></div></section></main>';
 }
-const READY_SERVICES={"landing-page":["Landing Page",2810,"Página de campanha.",[["sections","Mais seções","Seções extras",390],["form","Formulário de leads","Captação de contatos",490],["analytics","Analytics","Métricas",390],["seo","SEO inicial","Busca",490],["animations","Animações","Microinterações",690],["integration","Integração","CRM, WhatsApp ou API",790]]],"site":["Site Profissional",8250,"Site institucional ou comercial.",[["dashboard","Dashboard","Painel administrativo",1900],["terms","Termos de uso","Página de Termos de Uso",390],["privacy","Política de privacidade","Página de privacidade",390],["pages","Páginas extras","Cada página adicional",490],["blog","Blog","Artigos",990],["cms","CMS","Conteúdo gerenciável",1490],["seo","SEO inicial","Busca",690],["analytics","Analytics","Métricas",390],["auth","Login e cadastro","Autenticação",1290],["multilang","Multilíngue","Idiomas",1490],["integrations","Integrações","APIs e serviços",990]]],"ecommerce":["E-commerce",13100,"Loja virtual.",[["products","Catálogo avançado","Categorias e variações",1290],["dashboard","Dashboard","Painel",1900],["payments","Pagamentos","Gateway",1290],["shipping","Frete","Cálculo de frete",990],["coupons","Cupons","Promoções",690],["customers","Área do cliente","Conta e pedidos",1290],["analytics","Analytics","Métricas",590],["seo","SEO","Busca",790],["integrations","Integrações","ERP, CRM ou APIs",1490]]],"web-app":["Aplicação Web / SaaS",105000,"Sistema web personalizado.",[["dashboard","Dashboard","Painel",2500],["auth","Autenticação","Login e sessões",1490],["roles","Permissões","Perfis",1490],["database","Banco de dados","Persistência",1990],["api","API","API própria",2490],["notifications","Notificações","Email ou push",990],["payments","Pagamentos","Assinaturas",1490],["files","Arquivos","Upload",1290],["analytics","Analytics","Métricas",690]]],"mobile":["Aplicativo Mobile",75000,"Android e iOS.",[["auth","Login e cadastro","Conta",1490],["dashboard","Dashboard","Painel",1900],["notifications","Push notifications","Notificações",990],["offline","Modo offline","Sincronização",1990],["payments","Pagamentos","Compras",1490],["maps","Mapas","Localização",1290],["camera","Câmera / mídia","Fotos e vídeo",990],["api","API / backend","Backend",2490],["store","Publicação","Lojas",1290]]],"api":["API / Backend",31900,"API ou backend próprio.",[["auth","Autenticação","Acesso",990],["database","Banco de dados","Dados",1490],["admin","Painel administrativo","Gestão",1900],["docs","Documentação","Docs",790],["webhooks","Webhooks","Eventos",690],["payments","Pagamentos","Gateway",1290],["storage","Armazenamento","Arquivos",990],["monitoring","Monitoramento","Logs",890]]],"integration":["Integração de Sistemas",41300,"Conexão entre sistemas.",[["api","API","Integração",990],["webhook","Webhooks","Eventos",690],["database","Banco de dados","Sincronização",1290],["crm","CRM","Conexão",990],["payments","Pagamentos","Gateway",990],["erp","ERP","Conexão",1490],["auth","Autenticação","OAuth/tokens",790]]],"automation":["Automação de Processos",9400,"Fluxos automatizados.",[["workflow","Workflow","Fluxo principal",790],["n8n","n8n","Automação",990],["webhook","Webhooks","Gatilhos",690],["schedules","Agendamentos","Rotinas",490],["email","Email","Envio",490],["sheets","Planilhas","Integração",590],["crm","CRM","Automação",990],["monitoring","Monitoramento","Logs",690]]],"bot":["Bot / Chatbot",26300,"Atendimento e processos.",[["faq","FAQ","Perguntas",490],["buttons","Menu interativo","Caminhos",590],["whatsapp","WhatsApp","Integração",1290],["telegram","Telegram","Integração",690],["crm","CRM","Registros",990],["scheduling","Agendamento","Agenda",890],["handoff","Atendimento humano","Transferência",590],["dashboard","Dashboard","Painel",1490]]],"customization":["Customização",21800,"Alterações em sistema existente.",[["ui","Interface","Visual",690],["page","Página / tela","Nova tela",790],["module","Módulo","Função",1490],["api","API","Endpoint",990],["auth","Acesso","Login/permissões",990],["database","Dados","Estrutura",990],["automation","Automação","Rotina",890],["deployment","Deploy","Publicação",490]]]};const OPTION_DIFFICULTY={sections:3,form:5,analytics:6,seo:6,animations:3,integration:8,dashboard:8,terms:2,privacy:2,pages:4,blog:4,cms:8,auth:7,multilang:9,integrations:9,products:7,payments:9,shipping:6,coupons:4,customers:7,roles:7,database:8,api:8,notifications:6,files:7,offline:8,maps:7,camera:5,store:5,admin:7,docs:4,webhooks:6,storage:6,monitoring:8,webhook:6,crm:7,erp:9,workflow:6,n8n:6,schedules:4,email:5,sheets:5,faq:2,buttons:3,whatsapp:5,telegram:4,scheduling:5,handoff:4,ui:3,page:5,module:8,automation:7,deployment:7,responsive:3,tracking:6,cookie:3,domain:4,accessibility:6,performance:8,security:9,search:6,forms:5,backup:8,support:3,inventory:7,orders:8,reviews:5,abandoned:8,wishlist:4,"shipping-tracking":6,"multi-store":10,"reviews-admin":5,filters:7,audit:8,"admin-area":8,realtime:9,queue:8,cache:7,biometric:6,"deep-links":5,sharing:4,location:6,chat:8,crash:7,"rate-limit":6,queues:8,cron:5,"api-version":5,sso:8,mapping:7,sync:9,retry:5,logs:5,alerts:5,scheduler:5,conditions:5,transform:6,http:6,approval:7,reports:7,commands:7,media:6,multichannel:10,knowledge:8,report:6,notification:5};
-const OPTION_NEED={sections:3,form:6,analytics:5,seo:6,animations:2,integration:7,dashboard:7,terms:3,privacy:4,pages:5,blog:4,cms:7,auth:8,multilang:3,integrations:7,products:9,payments:10,shipping:8,coupons:4,customers:8,roles:7,database:10,api:9,notifications:4,files:5,offline:5,maps:5,camera:4,store:7,admin:8,docs:5,webhooks:7,storage:6,monitoring:8,webhook:7,crm:6,erp:7,workflow:9,n8n:7,schedules:5,email:7,sheets:4,faq:6,buttons:5,whatsapp:5,telegram:4,scheduling:6,handoff:6,ui:4,page:6,module:9,automation:7,deployment:8,responsive:8,tracking:5,cookie:4,domain:5,accessibility:7,performance:7,security:9,search:5,forms:6,backup:8,support:4,inventory:9,orders:10,reviews:4,abandoned:5,wishlist:3,"shipping-tracking":7,"multi-store":3,"reviews-admin":4,filters:6,audit:7,"admin-area":8,realtime:6,queue:7,cache:5,biometric:4,"deep-links":4,sharing:3,location:5,chat:7,crash:8,"rate-limit":8,queues:8,cron:5,"api-version":5,sso:6,mapping:6,sync:9,retry:7,logs:7,alerts:6,scheduler:5,conditions:7,transform:7,http:8,approval:5,reports:6,commands:7,media:5,multichannel:7,knowledge:8,report:6,notification:5};
-const SERVICE_EXTRAS={
-"landing-page":[
- ["tracking","Rastreamento de conversões","Métricas avançadas","Mede ações específicas, conversões e campanhas."],
- ["whatsapp","Integração com WhatsApp","Contato externo","Conecta a página a fluxos e atendimento pelo WhatsApp."],
- ["multilang","Mais idiomas","Internacionalização","Adiciona versões do conteúdo em outros idiomas."],
- ["animations","Animações avançadas","Experiência visual","Adiciona interações e movimentos personalizados além do padrão."],
- ["integration","Integrações externas","Sistemas externos","Conecta a landing page a CRM, automações ou outras plataformas."]
-],
-"site":[
- ["multilang","Mais idiomas","Internacionalização","Adiciona versões completas do site em outros idiomas."],
- ["integrations","Integrações externas","Sistemas e plataformas","Conecta o site a CRM, ERP, APIs ou ferramentas externas."],
- ["dashboard","Painel administrativo avançado","Gestão","Cria uma área administrativa personalizada para operações que exigem controles além do conteúdo padrão."],
- ["realtime","Atualizações em tempo real","Tempo real","Atualiza informações sem recarregar a página."],
- ["automation","Automação de processos","Automação","Executa tarefas e fluxos automaticamente a partir de eventos do site."]
-],
-"ecommerce":[
- ["abandoned","Recuperação de carrinho","Vendas","Cria automações para tentar recuperar compras não finalizadas."],
- ["multi-store","Multi-loja","Operações","Permite administrar mais de uma loja ou operação na mesma estrutura."],
- ["shipping-tracking","Rastreamento avançado de entrega","Logística","Integra o acompanhamento detalhado da entrega."],
- ["erp","Integração com ERP","Gestão empresarial","Sincroniza a loja com um sistema empresarial externo."],
- ["crm","Integração com CRM","Relacionamento","Sincroniza clientes e informações comerciais com um CRM."]
-],
-"web-app":[
- ["realtime","Tempo real","Atualização instantânea","Atualiza informações sem recarregar a aplicação."],
- ["webhooks","Webhooks","Eventos externos","Troca eventos automaticamente com outros sistemas."],
- ["queue","Filas de processamento","Processamento assíncrono","Processa tarefas demoradas em segundo plano."],
- ["cache","Cache avançado","Desempenho","Reduz processamento repetido em aplicações com maior carga."],
- ["monitoring","Monitoramento avançado","Observabilidade","Acompanha métricas e sinais operacionais detalhados."],
- ["integrations","Integrações externas","Sistemas","Conecta a aplicação a plataformas e serviços externos."]
-],
-"mobile":[
- ["biometric","Biometria","Acesso","Adiciona autenticação biométrica quando suportada pelo dispositivo."],
- ["deep-links","Deep links","Navegação","Abre diretamente telas específicas a partir de links."],
- ["location","Geolocalização","Localização","Usa a localização do dispositivo em recursos que dependem dela."],
- ["chat","Pulse em tempo real","Conversas","Adiciona comunicação instantânea entre usuários ou com atendimento."],
- ["realtime","Dados em tempo real","Sincronização","Mantém informações atualizadas instantaneamente."],
- ["sharing","Compartilhamento avançado","Integração nativa","Adiciona fluxos personalizados de compartilhamento do sistema."],
- ["offline","Offline avançado","Uso sem conexão","Permite que partes mais complexas do aplicativo funcionem sem internet e sincronizem depois."]
-],
-"api":[
- ["queues","Filas de processamento","Escala","Processa tarefas demoradas de forma assíncrona."],
- ["cache","Cache","Desempenho","Armazena respostas temporariamente para reduzir processamento."],
- ["search","Busca especializada","Pesquisa","Adiciona mecanismos de busca e filtros específicos para grandes volumes de dados."],
- ["roles","Permissões avançadas","Autorização","Cria regras detalhadas de acesso por usuário, equipe ou aplicação."],
- ["audit","Auditoria detalhada","Rastreamento","Mantém histórico detalhado das operações realizadas."],
- ["integrations","Integrações externas","Serviços","Conecta a APIs, CRMs, ERPs e outras plataformas."],
- ["realtime","Tempo real","Eventos","Entrega atualizações em tempo real para clientes conectados."],
- ["api-version","Versionamento avançado","Evolução","Mantém múltiplas versões da API para compatibilidade entre integrações."]
-],
-"integration":[
- ["sso","SSO","Identidade","Conecta a integração a um provedor de identidade centralizado."],
- ["queue","Filas","Escala","Processa grandes volumes de eventos sem bloquear a integração."],
- ["scheduler","Agendamentos avançados","Rotinas","Executa sincronizações e tarefas em horários programados."],
- ["files","Transferência de arquivos","Arquivos","Move arquivos entre plataformas durante a integração."],
- ["alerts","Alertas operacionais","Falhas","Notifica a equipe quando uma integração apresenta problemas."]
-],
-"automation":[
- ["database","Automação com banco de dados","Dados","Consulta ou altera bancos de dados durante os fluxos."],
- ["http","Integrações HTTP avançadas","APIs","Faz chamadas personalizadas para APIs externas."],
- ["approval","Aprovação humana","Controle","Pausa um fluxo para que uma pessoa aprove antes da continuação."],
- ["files","Automação de arquivos","Arquivos","Cria, move ou processa arquivos automaticamente."],
- ["reports","Relatórios automáticos","Relatórios","Gera e envia relatórios de processos."],
- ["notifications","Notificações avançadas","Avisos","Envia notificações por canais adicionais conforme regras do fluxo."]
-],
-"bot":[
- ["media","Mídia avançada","Arquivos","Processa imagens, vídeos, documentos e outros formatos."],
- ["payments","Pagamentos no bot","Cobrança","Permite realizar operações de pagamento dentro do fluxo."],
- ["integrations","Integrações externas","Sistemas","Conecta o bot a CRM, ERP, agenda e outras plataformas."],
- ["analytics","Analytics avançado","Métricas","Analisa conversas, etapas e resultados do atendimento."],
- ["multichannel","Multicanal","Canais","Reaproveita o bot em diferentes canais de atendimento."],
- ["knowledge","Base de conhecimento avançada","Conteúdo","Organiza grandes volumes de conteúdo para consulta pelo bot."]
-],
-"customization":[
- ["integration","Integração externa","Conexões","Conecta o sistema existente a um serviço externo."],
- ["dashboard","Dashboard personalizado","Gestão","Cria painéis administrativos ou indicadores sob medida."],
- ["report","Relatórios personalizados","Informações","Cria relatórios específicos para a necessidade do sistema."],
- ["notification","Notificações adicionais","Avisos","Adiciona canais e regras de aviso além do funcionamento atual."],
- ["automation","Automação personalizada","Processos","Automatiza rotinas específicas do sistema existente."],
- ["monitoring","Monitoramento","Observabilidade","Adiciona acompanhamento técnico de erros e disponibilidade."]
-]
-};
+const READY_SERVICES={};const OPTION_DIFFICULTY={};
+const OPTION_NEED={};
+const SERVICE_EXTRAS={};
 
-const SERVICE_INCLUDED={
-  "landing-page":["responsive","deployment","security","performance","accessibility","seo","sections","form","analytics"],
-  "site":["responsive","deployment","security","performance","accessibility","seo","sections","pages","forms","cookie","terms","privacy"],
-  "ecommerce":["responsive","deployment","security","performance","accessibility","seo","sections","pages","forms","search","filters","files","auth","roles","products","dashboard","payments","shipping","inventory","orders","customers","cart","checkout","email","analytics"],
-  "web-app":["responsive","deployment","security","performance","accessibility","sections","pages","forms","files","auth","roles","database","api","dashboard","notifications","audit","backup"],
-  "mobile":["deployment","security","performance","accessibility","auth","dashboard","notifications","files","api","store","crash"],
-  "api":["auth","database","admin","docs","webhooks","storage","monitoring","rate-limit"],
-  "integration":["api","webhook","auth","mapping","sync","retry","logs","monitoring"],
-  "automation":["workflow","webhook","conditions","transform","retry","logs"],
-  "bot":["commands","faq","buttons","handoff","forms","auth","notifications"],
-  "customization":[]
-};
+const SERVICE_INCLUDED={};
 
-Object.keys(SERVICE_INCLUDED).forEach(serviceId=>{
-  const included=new Set(SERVICE_INCLUDED[serviceId]||[]);
-  if(READY_SERVICES[serviceId]){
-    READY_SERVICES[serviceId][3]=(READY_SERVICES[serviceId][3]||[]).filter(option=>!included.has(option[0]));
-  }
-  if(SERVICE_EXTRAS[serviceId]){
-    SERVICE_EXTRAS[serviceId]=SERVICE_EXTRAS[serviceId].filter(option=>!included.has(option[0]));
-  }
-});
-Object.keys(READY_SERVICES).forEach(k=>{
-  const base=READY_SERVICES[k][3]||[];
-  const existing=new Set(base.map(o=>o[0]));
-  (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
-});
+function normalizeServiceCatalog(){
+  Object.keys(SERVICE_INCLUDED).forEach(serviceId=>{
+    const included=new Set(SERVICE_INCLUDED[serviceId]||[]);
+    if(READY_SERVICES[serviceId])READY_SERVICES[serviceId][3]=(READY_SERVICES[serviceId][3]||[]).filter(option=>!included.has(option[0]));
+    if(SERVICE_EXTRAS[serviceId])SERVICE_EXTRAS[serviceId]=SERVICE_EXTRAS[serviceId].filter(option=>!included.has(option[0]));
+  });
+  Object.keys(READY_SERVICES).forEach(k=>{
+    const base=READY_SERVICES[k][3]||[],existing=new Set(base.map(o=>o[0]));
+    (SERVICE_EXTRAS[k]||[]).forEach(o=>{if(!existing.has(o[0]))base.push([o[0],o[1],o[2],o[3],OPTION_DIFFICULTY[o[0]]||6]);});
+  });
+}
+normalizeServiceCatalog();
 
 
 function serviceOptionPrices(service){
@@ -828,6 +735,14 @@ async function load(){
     if(content?.products?.length)state.products=content.products;
     if(content?.plans)Object.assign(PLAN_CATALOG,content.plans);
     if(content?.modules)for(const [id,list] of Object.entries(content.modules))MODULAR_CATALOG[id]=list.map(m=>({...m}));
+    if(content?.services){
+      Object.assign(READY_SERVICES,content.services.ready||{});
+      Object.assign(SERVICE_EXTRAS,content.services.extras||{});
+      Object.assign(SERVICE_INCLUDED,content.services.included||{});
+      Object.assign(OPTION_DIFFICULTY,content.services.difficulty||{});
+      Object.assign(OPTION_NEED,content.services.need||{});
+      normalizeServiceCatalog();
+    }
     const pricing=await fetch("./data/pricing.json?"+APP_VERSION).then(r=>r.ok?r.json():null);
     if(pricing?.plans)for(const [key,list] of Object.entries(pricing.plans)){const base=PLAN_CATALOG[key]||[];PLAN_CATALOG[key]=list.map(p=>({...((base.find(x=>x.id===p.id)||{})),...p}));}
     if(pricing?.modules)for(const [id,rows] of Object.entries(pricing.modules)){const list=MODULAR_CATALOG[id]||[];for(const row of rows){const m=list.find(x=>x.id===row[0]);if(m){m.price=Number(row[2]);m.monthly=Number(row[3]);m.required=Boolean(row[4]||m.required);}}}
