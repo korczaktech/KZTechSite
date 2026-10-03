@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.07";
+const APP_VERSION="2026.10.03.08";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
@@ -388,7 +388,7 @@ function product(id){
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(["korczak-ai","ide"].includes(p.id)) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
-  else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a>';
+  else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a><a class="btn ghost" href="https://github.com/korczaktech/kzdoc/archive/refs/heads/main.zip" download="KZDoc-Nexus-main.zip">Baixar Nexus '+icon("arrow")+'</a>';
   else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
