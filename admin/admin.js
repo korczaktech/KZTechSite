@@ -12,8 +12,8 @@ async function entrar(e){
     if(!r.ok)throw Error(d.error||"Não foi possível entrar.");
     if(d?.user?.role!=="admin")throw Error("Conta sem permissão de administrador.");
     if(!d.token)throw Error("O servidor não retornou uma sessão.");
-    sessionStorage.setItem("adm",d.token);
-    location.href="./dashboard.html";
+    sessionStorage.setItem("adm",d.token);localStorage.setItem("kz_admin_session",d.token);
+    location.href=new URL("./dashboard.html",location.href).href;
   }catch(x){
     msg.textContent=x?.name==="AbortError"?"O servidor demorou demais para responder.":(x?.message||"Erro ao entrar.");
   }finally{
