@@ -8,7 +8,7 @@ const PLAN_CATALOG={};
 
 const MODULAR_CATALOG={};
 
-const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
+const state={token:localStorage.getItem("kz_token"),user:null,content:{},products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const money=value=>{const n=Number(value);return Number.isFinite(n)?n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2,maximumFractionDigits:2}):"R$ 0,00"};
@@ -379,20 +379,7 @@ function productPlansPage(id){
 function product(id){
   const p=state.products.find(x=>x.id===id);
   if(!p)return '<main id="main-content" class="section shell"><span class="eyebrow">Produto</span><h2>Produto não encontrado.</h2><p class="section-lead">O produto solicitado não está no catálogo atual.</p><a class="btn ghost" href="#/produtos">Voltar aos produtos</a></main>'+planBlock;
-  const details={
-    "korczak-ai":["Inteligência aplicada","Camada de inteligência para assistência, análise, geração e automação dentro do ecossistema Korczak.","Centraliza recursos inteligentes, contexto e automações para reduzir trabalho repetitivo e apoiar decisões."],
-    "morok":["Assistente pessoal e operacional","Um assistente multiplataforma pensado para comandos, automações e interação por voz e interface.","O MOROK conecta comandos predefinidos, experiências web, desktop e mobile e novas integrações conforme evolui."],
-    "ide":["Ambiente de desenvolvimento","Um ambiente para criar, testar, organizar e evoluir projetos de software.","A proposta é reunir desenvolvimento, organização de projetos e ferramentas técnicas em uma experiência própria."],
-    "hub":["Produtividade e colaboração","Uma suíte para documentos, planilhas, apresentações, arquivos, email, agenda, reuniões, chat, formulários e sites.","Uma conta e um contexto de trabalho reúnem as ferramentas usadas diariamente por pessoas e equipes."],
-    "erp":["Gestão empresarial","Núcleo de gestão para clientes, processos, financeiro e rotinas empresariais.","O ERP organiza informações centrais da empresa e cria uma base para acompanhar operações e resultados."],
-    "flow":["Automação de processos","Fluxos para tarefas, aprovações, rotinas e automações.","O FLOW transforma processos repetitivos em etapas rastreáveis, com responsáveis e estados definidos."],
-    "vault":["Arquivos e armazenamento","Espaço central para organizar, guardar e acessar arquivos.","O Vault concentra armazenamento e arquivos dentro do HUB."],"nexus":["Documentos","Aplicativo de documentos para criar, editar, organizar e colaborar.","O Nexus é o aplicativo de documentos do HUB."],"nexa":["Planilhas","Aplicativo para criar, editar e organizar planilhas.","O Nexa é o aplicativo de planilhas do HUB."],"veya":["Apresentações","Aplicativo para criar e editar apresentações.","O Veya é o aplicativo de apresentações do HUB."],"formly":["Formulários","Aplicativo para criar e gerenciar formulários.","O Formly é o aplicativo de formulários do HUB."],"korvo":["E-mail","Serviço de e-mail para comunicação profissional.","O Korvo é o aplicativo de e-mail do HUB."],"chrona":["Calendário","Calendário para compromissos, eventos e organização de agenda.","O Chrona organiza a agenda dentro do HUB."],"meet":["Videoconferências","Reuniões e videoconferências para pessoas e equipes.","O Meet é o aplicativo de videoconferências do HUB."],"pulse":["Pulse e comunicação","Comunicação rápida entre pessoas e equipes.","O Pulse concentra chat e comunicação do HUB."],"acta":["Tarefas","Organização e acompanhamento de tarefas.","O Acta é o aplicativo de tarefas do HUB."],"memo":["Anotações","Espaço para registrar e organizar anotações.","O Memo é o aplicativo de anotações do HUB."],"people":["Contatos","Organização de contatos e pessoas.","O People centraliza contatos do HUB."],"web":["Criação de sites","Ferramenta para criação e organização de sites.","O Web é o aplicativo de criação de sites do HUB."],"klash":["Notas rápidas e lembretes","Espaço para notas rápidas, lembretes e pequenas informações.","O Klash é o aplicativo de notas rápidas do HUB."],
-    "vision":["Visão operacional","Painéis e camadas de informação para acompanhar indicadores, contexto e atividade.","O VISION transforma dados operacionais em uma visão mais clara para acompanhamento e análise."],
-    "ops":["Operações e administração","Controle técnico e operacional do ecossistema empresarial.","O OPS concentra rotinas de administração, acompanhamento e observabilidade dos serviços."],
-    "connect":["Conectividade","Integração entre pessoas, sistemas, serviços e canais.","O CONNECT funciona como camada de comunicação e integração entre partes do ecossistema."],
-    "mobile":["Operação em mobilidade","Experiência móvel para acessar e operar recursos empresariais.","O MOBILE leva recursos selecionados do ecossistema para contextos em que a operação acontece fora do desktop."],
-    "wms":["Gestão de armazém","Sistema para controlar estoque, entradas, saídas e movimentação dentro de armazéns.","O WMS será desenvolvido para operações logísticas com maior volume e necessidade de rastreabilidade."]
-  };
+  const details=state.content?.productsDetails||{};
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
   const isModular=Boolean(MODULAR_CATALOG[p.id]);
   const planBlock=(!isModular&&["korczak-ai","ide","hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
@@ -732,6 +719,7 @@ async function load(){
   render();
   try{
     const content=await fetch("./data/content.json?"+APP_VERSION).then(r=>r.ok?r.json():null);
+    if(content)state.content=content;
     if(content?.products?.length)state.products=content.products;
     if(content?.plans)Object.assign(PLAN_CATALOG,content.plans);
     if(content?.modules)for(const [id,list] of Object.entries(content.modules))MODULAR_CATALOG[id]=list.map(m=>({...m}));
