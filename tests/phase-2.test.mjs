@@ -28,7 +28,8 @@ test("Fase 2: conteúdo dinâmico é escapado e handlers inline não são usados
   assert.ok(app.includes("const esc="));
   assert.doesNotMatch(app,/onclick\s*=/i);
   assert.ok(app.includes("async function quote(id)"));
-  assert.ok(app.includes("#/orcamento?produto="));
+  assert.ok(app.includes("#/assinatura?produto="));
+  assert.ok(app.includes("function subscriptionPage()"));
 });
 
 test("Fase 2: documentação declara os critérios",()=>{
