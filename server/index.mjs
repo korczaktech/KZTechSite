@@ -251,6 +251,42 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
     res.status(500).json({error:"Não foi possível carregar as analytics."});
   }
 });
+app.post("/api/interessados/korczak-ai",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const b=req.body||{};
+  const nome=String(b.nome||"").trim().slice(0,120);
+  const emailInformado=String(b.email||"").trim().toLowerCase().slice(0,180);
+  const whatsapp=String(b.whatsapp||"").trim().slice(0,40);
+  const uso=String(b.uso||"").trim().slice(0,500);
+  const consentimento=b.consentimento===true;
+  if(nome.length<2)return res.status(400).json({error:"Informe seu nome."});
+  if(!emailValida(emailInformado))return res.status(400).json({error:"Informe um email válido."});
+  if(!consentimento)return res.status(400).json({error:"É necessário autorizar o contato sobre a Korczak AI."});
+  const agora=new Date();
+  const doc={
+    produto:"korczak-ai",
+    nome,email:emailInformado,whatsapp,uso,
+    consentimento:true,
+    origem:String(b.origem||"site").slice(0,80),
+    status:"interessado",
+    atualizadoEm:agora,
+    criadoEm:agora
+  };
+  const existente=await db.collection("interessados").findOne({produto:"korczak-ai",email:emailInformado});
+  if(existente){
+    await db.collection("interessados").updateOne({_id:existente._id},{$set:{...doc,criadoEm:existente.criadoEm||agora}});
+    return res.json({ok:true,novo:false,message:"Seu interesse já estava registrado. Atualizamos seus dados."});
+  }
+  const r=await db.collection("interessados").insertOne(doc);
+  res.status(201).json({ok:true,novo:true,id:String(r.insertedId),message:"Seu interesse foi registrado."});
+});
+app.get("/api/admin/interessados",auth,admin,async(req,res)=>{
+  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  const produto=String(req.query.produto||"").trim().slice(0,80);
+  const filtro=produto?{produto}:{};
+  const rows=await db.collection("interessados").find(filtro,{projection:{}}).sort({criadoEm:-1}).limit(2000).toArray();
+  res.json(rows.map(r=>({...r,_id:String(r._id)})));
+});
 app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
