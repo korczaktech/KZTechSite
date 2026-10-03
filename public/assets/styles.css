@@ -1113,3 +1113,17 @@ img,svg,video,canvas,iframe{max-width:100%}
   .presale-grid,.presale-choice-grid{grid-template-columns:1fr}
   .presale-card{min-height:245px}
 }
+
+
+/* Assinaturas */
+.subscription-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:28px;align-items:start;margin-top:28px}
+.subscription-summary,.subscription-form{border:1px solid rgba(255,255,255,.12);background:rgba(10,10,14,.78);padding:28px;border-radius:18px}
+.subscription-summary h3{font-size:clamp(24px,3vw,38px);margin:10px 0 24px}
+.subscription-price-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:end;padding:15px 0;border-top:1px solid rgba(255,255,255,.08)}
+.subscription-price-row strong{font-size:22px}.subscription-price-row small{color:#9a9aa5}
+.subscription-modules{margin:22px 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.08)}
+.subscription-pix{margin-top:24px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);display:grid;gap:10px}
+.pix-placeholder{border:1px dashed rgba(255,255,255,.22);min-height:120px;display:grid;place-items:center;color:#aaa;border-radius:12px;background:rgba(255,255,255,.025)}
+.subscription-form{display:grid;gap:16px}
+.subscription-form label{display:grid;gap:8px}.subscription-form .btn{margin-top:4px}
+@media(max-width:800px){.subscription-layout{grid-template-columns:1fr}.subscription-summary,.subscription-form{padding:20px}}
