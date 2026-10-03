@@ -1,11 +1,11 @@
 {
-  "version": "2026.10.03.08-subscription-isolation",
+  "version": "2026.10.03.10-korczak-ai-alpha",
   "products": [
     {
       "id": "korczak-ai",
       "name": "Korczak AI",
       "type": "KOS",
-      "status": "Iniciado",
+      "status": "Alpha",
       "description": "Inteligência e automação para o ecossistema Korczak."
     },
     {
