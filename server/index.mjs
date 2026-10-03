@@ -212,7 +212,7 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const dias=Math.min(Math.max(Number(req.query.dias)||30,1),365);
   const desde=new Date(Date.now()-dias*86400000);
-  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,categorias,subcategorias,acoes,ultimos]=await Promise.all([
+  const [total,unicos,paginas,dispositivos,navegadores,tipos,diarios,mercado,categorias,subcategorias,acoes,ultimos]=await Promise.all([
     db.collection("analiticas").countDocuments({criadoEm:{$gte:desde}}),
     db.collection("analiticas").aggregate([
       {$match:{criadoEm:{$gte:desde},tipo:"visualizacao"}},
