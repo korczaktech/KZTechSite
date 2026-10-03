@@ -709,3 +709,22 @@ button:disabled{cursor:not-allowed;transform:none!important;filter:grayscale(.4)
 .kos-module-summary .btn{width:100%;margin-top:8px}
 @media(max-width:1000px){.kos-module-layout{grid-template-columns:1fr}.kos-module-summary{position:static}.kos-module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.kos-module-grid{grid-template-columns:1fr}.kos-module-card{padding:20px}.module-prices strong{font-size:18px}}
+
+
+/* Page consistency layer */
+.split-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
+.split-head h2,.split-head h3{margin:8px 0 0}
+.plan-note{display:inline-flex;align-items:center;min-height:44px;padding:11px 16px;border:1px solid var(--line);border-radius:999px;background:#0b0b0b;color:#aaa;font-size:12px}
+.quote-form{max-width:780px;padding:30px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:var(--shadow)}
+.quote-form label,.auth-form label{display:grid;gap:7px;color:#aaa;font-size:12px}
+.quote-form .btn{width:max-content}
+.product-plan-card{min-height:360px;display:flex;flex-direction:column}
+.product-plan-card .plan-price-main{margin-top:auto}
+.product-plan-card .plan-presale{margin-top:14px}
+.product-plan-card .plan-monthly{margin-top:10px}
+@media(max-width:700px){
+  .split-head{display:grid;align-items:start;gap:8px}
+  .plan-note{width:100%;justify-content:center}
+  .quote-form{padding:20px;border-radius:16px}
+  .quote-form .btn{width:100%}
+}
