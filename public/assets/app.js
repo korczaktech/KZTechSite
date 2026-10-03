@@ -1,125 +1,12 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.01";
+const APP_VERSION="2026.10.03.02";
 const root=document.querySelector("#app");
-const FALLBACK_PRODUCTS=[
-{id:"korczak-ai",name:"Korczak AI",type:"KOS",status:"Iniciado",description:"Inteligência e automação para o ecossistema Korczak."},
-{id:"ide",name:"Korczak IDE",type:"KOS",status:"Iniciado",description:"Ambiente de desenvolvimento em construção ativa."},
-{id:"morok",name:"MOROK",type:"KOS",status:"Em desenvolvimento",description:"Assistente pessoal e operacional em desenvolvimento."},
-{id:"erp",name:"KORCZAK ERP",type:"KOS",status:"Iniciado",description:"Gestão empresarial."},
-{id:"flow",name:"KORCZAK FLOW",type:"KOS",status:"Planejado",description:"Fluxos e automações."},
-{id:"vision",name:"KORCZAK VISION",type:"KOS",status:"Planejado",description:"Visão operacional."},
-{id:"ops",name:"KORCZAK OPS",type:"KOS",status:"Planejado",description:"Operações."},
-{id:"connect",name:"KORCZAK CONNECT",type:"KOS",status:"Planejado",description:"Integrações."},
-{id:"mobile",name:"KORCZAK MOBILE",type:"KOS",status:"Planejado",description:"Mobilidade."},{id:"wms",name:"KORCZAK WMS",type:"KOS",status:"Planejado",description:"Gestão de armazém."},
-{id:"hub",name:"HUB",type:"HUB",status:"Em construção",description:"Suíte central que reúne os aplicativos de produtividade."},
-{id:"vault",name:"Vault",type:"HUB",status:"Planejado",description:"Arquivos e armazenamento."},
-{id:"nexus",name:"Nexus",type:"HUB",status:"Em construção",description:"Documentos."},
-{id:"nexa",name:"Nexa",type:"HUB",status:"Planejado",description:"Planilhas."},
-{id:"veya",name:"Veya",type:"HUB",status:"Planejado",description:"Apresentações."},
-{id:"formly",name:"Formly",type:"HUB",status:"Planejado",description:"Formulários."},
-{id:"korvo",name:"Korvo",type:"HUB",status:"Planejado",description:"E-mail."},
-{id:"chrona",name:"Chrona",type:"HUB",status:"Planejado",description:"Calendário."},
-{id:"meet",name:"Meet",type:"HUB",status:"Planejado",description:"Videoconferências."},
-{id:"pulse",name:"Pulse",type:"HUB",status:"Planejado",description:"Chat e comunicação."},
-{id:"acta",name:"Acta",type:"HUB",status:"Planejado",description:"Tarefas."},
-{id:"memo",name:"Memo",type:"HUB",status:"Planejado",description:"Anotações."},
-{id:"people",name:"People",type:"HUB",status:"Planejado",description:"Contatos."},
-{id:"web",name:"Web",type:"HUB",status:"Planejado",description:"Criação de sites."},
-{id:"klash",name:"Klash",type:"HUB",status:"Planejado",description:"Notas rápidas e lembretes."}
-];
-const PLAN_CATALOG={
-  "korczak-ai":[
-    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Para conhecer o Korczak AI e usar os recursos essenciais.",features:["Acesso gratuito","Recursos essenciais","Limites de uso para começar"]},
-    {id:"go",name:"Go",price:21,preSalePrice:18,billing:"mês",tag:"Entrada",description:"Mais capacidade para uso frequente sem chegar ao nível profissional.",features:["Tudo do Free","Mais capacidade de uso","Recursos ampliados"]},
-    {id:"plus",name:"Plus",price:52,preSalePrice:44,billing:"mês",tag:"Uso diário",description:"Para quem usa inteligência, análise e criação com frequência.",features:["Tudo do Go","Mais ferramentas e capacidade","Uso mais amplo"]},
-    {id:"pro",name:"Pro",price:261,preSalePrice:222,billing:"mês",tag:"Profissional",description:"Mais capacidade para tarefas intensas, projetos e trabalho profissional.",features:["Tudo do Plus","Limites muito maiores","Recursos profissionais"]},
-    {id:"pro-max",name:"Pro 20x",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Camada de maior utilização para cargas de trabalho intensas.",features:["Tudo do Pro","Capacidade máxima da linha","Uso intensivo"]},
-  ],
-  "ide":[
-    {id:"free",name:"Free",price:0,preSalePrice:0,billing:"mês",tag:"Grátis",description:"Ambiente de desenvolvimento para começar sem custo.",features:["Editor e recursos essenciais","Uso individual","Sem mensalidade"]},
-    {id:"pro",name:"Pro",price:52,preSalePrice:44,billing:"mês",tag:"Individual",description:"Para desenvolvimento diário com recursos de assistência ampliados.",features:["Tudo do Free","Assistência avançada","Mais uso mensal"]},
-    {id:"pro-plus",name:"Pro+",price:203,preSalePrice:173,billing:"mês",tag:"Avançado",description:"Para projetos mais complexos e uso intenso de modelos premium.",features:["Tudo do Pro","Modelos premium","Maior capacidade"]},
-    {id:"max",name:"Max",price:521,preSalePrice:443,billing:"mês",tag:"Alta utilização",description:"Para fluxos de desenvolvimento contínuos e de alto volume.",features:["Tudo do Pro+","Uso de alto volume","Prioridade em recursos avançados"]},
-    {id:"business",name:"Business",price:74,preSalePrice:63,billing:"usuário/mês",tag:"Equipes",description:"Gestão e governança para equipes de desenvolvimento.",features:["Tudo do Pro","Controle de acesso e orçamento","Governança e privacidade"]},
-    {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações que precisam de implantação em escala.",features:["Tudo do Business","Recursos corporativos","Maior capacidade organizacional"]},
-  ],
-  "hub":[
-    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Nexa, Vault, Meet e mais"]},
-    {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e recursos para equipes em crescimento.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados de colaboração e IA"]},
-    {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança e administração avançadas"]},
-    {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração para organizações com necessidades corporativas específicas.",features:["Recursos Enterprise","Controles corporativos","Preço definido conforme escopo"]},
-  ],
-  "erp":[
-    {id:"erp-standard",name:"KORCZAK ERP",price:75000,preSalePrice:63750,billing:"implantação",monthly:1500,preSaleMonthly:1275,tag:"Compra + mensal",description:"Implantação de um ERP completo com mensalidade de operação e suporte.",features:["Implantação do sistema","Gestão empresarial integrada","Mensalidade de operação e manutenção"]}
-  ],
-  "flow":[
-    {id:"flow-standard",name:"KORCZAK FLOW",price:22500,preSalePrice:19125,billing:"implantação",monthly:1125,preSaleMonthly:956,tag:"Compra + mensal",description:"Implantação de plataforma de fluxos, aprovações e automações.",features:["Mapeamento e implantação","Fluxos e aprovações","Mensalidade de operação e manutenção"]}
-  ],
-  "vision":[{id:"vision-standard",name:"KORCZAK VISION",price:22500,preSalePrice:19125,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Business intelligence e painéis operacionais.",features:["Implantação","Dashboards e indicadores","Mensalidade"]}],
-  "ops":[{id:"ops-standard",name:"KORCZAK OPS",price:45000,preSalePrice:38250,billing:"implantação",monthly:3000,preSaleMonthly:2550,tag:"Compra + mensal",description:"Operações, administração e observabilidade.",features:["Implantação","Operação e administração","Mensalidade"]}],
-  "connect":[{id:"connect-standard",name:"KORCZAK CONNECT",price:37500,preSalePrice:31875,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Integrações entre pessoas, sistemas e serviços.",features:["Implantação","Integrações","Mensalidade"]}],
-  "mobile":[{id:"mobile-standard",name:"KORCZAK MOBILE",price:45000,preSalePrice:38250,billing:"implantação",monthly:2250,preSaleMonthly:1913,tag:"Compra + mensal",description:"Aplicativo móvel empresarial.",features:["Implantação","Experiência mobile","Mensalidade"]}],
-  "wms":[{id:"wms-standard",name:"KORCZAK WMS",price:117000,preSalePrice:99450,billing:"implantação",monthly:5860,preSaleMonthly:4981,tag:"Compra + mensal",description:"Gestão de armazém e movimentação.",features:["Implantação","Estoque e movimentação","Mensalidade"]}]
-};
+const FALLBACK_PRODUCTS=[];
+const PLAN_CATALOG={};
 
-const MODULAR_CATALOG={
-erp:[
-{id:"erp-base",name:"Base de Gestão",price:6000,monthly:350,required:true,tag:"Obrigatório",description:"Núcleo do ERP: empresas, usuários, permissões, cadastros e estrutura central.",features:["Cadastros centrais","Usuários e permissões","Configurações da empresa"]},
-{id:"erp-financeiro",name:"Financeiro",price:5000,monthly:350,tag:"Alta utilidade",description:"Contas a pagar e receber, fluxo financeiro e acompanhamento das movimentações.",features:["Contas a pagar e receber","Fluxo de caixa","Relatórios financeiros"]},
-{id:"erp-crm",name:"CRM e Vendas",price:3500,monthly:250,tag:"Comercial",description:"Clientes, oportunidades, funil comercial e acompanhamento de vendas.",features:["Cadastro de clientes","Funil de vendas","Acompanhamento comercial"]},
-{id:"erp-estoque",name:"Estoque",price:4000,monthly:300,tag:"Operacional",description:"Controle de produtos, entradas, saídas, saldos e movimentações.",features:["Saldo de estoque","Entradas e saídas","Movimentações"]},
-{id:"erp-fiscal",name:"Fiscal",price:5000,monthly:350,tag:"Complexidade alta",description:"Regras fiscais e rotinas de documentos fiscais integradas ao ERP.",features:["Regras fiscais","Documentos fiscais","Integração fiscal"]},
-{id:"erp-rh",name:"RH",price:3000,monthly:200,tag:"Gestão de pessoas",description:"Cadastros e rotinas internas relacionadas à equipe.",features:["Cadastro de colaboradores","Dados internos","Rotinas administrativas"]},
-{id:"erp-bi",name:"BI e Indicadores",price:3500,monthly:250,tag:"Análise",description:"Indicadores, painéis e relatórios gerenciais para acompanhar a operação.",features:["Dashboards","Indicadores","Relatórios gerenciais"]}
-],
-flow:[
-{id:"flow-base",name:"Base de Processos",price:2000,monthly:250,required:true,tag:"Obrigatório",description:"Núcleo para cadastrar, acompanhar e organizar processos.",features:["Processos","Etapas","Responsáveis"]},
-{id:"flow-aprovacoes",name:"Aprovações",price:1500,monthly:200,tag:"Governança",description:"Aprovações por etapas, responsáveis e regras.",features:["Alçadas","Aprovação por etapa","Histórico"]},
-{id:"flow-automacoes",name:"Automações",price:3000,monthly:350,tag:"Complexidade alta",description:"Regras automáticas para disparar tarefas, ações e transições.",features:["Gatilhos","Ações automáticas","Regras condicionais"]},
-{id:"flow-formularios",name:"Formulários",price:1500,monthly:200,tag:"Entrada de dados",description:"Formulários internos e externos conectados aos processos.",features:["Formulários","Campos personalizados","Validações"]},
-{id:"flow-integracoes",name:"Integrações",price:3000,monthly:350,tag:"Integração",description:"Conexão com APIs e sistemas externos para alimentar ou executar fluxos.",features:["APIs","Webhooks","Sincronização"]}
-],
-vision:[
-{id:"vision-base",name:"Base Analítica",price:3000,monthly:600,required:true,tag:"Obrigatório",description:"Núcleo para organizar fontes, métricas e visualizações.",features:["Modelo analítico","Indicadores","Painel base"]},
-{id:"vision-dashboards",name:"Dashboards",price:3000,monthly:600,tag:"Visualização",description:"Painéis operacionais e executivos personalizados.",features:["Dashboards","Filtros","Visões por perfil"]},
-{id:"vision-bi",name:"BI Avançado",price:4500,monthly:900,tag:"Complexidade alta",description:"Camadas analíticas para cruzamentos e exploração de dados.",features:["Análises avançadas","Cruzamento de dados","Indicadores compostos"]},
-{id:"vision-fontes",name:"Fontes de Dados",price:3000,monthly:700,tag:"Integração",description:"Conectores e ingestão de dados de sistemas externos.",features:["Conectores","Importação","Atualização de dados"]},
-{id:"vision-alertas",name:"Alertas e Monitoramento",price:2000,monthly:350,tag:"Operacional",description:"Alertas baseados em indicadores e condições definidas.",features:["Alertas","Regras","Acompanhamento"]}
-],
-ops:[
-{id:"ops-base",name:"Base Operacional",price:4500,monthly:700,required:true,tag:"Obrigatório",description:"Núcleo de operação, usuários, serviços e acompanhamento técnico.",features:["Painel operacional","Usuários e acessos","Status de serviços"]},
-{id:"ops-monitoramento",name:"Monitoramento",price:4500,monthly:700,tag:"Alta utilidade",description:"Acompanhamento de disponibilidade, métricas e eventos.",features:["Métricas","Health checks","Alertas"]},
-{id:"ops-admin",name:"Administração",price:3500,monthly:600,tag:"Gestão",description:"Rotinas administrativas, configurações e controles internos.",features:["Configurações","Gestão de acessos","Rotinas administrativas"]},
-{id:"ops-incidentes",name:"Incidentes e Suporte",price:3000,monthly:500,tag:"Operacional",description:"Registro, acompanhamento e resolução de incidentes.",features:["Chamados","Prioridades","Histórico"]},
-{id:"ops-auditoria",name:"Auditoria",price:3000,monthly:500,tag:"Governança",description:"Rastreamento de ações e alterações importantes.",features:["Logs","Histórico","Rastreabilidade"]},
-{id:"ops-infra",name:"Infraestrutura",price:4500,monthly:700,tag:"Complexidade alta",description:"Camada de infraestrutura e acompanhamento de recursos técnicos.",features:["Recursos","Ambientes","Indicadores técnicos"]}
-],
-connect:[
-{id:"connect-base",name:"Base de Integrações",price:3500,monthly:500,required:true,tag:"Obrigatório",description:"Núcleo para administrar conexões, credenciais e integrações.",features:["Conexões","Credenciais","Logs"]},
-{id:"connect-api",name:"API Gateway",price:3500,monthly:500,tag:"Integração",description:"Exposição e organização de APIs para sistemas e aplicações.",features:["APIs","Autenticação","Controle de acesso"]},
-{id:"connect-webhooks",name:"Webhooks",price:2000,monthly:300,tag:"Automação",description:"Eventos em tempo real entre o ecossistema e serviços externos.",features:["Eventos","Disparos","Recebimento"]},
-{id:"connect-conectores",name:"Conectores",price:4500,monthly:600,tag:"Complexidade alta",description:"Integrações específicas com serviços e plataformas externas.",features:["Conectores","Mapeamento","Sincronização"]},
-{id:"connect-identidade",name:"Identidade e SSO",price:3000,monthly:450,tag:"Segurança",description:"Integração de identidade, autenticação e acesso centralizado.",features:["SSO","Autenticação","Controle de acesso"]}
-],
-mobile:[
-{id:"mobile-base",name:"Base do Aplicativo",price:5000,monthly:700,required:true,tag:"Obrigatório",description:"Estrutura principal do aplicativo e navegação.",features:["Shell do app","Navegação","Arquitetura mobile"]},
-{id:"mobile-auth",name:"Autenticação",price:2500,monthly:350,tag:"Segurança",description:"Login, sessão e controle de acesso no aplicativo.",features:["Login","Sessões","Permissões"]},
-{id:"mobile-notificacoes",name:"Notificações",price:2000,monthly:300,tag:"Comunicação",description:"Notificações push e eventos para usuários.",features:["Push","Preferências","Eventos"]},
-{id:"mobile-offline",name:"Modo Offline",price:3500,monthly:500,tag:"Complexidade alta",description:"Uso parcial sem conexão e sincronização posterior.",features:["Cache local","Fila de sincronização","Recuperação de conexão"]},
-{id:"mobile-publicacao",name:"Publicação e Distribuição",price:3000,monthly:400,tag:"Operação",description:"Preparação, distribuição e manutenção dos canais móveis.",features:["Builds","Distribuição","Atualizações"]}
-],
-wms:[
-{id:"wms-base",name:"Base WMS",price:7000,monthly:900,required:true,tag:"Obrigatório",description:"Núcleo de armazém, endereços, usuários e regras de operação.",features:["Estrutura do armazém","Usuários","Regras operacionais"]},
-{id:"wms-estoque",name:"Estoque e Endereçamento",price:9000,monthly:1200,tag:"Alta utilidade",description:"Controle detalhado de estoque, posições e movimentações.",features:["Endereçamento","Saldos","Movimentações"]},
-{id:"wms-recebimento",name:"Recebimento",price:6000,monthly:900,tag:"Operacional",description:"Entrada, conferência e organização de mercadorias recebidas.",features:["Recebimento","Conferência","Divergências"]},
-{id:"wms-picking",name:"Picking",price:8000,monthly:1100,tag:"Complexidade alta",description:"Separação de pedidos com regras e acompanhamento operacional.",features:["Ondas de picking","Separação","Conferência"]},
-{id:"wms-expedicao",name:"Expedição",price:6000,monthly:900,tag:"Operacional",description:"Conferência, despacho e rastreabilidade de saídas.",features:["Expedição","Conferência","Rastreabilidade"]},
-{id:"wms-barcodes",name:"Código de Barras",price:5000,monthly:750,tag:"Integração",description:"Operação com leitores, códigos e identificação de produtos.",features:["Leitura","Etiquetas","Identificação"]},
-{id:"wms-bi",name:"Painel Logístico",price:5000,monthly:700,tag:"Análise",description:"Indicadores de produtividade, estoque e operação do armazém.",features:["KPIs","Dashboards","Relatórios"]}
-]
-};
+const MODULAR_CATALOG={};
 
 const state={token:localStorage.getItem("kz_token"),user:null,products:FALLBACK_PRODUCTS,plans:PLAN_CATALOG,quotes:[],orders:[],menu:false,authenticated:false,authMode:"login",authMessage:""};
 
@@ -937,11 +824,17 @@ async function load(){
   }
   render();
   try{
-    try{const pricing=await fetch("./data/pricing.json?"+APP_VERSION).then(r=>r.ok?r.json():null);if(pricing?.plans)Object.assign(PLAN_CATALOG,pricing.plans);if(pricing?.modules)for(const [id,rows] of Object.entries(pricing.modules)){if(MODULAR_CATALOG[id])for(const row of rows){const m=MODULAR_CATALOG[id].find(x=>x.id===row[0]);if(m){m.price=Number(row[2]);m.monthly=Number(row[3]);}}}}catch{}
-    const products=await api("/api/products");
-    if(Array.isArray(products)&&products.length)state.products=products;
-    try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...PLAN_CATALOG,...plans};}catch{}
+    const content=await fetch("./data/content.json?"+APP_VERSION).then(r=>r.ok?r.json():null);
+    if(content?.products?.length)state.products=content.products;
+    if(content?.plans)Object.assign(PLAN_CATALOG,content.plans);
+    if(content?.modules)for(const [id,list] of Object.entries(content.modules))MODULAR_CATALOG[id]=list.map(m=>({...m}));
+    const pricing=await fetch("./data/pricing.json?"+APP_VERSION).then(r=>r.ok?r.json():null);
+    if(pricing?.plans)for(const [key,list] of Object.entries(pricing.plans)){const base=PLAN_CATALOG[key]||[];PLAN_CATALOG[key]=list.map(p=>({...((base.find(x=>x.id===p.id)||{})),...p}));}
+    if(pricing?.modules)for(const [id,rows] of Object.entries(pricing.modules)){const list=MODULAR_CATALOG[id]||[];for(const row of rows){const m=list.find(x=>x.id===row[0]);if(m){m.price=Number(row[2]);m.monthly=Number(row[3]);m.required=Boolean(row[4]||m.required);}}}
+    state.plans={...PLAN_CATALOG};
+    try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...state.plans,...plans};}catch{}
   }catch{}
+  if(!state.products.length){try{const products=await api("/api/products");if(Array.isArray(products)&&products.length)state.products=products;}catch{}}
   if(state.token){
     try{
       state.user=await api("/api/me");
