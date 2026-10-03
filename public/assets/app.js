@@ -65,58 +65,58 @@ const PLAN_CATALOG={
 
 const MODULAR_CATALOG={
 erp:[
-{id:"erp-base",name:"Base de Gestão",price:18000,monthly:350,required:true,tag:"Obrigatório",description:"Núcleo do ERP: empresas, usuários, permissões, cadastros e estrutura central.",features:["Cadastros centrais","Usuários e permissões","Configurações da empresa"]},
-{id:"erp-financeiro",name:"Financeiro",price:15000,monthly:350,tag:"Alta utilidade",description:"Contas a pagar e receber, fluxo financeiro e acompanhamento das movimentações.",features:["Contas a pagar e receber","Fluxo de caixa","Relatórios financeiros"]},
-{id:"erp-crm",name:"CRM e Vendas",price:10000,monthly:250,tag:"Comercial",description:"Clientes, oportunidades, funil comercial e acompanhamento de vendas.",features:["Cadastro de clientes","Funil de vendas","Acompanhamento comercial"]},
-{id:"erp-estoque",name:"Estoque",price:12000,monthly:300,tag:"Operacional",description:"Controle de produtos, entradas, saídas, saldos e movimentações.",features:["Saldo de estoque","Entradas e saídas","Movimentações"]},
-{id:"erp-fiscal",name:"Fiscal",price:15000,monthly:350,tag:"Complexidade alta",description:"Regras fiscais e rotinas de documentos fiscais integradas ao ERP.",features:["Regras fiscais","Documentos fiscais","Integração fiscal"]},
-{id:"erp-rh",name:"RH",price:8000,monthly:200,tag:"Gestão de pessoas",description:"Cadastros e rotinas internas relacionadas à equipe.",features:["Cadastro de colaboradores","Dados internos","Rotinas administrativas"]},
-{id:"erp-bi",name:"BI e Indicadores",price:10000,monthly:250,tag:"Análise",description:"Indicadores, painéis e relatórios gerenciais para acompanhar a operação.",features:["Dashboards","Indicadores","Relatórios gerenciais"]}
+{id:"erp-base",name:"Base de Gestão",price:6000,monthly:350,required:true,tag:"Obrigatório",description:"Núcleo do ERP: empresas, usuários, permissões, cadastros e estrutura central.",features:["Cadastros centrais","Usuários e permissões","Configurações da empresa"]},
+{id:"erp-financeiro",name:"Financeiro",price:5000,monthly:350,tag:"Alta utilidade",description:"Contas a pagar e receber, fluxo financeiro e acompanhamento das movimentações.",features:["Contas a pagar e receber","Fluxo de caixa","Relatórios financeiros"]},
+{id:"erp-crm",name:"CRM e Vendas",price:3500,monthly:250,tag:"Comercial",description:"Clientes, oportunidades, funil comercial e acompanhamento de vendas.",features:["Cadastro de clientes","Funil de vendas","Acompanhamento comercial"]},
+{id:"erp-estoque",name:"Estoque",price:4000,monthly:300,tag:"Operacional",description:"Controle de produtos, entradas, saídas, saldos e movimentações.",features:["Saldo de estoque","Entradas e saídas","Movimentações"]},
+{id:"erp-fiscal",name:"Fiscal",price:5000,monthly:350,tag:"Complexidade alta",description:"Regras fiscais e rotinas de documentos fiscais integradas ao ERP.",features:["Regras fiscais","Documentos fiscais","Integração fiscal"]},
+{id:"erp-rh",name:"RH",price:3000,monthly:200,tag:"Gestão de pessoas",description:"Cadastros e rotinas internas relacionadas à equipe.",features:["Cadastro de colaboradores","Dados internos","Rotinas administrativas"]},
+{id:"erp-bi",name:"BI e Indicadores",price:3500,monthly:250,tag:"Análise",description:"Indicadores, painéis e relatórios gerenciais para acompanhar a operação.",features:["Dashboards","Indicadores","Relatórios gerenciais"]}
 ],
 flow:[
-{id:"flow-base",name:"Base de Processos",price:6000,monthly:250,required:true,tag:"Obrigatório",description:"Núcleo para cadastrar, acompanhar e organizar processos.",features:["Processos","Etapas","Responsáveis"]},
-{id:"flow-aprovacoes",name:"Aprovações",price:4000,monthly:200,tag:"Governança",description:"Aprovações por etapas, responsáveis e regras.",features:["Alçadas","Aprovação por etapa","Histórico"]},
-{id:"flow-automacoes",name:"Automações",price:8000,monthly:350,tag:"Complexidade alta",description:"Regras automáticas para disparar tarefas, ações e transições.",features:["Gatilhos","Ações automáticas","Regras condicionais"]},
-{id:"flow-formularios",name:"Formulários",price:4000,monthly:200,tag:"Entrada de dados",description:"Formulários internos e externos conectados aos processos.",features:["Formulários","Campos personalizados","Validações"]},
-{id:"flow-integracoes",name:"Integrações",price:8000,monthly:350,tag:"Integração",description:"Conexão com APIs e sistemas externos para alimentar ou executar fluxos.",features:["APIs","Webhooks","Sincronização"]}
+{id:"flow-base",name:"Base de Processos",price:2000,monthly:250,required:true,tag:"Obrigatório",description:"Núcleo para cadastrar, acompanhar e organizar processos.",features:["Processos","Etapas","Responsáveis"]},
+{id:"flow-aprovacoes",name:"Aprovações",price:1500,monthly:200,tag:"Governança",description:"Aprovações por etapas, responsáveis e regras.",features:["Alçadas","Aprovação por etapa","Histórico"]},
+{id:"flow-automacoes",name:"Automações",price:3000,monthly:350,tag:"Complexidade alta",description:"Regras automáticas para disparar tarefas, ações e transições.",features:["Gatilhos","Ações automáticas","Regras condicionais"]},
+{id:"flow-formularios",name:"Formulários",price:1500,monthly:200,tag:"Entrada de dados",description:"Formulários internos e externos conectados aos processos.",features:["Formulários","Campos personalizados","Validações"]},
+{id:"flow-integracoes",name:"Integrações",price:3000,monthly:350,tag:"Integração",description:"Conexão com APIs e sistemas externos para alimentar ou executar fluxos.",features:["APIs","Webhooks","Sincronização"]}
 ],
 vision:[
-{id:"vision-base",name:"Base Analítica",price:8000,monthly:600,required:true,tag:"Obrigatório",description:"Núcleo para organizar fontes, métricas e visualizações.",features:["Modelo analítico","Indicadores","Painel base"]},
-{id:"vision-dashboards",name:"Dashboards",price:8000,monthly:600,tag:"Visualização",description:"Painéis operacionais e executivos personalizados.",features:["Dashboards","Filtros","Visões por perfil"]},
-{id:"vision-bi",name:"BI Avançado",price:12000,monthly:900,tag:"Complexidade alta",description:"Camadas analíticas para cruzamentos e exploração de dados.",features:["Análises avançadas","Cruzamento de dados","Indicadores compostos"]},
-{id:"vision-fontes",name:"Fontes de Dados",price:8000,monthly:700,tag:"Integração",description:"Conectores e ingestão de dados de sistemas externos.",features:["Conectores","Importação","Atualização de dados"]},
-{id:"vision-alertas",name:"Alertas e Monitoramento",price:5000,monthly:350,tag:"Operacional",description:"Alertas baseados em indicadores e condições definidas.",features:["Alertas","Regras","Acompanhamento"]}
+{id:"vision-base",name:"Base Analítica",price:3000,monthly:600,required:true,tag:"Obrigatório",description:"Núcleo para organizar fontes, métricas e visualizações.",features:["Modelo analítico","Indicadores","Painel base"]},
+{id:"vision-dashboards",name:"Dashboards",price:3000,monthly:600,tag:"Visualização",description:"Painéis operacionais e executivos personalizados.",features:["Dashboards","Filtros","Visões por perfil"]},
+{id:"vision-bi",name:"BI Avançado",price:4500,monthly:900,tag:"Complexidade alta",description:"Camadas analíticas para cruzamentos e exploração de dados.",features:["Análises avançadas","Cruzamento de dados","Indicadores compostos"]},
+{id:"vision-fontes",name:"Fontes de Dados",price:3000,monthly:700,tag:"Integração",description:"Conectores e ingestão de dados de sistemas externos.",features:["Conectores","Importação","Atualização de dados"]},
+{id:"vision-alertas",name:"Alertas e Monitoramento",price:2000,monthly:350,tag:"Operacional",description:"Alertas baseados em indicadores e condições definidas.",features:["Alertas","Regras","Acompanhamento"]}
 ],
 ops:[
-{id:"ops-base",name:"Base Operacional",price:12000,monthly:700,required:true,tag:"Obrigatório",description:"Núcleo de operação, usuários, serviços e acompanhamento técnico.",features:["Painel operacional","Usuários e acessos","Status de serviços"]},
-{id:"ops-monitoramento",name:"Monitoramento",price:12000,monthly:700,tag:"Alta utilidade",description:"Acompanhamento de disponibilidade, métricas e eventos.",features:["Métricas","Health checks","Alertas"]},
-{id:"ops-admin",name:"Administração",price:10000,monthly:600,tag:"Gestão",description:"Rotinas administrativas, configurações e controles internos.",features:["Configurações","Gestão de acessos","Rotinas administrativas"]},
-{id:"ops-incidentes",name:"Incidentes e Suporte",price:8000,monthly:500,tag:"Operacional",description:"Registro, acompanhamento e resolução de incidentes.",features:["Chamados","Prioridades","Histórico"]},
-{id:"ops-auditoria",name:"Auditoria",price:8000,monthly:500,tag:"Governança",description:"Rastreamento de ações e alterações importantes.",features:["Logs","Histórico","Rastreabilidade"]},
-{id:"ops-infra",name:"Infraestrutura",price:12000,monthly:700,tag:"Complexidade alta",description:"Camada de infraestrutura e acompanhamento de recursos técnicos.",features:["Recursos","Ambientes","Indicadores técnicos"]}
+{id:"ops-base",name:"Base Operacional",price:4500,monthly:700,required:true,tag:"Obrigatório",description:"Núcleo de operação, usuários, serviços e acompanhamento técnico.",features:["Painel operacional","Usuários e acessos","Status de serviços"]},
+{id:"ops-monitoramento",name:"Monitoramento",price:4500,monthly:700,tag:"Alta utilidade",description:"Acompanhamento de disponibilidade, métricas e eventos.",features:["Métricas","Health checks","Alertas"]},
+{id:"ops-admin",name:"Administração",price:3500,monthly:600,tag:"Gestão",description:"Rotinas administrativas, configurações e controles internos.",features:["Configurações","Gestão de acessos","Rotinas administrativas"]},
+{id:"ops-incidentes",name:"Incidentes e Suporte",price:3000,monthly:500,tag:"Operacional",description:"Registro, acompanhamento e resolução de incidentes.",features:["Chamados","Prioridades","Histórico"]},
+{id:"ops-auditoria",name:"Auditoria",price:3000,monthly:500,tag:"Governança",description:"Rastreamento de ações e alterações importantes.",features:["Logs","Histórico","Rastreabilidade"]},
+{id:"ops-infra",name:"Infraestrutura",price:4500,monthly:700,tag:"Complexidade alta",description:"Camada de infraestrutura e acompanhamento de recursos técnicos.",features:["Recursos","Ambientes","Indicadores técnicos"]}
 ],
 connect:[
-{id:"connect-base",name:"Base de Integrações",price:10000,monthly:500,required:true,tag:"Obrigatório",description:"Núcleo para administrar conexões, credenciais e integrações.",features:["Conexões","Credenciais","Logs"]},
-{id:"connect-api",name:"API Gateway",price:10000,monthly:500,tag:"Integração",description:"Exposição e organização de APIs para sistemas e aplicações.",features:["APIs","Autenticação","Controle de acesso"]},
-{id:"connect-webhooks",name:"Webhooks",price:6000,monthly:300,tag:"Automação",description:"Eventos em tempo real entre o ecossistema e serviços externos.",features:["Eventos","Disparos","Recebimento"]},
-{id:"connect-conectores",name:"Conectores",price:12000,monthly:600,tag:"Complexidade alta",description:"Integrações específicas com serviços e plataformas externas.",features:["Conectores","Mapeamento","Sincronização"]},
-{id:"connect-identidade",name:"Identidade e SSO",price:8000,monthly:450,tag:"Segurança",description:"Integração de identidade, autenticação e acesso centralizado.",features:["SSO","Autenticação","Controle de acesso"]}
+{id:"connect-base",name:"Base de Integrações",price:3500,monthly:500,required:true,tag:"Obrigatório",description:"Núcleo para administrar conexões, credenciais e integrações.",features:["Conexões","Credenciais","Logs"]},
+{id:"connect-api",name:"API Gateway",price:3500,monthly:500,tag:"Integração",description:"Exposição e organização de APIs para sistemas e aplicações.",features:["APIs","Autenticação","Controle de acesso"]},
+{id:"connect-webhooks",name:"Webhooks",price:2000,monthly:300,tag:"Automação",description:"Eventos em tempo real entre o ecossistema e serviços externos.",features:["Eventos","Disparos","Recebimento"]},
+{id:"connect-conectores",name:"Conectores",price:4500,monthly:600,tag:"Complexidade alta",description:"Integrações específicas com serviços e plataformas externas.",features:["Conectores","Mapeamento","Sincronização"]},
+{id:"connect-identidade",name:"Identidade e SSO",price:3000,monthly:450,tag:"Segurança",description:"Integração de identidade, autenticação e acesso centralizado.",features:["SSO","Autenticação","Controle de acesso"]}
 ],
 mobile:[
-{id:"mobile-base",name:"Base do Aplicativo",price:15000,monthly:700,required:true,tag:"Obrigatório",description:"Estrutura principal do aplicativo e navegação.",features:["Shell do app","Navegação","Arquitetura mobile"]},
-{id:"mobile-auth",name:"Autenticação",price:7000,monthly:350,tag:"Segurança",description:"Login, sessão e controle de acesso no aplicativo.",features:["Login","Sessões","Permissões"]},
-{id:"mobile-notificacoes",name:"Notificações",price:6000,monthly:300,tag:"Comunicação",description:"Notificações push e eventos para usuários.",features:["Push","Preferências","Eventos"]},
-{id:"mobile-offline",name:"Modo Offline",price:10000,monthly:500,tag:"Complexidade alta",description:"Uso parcial sem conexão e sincronização posterior.",features:["Cache local","Fila de sincronização","Recuperação de conexão"]},
-{id:"mobile-publicacao",name:"Publicação e Distribuição",price:8000,monthly:400,tag:"Operação",description:"Preparação, distribuição e manutenção dos canais móveis.",features:["Builds","Distribuição","Atualizações"]}
+{id:"mobile-base",name:"Base do Aplicativo",price:5000,monthly:700,required:true,tag:"Obrigatório",description:"Estrutura principal do aplicativo e navegação.",features:["Shell do app","Navegação","Arquitetura mobile"]},
+{id:"mobile-auth",name:"Autenticação",price:2500,monthly:350,tag:"Segurança",description:"Login, sessão e controle de acesso no aplicativo.",features:["Login","Sessões","Permissões"]},
+{id:"mobile-notificacoes",name:"Notificações",price:2000,monthly:300,tag:"Comunicação",description:"Notificações push e eventos para usuários.",features:["Push","Preferências","Eventos"]},
+{id:"mobile-offline",name:"Modo Offline",price:3500,monthly:500,tag:"Complexidade alta",description:"Uso parcial sem conexão e sincronização posterior.",features:["Cache local","Fila de sincronização","Recuperação de conexão"]},
+{id:"mobile-publicacao",name:"Publicação e Distribuição",price:3000,monthly:400,tag:"Operação",description:"Preparação, distribuição e manutenção dos canais móveis.",features:["Builds","Distribuição","Atualizações"]}
 ],
 wms:[
-{id:"wms-base",name:"Base WMS",price:20000,monthly:900,required:true,tag:"Obrigatório",description:"Núcleo de armazém, endereços, usuários e regras de operação.",features:["Estrutura do armazém","Usuários","Regras operacionais"]},
-{id:"wms-estoque",name:"Estoque e Endereçamento",price:25000,monthly:1200,tag:"Alta utilidade",description:"Controle detalhado de estoque, posições e movimentações.",features:["Endereçamento","Saldos","Movimentações"]},
-{id:"wms-recebimento",name:"Recebimento",price:18000,monthly:900,tag:"Operacional",description:"Entrada, conferência e organização de mercadorias recebidas.",features:["Recebimento","Conferência","Divergências"]},
-{id:"wms-picking",name:"Picking",price:22000,monthly:1100,tag:"Complexidade alta",description:"Separação de pedidos com regras e acompanhamento operacional.",features:["Ondas de picking","Separação","Conferência"]},
-{id:"wms-expedicao",name:"Expedição",price:18000,monthly:900,tag:"Operacional",description:"Conferência, despacho e rastreabilidade de saídas.",features:["Expedição","Conferência","Rastreabilidade"]},
-{id:"wms-barcodes",name:"Código de Barras",price:15000,monthly:750,tag:"Integração",description:"Operação com leitores, códigos e identificação de produtos.",features:["Leitura","Etiquetas","Identificação"]},
-{id:"wms-bi",name:"Painel Logístico",price:14000,monthly:700,tag:"Análise",description:"Indicadores de produtividade, estoque e operação do armazém.",features:["KPIs","Dashboards","Relatórios"]}
+{id:"wms-base",name:"Base WMS",price:7000,monthly:900,required:true,tag:"Obrigatório",description:"Núcleo de armazém, endereços, usuários e regras de operação.",features:["Estrutura do armazém","Usuários","Regras operacionais"]},
+{id:"wms-estoque",name:"Estoque e Endereçamento",price:9000,monthly:1200,tag:"Alta utilidade",description:"Controle detalhado de estoque, posições e movimentações.",features:["Endereçamento","Saldos","Movimentações"]},
+{id:"wms-recebimento",name:"Recebimento",price:6000,monthly:900,tag:"Operacional",description:"Entrada, conferência e organização de mercadorias recebidas.",features:["Recebimento","Conferência","Divergências"]},
+{id:"wms-picking",name:"Picking",price:8000,monthly:1100,tag:"Complexidade alta",description:"Separação de pedidos com regras e acompanhamento operacional.",features:["Ondas de picking","Separação","Conferência"]},
+{id:"wms-expedicao",name:"Expedição",price:6000,monthly:900,tag:"Operacional",description:"Conferência, despacho e rastreabilidade de saídas.",features:["Expedição","Conferência","Rastreabilidade"]},
+{id:"wms-barcodes",name:"Código de Barras",price:5000,monthly:750,tag:"Integração",description:"Operação com leitores, códigos e identificação de produtos.",features:["Leitura","Etiquetas","Identificação"]},
+{id:"wms-bi",name:"Painel Logístico",price:5000,monthly:700,tag:"Análise",description:"Indicadores de produtividade, estoque e operação do armazém.",features:["KPIs","Dashboards","Relatórios"]}
 ]
 };
 
