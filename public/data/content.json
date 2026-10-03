@@ -2828,5 +2828,20 @@
       "pricing": "Preços e catálogo",
       "singleSource": "Fonte única do site"
     }
+  },
+  "presale": {
+    "eyebrow": "PRÉ-VENDA · ECOSSISTEMA KORCZAK",
+    "title": "Garanta seu acesso antecipado.",
+    "lead": "A pré-venda reúne todos os aplicativos do catálogo, inclusive produtos em desenvolvimento e planejados. Escolha um produto, confira a condição antecipada e registre sua intenção de compra.",
+    "introEyebrow": "01 · TODOS OS APLICATIVOS",
+    "introTitle": "Escolha o que você quer receber primeiro.",
+    "introText": "A condição de pré-venda é registrada separadamente de um orçamento. Ela não substitui propostas para serviços personalizados.",
+    "catalogButton": "Ver catálogo",
+    "kosTitle": "Produtos operacionais",
+    "hubTitle": "Aplicativos do HUB",
+    "selectedEyebrow": "02 · PRODUTO SELECIONADO",
+    "confirmButton": "Confirmar pré-venda",
+    "successMessage": "Pré-venda registrada. A equipe enviará as instruções de pagamento quando a oferta estiver disponível.",
+    "pendingPrice": "Definida no lançamento"
   }
 }
