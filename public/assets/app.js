@@ -22,7 +22,7 @@ const FALLBACK_PRODUCTS=[
 {id:"korvo",name:"Korvo",type:"HUB",status:"Planejado",description:"E-mail."},
 {id:"chrona",name:"Chrona",type:"HUB",status:"Planejado",description:"Calendário."},
 {id:"meet",name:"Meet",type:"HUB",status:"Planejado",description:"Videoconferências."},
-{id:"pulse",name:"Pulse",type:"HUB",status:"Planejado",description:"Pulse e comunicação."},
+{id:"pulse",name:"Pulse",type:"HUB",status:"Planejado",description:"Chat e comunicação."},
 {id:"acta",name:"Acta",type:"HUB",status:"Planejado",description:"Tarefas."},
 {id:"memo",name:"Memo",type:"HUB",status:"Planejado",description:"Anotações."},
 {id:"people",name:"People",type:"HUB",status:"Planejado",description:"Contatos."},
@@ -546,13 +546,13 @@ function institutional(){
 
 function products(){
  const kosIds=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"];
- const wsIds=["documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"];
+ const hubIds=["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"];
  const kos=kosIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
- const ws=wsIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
+ const ws=hubIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">Produtos · Catálogo</span><h2>Produtos e suítes Korczak.</h2><p class="section-lead">O HUB reúne aplicativos de produtividade e colaboração. O KOS reúne produtos operacionais.</p></div><section class="section-group"><div class="split-head"><div><span class="eyebrow">HUB</span><h3>Aplicativos do HUB</h3></div><span class="muted">O HUB é a suíte central</span></div><div class="hub-grid">'+ws.map((p,i)=>'<article class="hub-app '+(p.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.id==="nexus"?'<a class="btn ghost" href="#/produto/nexus">Ver planos</a>':p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':"")+'</article>').join("")+'</div></section><section class="section-group"><div class="split-head"><div><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h3>Produtos operacionais</h3></div><span class="muted">'+kos.length+' produtos</span></div><div class="grid">'+kos.map(card).join("")+'</div></section></main>';
 }
 function hub(){
- const ids=["documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"];
+ const ids=["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"];
  const apps=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell hub-page"><div class="portfolio-hero"><span class="eyebrow">HUB · SUÍTE DE PRODUTIVIDADE</span><h2>Seu trabalho, em um único espaço.</h2><p class="section-lead">O HUB reúne arquivos, documentos, planilhas, apresentações, formulários, e-mail, calendário, videoconferências, comunicação, tarefas, contatos, sites e anotações.</p></div><section class="hub-grid">'+apps.map((a,i)=>'<article class="hub-app '+(a.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(a.status)+'</span><h3>'+esc(a.name)+'</h3><p class="muted">'+esc(a.description)+'</p>'+(a.id==="nexus"?'<a class="btn ghost" href="#/produto/nexus">Ver planos</a>':a.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':"")+'</article>').join("")+'</section></main>';
 }
@@ -601,14 +601,14 @@ function product(id){
   };
   const d=details[p.id]||["Produto Korczak","Uma solução do ecossistema Korczak Technology.","Consulte a equipe para conhecer escopo, disponibilidade e próximos passos."];
   const isModular=Boolean(MODULAR_CATALOG[p.id]);
-  const planBlock=(!isModular&&["korczak-ai","ide","hub","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
+  const planBlock=(!isModular&&["korczak-ai","ide","hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
   const isWorkspace=p.type==="HUB";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
-  else if(isKOS&&["korczak-ai","ide","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
+  else if(isKOS&&["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(p.id)) action='<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Iniciado") action='<span class="plan-note">Compra + mensalidade · preço conforme escopo</span>';
   else if(isKOS) action='<span class="plan-note">Assinar pré-venda</span>';
