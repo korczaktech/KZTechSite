@@ -13,21 +13,21 @@ const FALLBACK_PRODUCTS=[
 {id:"ops",name:"KORCZAK OPS",type:"KOS",status:"Planejado",description:"Operações."},
 {id:"connect",name:"KORCZAK CONNECT",type:"KOS",status:"Planejado",description:"Integrações."},
 {id:"mobile",name:"KORCZAK MOBILE",type:"KOS",status:"Planejado",description:"Mobilidade."},{id:"wms",name:"KORCZAK WMS",type:"KOS",status:"Planejado",description:"Gestão de armazém."},
-{id:"hub",name:"HUB",type:"Workspace",status:"Em construção",description:"Suíte central que reúne os aplicativos de produtividade."},
-{id:"hubvault",name:"HUBVault",type:"Workspace",status:"Planejado",description:"Arquivos e armazenamento."},
-{id:"nexus",name:"Nexus",type:"Workspace",status:"Em construção",description:"Documentos."},
-{id:"nexa",name:"Nexa",type:"Workspace",status:"Planejado",description:"Planilhas."},
-{id:"veya",name:"Veya",type:"Workspace",status:"Planejado",description:"Apresentações."},
-{id:"formly",name:"Formly",type:"Workspace",status:"Planejado",description:"Formulários."},
-{id:"korvo",name:"Korvo",type:"Workspace",status:"Planejado",description:"E-mail."},
-{id:"chrona",name:"Chrona",type:"Workspace",status:"Planejado",description:"Calendário."},
-{id:"meet",name:"Meet",type:"Workspace",status:"Planejado",description:"Videoconferências."},
-{id:"pulse",name:"Pulse",type:"Workspace",status:"Planejado",description:"Chat e comunicação."},
-{id:"acta",name:"Acta",type:"Workspace",status:"Planejado",description:"Tarefas."},
-{id:"memo",name:"Memo",type:"Workspace",status:"Planejado",description:"Anotações."},
-{id:"people",name:"People",type:"Workspace",status:"Planejado",description:"Contatos."},
-{id:"web",name:"Web",type:"Workspace",status:"Planejado",description:"Criação de sites."},
-{id:"klash",name:"Klash",type:"Workspace",status:"Planejado",description:"Notas rápidas e lembretes."}
+{id:"hub",name:"HUB",type:"HUB",status:"Em construção",description:"Suíte central que reúne os aplicativos de produtividade."},
+{id:"vault",name:"Vault",type:"HUB",status:"Planejado",description:"Arquivos e armazenamento."},
+{id:"nexus",name:"Nexus",type:"HUB",status:"Em construção",description:"Documentos."},
+{id:"nexa",name:"Nexa",type:"HUB",status:"Planejado",description:"Planilhas."},
+{id:"veya",name:"Veya",type:"HUB",status:"Planejado",description:"Apresentações."},
+{id:"formly",name:"Formly",type:"HUB",status:"Planejado",description:"Formulários."},
+{id:"korvo",name:"Korvo",type:"HUB",status:"Planejado",description:"E-mail."},
+{id:"chrona",name:"Chrona",type:"HUB",status:"Planejado",description:"Calendário."},
+{id:"meet",name:"Meet",type:"HUB",status:"Planejado",description:"Videoconferências."},
+{id:"pulse",name:"Pulse",type:"HUB",status:"Planejado",description:"Pulse e comunicação."},
+{id:"acta",name:"Acta",type:"HUB",status:"Planejado",description:"Tarefas."},
+{id:"memo",name:"Memo",type:"HUB",status:"Planejado",description:"Anotações."},
+{id:"people",name:"People",type:"HUB",status:"Planejado",description:"Contatos."},
+{id:"web",name:"Web",type:"HUB",status:"Planejado",description:"Criação de sites."},
+{id:"klash",name:"Klash",type:"HUB",status:"Planejado",description:"Notas rápidas e lembretes."}
 ];
 const PLAN_CATALOG={
   "korczak-ai":[
@@ -46,7 +46,7 @@ const PLAN_CATALOG={
     {id:"enterprise",name:"Enterprise",price:152,preSalePrice:129,billing:"usuário/mês",tag:"Empresarial",description:"Para organizações que precisam de implantação em escala.",features:["Tudo do Business","Recursos corporativos","Maior capacidade organizacional"]},
   ],
   "hub":[
-    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Sheets, Drive, Meet e mais"]},
+    {id:"starter",name:"Starter",price:27,preSalePrice:23,billing:"usuário/mês",tag:"Entrada",description:"Ferramentas essenciais de produtividade e colaboração.",features:["Email profissional","30 GB por usuário","Docs, Nexa, Vault, Meet e mais"]},
     {id:"standard",name:"Standard",price:55,preSalePrice:47,billing:"usuário/mês",tag:"Mais usado",description:"Mais armazenamento e recursos para equipes em crescimento.",features:["Tudo do Starter","2 TB por usuário","Recursos avançados de colaboração e IA"]},
     {id:"plus",name:"Plus",price:86,preSalePrice:73,billing:"usuário/mês",tag:"Avançado",description:"Mais armazenamento, segurança e administração.",features:["Tudo do Standard","5 TB por usuário","Segurança e administração avançadas"]},
     {id:"enterprise",name:"Enterprise",price:null,preSalePrice:null,billing:"sob consulta",tag:"Empresarial",description:"Configuração para organizações com necessidades corporativas específicas.",features:["Recursos Enterprise","Controles corporativos","Preço definido conforme escopo"]},
@@ -248,7 +248,7 @@ const SERVICE_EXTRAS={
  ["biometric","Biometria","Acesso","Adiciona autenticação biométrica quando suportada pelo dispositivo."],
  ["deep-links","Deep links","Navegação","Abre diretamente telas específicas a partir de links."],
  ["location","Geolocalização","Localização","Usa a localização do dispositivo em recursos que dependem dela."],
- ["chat","Chat em tempo real","Conversas","Adiciona comunicação instantânea entre usuários ou com atendimento."],
+ ["chat","Pulse em tempo real","Conversas","Adiciona comunicação instantânea entre usuários ou com atendimento."],
  ["realtime","Dados em tempo real","Sincronização","Mantém informações atualizadas instantaneamente."],
  ["sharing","Compartilhamento avançado","Integração nativa","Adiciona fluxos personalizados de compartilhamento do sistema."],
  ["offline","Offline avançado","Uso sem conexão","Permite que partes mais complexas do aplicativo funcionem sem internet e sincronizem depois."]
@@ -561,7 +561,7 @@ function kos(){
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell hub-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="hub-grid">'+items.map((p,i)=>'<article class="hub-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
-function planKeyForProduct(id){return ["hub","hubvault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(id)?"hub":id;}
+function planKeyForProduct(id){return ["hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(id)?"hub":id;}
 function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
@@ -592,7 +592,7 @@ function product(id){
     "hub":["Produtividade e colaboração","Uma suíte para documentos, planilhas, apresentações, arquivos, email, agenda, reuniões, chat, formulários e sites.","Uma conta e um contexto de trabalho reúnem as ferramentas usadas diariamente por pessoas e equipes."],
     "erp":["Gestão empresarial","Núcleo de gestão para clientes, processos, financeiro e rotinas empresariais.","O ERP organiza informações centrais da empresa e cria uma base para acompanhar operações e resultados."],
     "flow":["Automação de processos","Fluxos para tarefas, aprovações, rotinas e automações.","O FLOW transforma processos repetitivos em etapas rastreáveis, com responsáveis e estados definidos."],
-    "hubvault":["Arquivos e armazenamento","Espaço central para organizar, guardar e acessar arquivos.","O HUBVault concentra armazenamento e arquivos dentro do HUB."],"nexus":["Documentos","Aplicativo de documentos para criar, editar, organizar e colaborar.","O Nexus é o aplicativo de documentos do HUB."],"nexa":["Planilhas","Aplicativo para criar, editar e organizar planilhas.","O Nexa é o aplicativo de planilhas do HUB."],"veya":["Apresentações","Aplicativo para criar e editar apresentações.","O Veya é o aplicativo de apresentações do HUB."],"formly":["Formulários","Aplicativo para criar e gerenciar formulários.","O Formly é o aplicativo de formulários do HUB."],"korvo":["E-mail","Serviço de e-mail para comunicação profissional.","O Korvo é o aplicativo de e-mail do HUB."],"chrona":["Calendário","Calendário para compromissos, eventos e organização de agenda.","O Chrona organiza a agenda dentro do HUB."],"meet":["Videoconferências","Reuniões e videoconferências para pessoas e equipes.","O Meet é o aplicativo de videoconferências do HUB."],"pulse":["Chat e comunicação","Comunicação rápida entre pessoas e equipes.","O Pulse concentra chat e comunicação do HUB."],"acta":["Tarefas","Organização e acompanhamento de tarefas.","O Acta é o aplicativo de tarefas do HUB."],"memo":["Anotações","Espaço para registrar e organizar anotações.","O Memo é o aplicativo de anotações do HUB."],"people":["Contatos","Organização de contatos e pessoas.","O People centraliza contatos do HUB."],"web":["Criação de sites","Ferramenta para criação e organização de sites.","O Web é o aplicativo de criação de sites do HUB."],"klash":["Notas rápidas e lembretes","Espaço para notas rápidas, lembretes e pequenas informações.","O Klash é o aplicativo de notas rápidas do HUB."],
+    "vault":["Arquivos e armazenamento","Espaço central para organizar, guardar e acessar arquivos.","O Vault concentra armazenamento e arquivos dentro do HUB."],"nexus":["Documentos","Aplicativo de documentos para criar, editar, organizar e colaborar.","O Nexus é o aplicativo de documentos do HUB."],"nexa":["Planilhas","Aplicativo para criar, editar e organizar planilhas.","O Nexa é o aplicativo de planilhas do HUB."],"veya":["Apresentações","Aplicativo para criar e editar apresentações.","O Veya é o aplicativo de apresentações do HUB."],"formly":["Formulários","Aplicativo para criar e gerenciar formulários.","O Formly é o aplicativo de formulários do HUB."],"korvo":["E-mail","Serviço de e-mail para comunicação profissional.","O Korvo é o aplicativo de e-mail do HUB."],"chrona":["Calendário","Calendário para compromissos, eventos e organização de agenda.","O Chrona organiza a agenda dentro do HUB."],"meet":["Videoconferências","Reuniões e videoconferências para pessoas e equipes.","O Meet é o aplicativo de videoconferências do HUB."],"pulse":["Pulse e comunicação","Comunicação rápida entre pessoas e equipes.","O Pulse concentra chat e comunicação do HUB."],"acta":["Tarefas","Organização e acompanhamento de tarefas.","O Acta é o aplicativo de tarefas do HUB."],"memo":["Anotações","Espaço para registrar e organizar anotações.","O Memo é o aplicativo de anotações do HUB."],"people":["Contatos","Organização de contatos e pessoas.","O People centraliza contatos do HUB."],"web":["Criação de sites","Ferramenta para criação e organização de sites.","O Web é o aplicativo de criação de sites do HUB."],"klash":["Notas rápidas e lembretes","Espaço para notas rápidas, lembretes e pequenas informações.","O Klash é o aplicativo de notas rápidas do HUB."],
     "vision":["Visão operacional","Painéis e camadas de informação para acompanhar indicadores, contexto e atividade.","O VISION transforma dados operacionais em uma visão mais clara para acompanhamento e análise."],
     "ops":["Operações e administração","Controle técnico e operacional do ecossistema empresarial.","O OPS concentra rotinas de administração, acompanhamento e observabilidade dos serviços."],
     "connect":["Conectividade","Integração entre pessoas, sistemas, serviços e canais.","O CONNECT funciona como camada de comunicação e integração entre partes do ecossistema."],
@@ -603,7 +603,7 @@ function product(id){
   const isModular=Boolean(MODULAR_CATALOG[p.id]);
   const planBlock=(!isModular&&["korczak-ai","ide","hub","documents","sheets","slides","drive","cloud","mail","calendar","meet","chat","forms","sites","tasks","keep","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id))?planSectionFor(p.id):"";
   const related=state.products.filter(x=>x.id!==p.id&&x.type===p.type).slice(0,3);
-  const isWorkspace=p.type==="Workspace";
+  const isWorkspace=p.type==="HUB";
   const isKOS=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"].includes(p.id);
   let action="";
   if(isWorkspace) action=p.status==="Planejado"?'<span class="plan-note">Assinar pré-venda</span>':'<a class="btn" href="#planos">Ver planos '+icon("arrow")+'</a>';
