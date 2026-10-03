@@ -235,7 +235,7 @@ app.get("/api/admin/analiticas",auth,admin,async(req,res)=>{
       safeAgg([{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%Y-%m-%d"}},total:{$sum:1}}},{$sort:{_id:1}}]),
       safeAgg([{$group:{_id:{$dateToString:{date:"$_analyticsDate",format:"%H:%M"}},total:{$sum:1}}},{$sort:{_id:1}}]),
       safeAgg([{$group:{_id:"$categoria",total:{$sum:1}}},{$sort:{total:-1}}]),
-      safeAgg([{$group:{_id:{subcategoria:"$subcategoria"},total:{$sum:1}}},{$sort:{total:-1}}]),
+      safeAgg([{$group:{_id:"$subcategoria",total:{$sum:1}}},{$sort:{total:-1}}]),
       safeAgg([{$group:{_id:"$acao",total:{$sum:1}}},{$sort:{total:-1}},{$limit:30}]),
       safeAgg([{$sort:{_analyticsDate:-1}},{$limit:100},{$unset:"_analyticsDate"}])
     ]);
