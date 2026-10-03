@@ -63,6 +63,15 @@ const commercialProducts=Object.fromEntries([
 
 const products=[
 ["korczak-ai","KORCZAK AI","Inteligência","Produto iniciado: inteligência e automação para o ecossistema Korczak.","Iniciado"],
+["ide","Korczak IDE","Desenvolvimento","Produto iniciado: ambiente de desenvolvimento para projetos Korczak.","Iniciado"],
+["morok","MOROK","Assistente","Assistente pessoal e operacional em desenvolvimento.","Em desenvolvimento"],
+["erp","KORCZAK ERP","Gestão","Produto iniciado: gestão empresarial para clientes, processos, financeiro e operação.","Iniciado"],
+["flow","KORCZAK FLOW","Operations","Produto planejado para fluxos e automações operacionais.","Planejado"],
+["vision","KORCZAK VISION","Intelligence","Produto planejado para visão e inteligência operacional.","Planejado"],
+["ops","KORCZAK OPS","Operations","Produto planejado para operações e administração do ecossistema.","Planejado"],
+["connect","KORCZAK CONNECT","Connectivity","Produto planejado para integração entre pessoas, sistemas e serviços.","Planejado"],
+["mobile","KORCZAK MOBILE","Mobile","Produto planejado para experiências móveis do ecossistema.","Planejado"],
+["wms","KORCZAK WMS","Operations","Sistema de gestão de armazém planejado para operações logísticas.","Planejado"],
 ["hub","HUB","Workspace","Suíte central que reúne os aplicativos de produtividade e colaboração.","Em construção"],
 ["hubvault","HUBVault","Workspace","Arquivos e armazenamento.","Planejado"],
 ["nexus","Nexus","Workspace","Documentos.","Em construção"],
