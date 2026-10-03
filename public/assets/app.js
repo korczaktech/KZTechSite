@@ -355,7 +355,7 @@ function kos(){
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell hub-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="hub-grid">'+items.map((p,i)=>'<article class="hub-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
-function planKeyForProduct(id){return ["hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(id)?"hub":id;}
+function planKeyForProduct(id){return id;}
 function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
@@ -440,7 +440,7 @@ function subscriptionPage(){
   const selectedProduct=isWorkspaceProduct?requestedProduct:(state.products.find(x=>x.id==="hub")||null);
   const requestedPlanKey=isWorkspaceProduct?requestedProductId:"hub";
   // Se o CMS centraliza os planos no HUB, ele é apenas o fallback do aplicativo solicitado.
-  const workspacePlans=Array.isArray(mergedPlans[requestedPlanKey])?mergedPlans[requestedPlanKey]:(Array.isArray(mergedPlans.hub)?mergedPlans.hub:[]);
+  const workspacePlans=Array.isArray(mergedPlans[requestedPlanKey])?mergedPlans[requestedPlanKey]:[];
   const planGroups=workspacePlans.length?[[requestedPlanKey,workspacePlans]]:[];
   const selectedPlan=workspacePlans.find(x=>x.id===planId)||null;
   const workspaceName=selectedProduct?.name||"KORCZAK WORKSPACE";
