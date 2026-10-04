@@ -1315,13 +1315,13 @@ img,svg,video,canvas,iframe{max-width:100%}
 .hub-app .plan-note{display:inline-flex;margin-top:22px;color:#b9b2d9;font-size:12px}
 .product-plan-grid .product-plan-card{background:linear-gradient(145deg,rgba(14,14,20,.98),rgba(7,7,9,.98));border:1px solid #272731;border-radius:18px;min-height:410px;box-shadow:0 12px 34px rgba(0,0,0,.18)}
 .product-plan-grid .product-plan-card:hover{border-color:#51466f;box-shadow:0 22px 55px rgba(0,0,0,.38),0 0 28px rgba(112,82,220,.08)}
-.product-plan-grid .product-plan-card[data-plan-group="personal"]{--plan-accent:#8e7cff}
-.product-plan-grid .product-plan-card[data-plan-group="business"]{--plan-accent:#42b8ff}
-.product-plan-grid .product-plan-card[data-plan-group="enterprise"]{--plan-accent:#ff527f}
-.product-plan-grid .product-plan-card:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--plan-accent);box-shadow:0 0 18px color-mix(in srgb,var(--plan-accent),transparent 45%)}
-.product-plan-grid .product-plan-card .eyebrow{color:var(--plan-accent)}
+.product-plan-grid .product-plan-card[data-plan-group="personal"]{border-top-color:#8e7cff}
+.product-plan-grid .product-plan-card[data-plan-group="business"]{border-top-color:#42b8ff}
+.product-plan-grid .product-plan-card[data-plan-group="enterprise"]{border-top-color:#ff527f}
+.product-plan-grid .product-plan-card:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#8e7cff}
+.product-plan-grid .product-plan-card .eyebrow{color:#b7b0d8}
 .product-plan-grid .product-plan-card .plan-price-main strong{color:#fff}
-.product-plan-grid .product-plan-card .plan-presale{border-color:color-mix(in srgb,var(--plan-accent),#202020 70%);background:color-mix(in srgb,var(--plan-accent),transparent 94%)}
+.product-plan-grid .product-plan-card .plan-presale{border-color:#302c3c;background:rgba(255,255,255,.025)}
 .plan-audience-switch{background:#0d0d14;border-color:#292936}
 .plan-audience-tab[data-plan-tab="personal"].is-active{background:#8e7cff}
 .plan-audience-tab[data-plan-tab="business"].is-active{background:#42b8ff}
