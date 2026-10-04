@@ -338,6 +338,20 @@
     ],
     "hub": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar HUB.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Starter",
         "billing": "usuário/mês",
@@ -396,6 +410,20 @@
     ],
     "erp": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar ERP.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "erp-standard",
         "name": "KORCZAK ERP",
         "billing": "implantação",
@@ -413,6 +441,20 @@
       }
     ],
     "flow": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar FLOW.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "flow-standard",
         "name": "KORCZAK FLOW",
@@ -432,6 +474,20 @@
     ],
     "vision": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar VISION.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "vision-standard",
         "name": "KORCZAK VISION",
         "billing": "implantação",
@@ -449,6 +505,20 @@
       }
     ],
     "ops": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar OPS.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "ops-standard",
         "name": "KORCZAK OPS",
@@ -468,6 +538,20 @@
     ],
     "connect": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar CONNECT.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "connect-standard",
         "name": "KORCZAK CONNECT",
         "billing": "implantação",
@@ -485,6 +569,20 @@
       }
     ],
     "mobile": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar MOBILE.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "mobile-standard",
         "name": "KORCZAK MOBILE",
@@ -504,6 +602,20 @@
     ],
     "wms": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar WMS.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "wms-standard",
         "name": "KORCZAK WMS",
         "billing": "implantação",
@@ -521,6 +633,20 @@
       }
     ],
     "vault": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Vault.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Vault Starter",
@@ -580,6 +706,20 @@
     ],
     "nexus": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Nexus.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Nexus Starter",
         "billing": "usuário/mês",
@@ -637,6 +777,20 @@
       }
     ],
     "nexa": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Nexa.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Nexa Starter",
@@ -696,6 +850,20 @@
     ],
     "veya": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Veya.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Veya Starter",
         "billing": "usuário/mês",
@@ -753,6 +921,20 @@
       }
     ],
     "formly": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Formly.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Formly Starter",
@@ -812,6 +994,20 @@
     ],
     "korvo": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Korvo.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Korvo Starter",
         "billing": "usuário/mês",
@@ -869,6 +1065,20 @@
       }
     ],
     "chrona": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Chrona.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Chrona Starter",
@@ -928,6 +1138,20 @@
     ],
     "meet": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Meet.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Meet Starter",
         "billing": "usuário/mês",
@@ -985,6 +1209,20 @@
       }
     ],
     "pulse": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Pulse.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Pulse Starter",
@@ -1044,6 +1282,20 @@
     ],
     "acta": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Acta.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Acta Starter",
         "billing": "usuário/mês",
@@ -1101,6 +1353,20 @@
       }
     ],
     "memo": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Memo.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Memo Starter",
@@ -1160,6 +1426,20 @@
     ],
     "people": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar People.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "People Starter",
         "billing": "usuário/mês",
@@ -1218,6 +1498,20 @@
     ],
     "web": [
       {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Web.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
         "id": "starter",
         "name": "Web Starter",
         "billing": "usuário/mês",
@@ -1275,6 +1569,20 @@
       }
     ],
     "klash": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Plano gratuito para começar a usar Klash.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Sem mensalidade"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
       {
         "id": "starter",
         "name": "Klash Starter",
