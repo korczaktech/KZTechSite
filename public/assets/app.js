@@ -735,7 +735,29 @@ load();return true}
   return false;
 }
 
-document.addEventListener("click",e=>{const tab=e.target.closest("[data-plan-tab]");if(tab){const section=tab.closest(".plan-section");if(section){section.querySelectorAll("[data-plan-tab]").forEach(x=>{const active=x===tab;x.classList.toggle("is-active",active);x.setAttribute("aria-selected",active?"true":"false")});const group=tab.dataset.planTab;section.querySelectorAll(".plan-group-card").forEach(card=>card.hidden=card.dataset.planGroup!==group);const usersWrap=section.querySelector("[data-enterprise-users-wrap]");if(usersWrap)usersWrap.hidden=group!=="enterprise"}return}const q=e.target.closest("[data-service-request]");if(q){e.preventDefault();requestServiceQuote(q);return}if(handleAction(e.target))e.preventDefault()});\ndocument.addEventListener("input",e=>{const input=e.target.closest("[data-enterprise-users]");if(input){const users=Math.max(1,parseInt(input.value||"1",10)||1);input.value=users;const section=input.closest(".plan-section");section?.querySelectorAll("[data-enterprise-total]").forEach(el=>{const price=Number(el.dataset.enterpriseTotal)||0;el.textContent=money(price*users)});section?.querySelectorAll("[data-enterprise-presale]").forEach(el=>{const price=Number(el.dataset.enterprisePresale)||0;el.textContent=" · "+money(price*users)+" total / mês"});return}const sub=input&&e.target.closest("[data-subscription-users]");if(sub){const users=Math.max(1,parseInt(sub.value||"1",10)||1);sub.value=users;const qs=new URLSearchParams(location.hash.split("?")[1]||"");qs.set("usuarios",String(users));location.hash="#/assinatura?"+qs.toString()}});
+document.addEventListener("click",e=>{const tab=e.target.closest("[data-plan-tab]");if(tab){const section=tab.closest(".plan-section");if(section){section.querySelectorAll("[data-plan-tab]").forEach(x=>{const active=x===tab;x.classList.toggle("is-active",active);x.setAttribute("aria-selected",active?"true":"false")});const group=tab.dataset.planTab;section.querySelectorAll(".plan-group-card").forEach(card=>{card.hidden=card.dataset.planGroup!==group});const usersWrap=section.querySelector("[data-enterprise-users-wrap]");if(usersWrap)usersWrap.hidden=group!=="enterprise"}return}const q=e.target.closest("[data-service-request]");if(q){e.preventDefault();requestServiceQuote(q);return}if(handleAction(e.target))e.preventDefault()});
+document.addEventListener("input",e=>{
+ const target=e.target;
+ const input=target.closest("[data-enterprise-users]");
+ if(input){
+  const users=Math.max(1,parseInt(input.value||"1",10)||1);
+  input.value=users;
+  const section=input.closest(".plan-section");
+  if(section){
+   section.querySelectorAll("[data-enterprise-total]").forEach(el=>{const price=Number(el.dataset.enterpriseTotal)||0;el.textContent=money(price*users)});
+   section.querySelectorAll("[data-enterprise-presale]").forEach(el=>{const price=Number(el.dataset.enterprisePresale)||0;el.textContent=" · "+money(price*users)+" total / mês"});
+  }
+  return;
+ }
+ const sub=target.closest("[data-subscription-users]");
+ if(sub){
+  const users=Math.max(1,parseInt(sub.value||"1",10)||1);
+  sub.value=users;
+  const qs=new URLSearchParams(location.hash.split("?")[1]||"");
+  qs.set("usuarios",String(users));
+  location.hash="#/assinatura?"+qs.toString();
+ }
+});
 async function submitAuth(e){
   e.preventDefault();
   const form=e.currentTarget;
