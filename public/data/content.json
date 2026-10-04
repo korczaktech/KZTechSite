@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.5-kztech-160-user",
+  "version": "2026.10.04.6-hub-business-tabs",
   "products": [
     {
       "id": "korczak-ai",
@@ -266,6 +266,20 @@
         ],
         "price": 86,
         "preSalePrice": 73
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
       },
       {
         "id": "enterprise",
