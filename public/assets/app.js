@@ -477,7 +477,7 @@ function updateKOSModules(el){
 }
 function subscriptionPage(){
   const qs=new URLSearchParams((location.hash.split("?")[1]||""));
-  const requestedProductId=qs.get("produto")||"",planId=qs.get("plano")||"",moduleIds=qs.get("modulos")||"";
+  const requestedProductId=qs.get("produto")||"",planId=qs.get("plano")||"",moduleIds=qs.get("modulos")||"",audience=qs.get("audiencia")||"personal";
   const requestedProduct=state.products.find(x=>x.id===requestedProductId);
   const catalog=state.content?.plans||PLAN_CATALOG||{};
   const mergedPlans={};
@@ -494,7 +494,7 @@ function subscriptionPage(){
   const enterprise=plans.filter(x=>!personalIds.has(x.id));
   const hasTabs=personal.length&&enterprise.length;
   const selectedPlan=plans.find(x=>x.id===planId)||null;
-  const selectedGroup=selectedPlan&&personalIds.has(selectedPlan.id)?"personal":"enterprise";
+  const selectedGroup=selectedPlan?(personalIds.has(selectedPlan.id)?"personal":"enterprise"):(audience==="enterprise"&&enterprise.length?"enterprise":"personal");
   const workspaceName=selectedProduct.name||requestedPlanKey;
   const allMods=MODULAR_CATALOG[selectedProduct.id]||[];
   const effectiveModuleIds=moduleIds||allMods.filter(x=>x.required).map(x=>x.id).join(",");
