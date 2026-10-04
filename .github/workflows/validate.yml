@@ -10,18 +10,27 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
+          cache: npm
+
       - name: Install
-        run: npm install
+        run: npm install --no-audit --no-fund
+
       - name: Syntax checks
         run: |
           node --check server/index.mjs
@@ -29,5 +38,6 @@ jobs:
           node --check public/assets/cms.js
           node --check admin/admin.js
           node --check admin/dashboard.js
+
       - name: Tests
         run: npm test
