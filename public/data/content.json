@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.03.10-korczak-ai-alpha",
+  "version": "2026.10.04.1-erp-user-scaling",
   "products": [
     {
       "id": "korczak-ai",
@@ -414,7 +414,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar ERP.",
+        "description": "Plano gratuito para conhecer o KORCZAK ERP e avaliar os recursos essenciais.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -424,20 +424,130 @@
         "preSalePrice": 0
       },
       {
-        "id": "erp-standard",
-        "name": "KORCZAK ERP",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Implantação de um ERP completo com mensalidade de operação e suporte.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "mês",
+        "tag": "Até 5 usuários",
+        "description": "Para pequenas operações que estão começando a centralizar sua gestão empresarial.",
         "features": [
-          "Implantação do sistema",
+          "Até 5 usuários",
           "Gestão empresarial integrada",
-          "Mensalidade de operação e manutenção"
+          "Capacidade inicial"
         ],
-        "price": 75000,
-        "preSalePrice": 63750,
-        "monthly": 1500,
-        "preSaleMonthly": 1275
+        "price": 399,
+        "preSalePrice": 339
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "mês",
+        "tag": "Até 10 usuários",
+        "description": "Para pequenas empresas com uma equipe maior e operação em crescimento.",
+        "features": [
+          "Até 10 usuários",
+          "Gestão empresarial integrada",
+          "Capacidade ampliada"
+        ],
+        "price": 599,
+        "preSalePrice": 509
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "mês",
+        "tag": "Até 25 usuários",
+        "description": "Para empresas que precisam de uma estrutura empresarial mais ampla.",
+        "features": [
+          "Até 25 usuários",
+          "Gestão empresarial integrada",
+          "Escala para equipes em crescimento"
+        ],
+        "price": 999,
+        "preSalePrice": 849
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "mês",
+        "tag": "Até 50 usuários",
+        "description": "Para operações de médio porte com maior quantidade de usuários e processos.",
+        "features": [
+          "Até 50 usuários",
+          "Gestão empresarial integrada",
+          "Maior capacidade operacional"
+        ],
+        "price": 1499,
+        "preSalePrice": 1274
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "mês",
+        "tag": "Até 100 usuários",
+        "description": "Para empresas com equipes maiores e necessidade de maior capacidade operacional.",
+        "features": [
+          "Até 100 usuários",
+          "Gestão empresarial integrada",
+          "Capacidade ampliada para operações maiores"
+        ],
+        "price": 2499,
+        "preSalePrice": 2124
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "mês",
+        "tag": "Até 250 usuários",
+        "description": "Para organizações maiores que precisam de uma estrutura ERP em escala.",
+        "features": [
+          "Até 250 usuários",
+          "Gestão empresarial integrada",
+          "Capacidade empresarial ampliada"
+        ],
+        "price": 4999,
+        "preSalePrice": 4249
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "mês",
+        "tag": "Até 500 usuários",
+        "description": "Para operações de grande porte com maior escala de usuários e processamento.",
+        "features": [
+          "Até 500 usuários",
+          "Gestão empresarial integrada",
+          "Maior capacidade para grandes operações"
+        ],
+        "price": 8499,
+        "preSalePrice": 7224
+      },
+      {
+        "id": "enterprise-max",
+        "name": "Enterprise Max",
+        "billing": "mês",
+        "tag": "Até 1.000 usuários",
+        "description": "Para grandes organizações que precisam operar o ERP em escala elevada.",
+        "features": [
+          "Até 1.000 usuários",
+          "Gestão empresarial integrada",
+          "Alta capacidade operacional"
+        ],
+        "price": 14999,
+        "preSalePrice": 12749
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "1.001+ usuários",
+        "description": "Dimensionamento personalizado para organizações acima de 1.000 usuários ou com necessidades específicas de infraestrutura, operação e integração.",
+        "features": [
+          "Mais de 1.000 usuários",
+          "Dimensionamento personalizado",
+          "Infraestrutura e condições conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "flow": [
