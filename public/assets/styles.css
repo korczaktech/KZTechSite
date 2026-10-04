@@ -1258,3 +1258,21 @@ img,svg,video,canvas,iframe{max-width:100%}
 @media(max-width:800px){.interest-layout{grid-template-columns:1fr}.interest-copy,.interest-form{padding:22px}.interest-copy h3{font-size:25px}}
 
 .interest-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.interest-form select{width:100%;box-sizing:border-box;padding:13px 14px;border:1px solid #292929;border-radius:10px;background:#080808;color:#fff;font:inherit}.interest-form select:focus{outline:0;border-color:#666}@media(max-width:600px){.interest-form-row{grid-template-columns:1fr}}
+
+/* Nexus download flow */
+.product-card-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.product-card-actions .btn{margin-top:0}
+.nexus-ios-steps{display:grid;gap:14px;margin:22px 0 24px;padding:0;list-style:none;width:100%;counter-reset:nexus-step}
+.nexus-ios-steps li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.nexus-ios-steps li::before{counter-increment:nexus-step;content:counter(nexus-step,decimal-leading-zero);font-size:10px;letter-spacing:.12em;color:#777;padding-top:3px}
+.nexus-ios-steps li strong,.nexus-ios-steps li span{grid-column:2}
+.nexus-ios-steps li strong{font-size:14px}
+.nexus-ios-steps li span{font-size:12px;color:#888;line-height:1.55}
+.nexus-ios-steps code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#ccc;overflow-wrap:anywhere}
+.nexus-download-card>.nexus-ios-steps+.btn{margin-top:auto}
+.empty-state{grid-column:1/-1;padding:30px;border:1px dashed #292929;border-radius:18px;background:rgba(255,255,255,.018)}
+.empty-state h3{margin:0 0 8px}
+@media(max-width:700px){
+  .product-card-actions{display:grid;grid-template-columns:1fr}
+  .nexus-ios-steps{margin-top:18px}
+}
