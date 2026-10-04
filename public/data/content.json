@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.4-plan-tabs-enterprise-pricing",
+  "version": "2026.10.04.5-kztech-160-user",
   "products": [
     {
       "id": "korczak-ai",
@@ -1514,6 +1514,64 @@
         ],
         "price": null,
         "preSalePrice": null
+      }
+    ],
+    "kzt": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "até 5 usuários",
+        "maxUsers": 5,
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
+        "id": "hephaestus",
+        "name": "Hephaestus",
+        "billing": "usuário/mês",
+        "maxUsers": 50,
+        "price": 160,
+        "preSalePrice": 136
+      },
+      {
+        "id": "apollo",
+        "name": "Apollo",
+        "billing": "usuário/mês",
+        "maxUsers": 100,
+        "price": 160,
+        "preSalePrice": 136
+      },
+      {
+        "id": "athena",
+        "name": "Athena",
+        "billing": "usuário/mês",
+        "maxUsers": 250,
+        "price": 160,
+        "preSalePrice": 136
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "maxUsers": 500,
+        "price": 160,
+        "preSalePrice": 136
+      },
+      {
+        "id": "veles",
+        "name": "Veles",
+        "billing": "usuário/mês",
+        "maxUsers": 1000,
+        "price": 160,
+        "preSalePrice": 136
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "usuário/mês",
+        "maxUsers": null,
+        "price": 160,
+        "preSalePrice": 136
       }
     ]
   },
