@@ -837,7 +837,7 @@ async function load(){
       normalizeServiceCatalog();
     }
     state.plans={...PLAN_CATALOG};
-    try{const plans=await api("/api/planos");if(plans&&typeof plans==="object")state.plans={...state.plans,...plans};}catch{}
+    try{const plans=await api("/api/planos");if(plans&&typeof plans==="object"){for(const [key,list] of Object.entries(plans)){if(!Array.isArray(list))continue;const cmsPlans=Array.isArray(state.plans[key])?state.plans[key]:[];const byId=new Map(cmsPlans.map(p=>[p.id,p]));for(const p of list)byId.set(p.id,p);state.plans[key]=Array.from(byId.values());}}}catch{}
   }catch{}
   if(!state.products.length){try{const products=await api("/api/products");if(Array.isArray(products)&&products.length)state.products=products;}catch{}}
   if(state.token){
