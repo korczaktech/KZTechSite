@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.4-plan-tabs",
+  "version": "2026.10.04.4-plan-tabs-enterprise-pricing",
   "products": [
     {
       "id": "korczak-ai",
@@ -270,16 +270,16 @@
       {
         "id": "enterprise",
         "name": "Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
         "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "erp": [
@@ -454,16 +454,16 @@
       {
         "id": "enterprise",
         "name": "Vault Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Vault.",
+        "description": "Plano Enterprise de Vault para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "nexus": [
@@ -526,16 +526,16 @@
       {
         "id": "enterprise",
         "name": "Nexus Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Nexus.",
+        "description": "Plano Enterprise de Nexus para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "nexa": [
@@ -598,16 +598,16 @@
       {
         "id": "enterprise",
         "name": "Nexa Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Nexa.",
+        "description": "Plano Enterprise de Nexa para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "veya": [
@@ -670,16 +670,16 @@
       {
         "id": "enterprise",
         "name": "Veya Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Veya.",
+        "description": "Plano Enterprise de Veya para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "formly": [
@@ -742,16 +742,16 @@
       {
         "id": "enterprise",
         "name": "Formly Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Formly.",
+        "description": "Plano Enterprise de Formly para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "korvo": [
@@ -814,16 +814,16 @@
       {
         "id": "enterprise",
         "name": "Korvo Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Korvo.",
+        "description": "Plano Enterprise de Korvo para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "chrona": [
@@ -886,16 +886,16 @@
       {
         "id": "enterprise",
         "name": "Chrona Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Chrona.",
+        "description": "Plano Enterprise de Chrona para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "meet": [
@@ -958,16 +958,16 @@
       {
         "id": "enterprise",
         "name": "Meet Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Meet.",
+        "description": "Plano Enterprise de Meet para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "pulse": [
@@ -1030,16 +1030,16 @@
       {
         "id": "enterprise",
         "name": "Pulse Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Pulse.",
+        "description": "Plano Enterprise de Pulse para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "acta": [
@@ -1102,16 +1102,16 @@
       {
         "id": "enterprise",
         "name": "Acta Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Acta.",
+        "description": "Plano Enterprise de Acta para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "memo": [
@@ -1174,16 +1174,16 @@
       {
         "id": "enterprise",
         "name": "Memo Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Memo.",
+        "description": "Plano Enterprise de Memo para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "people": [
@@ -1246,16 +1246,16 @@
       {
         "id": "enterprise",
         "name": "People Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para People.",
+        "description": "Plano Enterprise de People para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "web": [
@@ -1318,16 +1318,16 @@
       {
         "id": "enterprise",
         "name": "Web Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Web.",
+        "description": "Plano Enterprise de Web para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "klash": [
@@ -1390,16 +1390,16 @@
       {
         "id": "enterprise",
         "name": "Klash Enterprise",
-        "billing": "sob consulta",
+        "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise para Klash.",
+        "description": "Plano Enterprise de Klash para organizações e equipes.",
         "features": [
-          "Recursos Enterprise",
-          "Controles corporativos",
-          "Preço definido conforme escopo"
+          "Cobrança por usuário",
+          "Recursos empresariais",
+          "Gestão e suporte para organizações"
         ],
-        "price": null,
-        "preSalePrice": null
+        "price": 129,
+        "preSalePrice": 110
       }
     ],
     "morok": [
