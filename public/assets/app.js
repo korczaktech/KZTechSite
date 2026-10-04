@@ -341,15 +341,19 @@ function institutional(){return cmsPage("institutional")}function portfolio(){
 function products(){
  const kosIds=["korczak-ai","ide","morok","erp","flow","vision","ops","connect","mobile","wms"];
  const hubIds=["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"];
- const kos=kosIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
- const ws=hubIds.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
+ const all=Array.isArray(state.products)?state.products:[];
+ const byId=new Map(all.filter(Boolean).map(p=>[p.id,p]));
+ const kos=kosIds.map(id=>byId.get(id)).filter(Boolean);
+ const ws=hubIds.map(id=>byId.get(id)).filter(Boolean);
  const catalog=state.content?.productsPage||{};
  const title=catalog.title||"Produtos e suítes Korczak.";
- const lead=catalog.description||"O HUB reúne aplicativos de produtividade e colaboração. O KOS reúne produtos operacionais.";
+ const lead=catalog.description||"Conheça os produtos e aplicativos do ecossistema Korczak Technology.";
  const hubTitle=catalog.hubTitle||"Aplicativos do HUB";
- const hubNote=catalog.hubNote||"O HUB é a suíte central";
+ const hubNote=catalog.hubNote||"Produtividade, documentos e colaboração em um único ecossistema.";
  const kosTitle=catalog.kosTitle||"Produtos operacionais";
- return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(catalog.eyebrow||"Produtos · Catálogo")+'</span><h2>'+esc(title)+'</h2><p class="section-lead">'+esc(lead)+'</p></div><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">HUB</span><h3>'+esc(hubTitle)+'</h3></div><span class="muted">'+esc(hubNote)+'</span></div><div class="product-hub-grid">'+ws.map((p,i)=>'<article class="hub-app '+(p.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.id==="nexus"?'<a class="btn ghost" href="#/planos/nexus">Ver planos</a>':p.status==="Planejado"?'<a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda</a>':"")+'</article>').join("")+'</div></section><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h3>'+esc(kosTitle)+'</h3></div><span class="muted">'+kos.length+' produtos</span></div><div class="product-kos-grid">'+kos.map(card).join("")+'</div></section></main>';
+ const hubCards=ws.length?ws.map((p,i)=>'<article class="hub-app '+(p.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Status não informado")+'</span><h3>'+esc(p.name||p.id)+'</h3><p class="muted">'+esc(p.description||"Produto do ecossistema Korczak Technology.")+'</p>'+(p.id==="nexus"?'<div class="actions product-card-actions"><a class="btn" href="#/produto/nexus">Conhecer Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar</a></div>':p.status==="Planejado"?'<a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda</a>':"")+'</article>').join(""):'<div class="empty-state"><h3>Catálogo temporariamente indisponível.</h3><p class="muted">Não foi possível carregar os produtos agora. Recarregue a página para tentar novamente.</p><button class="btn ghost" type="button" data-action="reload">Recarregar</button></div>';
+ const kosCards=kos.length?kos.map(card).join(""):'<div class="empty-state"><h3>Produtos indisponíveis no momento.</h3><p class="muted">O catálogo operacional não pôde ser carregado.</p></div>';
+ return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(catalog.eyebrow||"Produtos · Catálogo")+'</span><h2>'+esc(title)+'</h2><p class="section-lead">'+esc(lead)+'</p></div><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">HUB</span><h3>'+esc(hubTitle)+'</h3></div><span class="muted">'+esc(hubNote)+'</span></div><div class="product-hub-grid">'+hubCards+'</div></section><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h3>'+esc(kosTitle)+'</h3></div><span class="muted">'+kos.length+' produtos</span></div><div class="product-kos-grid">'+kosCards+'</div></section></main>';
 }
 function hub(){
  const ids=["vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"];
@@ -405,24 +409,8 @@ function product(id){
 }
 
 function nexusDownloadPage(){
-  return '<main id="main-content" class="section shell nexus-download-page"><div class="portfolio-hero"><span class="eyebrow">NEXUS · DOWNLOAD</span><h2>Baixe o Nexus.</h2><p class="section-lead">Escolha a plataforma. O Android baixa sempre o APK da versão mais recente publicada no GitHub Releases do kz-nexus.</p></div><section class="nexus-download-grid"><article class="nexus-download-card"><span class="eyebrow">ANDROID</span><h3>Nexus para Android</h3><p class="muted">Baixe e instale diretamente o APK da última release disponível.</p><div class="nexus-release" id="nexus-release"><span class="release-state">Consultando última versão…</span></div><a class="btn" id="nexus-android-download" href="#" hidden>Baixar APK '+icon("arrow")+'</a></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">DESKTOP</span><h3>Nexus para Desktop</h3><p class="muted">A versão para desktop ainda não está publicada.</p><span class="download-soon">Em breve</span></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">IOS</span><h3>Nexus para iOS</h3><p class="muted">A versão para iOS ainda não está publicada.</p><span class="download-soon">Em breve</span></article></section><div class="actions"><a class="btn ghost" href="#/produto/nexus">Voltar ao Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></main>';
+  return '<main id="main-content" class="section shell nexus-download-page"><div class="portfolio-hero"><span class="eyebrow">NEXUS · BAIXAR</span><h2>Baixe o Nexus.</h2><p class="section-lead">Escolha sua plataforma. Android usa sempre o APK da última release do repositório kz-nexus. No iPhone e iPad, o Nexus funciona como PWA instalado pelo Safari.</p></div><section class="nexus-download-grid"><article class="nexus-download-card"><span class="eyebrow">ANDROID</span><h3>Nexus para Android</h3><p class="muted">Baixe e instale diretamente o APK da última versão publicada.</p><div class="nexus-release" id="nexus-release"><span class="release-state">Consultando última versão…</span></div><a class="btn" id="nexus-android-download" href="#" hidden>Baixar APK '+icon("arrow")+'</a></article><article class="nexus-download-card"><span class="eyebrow">IOS · PWA</span><h3>Nexus no iPhone e iPad</h3><p class="muted">Não precisa de App Store. Instale o Nexus diretamente pelo Safari como um aplicativo.</p><ol class="nexus-ios-steps"><li><strong>Abra o Nexus no Safari.</strong><span>Entre em <code>kzdoc.onrender.com</code> usando o Safari.</span></li><li><strong>Abra o menu Compartilhar.</strong><span>Toque no ícone de compartilhar do Safari.</span></li><li><strong>Adicione à Tela de Início.</strong><span>Selecione “Adicionar à Tela de Início” e confirme em “Adicionar”.</span></li><li><strong>Abra pelo novo ícone.</strong><span>O Nexus ficará disponível na Tela de Início como um aplicativo.</span></li></ol><a class="btn ghost" href="https://kzdoc.onrender.com" target="_blank" rel="noopener noreferrer">Abrir Nexus no Safari '+icon("external")+'</a></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">DESKTOP</span><h3>Desktop</h3><p class="muted">As versões para macOS, Windows e Linux ainda estão indisponíveis.</p><span class="download-soon">Indisponível</span></article></section><div class="actions"><a class="btn ghost" href="#/produto/nexus">Voltar ao Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></main>';
 }
-async function loadNexusRelease(){
-  const box=document.querySelector("#nexus-release"),button=document.querySelector("#nexus-android-download");
-  if(!box||!button)return;
-  try{
-    const release=await fetch("https://api.github.com/repos/korczaktech/kz-nexus/releases/latest",{headers:{"Accept":"application/vnd.github+json"}}).then(r=>{if(!r.ok)throw Error("GitHub não respondeu.");return r.json()});
-    const apk=(release.assets||[]).find(a=>/\.apk$/i.test(a.name));
-    if(!apk)throw Error("Nenhum APK foi publicado na última release.");
-    box.innerHTML='<span class="release-label">Última versão</span><strong>'+esc(release.tag_name||release.name||"Release atual")+'</strong><small>'+esc(apk.name)+'</small>';
-    button.href=apk.browser_download_url;
-    button.setAttribute("download",apk.name);
-    button.hidden=false;
-  }catch(error){
-    box.innerHTML='<span class="release-error">Não foi possível consultar a última release agora.</span><small>Tente novamente em alguns instantes.</small>';
-  }
-}
-
 function company(){return cmsPage("company")}
 function historyPage(){return cmsPage("historyPage")}
 
@@ -645,7 +633,7 @@ function render(){
   root.querySelectorAll("[data-mentor-tech]").forEach(el=>el.addEventListener("change",()=>{updateMentorTotal(el);if(el.checked)registrarAnalitica("interacao","Tecnologia selecionada",{categoria:"comercial",subcategoria:"mentorias",acao:"Selecionou tecnologia para a mentoria",descricao:"Selecionou uma tecnologia na grade personalizada da Mentoria.",entidade:"tecnologia",entidadeId:el.closest(".mentor-tech-row")?.querySelector("b")?.textContent||""});}));
   document.body.classList.toggle("menu-open",state.menu);
   document.body.classList.remove("loading");
-  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/pre-venda":"Pré-venda","/assinatura":"Assinatura","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/hub":"HUB","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/orcamento":"Solicitar orçamento","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço"};
+  const titleMap={"/":"KORCZAK TECHNOLOGY","/comercial":"Comercial","/pre-venda":"Pré-venda","/assinatura":"Assinatura","/mentoria":"Mentoria","/mentoria/precos":"Preços da Mentoria","/institucional":"Institucional","/empresa":"Empresa","/portfolio":"Portfólio","/produtos":"Produtos","/hub":"HUB","/kos":"KOS","/contato":"Contato","/conta":"Meu perfil","/orcamento":"Solicitar orçamento","/historia":"História","/visao":"Visão","/valores":"Valores","/parcerias":"Parcerias","/carreiras":"Carreiras","/faq":"FAQ","/privacidade":"Privacidade","/uso":"Uso","/servico":"Serviço","/download/nexus":"Baixar Nexus"};
   let detail=null;
   if(h.startsWith("/produto/")){
     try{detail=state.products.find(x=>x.id===decodeURIComponent(h.split("/")[2]||""))?.name||null}catch{}
