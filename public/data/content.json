@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.1-erp-user-scaling",
+  "version": "2026.10.04.2-kos-free-policy",
   "products": [
     {
       "id": "korczak-ai",
@@ -252,20 +252,6 @@
     ],
     "ide": [
       {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Ambiente de desenvolvimento para começar sem custo.",
-        "features": [
-          "Editor e recursos essenciais",
-          "Uso individual",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
-      {
         "id": "pro",
         "name": "Pro",
         "billing": "mês",
@@ -410,20 +396,6 @@
     ],
     "erp": [
       {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para conhecer o KORCZAK ERP e avaliar os recursos essenciais.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
-      {
         "id": "starter",
         "name": "Starter",
         "billing": "mês",
@@ -552,20 +524,6 @@
     ],
     "flow": [
       {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar FLOW.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
-      {
         "id": "flow-standard",
         "name": "KORCZAK FLOW",
         "billing": "implantação",
@@ -583,20 +541,6 @@
       }
     ],
     "vision": [
-      {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar VISION.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
       {
         "id": "vision-standard",
         "name": "KORCZAK VISION",
@@ -616,20 +560,6 @@
     ],
     "ops": [
       {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar OPS.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
-      {
         "id": "ops-standard",
         "name": "KORCZAK OPS",
         "billing": "implantação",
@@ -647,20 +577,6 @@
       }
     ],
     "connect": [
-      {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar CONNECT.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
       {
         "id": "connect-standard",
         "name": "KORCZAK CONNECT",
@@ -680,20 +596,6 @@
     ],
     "mobile": [
       {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar MOBILE.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
-      {
         "id": "mobile-standard",
         "name": "KORCZAK MOBILE",
         "billing": "implantação",
@@ -711,20 +613,6 @@
       }
     ],
     "wms": [
-      {
-        "id": "free",
-        "name": "Free",
-        "billing": "mês",
-        "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar WMS.",
-        "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
-        ],
-        "price": 0,
-        "preSalePrice": 0
-      },
       {
         "id": "wms-standard",
         "name": "KORCZAK WMS",
