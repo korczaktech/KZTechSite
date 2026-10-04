@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.2-kos-free-policy",
+  "version": "2026.10.04.3-kos-per-user",
   "products": [
     {
       "id": "korczak-ai",
@@ -524,110 +524,740 @@
     ],
     "flow": [
       {
-        "id": "flow-standard",
-        "name": "KORCZAK FLOW",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Implantação de plataforma de fluxos, aprovações e automações.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 5 usuários.",
         "features": [
-          "Mapeamento e implantação",
+          "Até 5 usuários",
           "Fluxos e aprovações",
-          "Mensalidade de operação e manutenção"
+          "Automação operacional",
+          "Escala por equipe"
         ],
-        "price": 22500,
-        "preSalePrice": 19125,
-        "monthly": 1125,
-        "preSaleMonthly": 956
+        "price": 199,
+        "preSalePrice": 169
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 349,
+        "preSalePrice": 297
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 699,
+        "preSalePrice": 594
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 1199,
+        "preSalePrice": 1019
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 1999,
+        "preSalePrice": 1699
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 3999,
+        "preSalePrice": 3399
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": 6999,
+        "preSalePrice": 5949
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Fluxos, aprovações e automações para equipes. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Fluxos e aprovações",
+          "Automação operacional",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "vision": [
       {
-        "id": "vision-standard",
-        "name": "KORCZAK VISION",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Business intelligence e painéis operacionais.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 5 usuários.",
         "features": [
-          "Implantação",
+          "Até 5 usuários",
           "Dashboards e indicadores",
-          "Mensalidade"
+          "Análise operacional",
+          "Escala por equipe"
         ],
-        "price": 22500,
-        "preSalePrice": 19125,
-        "monthly": 2250,
-        "preSaleMonthly": 1913
+        "price": 249,
+        "preSalePrice": 212
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 449,
+        "preSalePrice": 382
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 899,
+        "preSalePrice": 764
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 1599,
+        "preSalePrice": 1359
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 2799,
+        "preSalePrice": 2379
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 5499,
+        "preSalePrice": 4674
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Business intelligence e painéis operacionais. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": 8999,
+        "preSalePrice": 7649
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Business intelligence e painéis operacionais. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Dashboards e indicadores",
+          "Análise operacional",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "ops": [
       {
-        "id": "ops-standard",
-        "name": "KORCZAK OPS",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Operações, administração e observabilidade.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 5 usuários.",
         "features": [
-          "Implantação",
+          "Até 5 usuários",
           "Operação e administração",
-          "Mensalidade"
+          "Monitoramento operacional",
+          "Escala por equipe"
         ],
-        "price": 45000,
-        "preSalePrice": 38250,
-        "monthly": 3000,
-        "preSaleMonthly": 2550
+        "price": 299,
+        "preSalePrice": 254
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 549,
+        "preSalePrice": 467
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 1099,
+        "preSalePrice": 934
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 1999,
+        "preSalePrice": 1699
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 3499,
+        "preSalePrice": 2974
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 6999,
+        "preSalePrice": 5949
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Operações, administração e observabilidade. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": 11999,
+        "preSalePrice": 10199
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Operações, administração e observabilidade. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Operação e administração",
+          "Monitoramento operacional",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "connect": [
       {
-        "id": "connect-standard",
-        "name": "KORCZAK CONNECT",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Integrações entre pessoas, sistemas e serviços.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 5 usuários.",
         "features": [
-          "Implantação",
+          "Até 5 usuários",
           "Integrações",
-          "Mensalidade"
+          "Conectividade entre sistemas",
+          "Escala por equipe"
         ],
-        "price": 37500,
-        "preSalePrice": 31875,
-        "monthly": 2250,
-        "preSaleMonthly": 1913
+        "price": 249,
+        "preSalePrice": 212
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 449,
+        "preSalePrice": 382
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 899,
+        "preSalePrice": 764
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 1599,
+        "preSalePrice": 1359
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 2799,
+        "preSalePrice": 2379
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 5499,
+        "preSalePrice": 4674
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": 8999,
+        "preSalePrice": 7649
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Integrações entre pessoas, sistemas e serviços. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Integrações",
+          "Conectividade entre sistemas",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "mobile": [
       {
-        "id": "mobile-standard",
-        "name": "KORCZAK MOBILE",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Aplicativo móvel empresarial.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 5 usuários.",
         "features": [
-          "Implantação",
+          "Até 5 usuários",
           "Experiência mobile",
-          "Mensalidade"
+          "Acesso empresarial",
+          "Escala por equipe"
         ],
-        "price": 45000,
-        "preSalePrice": 38250,
-        "monthly": 2250,
-        "preSaleMonthly": 1913
+        "price": 199,
+        "preSalePrice": 169
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 349,
+        "preSalePrice": 297
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 699,
+        "preSalePrice": 594
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 1199,
+        "preSalePrice": 1019
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 1999,
+        "preSalePrice": 1699
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 3999,
+        "preSalePrice": 3399
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Aplicativos móveis empresariais. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": 6999,
+        "preSalePrice": 5949
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Aplicativos móveis empresariais. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Experiência mobile",
+          "Acesso empresarial",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "wms": [
       {
-        "id": "wms-standard",
-        "name": "KORCZAK WMS",
-        "billing": "implantação",
-        "tag": "Compra + mensal",
-        "description": "Gestão de armazém e movimentação.",
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 5 usuários.",
         "features": [
-          "Implantação",
+          "Até 5 usuários",
           "Estoque e movimentação",
-          "Mensalidade"
+          "Operação de armazém",
+          "Escala por equipe"
         ],
-        "price": 117000,
-        "preSalePrice": 99450,
-        "monthly": 5860,
-        "preSaleMonthly": 4981
+        "price": 399,
+        "preSalePrice": 339
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 699,
+        "preSalePrice": 594
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 1499,
+        "preSalePrice": 1274
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 2499,
+        "preSalePrice": 2124
+      },
+      {
+        "id": "advanced",
+        "name": "Advanced",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 4499,
+        "preSalePrice": 3824
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 8999,
+        "preSalePrice": 7649
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 500 usuários",
+        "description": "Gestão de armazém e movimentação. Plano para até 500 usuários.",
+        "features": [
+          "Até 500 usuários",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": 14999,
+        "preSalePrice": 12749
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "501+ usuários",
+        "description": "Gestão de armazém e movimentação. Dimensionamento personalizado para organizações acima de 500 usuários.",
+        "features": [
+          "Mais de 500 usuários",
+          "Dimensionamento personalizado",
+          "Estoque e movimentação",
+          "Operação de armazém",
+          "Escala por equipe"
+        ],
+        "price": null,
+        "preSalePrice": null
       }
     ],
     "vault": [
@@ -1633,6 +2263,120 @@
           "Recursos Enterprise",
           "Controles corporativos",
           "Preço definido conforme escopo"
+        ],
+        "price": null,
+        "preSalePrice": null
+      }
+    ],
+    "morok": [
+      {
+        "id": "free",
+        "name": "Free",
+        "billing": "mês",
+        "tag": "Grátis",
+        "description": "Para conhecer o MOROK e utilizar seus recursos essenciais.",
+        "features": [
+          "Acesso gratuito",
+          "Recursos essenciais",
+          "Uso individual"
+        ],
+        "price": 0,
+        "preSalePrice": 0
+      },
+      {
+        "id": "starter",
+        "name": "Starter",
+        "billing": "usuário/mês",
+        "tag": "Até 5 usuários",
+        "description": "MOROK para equipes com até 5 usuários.",
+        "features": [
+          "Até 5 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 99,
+        "preSalePrice": 84
+      },
+      {
+        "id": "basic",
+        "name": "Basic",
+        "billing": "usuário/mês",
+        "tag": "Até 10 usuários",
+        "description": "MOROK para equipes com até 10 usuários.",
+        "features": [
+          "Até 10 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 179,
+        "preSalePrice": 152
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "billing": "usuário/mês",
+        "tag": "Até 25 usuários",
+        "description": "MOROK para equipes com até 25 usuários.",
+        "features": [
+          "Até 25 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 399,
+        "preSalePrice": 339
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "billing": "usuário/mês",
+        "tag": "Até 50 usuários",
+        "description": "MOROK para equipes com até 50 usuários.",
+        "features": [
+          "Até 50 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 699,
+        "preSalePrice": 594
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Até 100 usuários",
+        "description": "MOROK para equipes com até 100 usuários.",
+        "features": [
+          "Até 100 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 1199,
+        "preSalePrice": 1019
+      },
+      {
+        "id": "enterprise-plus",
+        "name": "Enterprise Plus",
+        "billing": "usuário/mês",
+        "tag": "Até 250 usuários",
+        "description": "MOROK para equipes com até 250 usuários.",
+        "features": [
+          "Até 250 usuários",
+          "Recursos do MOROK",
+          "Escala por equipe"
+        ],
+        "price": 2499,
+        "preSalePrice": 2124
+      },
+      {
+        "id": "enterprise-custom",
+        "name": "Enterprise Custom",
+        "billing": "sob consulta",
+        "tag": "251+ usuários",
+        "description": "MOROK dimensionado para organizações acima de 250 usuários ou necessidades específicas.",
+        "features": [
+          "Mais de 250 usuários",
+          "Dimensionamento personalizado",
+          "Condições conforme escopo"
         ],
         "price": null,
         "preSalePrice": null
