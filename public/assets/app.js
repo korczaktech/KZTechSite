@@ -408,6 +408,25 @@ function product(id){
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(p.type)+' · '+esc(p.status)+'</span><h2>'+esc(p.name)+'.</h2><p class="section-lead">'+esc(d[1])+'</p><div class="actions">'+action+'<a class="btn ghost" href="#/produtos">Ver catálogo</a></div></div><div class="detail-grid"><section class="detail-panel"><span class="eyebrow">O que é</span><h3>'+esc(d[0])+'</h3><p class="muted">'+esc(d[2])+'</p><ul class="feature-list"><li>Arquitetura pensada para evolução por etapas.</li><li>Interface orientada à clareza e ao uso cotidiano.</li><li>Integração com o ecossistema quando aplicável.</li><li>Escopo e disponibilidade definidos conforme o estágio.</li></ul></section><aside class="detail-panel"><span class="eyebrow">Status</span><h3>'+esc(p.status)+'</h3><p class="muted">O estágio publicado indica o nível atual de desenvolvimento e não representa necessariamente disponibilidade comercial completa.</p><a class="btn ghost" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></aside></div><div class="split"><section><span class="eyebrow">Como funciona</span><h3>Construído para crescer.</h3><p class="muted">O produto é desenvolvido em fases, começando pelos recursos essenciais e ampliando capacidades conforme requisitos, testes e feedback.</p></section><section><span class="eyebrow">Próximo passo</span><h3>Defina seu cenário.</h3><p class="muted">Para projetos, contratação ou parceria, envie objetivo, equipe, requisitos e prazo desejado.</p></section></div>'+(related.length?'<div class="rule"></div><span class="eyebrow">Relacionados</span><div class="grid">'+related.map(card).join('')+'</div>':'')+'</main>'+planBlock;
 }
 
+async function loadNexusRelease(){
+  const stateEl=document.getElementById("nexus-release");
+  const button=document.getElementById("nexus-android-download");
+  if(!stateEl||!button)return;
+  try{
+    const response=await fetch("https://api.github.com/repos/korczaktech/kz-nexus/releases/latest",{headers:{Accept:"application/vnd.github+json"}});
+    if(!response.ok)throw new Error("release");
+    const release=await response.json();
+    const apk=(release.assets||[]).find(a=>/\.apk$/i.test(a.name));
+    if(!apk)throw new Error("apk");
+    stateEl.innerHTML='<span class="release-state">Última versão: '+esc(release.tag_name||release.name||"disponível")+'</span>';
+    button.href=apk.browser_download_url;
+    button.hidden=false;
+  }catch(error){
+    stateEl.innerHTML='<span class="release-state">Não foi possível consultar a última versão agora. Tente novamente.</span>';
+    button.hidden=true;
+  }
+}
+
 function nexusDownloadPage(){
   return '<main id="main-content" class="section shell nexus-download-page"><div class="portfolio-hero"><span class="eyebrow">NEXUS · BAIXAR</span><h2>Baixe o Nexus.</h2><p class="section-lead">Escolha sua plataforma. Android usa sempre o APK da última release do repositório kz-nexus. No iPhone e iPad, o Nexus funciona como PWA instalado pelo Safari.</p></div><section class="nexus-download-grid"><article class="nexus-download-card"><span class="eyebrow">ANDROID</span><h3>Nexus para Android</h3><p class="muted">Baixe e instale diretamente o APK da última versão publicada.</p><div class="nexus-release" id="nexus-release"><span class="release-state">Consultando última versão…</span></div><a class="btn" id="nexus-android-download" href="#" hidden>Baixar APK '+icon("arrow")+'</a></article><article class="nexus-download-card"><span class="eyebrow">IOS · PWA</span><h3>Nexus no iPhone e iPad</h3><p class="muted">Não precisa de App Store. Instale o Nexus diretamente pelo Safari como um aplicativo.</p><ol class="nexus-ios-steps"><li><strong>Abra o Nexus no Safari.</strong><span>Entre em <code>korczaktech.github.io/kz-nexus</code> usando o Safari.</span></li><li><strong>Abra o menu Compartilhar.</strong><span>Toque no ícone de compartilhar do Safari.</span></li><li><strong>Adicione à Tela de Início.</strong><span>Selecione “Adicionar à Tela de Início” e confirme em “Adicionar”.</span></li><li><strong>Abra pelo novo ícone.</strong><span>O Nexus ficará disponível na Tela de Início como um aplicativo.</span></li></ol><a class="btn ghost" href="https://korczaktech.github.io/kz-nexus" target="_blank" rel="noopener noreferrer">Abrir Nexus no Safari '+icon("external")+'</a></article><article class="nexus-download-card nexus-download-disabled"><span class="eyebrow">DESKTOP</span><h3>Desktop</h3><p class="muted">As versões para macOS, Windows e Linux ainda estão indisponíveis.</p><span class="download-soon">Indisponível</span></article></section><div class="actions"><a class="btn ghost" href="#/produto/nexus">Voltar ao Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/produtos">Ver produtos</a></div></main>';
 }
