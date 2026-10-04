@@ -1276,3 +1276,11 @@ img,svg,video,canvas,iframe{max-width:100%}
   .product-card-actions{display:grid;grid-template-columns:1fr}
   .nexus-ios-steps{margin-top:18px}
 }
+
+
+.plan-audience-switch{display:inline-flex;align-items:center;gap:3px;padding:4px;margin:8px 0 22px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);box-shadow:0 8px 30px rgba(0,0,0,.16)}
+.plan-audience-tab{appearance:none;border:0;background:transparent;color:#888;padding:10px 22px;border-radius:999px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.plan-audience-tab:hover{color:#fff}
+.plan-audience-tab.is-active{background:#fff;color:#050505;box-shadow:0 2px 12px rgba(255,255,255,.12)}
+.plan-audience-tab:active{transform:scale(.98)}
+.plan-group-card[hidden]{display:none}
