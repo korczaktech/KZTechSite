@@ -370,10 +370,12 @@ function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
   const title=key==="hub"?"Planos do HUB":id==="korczak-ai"?"Planos do Korczak AI":id==="ide"?"Planos do Korczak IDE":"Planos do "+(state.products.find(x=>x.id===id)?.name||id);
-  return '<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS · INVESTIMENTO</span><h3>'+title+'</h3><p class="section-lead">Preços mensais definidos a partir das referências de mercado escolhidas, convertidos para reais e ajustados pela política comercial da Korczak.</p><div class="mentor-track-grid product-plan-grid">'+plans.map(plan=>{
-    const hasPrice=Number.isFinite(Number(plan.price)),pre=Number.isFinite(Number(plan.preSalePrice))?plan.preSalePrice:null;
-    return '<article class="mentor-track-card product-plan-card"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(hasPrice?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(pre!==null&&pre!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(pre)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Assinar pré-venda '+icon("arrow")+'</a></article>';
-  }).join("")+'</div><p class="muted plan-footnote">A pré-venda aplica 15% de desconto sobre o preço comercial já ajustado. Valores empresariais podem depender de quantidade de usuários e escopo.</p></section>';
+  const personalIds=key==="morok"?new Set(["free","starter","basic","business","professional"]):new Set(["free","starter","standard","plus"]);
+  const personal=plans.filter(p=>personalIds.has(p.id));
+  const enterprise=plans.filter(p=>!personalIds.has(p.id));
+  const hasTabs=personal.length&&enterprise.length;
+  const renderPlan=(plan,group)=>'<article class="mentor-track-card product-plan-card plan-group-card" data-plan-group="'+group+'"><span class="eyebrow">'+esc(plan.tag||"PLANO")+'</span><h3>'+esc(plan.name)+'</h3><p>'+esc(plan.description||"")+'</p><div class="plan-price-main">'+(Number.isFinite(Number(plan.price))?'<strong>'+money(plan.price)+'</strong><small>/ '+esc(plan.billing||"mês")+'</small>':'<strong>Sob consulta</strong>')+'</div>'+(Number.isFinite(Number(plan.preSalePrice))&&plan.preSalePrice!==plan.price?'<div class="plan-presale"><span>Pré-venda · -15%</span><b>'+money(plan.preSalePrice)+'</b></div>':"")+'<ul class="feature-list">'+(plan.features||[]).map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul><a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(id)+'&plano='+encodeURIComponent(plan.id)+'">Assinar pré-venda '+icon("arrow")+'</a></article>';
+  return '<section id="planos" class="section-group plan-section"><span class="eyebrow">PLANOS · INVESTIMENTO</span><h3>'+title+'</h3><p class="section-lead">Escolha entre planos pessoais ou empresariais. Os planos empresariais são dimensionados para organizações e cobrança por usuário quando aplicável.</p>'+(hasTabs?'<div class="plan-audience-switch" role="tablist" aria-label="Tipo de plano"><button type="button" class="plan-audience-tab is-active" data-plan-tab="personal" role="tab" aria-selected="true">Pessoal</button><button type="button" class="plan-audience-tab" data-plan-tab="enterprise" role="tab" aria-selected="false">Empresarial</button></div>':"")+'<div class="mentor-track-grid product-plan-grid" data-plan-groups>'+plans.map(p=>renderPlan(p,personalIds.has(p.id)?"personal":"enterprise")).join("")+'</div><p class="muted plan-footnote">A pré-venda aplica 15% de desconto sobre o preço comercial já ajustado. Valores empresariais podem depender de quantidade de usuários e escopo.</p></section>';
 }
 function modularProductPage(id){
   const p=state.products.find(x=>x.id===id),mods=MODULAR_CATALOG[id];
@@ -718,7 +720,7 @@ load();return true}
   return false;
 }
 
-document.addEventListener("click",e=>{const q=e.target.closest("[data-service-request]");if(q){e.preventDefault();requestServiceQuote(q);return}if(handleAction(e.target))e.preventDefault()});
+document.addEventListener("click",e=>{const tab=e.target.closest("[data-plan-tab]");if(tab){const section=tab.closest(".plan-section");if(section){section.querySelectorAll("[data-plan-tab]").forEach(x=>{const active=x===tab;x.classList.toggle("is-active",active);x.setAttribute("aria-selected",active?"true":"false")});const group=tab.dataset.planTab;section.querySelectorAll(".plan-group-card").forEach(card=>card.hidden=card.dataset.planGroup!==group)}return}const q=e.target.closest("[data-service-request]");if(q){e.preventDefault();requestServiceQuote(q);return}if(handleAction(e.target))e.preventDefault()});
 async function submitAuth(e){
   e.preventDefault();
   const form=e.currentTarget;
