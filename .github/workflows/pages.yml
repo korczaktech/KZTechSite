@@ -1,4 +1,5 @@
 name: Deploy GitHub Pages
+# Cache-bust: 2026-10-04 pricing publication
 
 on:
   push:
