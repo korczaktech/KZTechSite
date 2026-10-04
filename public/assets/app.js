@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGY</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.03.11";
+const APP_VERSION="2026.10.04.5";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
