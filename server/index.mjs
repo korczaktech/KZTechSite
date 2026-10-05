@@ -637,6 +637,36 @@ app.get("/api/me",auth,async(req,res)=>{
   u?res.json(accountSafe(u)):res.status(404).json({error:"Usuário não encontrado"});
 });
 
+app.patch("/api/me",rateLimit({windowMs:60000,max:12}),auth,async(req,res)=>{
+  if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
+  const name=String(req.body?.name??"").trim();
+  const phone=String(req.body?.phone??"").trim();
+  if(name.length<2||name.length>120)return res.status(400).json({error:"Nome inválido"});
+  if(phone.length>40)return res.status(400).json({error:"Telefone inválido"});
+  const agora=new Date();
+  await accountsDb.collection("contas").updateOne({id:req.user.sub},{$set:{Nome:name,Telefone:phone||null,"Conta.AtualizadaEm":agora.toISOString()}});
+  const u=await accountsDb.collection("contas").findOne({id:req.user.sub});
+  if(!u)return res.status(404).json({error:"Usuário não encontrado"});
+  await registrarEventoAnalitico({tipo:"perfil",categoria:"contas",subcategoria:"perfil",acao:"Perfil atualizado",descricao:"Dados básicos da conta foram atualizados.",pagina:"/conta",usuarioId:u.id,nome:u.Nome,email:u.Email,entidade:"conta",entidadeId:u.id});
+  const safe=accountSafe(u);
+  res.json({user:safe,token:token(safe)});
+});
+
+app.post("/api/me/password",rateLimit({windowMs:60000,max:5}),auth,async(req,res)=>{
+  if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
+  const current=String(req.body?.currentPassword||"");
+  const next=String(req.body?.newPassword||"");
+  if(next.length<8||next.length>128)return res.status(400).json({error:"A nova senha deve ter entre 8 e 128 caracteres."});
+  if(current===next)return res.status(400).json({error:"A nova senha deve ser diferente da atual."});
+  const u=await accountsDb.collection("contas").findOne({id:req.user.sub});
+  const hash=u?.Aplicativos?.Site?.Senha||"";
+  if(!u||!hash||!(await bcrypt.compare(current,hash)))return res.status(401).json({error:"Senha atual inválida"});
+  const newHash=await bcrypt.hash(next,12),agora=new Date();
+  await accountsDb.collection("contas").updateOne({id:req.user.sub},{$set:{"Aplicativos.Site.Senha":newHash,"Aplicativos.Site.Ativo":true,"Conta.AtualizadaEm":agora.toISOString()}});
+  await registrarEventoAnalitico({tipo:"seguranca",categoria:"contas",subcategoria:"seguranca",acao:"Senha do site alterada",descricao:"A senha de acesso ao site foi alterada.",pagina:"/conta",usuarioId:u.id,nome:u.Nome,email:u.Email,entidade:"conta",entidadeId:u.id});
+  res.json({ok:true,message:"Senha alterada com sucesso."});
+});
+
 app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const productId=String(req.body?.productId||"");
