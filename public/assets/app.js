@@ -599,9 +599,8 @@ function account(){
   const u=state.user||{},initial=esc((u.name||"K").slice(0,1).toUpperCase());
   const quoteRows=state.quotes.length?state.quotes.map(q=>'<div class="profile-row"><span>'+esc(q.productId)+'</span><strong>'+esc(q.status||"pending")+'</strong><small class="muted">'+new Date(q.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma solicitação de orçamento ainda.</div>';
   const orderRows=state.orders.length?state.orders.map(o=>'<div class="profile-row"><span>'+esc(o.productId)+'</span><strong>'+esc(o.status||"checkout_created")+'</strong><small class="muted">'+new Date(o.createdAt).toLocaleDateString("pt-BR")+'</small></div>').join(""):'<div class="empty">Nenhuma compra registrada.</div>';
-  return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Minha conta.</h2><div class="profile"><aside class="profile-aside"><div class="profile-avatar" aria-hidden="true">'+initial+'</div><h3>'+esc(u.name||"Usuário")+'</h3><p class="muted">'+esc(u.email||"")+'</p><span class="status">'+esc(u.role||"user")+'</span></aside><section class="profile-main"><div class="profile-row"><span class="muted">Nome</span><strong>'+esc(u.name||"—")+'</strong></div><div class="profile-row"><span class="muted">Email</span><strong>'+esc(u.email||"—")+'</strong></div><div class="profile-row"><span class="muted">Perfil</span><strong>'+esc(u.role||"user")+'</strong></div><div class="profile-row"><span class="muted">Verificação</span><strong>'+((u.verified)?"Verificado":"Pendente")+'</strong></div><div class="actions"><a class="btn ghost" href="#/contato">Falar com a equipe</a><button class="btn" type="button" data-action="logout">Sair</button></div></section></div><div class="rule"></div><div class="split"><section><span class="eyebrow">Orçamentos</span><h3>Histórico comercial</h3>'+quoteRows+'</section><section><span class="eyebrow">Pedidos</span><h3>Histórico de compras</h3>'+orderRows+'</section></div></main>';
+  return '<main id="main-content" class="section shell"><span class="eyebrow">Meu perfil</span><h2>Minha conta.</h2><div class="profile"><aside class="profile-aside"><div class="profile-avatar" aria-hidden="true">'+initial+'</div><h3>'+esc(u.name||"Usuário")+'</h3><p class="muted">'+esc(u.email||"")+'</p><span class="status">'+esc(u.role||"user")+'</span></aside><section class="profile-main"><form id="profile-form" class="profile-form"><div class="profile-row"><label class="field-label">Nome<input class="field" name="name" value="'+esc(u.name||"")+'" autocomplete="name" required></label></div><div class="profile-row"><label class="field-label">Telefone<input class="field" name="phone" value="'+esc(u.phone||"")+'" autocomplete="tel" placeholder="Seu telefone"></label></div><div class="profile-row"><span class="muted">Email</span><strong>'+esc(u.email||"—")+'</strong></div><div class="profile-row"><span class="muted">Perfil</span><strong>'+esc(u.role||"user")+'</strong></div><div class="profile-row"><span class="muted">Verificação</span><strong>'+((u.verified)?"Verificado":"Pendente")+'</strong></div><button class="btn" type="submit">Salvar dados '+icon("arrow")+'</button><small id="profile-message" class="form-note" role="status"></small></form></section></div><div class="rule"></div><section class="auth-card account-security"><span class="eyebrow">Segurança</span><h3>Alterar senha do site.</h3><form id="password-form" class="auth-form"><label><span>Senha atual</span><input class="field" name="currentPassword" type="password" autocomplete="current-password" required></label><label><span>Nova senha</span><input class="field" name="newPassword" type="password" autocomplete="new-password" minlength="8" required></label><button class="btn" type="submit">Alterar senha '+icon("arrow")+'</button><small id="password-message" class="form-note" role="status"></small></form></section><div class="actions"><a class="btn ghost" href="#/contato">Falar com a equipe</a><button class="btn" type="button" data-action="logout">Sair</button></div><div class="rule"></div><div class="split"><section><span class="eyebrow">Orçamentos</span><h3>Histórico comercial</h3>'+quoteRows+'</section><section><span class="eyebrow">Pedidos</span><h3>Histórico de compras</h3>'+orderRows+'</section></div></main>';
 }
-
 function infoPage(title,kicker,body,sections=[]){
   return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(kicker)+'</span><h2>'+esc(title)+'.</h2><p class="section-lead">'+esc(body)+'</p><div class="info-meta"><span>01 · Estratégia</span><span>02 · Produto</span><span>03 · Engenharia</span></div></div>'+(sections.length?'<div class="info-grid">'+sections.map((x,i)=>'<section class="info-card"><span class="eyebrow">'+String(i+1).padStart(2,"0")+' · '+esc(x[0])+'</span><h3>'+esc(x[1])+'</h3><p class="muted">'+esc(x[2])+'</p><a class="text-link" href="#/contato">Falar com a equipe '+icon("arrow")+'</a></section>').join('')+'</div>':'')+'<section class="info-deep"><div><span class="eyebrow">Perspectiva</span><h3>Construção contínua, decisões claras.</h3></div><p class="muted">A Korczak Technology estrutura seus projetos em etapas para que produto, engenharia, experiência e operação possam evoluir com contexto, documentação e objetivos mensuráveis.</p></section><div class="actions"><a class="btn" href="#/produtos">Explorar produtos '+icon("arrow")+'</a><a class="btn ghost" href="#/contato">Entrar em contato</a></div></main>';
 }
@@ -776,7 +775,7 @@ async function submitAuth(e){
   button.dataset.originalText=button.textContent;
   button.textContent=mode==="login"?"Entrando…":"Criando conta…";
   try{
-    const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:new URLSearchParams(payload).toString()});
+    const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",body:JSON.stringify(payload)});
     if(!d?.token||!d?.user)throw Error("O servidor não retornou uma sessão válida.");
     state.token=d.token;state.user=d.user;state.authenticated=true;state.authMode="login";state.authMessage="";
     localStorage.setItem("kz_token",d.token);
@@ -789,8 +788,30 @@ async function submitAuth(e){
     if(document.body.contains(button))button.textContent=button.dataset.originalText||"Continuar";
   }
 }
+async function sendProfile(e){
+  e.preventDefault();
+  const form=e.target,msg=form.querySelector("#profile-message"),button=form.querySelector("button[type=submit]");
+  button.disabled=true;msg.textContent="Salvando…";
+  try{
+    const d=await api("/api/me",{method:"PATCH",body:JSON.stringify(Object.fromEntries(new FormData(form)))});
+    state.user=d.user;state.token=d.token;localStorage.setItem("kz_token",d.token);msg.textContent="Dados salvos.";toast("Perfil atualizado.");render();
+  }catch(x){msg.textContent=x.message}
+  finally{if(document.body.contains(button))button.disabled=false}
+}
+async function sendPasswordChange(e){
+  e.preventDefault();
+  const form=e.target,msg=form.querySelector("#password-message"),button=form.querySelector("button[type=submit]");
+  const data=Object.fromEntries(new FormData(form));
+  if(String(data.newPassword||"").length<8){msg.textContent="A nova senha precisa ter pelo menos 8 caracteres.";return}
+  button.disabled=true;msg.textContent="Alterando…";
+  try{const d=await api("/api/me/password",{method:"POST",body:JSON.stringify(data)});form.reset();msg.textContent=d.message||"Senha alterada com sucesso.";toast("Senha alterada com sucesso.");}
+  catch(x){msg.textContent=x.message}
+  finally{button.disabled=false}
+}
 document.addEventListener("submit",e=>{
   if(e.target.id==="contact-form")sendContact(e);
+  if(e.target.id==="profile-form")sendProfile(e);
+  if(e.target.id==="password-form")sendPasswordChange(e);
   if(e.target.id==="quote-form")sendQuote(e);
   if(e.target.id==="presale-form")sendPresale(e);
   if(e.target.id==="subscription-form")sendSubscription(e);
