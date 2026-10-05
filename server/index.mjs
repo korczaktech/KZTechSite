@@ -161,7 +161,7 @@ function idMongo(v){try{return new ObjectId(v)}catch{return null}}
 const CENTRAL_APPS=["Site","Morok","IDE","AI","ERP","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE","Vault","Nexus","Nexa","Veya","Formly","Korvo","Chrona","Meet","Pulse","Acta","Memo","People","Web","Klash"];
 function centralAplicativos(siteSenha=""){const out={};for(const app of CENTRAL_APPS)out[app]={Senha:app==="Site"?siteSenha:"",Ativo:true};return out;}
 function centralConta({id=randomUUID(),name,email,siteSenha="",role="user",verified=false,createdAt=new Date()}){const agora=createdAt||new Date();return {id,Nome:name,Email:email,Telefone:null,Aplicativos:centralAplicativos(siteSenha),Planos:{KOS:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false},Workspace:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false}},Verified:Boolean(verified),EmailVerified:Boolean(verified),PhoneVerified:false,Conta:{Status:"active",Role:role,CriadaEm:agora.toISOString(),AtualizadaEm:agora.toISOString(),UltimoLogin:null},Produtos:{KOS:true,Workspace:true,Site:true},Seguranca:{TwoFactorEnabled:false,RecoveryEnabled:true},Preferencias:{Idioma:"pt-BR",Tema:"dark"},Metadados:{OrigemCadastro:"KZTechSite",VersaoCadastro:"1.0.0",UltimoDispositivo:"",UltimoIP:null}};}
-function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,role:u.Conta?.Role||"user",verified:Boolean(u.Verified)};}
+function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,phone:u.Telefone||null,role:u.Conta?.Role||"user",verified:Boolean(u.Verified)};}
 async function registrarAuditoria(req,acao,detalhes){
   if(!db)return;
   await db.collection("auditoria").insertOne({
