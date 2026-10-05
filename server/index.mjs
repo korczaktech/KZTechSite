@@ -24,6 +24,7 @@ if(isProd&&!FRONTEND_URLS.length)throw new Error("FRONTEND_URL must be configure
 let db=null;
 let accountsDb=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
+const accountsMongo=process.env.MONGODB_ACCOUNTS_URI?new MongoClient(process.env.MONGODB_ACCOUNTS_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
 const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_KEY):null;
 const rateBuckets=new Map();
 function rateLimit({windowMs=60000,max=60}={}){return (req,res,next)=>{const now=Date.now(),key=req.ip||"unknown",old=rateBuckets.get(key);if(!old||now-old.started>=windowMs){rateBuckets.set(key,{started:now,count:1});return next()}old.count++;if(old.count>max){res.set("Retry-After",String(Math.ceil((windowMs-(now-old.started))/1000)));return res.status(429).json({error:"Muitas solicitações. Aguarde alguns segundos e tente novamente."})}next()}}
@@ -803,8 +804,15 @@ async function start(){
   if(mongo){
     await mongo.connect();
     db=mongo.db(process.env.MONGODB_DB||"KZTech");
-    accountsDb=mongo.db("Contas");
     await db.command({ping:1});
+    if(accountsMongo){
+      await accountsMongo.connect();
+      accountsDb=accountsMongo.db(process.env.MONGODB_ACCOUNTS_DATABASE||"Contas");
+    }else if(isProd){
+      throw new Error("MONGODB_ACCOUNTS_URI is required in production.");
+    }else{
+      accountsDb=mongo.db(process.env.MONGODB_ACCOUNTS_DATABASE||"Contas");
+    }
     await accountsDb.command({ping:1});
     await accountsDb.collection("contas").createIndex({Email:1},{unique:true});
     await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
@@ -835,6 +843,7 @@ async function start(){
 async function shutdown(signal){
   console.log(`${signal}: shutting down`);
   if(server)await new Promise(resolve=>server.close(resolve));
+  if(accountsMongo)await accountsMongo.close();
   if(mongo)await mongo.close();
   process.exit(0);
 }
