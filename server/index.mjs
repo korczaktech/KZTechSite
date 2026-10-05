@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {MongoClient,ObjectId} from "mongodb";
 import Stripe from "stripe";
+import {randomUUID} from "node:crypto";
 
 const app=express();
 const PORT=Number(process.env.PORT||3000);
@@ -21,6 +22,7 @@ if(isProd&&!SITE_URL)throw new Error("SITE_URL must be configured in production.
 if(isProd&&!FRONTEND_URLS.length)throw new Error("FRONTEND_URL must be configured in production.");
 
 let db=null;
+let accountsDb=null;
 const mongo=process.env.MONGODB_URI?new MongoClient(process.env.MONGODB_URI,{serverSelectionTimeoutMS:10000,connectTimeoutMS:10000}):null;
 const stripe=process.env.STRIPE_SECRET_KEY?new Stripe(process.env.STRIPE_SECRET_KEY):null;
 const rateBuckets=new Map();
@@ -156,6 +158,10 @@ app.use("/admin",express.static("admin",{extensions:["html"]}));
 const TIPOS_CONTEUDO=new Set(["texto","html","imagem","link","atributo","estilo","classe","visibilidade"]);
 const emailValida=v=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(v||"").trim());
 function idMongo(v){try{return new ObjectId(v)}catch{return null}}
+const CENTRAL_APPS=["Site","Morok","IDE","AI","ERP","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE","Vault","Nexus","Nexa","Veya","Formly","Korvo","Chrona","Meet","Pulse","Acta","Memo","People","Web","Klash"];
+function centralAplicativos(siteSenha=""){const out={};for(const app of CENTRAL_APPS)out[app]={Senha:app==="Site"?siteSenha:"",Ativo:true};return out;}
+function centralConta({id=randomUUID(),name,email,siteSenha="",role="user",verified=false,createdAt=new Date()}){const agora=createdAt||new Date();return {id,Nome:name,Email:email,Telefone:null,Aplicativos:centralAplicativos(siteSenha),Planos:{KOS:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false},Workspace:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false}},Verified:Boolean(verified),EmailVerified:Boolean(verified),PhoneVerified:false,Conta:{Status:"active",Role:role,CriadaEm:agora.toISOString(),AtualizadaEm:agora.toISOString(),UltimoLogin:null},Produtos:{KOS:true,Workspace:true,Site:true},Seguranca:{TwoFactorEnabled:false,RecoveryEnabled:true},Preferencias:{Idioma:"pt-BR",Tema:"dark"},Metadados:{OrigemCadastro:"KZTechSite",VersaoCadastro:"1.0.0",UltimoDispositivo:"",UltimoIP:null}};}
+function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,role:u.Conta?.Role||"user",verified:Boolean(u.Verified)};}
 async function registrarAuditoria(req,acao,detalhes){
   if(!db)return;
   await db.collection("auditoria").insertOne({
@@ -189,10 +195,10 @@ app.post("/api/analiticas/evento",rateLimit({windowMs:60000,max:120}),async(req,
   let nome=String(b.nome||"").slice(0,120);
   let emailEvento=String(b.email||"").slice(0,180);
   if(usuarioId){
-    const u=idMongo(usuarioId)?await db.collection("users").findOne({_id:idMongo(usuarioId)},{projection:{name:1,email:1}}):null;
-    if(u){nome=String(u.name||nome).slice(0,120);emailEvento=String(u.email||emailEvento).slice(0,180);}
+    const u=idMongo(usuarioId)?await accountsDb.collection("contas").findOne({id:usuarioId},{projection:{Nome:1,Email:1}}):null;
+    if(u){nome=String(u.Nome||nome).slice(0,120);emailEvento=String(u.Email||emailEvento).slice(0,180);}
   }else if(emailEvento){
-    const u=await db.collection("users").findOne({email:email(emailEvento)},{projection:{name:1,email:1}});
+    const u=await accountsDb.collection("contas").findOne({Email:email(emailEvento)},{projection:{Nome:1,Email:1,id:1}});
     if(u){usuarioId=String(u._id);nome=String(u.name||nome).slice(0,120);emailEvento=String(u.email||emailEvento).slice(0,180);}
   }
   await db.collection("analiticas").insertOne({
@@ -293,7 +299,7 @@ app.get("/api/admin/interessados",auth,admin,async(req,res)=>{
   const rows=await db.collection("interessados").find(filtro,{projection:{}}).sort({criadoEm:-1}).limit(2000).toArray();
   res.json(rows.map(r=>({...r,_id:String(r._id)})));
 });
-app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([db.collection("users").find({},{projection:{passwordHash:0}}).sort({createdAt:-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...u,_id:String(u._id),atividades:mapa.get(String(u._id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
+app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([accountsDb.collection("contas").find({}).sort({"Conta.AtualizadaEm":-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...accountSafe(u),atividades:mapa.get(String(u.id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos,interessadosAI]=await Promise.all([
@@ -301,7 +307,7 @@ app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
     db.collection("midias").countDocuments(),
     db.collection("usuarios_administradores").countDocuments(),
     db.collection("auditoria").countDocuments(),
-    db.collection("users").countDocuments(),
+    accountsDb.collection("contas").countDocuments(),
     db.collection("contacts").countDocuments(),
     db.collection("quotes").countDocuments(),
     db.collection("orders").countDocuments(),
@@ -472,8 +478,11 @@ app.post("/api/admin/administradores",auth,admin,async(req,res)=>{
   if(nome.length<2||!emailValida(mail)||senha.length<8||senha.length>128)return res.status(400).json({error:"Dados do administrador inválidos"});
   try{
     const agora=new Date();
-    const r=await db.collection("users").insertOne({name:nome,email:mail,passwordHash:await bcrypt.hash(senha,12),role:"admin",verified:true,createdAt:agora});
-    await db.collection("usuarios_administradores").insertOne({usuarioId:String(r.insertedId),nome,email:mail,papel:"administrador",criadoEm:agora,criadoPor:req.user.email});
+    const existente=await accountsDb.collection("contas").findOne({Email:mail},{projection:{id:1}});
+    if(existente)return res.status(409).json({error:"E-mail já cadastrado"});
+    const u=centralConta({name:nome,email:mail,siteSenha:await bcrypt.hash(senha,12),role:"admin",verified:true,createdAt:agora});
+    await accountsDb.collection("contas").insertOne(u);
+    await db.collection("usuarios_administradores").insertOne({usuarioId:u.id,nome,email:mail,papel:"administrador",criadoEm:agora,criadoPor:req.user.email});
     await registrarAuditoria(req,"criar_administrador",`Administrador ${mail} criado`);
     res.status(201).json({ok:true});
   }catch(e){res.status(e.code===11000?409:500).json({error:e.code===11000?"E-mail já cadastrado":"Falha ao criar administrador"})}
@@ -505,8 +514,8 @@ async function nomesPorEmails(emails){
   if(!db)return new Map();
   const lista=[...new Set((emails||[]).map(v=>email(v)).filter(Boolean))];
   if(!lista.length)return new Map();
-  const usuarios=await db.collection("users").find({email:{$in:lista}},{projection:{name:1,email:1}}).toArray();
-  return new Map(usuarios.map(u=>[email(u.email),u.name||""]));
+  const usuarios=await accountsDb.collection("contas").find({Email:{$in:lista}},{projection:{Nome:1,Email:1}}).toArray();
+  return new Map(usuarios.map(u=>[email(u.Email),u.Nome||""]));
 }
 
 
@@ -537,32 +546,29 @@ app.post("/api/contact",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
 });
 
 app.post("/api/auth/register",rateLimit({windowMs:60000,max:8}),async(req,res)=>{
-  if(!db)return res.status(503).json({error:"Banco não configurado"});
+  if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
   const name=String(req.body?.name||"").trim(),mail=email(req.body?.email),pass=String(req.body?.password||"");
-  if(name.length<2||name.length>120||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8||pass.length>128)
-    return res.status(400).json({error:"Dados inválidos"});
+  if(name.length<2||name.length>120||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8||pass.length>128)return res.status(400).json({error:"Dados inválidos"});
   try{
-    const r=await db.collection("users").insertOne({
-      name,email:mail,passwordHash:await bcrypt.hash(pass,12),role:"user",
-      verified:false,createdAt:new Date()
-    });
-    const u={_id:r.insertedId,name,email:mail,role:"user"};
-    await db.collection("atividade_contas").insertOne({usuarioId:String(r.insertedId),nome:name,email:mail,tipo:"cadastro",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",criadoEm:new Date()});
-    await registrarEventoAnalitico({tipo:"cadastro",categoria:"contas",subcategoria:"cadastros",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",usuarioId:r.insertedId,nome,email:mail,entidade:"conta",entidadeId:r.insertedId});
-    res.status(201).json({user:u,token:token(u)});
-  }catch(e){
-    res.status(e.code===11000?409:500).json({error:e.code===11000?"Email já cadastrado":"Falha ao criar conta"});
-  }
+    if(await accountsDb.collection("contas").findOne({Email:mail},{projection:{id:1}}))return res.status(409).json({error:"Email já cadastrado"});
+    const u=centralConta({name,email:mail,siteSenha:await bcrypt.hash(pass,12)});
+    await accountsDb.collection("contas").insertOne(u);
+    const safe=accountSafe(u),agora=new Date();
+    await db.collection("atividade_contas").insertOne({usuarioId:u.id,nome:name,email:mail,tipo:"cadastro",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",criadoEm:agora});
+    await registrarEventoAnalitico({tipo:"cadastro",categoria:"contas",subcategoria:"cadastros",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",usuarioId:u.id,nome,email:mail,entidade:"conta",entidadeId:u.id});
+    res.status(201).json({user:safe,token:token(safe)});
+  }catch(e){res.status(e.code===11000?409:500).json({error:e.code===11000?"Email já cadastrado":"Falha ao criar conta"});}
 });
 
 app.post("/api/auth/login",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
-  if(!db)return res.status(503).json({error:"Banco não configurado"});
-  const u=await db.collection("users").findOne({email:email(req.body?.email)});
-  if(!u||!(await bcrypt.compare(String(req.body?.password||""),u.passwordHash)))
-    return res.status(401).json({error:"Email ou senha inválidos"});
-  const safe={_id:u._id,name:u.name,email:u.email,role:u.role};
-  await db.collection("atividade_contas").insertOne({usuarioId:String(u._id),nome:u.name||"",email:u.email||"",tipo:"login",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",criadoEm:new Date()});
-  await registrarEventoAnalitico({tipo:"login",categoria:"contas",subcategoria:"logins",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",usuarioId:u._id,nome:u.name,email:u.email,entidade:"conta",entidadeId:u._id});
+  if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
+  const u=await accountsDb.collection("contas").findOne({Email:email(req.body?.email),"Aplicativos.Site.Ativo":true});
+  if(!u||!u.Aplicativos?.Site?.Senha||!(await bcrypt.compare(String(req.body?.password||""),u.Aplicativos.Site.Senha)))return res.status(401).json({error:"Email ou senha inválidos"});
+  const agora=new Date();
+  await accountsDb.collection("contas").updateOne({id:u.id},{$set:{"Conta.UltimoLogin":agora,"Conta.AtualizadaEm":agora.toISOString()}});
+  const safe=accountSafe(u);
+  await db.collection("atividade_contas").insertOne({usuarioId:u.id,nome:u.Nome||"",email:u.Email||"",tipo:"login",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",criadoEm:agora});
+  await registrarEventoAnalitico({tipo:"login",categoria:"contas",subcategoria:"logins",acao:"Login realizado",descricao:"Entrada na conta realizada com sucesso.",pagina:"/conta",usuarioId:u.id,nome:u.Nome,email:u.Email,entidade:"conta",entidadeId:u.id});
   res.json({user:safe,token:token(safe)});
 });
 
@@ -626,11 +632,9 @@ app.get("/api/orders",auth,async(req,res)=>{
 });
 
 app.get("/api/me",auth,async(req,res)=>{
-  if(!db)return res.status(503).json({error:"Banco não configurado"});
-  let id;
-  try{id=new ObjectId(req.user.sub)}catch{return res.status(401).json({error:"Sessão inválida"})}
-  const u=await db.collection("users").findOne({_id:id},{projection:{passwordHash:0}});
-  u?res.json(u):res.status(404).json({error:"Usuário não encontrado"});
+  if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
+  const u=await accountsDb.collection("contas").findOne({id:req.user.sub});
+  u?res.json(accountSafe(u)):res.status(404).json({error:"Usuário não encontrado"});
 });
 
 app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
@@ -647,8 +651,8 @@ app.post("/api/quotes",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
     return res.status(400).json({error:"Preencha os campos obrigatórios do orçamento"});
   const agora=new Date();
   await db.collection("quotes").insertOne({userId:req.user?.sub||null,productId:productId||null,serviceId:serviceId||null,planId:planId||null,name,email:mail,phone,company:String(req.body?.company||"").slice(0,180),objective,scope:scope.slice(0,8000),deadline:String(req.body?.deadline||"").slice(0,180),budget:String(req.body?.budget||"").slice(0,180),details:String(req.body?.details||"").slice(0,5000),moduleIds:String(req.body?.moduleIds||"").slice(0,2000),status:"pending",createdAt:agora});
-  const u=req.user?.sub?await db.collection("users").findOne({_id:idMongo(req.user.sub)},{projection:{passwordHash:0}}):null;
-  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:productId?"/produto/"+productId:serviceId?"/servicos/"+serviceId:"/orcamento",usuarioId:req.user?.sub||null,nome:u?.name||name,email:u?.email||mail,entidade:"produto",entidadeId:productId,metadados:{objetivo:objective,escopo:scope.slice(0,500),servico:serviceId||null,produto:productId||null}});
+  const u=req.user?.sub?await accountsDb.collection("contas").findOne({id:req.user.sub}):null;
+  await registrarEventoAnalitico({tipo:"orcamento",categoria:"comercial",subcategoria:"orcamentos",acao:"Orçamento solicitado",descricao:"Solicitação de orçamento enviada.",pagina:productId?"/produto/"+productId:serviceId?"/servicos/"+serviceId:"/orcamento",usuarioId:req.user?.sub||null,nome:u?.Nome||name,email:u?.Email||mail,entidade:"produto",entidadeId:productId,metadados:{objetivo:objective,escopo:scope.slice(0,500),servico:serviceId||null,produto:productId||null}});
   res.status(201).json({ok:true});
 });
 
@@ -769,8 +773,10 @@ async function start(){
   if(mongo){
     await mongo.connect();
     db=mongo.db(process.env.MONGODB_DB||"KZTech");
+    accountsDb=mongo.db("Contas");
     await db.command({ping:1});
-    await db.collection("users").createIndex({email:1},{unique:true});
+    await accountsDb.command({ping:1});
+    await accountsDb.collection("contas").createIndex({Email:1},{unique:true});
     await db.collection("conteudo").createIndex({publicado:1,pagina:1,ordem:1});
   await db.collection("analiticas").createIndex({criadoEm:-1});
   await db.collection("analiticas").createIndex({pagina:1,criadoEm:-1});
