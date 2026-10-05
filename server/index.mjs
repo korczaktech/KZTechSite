@@ -299,7 +299,7 @@ app.get("/api/admin/interessados",auth,admin,async(req,res)=>{
   const rows=await db.collection("interessados").find(filtro,{projection:{}}).sort({criadoEm:-1}).limit(2000).toArray();
   res.json(rows.map(r=>({...r,_id:String(r._id)})));
 });
-app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([accountsDb.collection("contas").find({}).sort({"Conta.AtualizadaEm":-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...accountSafe(u),atividades:mapa.get(String(u.id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
+app.get("/api/admin/contas",auth,admin,async(req,res)=>{if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});const [usuarios,atividades]=await Promise.all([accountsDb.collection("contas").find({}).sort({"Conta.AtualizadaEm":-1}).limit(1000).toArray(),db.collection("atividade_contas").find().sort({criadoEm:-1}).limit(500).toArray()]);const mapa=new Map();for(const a of atividades){const k=String(a.usuarioId||a.email||"");if(!mapa.has(k))mapa.set(k,[]);mapa.get(k).push({...a,_id:String(a._id)});}res.json({contas:usuarios.map(u=>({...accountSafe(u),atividades:mapa.get(String(u.id))||[]})),atividades:atividades.map(a=>({...a,_id:String(a._id)}))});});
 app.get("/api/admin/resumo",auth,admin,async(req,res)=>{
   if(!db)return res.status(503).json({error:"Banco não configurado"});
   const [conteudo,midias,admins,auditoria,usuarios,contatos,orcamentos,pedidos,interessadosAI]=await Promise.all([
@@ -511,7 +511,7 @@ const token=u=>jwt.sign({sub:String(u._id),email:u.email,role:u.role||"user"},SE
 function auth(req,res,next){try{const h=req.headers.authorization||"";if(!h.startsWith("Bearer "))throw 0;req.user=jwt.verify(h.slice(7),SECRET);next()}catch{res.status(401).json({error:"Não autenticado"})}}
 function admin(req,res,next){if(req.user?.role!=="admin")return res.status(403).json({error:"Acesso restrito"});next()}
 async function nomesPorEmails(emails){
-  if(!db)return new Map();
+  if(!accountsDb)return new Map();
   const lista=[...new Set((emails||[]).map(v=>email(v)).filter(Boolean))];
   if(!lista.length)return new Map();
   const usuarios=await accountsDb.collection("contas").find({Email:{$in:lista}},{projection:{Nome:1,Email:1}}).toArray();
@@ -528,7 +528,7 @@ app.get("/api/health",(req,res)=>res.status(200).json({
   environment:process.env.NODE_ENV||"development",time:new Date().toISOString()
 }));
 app.get("/api/ready",(req,res)=>{
-  const ready=Boolean(db);
+  const ready=Boolean(db&&accountsDb);
   res.status(ready?200:503).json({ready,database:ready,time:new Date().toISOString()});
 });
 app.get("/api/products",(req,res)=>res.json(products.map(p=>({...p,commercial:Boolean(commercialProducts[p.id]),price:commercialProducts[p.id]?.amount||null,currency:commercialProducts[p.id]?.currency||"brl"}))));
