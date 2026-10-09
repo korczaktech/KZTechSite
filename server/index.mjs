@@ -157,7 +157,7 @@ app.use(express.urlencoded({extended:false,limit:"100kb"}));
 app.use("/admin",express.static("admin",{extensions:["html"]}));
 
 const TIPOS_CONTEUDO=new Set(["texto","html","imagem","link","atributo","estilo","classe","visibilidade"]);
-const emailValida=v=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(v||"").trim());
+const emailValida=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||"").trim());
 function idMongo(v){try{return new ObjectId(v)}catch{return null}}
 const CENTRAL_APPS=["Site","Morok","IDE","AI","ERP","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE","Vault","Nexus","Nexa","Veya","Formly","Korvo","Chrona","Meet","Pulse","Acta","Memo","People","Web","Klash"];
 function centralAplicativos(siteSenha=""){const out={};for(const app of CENTRAL_APPS)out[app]={Senha:app==="Site"?siteSenha:"",Ativo:true};return out;}
