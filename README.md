@@ -1,6 +1,6 @@
 # KZ Tech Site
 
-Site institucional e comercial da **Korczak Technology**, com catálogo, páginas institucionais, contas, orçamento, checkout, analytics e painel administrativo.
+Site institucional e comercial da **Korczak Technologies**, com catálogo, páginas institucionais, contas, orçamento, checkout, analytics e painel administrativo.
 
 ## Estado real do ecossistema
 
