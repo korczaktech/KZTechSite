@@ -1,23 +1,25 @@
 (() => {
   const site = "https://site.korczaktech.com.br/";
+  const brand = "Korczak Technologies";
+  const image = site + "assets/mark.svg";
   const fallback = {
     title: "Korczak Technologies | Software e soluções digitais",
-    description: "Conheça a Korczak Technologies: soluções digitais, desenvolvimento de software, sistemas empresariais e produtos de tecnologia."
+    description: "Conheça a Korczak Technologies: software, sistemas empresariais e produtos digitais."
   };
   const pages = {
     "/": fallback,
-    "/mentoria": { title: "Mentoria | Korczak Technologies", description: "Conheça a mentoria e os serviços de orientação tecnológica da Korczak Technologies." },
-    "/comercial": { title: "Soluções comerciais | Korczak Technologies", description: "Conheça as soluções comerciais, serviços e possibilidades de atendimento da Korczak Technologies." },
-    "/pre-venda": { title: "Pré-venda | Korczak Technologies", description: "Consulte informações e demonstre interesse nos produtos e soluções da Korczak Technologies." },
-    "/institucional": { title: "Sobre a empresa | Korczak Technologies", description: "Conheça a empresa, sua atuação, visão e ecossistema de tecnologia da Korczak Technologies." },
-    "/produtos": { title: "Produtos de tecnologia | Korczak Technologies", description: "Explore os produtos digitais, softwares e sistemas desenvolvidos pela Korczak Technologies." },
-    "/historia": { title: "Nossa história | Korczak Technologies", description: "Conheça a trajetória e o desenvolvimento da Korczak Technologies." },
-    "/visao": { title: "Visão | Korczak Technologies", description: "Conheça a visão e os objetivos de longo prazo da Korczak Technologies." },
-    "/valores": { title: "Valores | Korczak Technologies", description: "Conheça os princípios e valores institucionais da Korczak Technologies." },
-    "/parcerias": { title: "Parcerias | Korczak Technologies", description: "Saiba mais sobre oportunidades de parceria com a Korczak Technologies." },
-    "/carreiras": { title: "Carreiras | Korczak Technologies", description: "Conheça oportunidades profissionais e possibilidades de colaboração com a Korczak Technologies." },
-    "/faq": { title: "Perguntas frequentes | Korczak Technologies", description: "Encontre respostas para dúvidas frequentes sobre a Korczak Technologies, seus serviços e produtos." },
-    "/contato": { title: "Contato | Korczak Technologies", description: "Entre em contato com a Korczak Technologies para dúvidas, propostas comerciais e informações." },
+    "/mentoria": { title: "Mentoria em tecnologia | Korczak Technologies", description: "Conheça a mentoria da Korczak Technologies para orientação tecnológica, planejamento e desenvolvimento de soluções digitais." },
+    "/comercial": { title: "Soluções comerciais | Korczak Technologies", description: "Conheça as soluções comerciais e os serviços de tecnologia da Korczak Technologies e entre em contato para discutir seu projeto." },
+    "/pre-venda": { title: "Pré-venda de produtos | Korczak Technologies", description: "Consulte informações e manifeste interesse nos produtos e soluções digitais da Korczak Technologies." },
+    "/institucional": { title: "Sobre a Korczak Technologies", description: "Conheça a Korczak Technologies, sua atuação em software, sistemas empresariais e produtos digitais." },
+    "/produtos": { title: "Produtos de tecnologia | Korczak Technologies", description: "Explore os produtos, softwares e sistemas digitais da Korczak Technologies e conheça o ecossistema de soluções." },
+    "/historia": { title: "Nossa história | Korczak Technologies", description: "Conheça a trajetória e o desenvolvimento da Korczak Technologies e de seu ecossistema de produtos digitais." },
+    "/visao": { title: "Visão da empresa | Korczak Technologies", description: "Conheça a visão e os objetivos de longo prazo da Korczak Technologies no desenvolvimento de tecnologia e software." },
+    "/valores": { title: "Valores institucionais | Korczak Technologies", description: "Conheça os valores e princípios institucionais da Korczak Technologies." },
+    "/parcerias": { title: "Parcerias | Korczak Technologies", description: "Conheça oportunidades de parceria com a Korczak Technologies para iniciativas, produtos e soluções de tecnologia." },
+    "/carreiras": { title: "Carreiras e oportunidades | Korczak Technologies", description: "Consulte informações sobre carreiras e possibilidades de colaboração com a Korczak Technologies." },
+    "/faq": { title: "Perguntas frequentes | Korczak Technologies", description: "Encontre respostas para dúvidas frequentes sobre a Korczak Technologies, seus produtos e suas soluções digitais." },
+    "/contato": { title: "Contato | Korczak Technologies", description: "Entre em contato com a Korczak Technologies para dúvidas, informações sobre produtos e propostas comerciais." },
     "/conta": { title: "Minha conta | Korczak Technologies", description: "Acesse sua conta na plataforma Korczak Technologies." }
   };
   function meta(name, content, property = false) {
@@ -34,7 +36,7 @@
     const raw = location.hash.startsWith("#/") ? location.hash.slice(1).split("?")[0] : "/";
     const path = raw.startsWith("/produto/") ? "/produto/" : raw;
     const data = pages[path] || (path === "/produto/" ? {
-      title: "Produto | Korczak Technologies",
+      title: "Produtos de tecnologia | Korczak Technologies",
       description: "Conheça os produtos e soluções digitais da Korczak Technologies."
     } : fallback);
     document.title = data.title;
@@ -42,8 +44,11 @@
     meta("og:title", data.title, true);
     meta("og:description", data.description, true);
     meta("og:url", site, true);
+    meta("og:image", image, true);
     meta("twitter:title", data.title);
     meta("twitter:description", data.description);
+    meta("twitter:image", image);
+    // Rotas por fragmento não são URLs canônicas independentes; a página canônica é a raiz.
     const canonical = document.head.querySelector('link[rel="canonical"]');
     if (canonical) canonical.href = site;
   }
