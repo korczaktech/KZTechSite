@@ -1330,3 +1330,11 @@ img,svg,video,canvas,iframe{max-width:100%}
 .section-group{position:relative}
 @media(max-width:900px){.hub-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.hub-grid{grid-template-columns:1fr}}
+
+
+/* Ações secundárias da autenticação — alinhadas ao estilo do site */
+.auth-recovery{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin:20px 0 0;color:#666;font-size:11px}
+.auth-recovery a,.auth-recovery button{appearance:none;border:0;background:transparent;color:#aaa;padding:4px 0;font:inherit;font-size:11px;text-decoration:none;cursor:pointer;box-shadow:none;transition:color .2s ease,opacity .2s ease}
+.auth-recovery a:hover,.auth-recovery button:hover{color:#fff}
+.auth-recovery button:focus-visible,.auth-recovery a:focus-visible{outline:1px solid #888;outline-offset:4px;border-radius:3px}
+.auth-recovery button:disabled{opacity:.5;cursor:wait}
