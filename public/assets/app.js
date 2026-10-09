@@ -595,8 +595,9 @@ function authPage(mode="login",message=""){
 }
 
 function account(){
-  const query=new URLSearchParams((location.hash.split("?")[1]||""));
-  const verifyToken=query.get("verificar")||"",resetToken=query.get("redefinir")||"",recover=query.has("recuperar");
+  const hashQuery=location.hash.includes("?")?location.hash.split("?").slice(1).join("?"):"";
+  const query=new URLSearchParams(hashQuery);
+  const verifyToken=query.get("verificar")||(location.hash.startsWith("#/verificar-email")?query.get("token"):"")||"",resetToken=query.get("redefinir")||(location.hash.startsWith("#/redefinir-senha")?query.get("token"):"")||"",recover=query.has("recuperar");
   if(verifyToken)return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-card"><span class="eyebrow">Verificação de e-mail</span><h1>Confirme seu endereço.</h1><p>Use o botão abaixo para confirmar seu e-mail e ativar o acesso.</p><form id="verify-email-form" class="auth-form"><input type="hidden" name="token" value="'+esc(verifyToken)+'"><button class="btn" type="submit">Verificar e-mail '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status"></small></form></div></section></main>';
   if(resetToken)return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-card"><span class="eyebrow">Recuperação segura</span><h1>Defina uma nova senha.</h1><form id="reset-password-form" class="auth-form"><input type="hidden" name="token" value="'+esc(resetToken)+'"><label><span>Nova senha</span><input class="field" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required></label><button class="btn" type="submit">Salvar nova senha '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status"></small></form></div></section></main>';
   if(recover)return '<main id="main-content" class="auth-page"><section class="auth-shell"><div class="auth-card"><span class="eyebrow">Recuperação de acesso</span><h1>Recupere sua conta.</h1><p>Enviaremos um link seguro para o e-mail cadastrado.</p><form id="forgot-password-form" class="auth-form"><label><span>Email</span><input class="field" name="email" type="email" autocomplete="email" required></label><button class="btn" type="submit">Enviar link de recuperação '+icon("arrow")+'</button><small id="auth-message" class="form-note" role="status"></small></form><p><a href="#/conta">Voltar ao login</a></p></div></section></main>';
@@ -633,6 +634,7 @@ function render(){
   };
   let c;
   if(h==="/acesso")c=authPage(state.authMode||"login",state.authMessage||"");
+  else if(h==="/redefinir-senha"||h==="/verificar-email")c=account();
   else if(h==="/conta"&&!state.authenticated&&!/[?&](?:redefinir|verificar|recuperar)(?:=|&|$)/.test(location.hash))c=authPage(state.authMode||"login");
   else if(h==="/")c=home();
   else if(h==="/comercial")c=commercial();
@@ -666,7 +668,8 @@ function render(){
     c=product(productId);
   }
   else c=infoPage("Página não encontrada","KZ Tech","A página solicitada não existe ou foi movida.",[["Navegação","Voltar ao ecossistema","Use a navegação para explorar a empresa, os produtos e os canais de contato."]]);
-  root.innerHTML=(h!=="/conta"||state.authenticated)?nav()+c+footer():c;initMoon();if(h==="/download/nexus")loadNexusRelease();
+  const authFlow=["/conta","/redefinir-senha","/verificar-email"].includes(h)&&(!state.authenticated||h!=="/conta"||/[?&](?:redefinir|verificar|recuperar)(?:=|&|$)/.test(location.hash));
+  root.innerHTML=authFlow?c:nav()+c+footer();initMoon();if(h==="/download/nexus")loadNexusRelease();
   const authForm=root.querySelector("#auth-form");
   if(authForm)authForm.addEventListener("submit",submitAuth);
   root.querySelectorAll("[data-service-option]").forEach(el=>el.addEventListener("change",()=>updateServiceQuote(el)));root.querySelectorAll("[data-module-toggle]").forEach(el=>el.addEventListener("change",()=>updateKOSModules(el)));
