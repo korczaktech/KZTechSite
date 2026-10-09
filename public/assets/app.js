@@ -782,11 +782,17 @@ async function submitAuth(e){
   button.textContent=mode==="login"?"Entrando…":"Criando conta…";
   try{
     const d=await api(mode==="login"?"/api/auth/login":"/api/auth/register",{method:"POST",body:JSON.stringify(payload)});
-    if(!d?.token||!d?.user)throw Error("O servidor não retornou uma sessão válida.");
+    if(!d?.user)throw Error("O servidor não retornou os dados da conta.");
+    if(mode==="register"&&d.emailVerificationRequired){
+      state.token=null;state.user=null;state.authenticated=false;localStorage.removeItem("kz_token");
+      state.authMode="login";state.authMessage=d.emailSent?"Conta criada. Confira sua caixa de entrada e confirme o e-mail antes de entrar.":"Conta criada, mas o envio de e-mail ainda não está configurado. A equipe precisa concluir a configuração do Gmail e você poderá solicitar novo envio.";
+      render();return;
+    }
+    if(!d?.token)throw Error("O servidor não retornou uma sessão válida.");
     state.token=d.token;state.user=d.user;state.authenticated=true;state.authMode="login";state.authMessage="";
     localStorage.setItem("kz_token",d.token);
     render();
-    toast(mode==="login"?"Login realizado.":"Conta criada com sucesso.");
+    toast("Login realizado.");
     await load();
   }catch(x){msg.textContent=x?.message||"Não foi possível concluir o cadastro."}
   finally{
