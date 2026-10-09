@@ -182,7 +182,8 @@ async function sendGmail({to,subject,text}){
  if(!r.ok){console.error("Gmail API erro:",d.error?.status||r.status);throw new Error("O Gmail não conseguiu enviar a mensagem.");}return d;
 }
 async function emailLink(user,value,type){
- const link=`${FRONTEND_URL||SITE_URL}/#/conta?${type}=${encodeURIComponent(value)}`;
+ const route=type==="verificar"?"verificar-email":"redefinir-senha";
+ const link=`${FRONTEND_URL||SITE_URL}/#/${route}?token=${encodeURIComponent(value)}`;
  await sendGmail({to:user.Email,subject:type==="verificar"?"Verifique seu e-mail — Korczak Technologies":"Recuperação de acesso — Korczak Technologies",text:`Olá, ${user.Nome||"usuário"}!\n\n${type==="verificar"?"Confirme seu e-mail":"Para definir uma nova senha"}: \n${link}\n\nEste link expira em 30 minutos. Se você não solicitou esta ação, ignore a mensagem.\n\nKorczak Technologies`});
 }
 async function securityEmail(user,subject,message){if(!GMAIL_API_CONFIGURED)return;try{await sendGmail({to:user.Email,subject,text:`Olá, ${user.Nome||"usuário"}.\n\n${message}\n\nKorczak Technologies`});}catch(e){console.error("Notificação de segurança não enviada:",e?.message||e);}}
