@@ -633,7 +633,7 @@ function render(){
   };
   let c;
   if(h==="/acesso")c=authPage(state.authMode||"login",state.authMessage||"");
-  else if(h==="/conta"&&!state.authenticated)c=authPage(state.authMode||"login");
+  else if(h==="/conta"&&!state.authenticated&&!/[?&](?:redefinir|verificar|recuperar)(?:=|&|$)/.test(location.hash))c=authPage(state.authMode||"login");
   else if(h==="/")c=home();
   else if(h==="/comercial")c=commercial();
   else if(h.startsWith("/pre-venda"))c=presalePage();
