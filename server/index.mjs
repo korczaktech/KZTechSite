@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {MongoClient,ObjectId} from "mongodb";
 import Stripe from "stripe";
-import {randomUUID} from "node:crypto";
+import {randomUUID,randomBytes,createHash} from "node:crypto";
 
 const app=express();
 const PORT=Number(process.env.PORT||3000);
@@ -162,7 +162,29 @@ function idMongo(v){try{return new ObjectId(v)}catch{return null}}
 const CENTRAL_APPS=["Site","Morok","IDE","AI","ERP","FLOW","DOCUMENTS","VISION","OPS","CONNECT","MOBILE","Vault","Nexus","Nexa","Veya","Formly","Korvo","Chrona","Meet","Pulse","Acta","Memo","People","Web","Klash"];
 function centralAplicativos(siteSenha=""){const out={};for(const app of CENTRAL_APPS)out[app]={Senha:app==="Site"?siteSenha:"",Ativo:true};return out;}
 function centralConta({id=randomUUID(),name,email,siteSenha="",role="user",verified=false,createdAt=new Date()}){const agora=createdAt||new Date();return {id,Nome:name,Email:email,Telefone:null,Aplicativos:centralAplicativos(siteSenha),Planos:{KOS:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false},Workspace:{Free:true,Hephaestus:false,Apollo:false,Athena:false,Zeus:false,Veles:false,Marzanna:false}},Verified:Boolean(verified),EmailVerified:Boolean(verified),PhoneVerified:false,Conta:{Status:"active",Role:role,CriadaEm:agora.toISOString(),AtualizadaEm:agora.toISOString(),UltimoLogin:null},Produtos:{KOS:true,Workspace:true,Site:true},Seguranca:{TwoFactorEnabled:false,RecoveryEnabled:true},Preferencias:{Idioma:"pt-BR",Tema:"dark"},Metadados:{OrigemCadastro:"KZTechSite",VersaoCadastro:"1.0.0",UltimoDispositivo:"",UltimoIP:null}};}
-function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,phone:u.Telefone||null,role:u.Conta?.Role||"user",verified:Boolean(u.Verified)};}
+
+function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,phone:u.Telefone||null,role:u.Conta?.Role||"user",verified:Boolean(u.EmailVerified||u.Verified)};}
+const GMAIL_CLIENT_ID=String(process.env.GMAIL_CLIENT_ID||"").trim(),GMAIL_CLIENT_SECRET=String(process.env.GMAIL_CLIENT_SECRET||"").trim(),GMAIL_REFRESH_TOKEN=String(process.env.GMAIL_REFRESH_TOKEN||"").trim(),GMAIL_SENDER_EMAIL=String(process.env.GMAIL_SENDER_EMAIL||"").trim().toLowerCase();
+const GMAIL_API_CONFIGURED=Boolean(GMAIL_CLIENT_ID&&GMAIL_CLIENT_SECRET&&GMAIL_REFRESH_TOKEN&&GMAIL_SENDER_EMAIL);
+const hashAuthToken=v=>createHash("sha256").update(String(v)).digest("hex");
+async function gmailAccessToken(){
+ if(!GMAIL_API_CONFIGURED)throw new Error("Configure as credenciais OAuth do Gmail no Render.");
+ const r=await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({client_id:GMAIL_CLIENT_ID,client_secret:GMAIL_CLIENT_SECRET,refresh_token:GMAIL_REFRESH_TOKEN,grant_type:"refresh_token"})});
+ const d=await r.json().catch(()=>({}));if(!r.ok||!d.access_token){console.error("Gmail OAuth falhou:",d.error||r.status);throw new Error("Não foi possível autorizar o Gmail.");}return d.access_token;
+}
+async function sendGmail({to,subject,text}){
+ const recipient=String(to||"").trim().toLowerCase();if(!emailValida(recipient))throw new Error("Destinatário inválido.");
+ const enc=v=>Buffer.from(String(v),"utf8").toString("base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+ const mime=[`From: Korczak Technologies <${GMAIL_SENDER_EMAIL}>`,`To: ${recipient}`,`Subject: =?UTF-8?B?${Buffer.from(String(subject||"Korczak Technologies").replace(/[\r\n]/g," ")).toString("base64")}?=`,"MIME-Version: 1.0",'Content-Type: text/plain; charset="UTF-8"',"Content-Transfer-Encoding: base64","",Buffer.from(String(text||""),"utf8").toString("base64")].join("\r\n");
+ const token=await gmailAccessToken(),r=await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send",{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({raw:enc(mime)})}),d=await r.json().catch(()=>({}));
+ if(!r.ok){console.error("Gmail API erro:",d.error?.status||r.status);throw new Error("O Gmail não conseguiu enviar a mensagem.");}return d;
+}
+async function emailLink(user,value,type){
+ const link=`${FRONTEND_URL||SITE_URL}/#/conta?${type}=${encodeURIComponent(value)}`;
+ await sendGmail({to:user.Email,subject:type==="verificar"?"Verifique seu e-mail — Korczak Technologies":"Recuperação de acesso — Korczak Technologies",text:`Olá, ${user.Nome||"usuário"}!\n\n${type==="verificar"?"Confirme seu e-mail":"Para definir uma nova senha"}: \n${link}\n\nEste link expira em 30 minutos. Se você não solicitou esta ação, ignore a mensagem.\n\nKorczak Technologies`});
+}
+async function securityEmail(user,subject,message){if(!GMAIL_API_CONFIGURED)return;try{await sendGmail({to:user.Email,subject,text:`Olá, ${user.Nome||"usuário"}.\n\n${message}\n\nKorczak Technologies`});}catch(e){console.error("Notificação de segurança não enviada:",e?.message||e);}}
+
 async function registrarAuditoria(req,acao,detalhes){
   if(!db)return;
   await db.collection("auditoria").insertOne({
@@ -546,18 +568,56 @@ app.post("/api/contact",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   res.status(201).json({ok:true});
 });
 
+
+app.get("/api/notifications/email-status",(req,res)=>res.json({configured:GMAIL_API_CONFIGURED}));
+app.post("/api/auth/verify-email",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
+ if(!accountsDb)return res.status(503).json({error:"Banco não configurado"});const raw=String(req.body?.token||"");
+ if(raw.length<32||raw.length>256)return res.status(400).json({error:"Link inválido ou expirado."});
+ const u=await accountsDb.collection("contas").findOne({EmailVerificationTokenHash:hashAuthToken(raw),EmailVerificationExpires:{$gt:new Date()}});
+ if(!u)return res.status(400).json({error:"Link inválido ou expirado. Solicite outro e-mail."});
+ const now=new Date();await accountsDb.collection("contas").updateOne({_id:u._id},{$set:{EmailVerified:true,Verified:true,EmailVerifiedAt:now,"Conta.AtualizadaEm":now.toISOString()},$unset:{EmailVerificationTokenHash:"",EmailVerificationExpires:""}});
+ await securityEmail(u,"E-mail verificado","Seu endereço de e-mail foi verificado com sucesso.");res.json({ok:true,message:"E-mail verificado. Você já pode entrar."});
+});
+app.post("/api/auth/resend-verification",rateLimit({windowMs:60000,max:4}),async(req,res)=>{
+ if(!accountsDb)return res.status(503).json({error:"Banco não configurado"});const mail=email(req.body?.email);
+ if(!emailValida(mail))return res.status(400).json({error:"Informe um e-mail válido."});
+ const u=await accountsDb.collection("contas").findOne({Email:mail});
+ if(u&&!u.EmailVerified&&!u.Verified){const value=randomBytes(32).toString("hex");await accountsDb.collection("contas").updateOne({_id:u._id},{$set:{EmailVerificationTokenHash:hashAuthToken(value),EmailVerificationExpires:new Date(Date.now()+1800000)}});
+ try{await emailLink(u,value,"verificar");}catch(e){console.error("Envio de verificação falhou:",e?.message||e);return res.status(503).json({error:"Não foi possível enviar o e-mail. Confira a configuração do Gmail no Render."});}}
+ res.json({ok:true,message:"Se a conta existir e precisar de verificação, enviaremos as instruções."});
+});
+app.post("/api/auth/forgot-password",rateLimit({windowMs:60000,max:5}),async(req,res)=>{
+ if(!accountsDb)return res.status(503).json({error:"Banco não configurado"});const mail=email(req.body?.email);
+ if(!emailValida(mail))return res.status(400).json({error:"Informe um e-mail válido."});
+ const u=await accountsDb.collection("contas").findOne({Email:mail,"Aplicativos.Site.Ativo":true});
+ if(u){const value=randomBytes(32).toString("hex");await accountsDb.collection("contas").updateOne({_id:u._id},{$set:{PasswordResetTokenHash:hashAuthToken(value),PasswordResetExpires:new Date(Date.now()+1800000)}});
+ try{await emailLink(u,value,"redefinir");}catch(e){console.error("Envio de recuperação falhou:",e?.message||e);return res.status(503).json({error:"Não foi possível enviar o e-mail. Confira a configuração do Gmail no Render."});}}
+ res.json({ok:true,message:"Se existir uma conta para esse endereço, enviaremos as instruções de recuperação."});
+});
+app.post("/api/auth/reset-password",rateLimit({windowMs:60000,max:8}),async(req,res)=>{
+ if(!accountsDb)return res.status(503).json({error:"Banco não configurado"});const raw=String(req.body?.token||""),pass=String(req.body?.password||"");
+ if(raw.length<32||raw.length>256||pass.length<8||pass.length>128)return res.status(400).json({error:"Link inválido ou senha fora do limite de 8 a 128 caracteres."});
+ const u=await accountsDb.collection("contas").findOne({PasswordResetTokenHash:hashAuthToken(raw),PasswordResetExpires:{$gt:new Date()}});
+ if(!u)return res.status(400).json({error:"Link de recuperação inválido ou expirado. Solicite outro."});
+ const now=new Date();await accountsDb.collection("contas").updateOne({_id:u._id},{$set:{"Aplicativos.Site.Senha":await bcrypt.hash(pass,12),PasswordChangedAt:now,"Conta.AtualizadaEm":now.toISOString()},$unset:{PasswordResetTokenHash:"",PasswordResetExpires:""}});
+ await securityEmail(u,"Senha alterada","A senha da sua conta foi alterada. Se não foi você, solicite uma nova recuperação.");res.json({ok:true,message:"Senha alterada com sucesso. Você já pode entrar."});
+});
+
 app.post("/api/auth/register",rateLimit({windowMs:60000,max:8}),async(req,res)=>{
   if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
   const name=String(req.body?.name||"").trim(),mail=email(req.body?.email),pass=String(req.body?.password||"");
   if(name.length<2||name.length>120||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)||pass.length<8||pass.length>128)return res.status(400).json({error:"Dados inválidos"});
   try{
     if(await accountsDb.collection("contas").findOne({Email:mail},{projection:{id:1}}))return res.status(409).json({error:"Email já cadastrado"});
-    const u=centralConta({name,email:mail,siteSenha:await bcrypt.hash(pass,12)});
+    const verifyToken=randomBytes(32).toString("hex");
+    const u=centralConta({name,email:mail,siteSenha:await bcrypt.hash(pass,12),verified:false});
+    u.EmailVerified=false;u.EmailVerificationTokenHash=hashAuthToken(verifyToken);u.EmailVerificationExpires=new Date(Date.now()+1800000);
     await accountsDb.collection("contas").insertOne(u);
+    if(GMAIL_API_CONFIGURED){try{await emailLink(u,verifyToken,"verificar");}catch(e){console.error("E-mail inicial de verificação falhou:",e?.message||e);}}
     const safe=accountSafe(u),agora=new Date();
     await db.collection("atividade_contas").insertOne({usuarioId:u.id,nome:name,email:mail,tipo:"cadastro",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",criadoEm:agora});
     await registrarEventoAnalitico({tipo:"cadastro",categoria:"contas",subcategoria:"cadastros",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",usuarioId:u.id,nome,email:mail,entidade:"conta",entidadeId:u.id});
-    res.status(201).json({user:safe,token:token(safe)});
+    res.status(201).json({user:safe,token:token(safe),emailVerificationRequired:true,emailSent:GMAIL_API_CONFIGURED});
   }catch(e){res.status(e.code===11000?409:500).json({error:e.code===11000?"Email já cadastrado":"Falha ao criar conta"});}
 });
 
@@ -565,6 +625,7 @@ app.post("/api/auth/login",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
   const u=await accountsDb.collection("contas").findOne({Email:email(req.body?.email),"Aplicativos.Site.Ativo":true});
   if(!u||!u.Aplicativos?.Site?.Senha||!(await bcrypt.compare(String(req.body?.password||""),u.Aplicativos.Site.Senha)))return res.status(401).json({error:"Email ou senha inválidos"});
+  if(!u.EmailVerified&&!u.Verified)return res.status(403).json({error:"Verifique seu e-mail antes de entrar.",code:"EMAIL_NOT_VERIFIED"});
   const agora=new Date();
   await accountsDb.collection("contas").updateOne({id:u.id},{$set:{"Conta.UltimoLogin":agora,"Conta.AtualizadaEm":agora.toISOString()}});
   const safe=accountSafe(u);
