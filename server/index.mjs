@@ -165,7 +165,8 @@ function centralConta({id=randomUUID(),name,email,siteSenha="",role="user",verif
 
 function accountSafe(u){return {_id:String(u.id),id:String(u.id),name:u.Nome,email:u.Email,phone:u.Telefone||null,role:u.Conta?.Role||"user",verified:Boolean(u.EmailVerified||u.Verified)};}
 const GMAIL_CLIENT_ID=String(process.env.GMAIL_CLIENT_ID||"").trim(),GMAIL_CLIENT_SECRET=String(process.env.GMAIL_CLIENT_SECRET||"").trim(),GMAIL_REFRESH_TOKEN=String(process.env.GMAIL_REFRESH_TOKEN||"").trim(),GMAIL_SENDER_EMAIL=String(process.env.GMAIL_SENDER_EMAIL||"").trim().toLowerCase();
-const GMAIL_API_CONFIGURED=Boolean(GMAIL_CLIENT_ID&&GMAIL_CLIENT_SECRET&&GMAIL_REFRESH_TOKEN&&GMAIL_SENDER_EMAIL);
+const GMAIL_NOTIFICATION_EMAIL=String(process.env.GMAIL_NOTIFICATION_EMAIL||"").trim().toLowerCase();
+const GMAIL_API_CONFIGURED=Boolean(GMAIL_CLIENT_ID&&GMAIL_CLIENT_SECRET&&GMAIL_REFRESH_TOKEN&&GMAIL_SENDER_EMAIL&&emailValida(GMAIL_SENDER_EMAIL));
 const hashAuthToken=v=>createHash("sha256").update(String(v)).digest("hex");
 async function gmailAccessToken(){
  if(!GMAIL_API_CONFIGURED)throw new Error("Configure as credenciais OAuth do Gmail no Render.");
@@ -565,11 +566,27 @@ app.post("/api/contact",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   const agora=new Date();
   await db.collection("contacts").insertOne({name:cleanName,email:mail.slice(0,180),phone:cleanPhone,message:cleanMessage,createdAt:agora,status:"new"});
   await registrarEventoAnalitico({tipo:"contato",categoria:"comercial",subcategoria:"contato",acao:"Contato enviado",descricao:"Mensagem enviada pelo formulário de contato.",pagina:"/contato",nome:cleanName,email:mail,entidade:"contato",metadados:{telefone:cleanPhone}});
-  res.status(201).json({ok:true});
+  let emailNotificationSent=false;
+  if(GMAIL_API_CONFIGURED&&GMAIL_NOTIFICATION_EMAIL&&emailValida(GMAIL_NOTIFICATION_EMAIL)){
+    try{
+      await sendGmail({to:GMAIL_NOTIFICATION_EMAIL,subject:"Novo contato pelo site — Korczak Technologies",text:`Novo contato recebido pelo site.\n\nNome: ${cleanName}\nE-mail: ${mail}\nTelefone: ${cleanPhone||"Não informado"}\n\nMensagem:\n${cleanMessage}\n\nRecebido em: ${agora.toISOString()}`});
+      emailNotificationSent=true;
+    }catch(e){console.error("Notificação de contato não enviada:",e?.message||e);}
+  }
+  res.status(201).json({ok:true,emailNotificationSent});
 });
 
 
-app.get("/api/notifications/email-status",(req,res)=>res.json({configured:GMAIL_API_CONFIGURED}));
+app.get("/api/notifications/email-status",(req,res)=>res.json({provider:"gmail-api",configured:GMAIL_API_CONFIGURED,contactNotifications:Boolean(GMAIL_NOTIFICATION_EMAIL&&emailValida(GMAIL_NOTIFICATION_EMAIL))}));
+app.post("/api/admin/email/test",auth,admin,rateLimit({windowMs:60000,max:3}),async(req,res)=>{
+ if(!GMAIL_API_CONFIGURED)return res.status(503).json({ok:false,error:"Gmail não configurado. Defina as quatro variáveis OAuth no Render."});
+ const recipient=email(req.user?.email);
+ if(!emailValida(recipient))return res.status(400).json({ok:false,error:"O e-mail da sessão administrativa é inválido."});
+ try{
+  const result=await sendGmail({to:recipient,subject:"Teste de envio — Korczak Technologies",text:`O envio pelo Gmail API está funcionando.\n\nDestinatário de teste: ${recipient}\nData: ${new Date().toISOString()}\n\nKorczak Technologies`});
+  res.json({ok:true,message:"E-mail de teste enviado.",messageId:result.id||null,to:recipient});
+ }catch(e){console.error("Teste de e-mail falhou:",e?.message||e);res.status(502).json({ok:false,error:"O Gmail não conseguiu enviar o teste. Confira OAuth, escopo gmail.send e o endereço remetente."});}
+});
 app.post("/api/auth/verify-email",rateLimit({windowMs:60000,max:12}),async(req,res)=>{
  if(!accountsDb)return res.status(503).json({error:"Banco não configurado"});const raw=String(req.body?.token||"");
  if(raw.length<32||raw.length>256)return res.status(400).json({error:"Link inválido ou expirado."});
@@ -613,11 +630,12 @@ app.post("/api/auth/register",rateLimit({windowMs:60000,max:8}),async(req,res)=>
     const u=centralConta({name,email:mail,siteSenha:await bcrypt.hash(pass,12),verified:false});
     u.EmailVerified=false;u.EmailVerificationTokenHash=hashAuthToken(verifyToken);u.EmailVerificationExpires=new Date(Date.now()+1800000);
     await accountsDb.collection("contas").insertOne(u);
-    if(GMAIL_API_CONFIGURED){try{await emailLink(u,verifyToken,"verificar");}catch(e){console.error("E-mail inicial de verificação falhou:",e?.message||e);}}
+    let emailSent=false;
+    if(GMAIL_API_CONFIGURED){try{await emailLink(u,verifyToken,"verificar");emailSent=true;}catch(e){console.error("E-mail inicial de verificação falhou:",e?.message||e);}}
     const safe=accountSafe(u),agora=new Date();
     await db.collection("atividade_contas").insertOne({usuarioId:u.id,nome:name,email:mail,tipo:"cadastro",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",criadoEm:agora});
     await registrarEventoAnalitico({tipo:"cadastro",categoria:"contas",subcategoria:"cadastros",acao:"Conta criada",descricao:"Nova conta criada no site.",pagina:"/conta",usuarioId:u.id,nome,email:mail,entidade:"conta",entidadeId:u.id});
-    res.status(201).json({user:safe,token:token(safe),emailVerificationRequired:true,emailSent:GMAIL_API_CONFIGURED});
+    res.status(201).json({user:safe,token:token(safe),emailVerificationRequired:true,emailSent});
   }catch(e){res.status(e.code===11000?409:500).json({error:e.code===11000?"Email já cadastrado":"Falha ao criar conta"});}
 });
 
