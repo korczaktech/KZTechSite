@@ -1,5 +1,7 @@
+# Korczak Technologies — regras de rastreamento público
 User-agent: *
 Allow: /
 Disallow: /admin/
 
+# Sitemap principal
 Sitemap: https://site.korczaktech.com.br/sitemap.xml
