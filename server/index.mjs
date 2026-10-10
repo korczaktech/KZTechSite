@@ -644,7 +644,7 @@ app.post("/api/auth/login",rateLimit({windowMs:60000,max:10}),async(req,res)=>{
   if(!db||!accountsDb)return res.status(503).json({error:"Banco não configurado"});
   const mail=email(req.body?.email);
   const u=await accountsDb.collection("contas").findOne({"Autenticacao.Email":mail});
-  if(!u||!u.Autenticacao?.SenhaHash||!(await bcrypt.compare(String(req.body?.password||""),u.Autenticacao.SenhaHash))return res.status(401).json({error:"Email ou senha inválidos"});
+  if(!u||!u.Autenticacao?.SenhaHash||!(await bcrypt.compare(String(req.body?.password||""),u.Autenticacao.SenhaHash)))return res.status(401).json({error:"Email ou senha inválidos"});
   if(u.EmailVerificationTokenHash&&!u.EmailVerified&&!u.Verified)return res.status(403).json({error:"Verifique seu e-mail antes de entrar.",code:"EMAIL_NOT_VERIFIED"});
   const agora=new Date();
   await accountsDb.collection("contas").updateOne({id:u.id},{$set:{"Conta.UltimoLogin":agora,"Conta.AtualizadaEm":agora.toISOString()}});
