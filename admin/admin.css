@@ -112,7 +112,8 @@ button,.button,input,textarea,select{max-width:100%}
 #grafico .chart-tooltip span{color:#fff;font-size:14px;font-weight:750}
 #grafico .chart-dot-active{r:6;fill:#c5baff;stroke:#fff;stroke-width:2.5}
 
-/* Curva mais orgânica no gráfico de analytics */
-#grafico .chart-line{stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;}
-#grafico .chart-area{stroke:none;}
-#grafico .chart-dot{stroke-linecap:round;}
+/* Acabamento do gráfico: curva discreta e pontos sem excesso visual */
+#grafico .chart-line{stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 3px rgba(155,140,255,.16))}
+#grafico .chart-dot{r:2.2;stroke-width:1.5}
+#grafico .chart-dot:last-of-type{r:4;stroke-width:2}
+#grafico .chart-dot-active{r:5;stroke-width:2.2}
