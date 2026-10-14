@@ -371,7 +371,7 @@ function planSectionFor(id){
   if(!plans.length)return "";
   const title=key==="hub"?"Planos do HUB":id==="korczak-ai"?"Planos do Korczak AI":id==="ide"?"Planos do Korczak IDE":"Planos do "+(state.products.find(x=>x.id===id)?.name||id);
   const personalIds=key==="morok"?new Set(["free","starter","basic","business","professional"]):new Set(["free","starter","standard","plus"]);
-  const businessIds=new Set(["standard","plus","business","dimitri","zeus"]);
+  const businessIds=new Set(["business","dimitri","zeus"]);
   const personal=plans.filter(p=>personalIds.has(p.id));
   const business=plans.filter(p=>businessIds.has(p.id));
   const enterprise=plans.filter(p=>!personalIds.has(p.id)&&!businessIds.has(p.id));
@@ -498,7 +498,7 @@ function subscriptionPage(){
   if(!selectedProduct||!plans.length)return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">PRÉ-VENDA · ASSINATURA</span><h2>Nenhum plano disponível.</h2><p class="section-lead">O catálogo de planos deste produto ainda não está disponível.</p><a class="btn" href="#/produtos">Voltar aos produtos '+icon("arrow")+'</a></div></main>';
 
   const personalIds=requestedPlanKey==="morok"?new Set(["free","starter","basic"]):new Set(["free","starter"]);
-  const commercialIds=new Set(["standard","plus","business","professional","dimitri","zeus"]);
+  const commercialIds=new Set(["business","professional","dimitri","zeus"]);
   const personal=plans.filter(x=>personalIds.has(x.id));
   const commercial=plans.filter(x=>commercialIds.has(x.id));
   const enterprise=plans.filter(x=>!personalIds.has(x.id)&&!commercialIds.has(x.id));
@@ -512,11 +512,12 @@ function subscriptionPage(){
 
   const renderPlans=(list,group)=>list.map(pl=>{
     const active=selectedPlan?.id===pl.id;
-    const perUser=Number(pl.preSalePrice);
-    const commercial=Number(pl.price);
+    const commercial=pl.price===null||pl.price===undefined||pl.price===""?null:Number(pl.price);
+    const preSale=pl.preSalePrice===null||pl.preSalePrice===undefined||pl.preSalePrice===""?null:Number(pl.preSalePrice);
+    const perUser=preSale!==null?preSale:commercial;
     const isEnterprise=group==="enterprise";
-    const total=Number.isFinite(perUser)?perUser*userCount:0;
-    return '<article class="workspace-plan-card '+(active?"selected":"")+'" data-subscription-plan-group="'+group+'"><div class="workspace-plan-top"><span class="eyebrow">'+esc(pl.tag||"PLANO")+'</span>'+(active?'<span class="workspace-plan-selected">Selecionado</span>':"")+'</div><h3>'+esc(pl.name)+'</h3><p class="muted">'+esc(pl.description||"Condição especial de pré-venda")+'</p><div class="workspace-plan-price"><strong>'+((Number.isFinite(perUser))?money(perUser):"Sob consulta")+'</strong><small>/ '+esc(pl.billing||"mês")+'</small></div>'+(isEnterprise?'<div class="enterprise-price-detail"><span>Preço por usuário</span><strong>'+money(perUser)+'</strong><small>/ usuário / mês</small><div class="enterprise-total-row"><span>Total mensal · '+userCount+' '+(userCount===1?"usuário":"usuários")+'</span><strong>'+money(total)+'</strong></div></div>':"")+(isEnterprise&&Number.isFinite(commercial)&&commercial!==perUser?'<div class="plan-commercial-reference"><span>Preço comercial por usuário</span><b>'+money(commercial)+'/usuário/mês</b></div>':"")+'<ul class="feature-list">'+(Array.isArray(pl.features)?pl.features.map(f=>'<li>'+esc(f)+'</li>').join(""):"")+'</ul><a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(selectedProduct.id)+'&plano='+encodeURIComponent(pl.id)+(effectiveModuleIds?'&modulos='+encodeURIComponent(effectiveModuleIds):'')+'&audiencia='+group+'&usuarios='+userCount+'">Escolher plano '+icon("arrow")+'</a></article>';
+    const total=Number.isFinite(perUser)?perUser*userCount:null;
+    return '<article class="workspace-plan-card '+(active?"selected":"")+'" data-subscription-plan-group="'+group+'"><div class="workspace-plan-top"><span class="eyebrow">'+esc(pl.tag||"PLANO")+'</span>'+(active?'<span class="workspace-plan-selected">Selecionado</span>':"")+'</div><h3>'+esc(pl.name)+'</h3><p class="muted">'+esc(pl.description||"Condição especial de pré-venda")+'</p><div class="workspace-plan-price"><strong>'+(Number.isFinite(perUser)?money(perUser):"Sob consulta")+'</strong><small>/ '+esc(pl.billing||"mês")+'</small></div>'+(isEnterprise?'<div class="enterprise-price-detail"><span>Preço por usuário</span><strong>'+(Number.isFinite(perUser)?money(perUser):"Sob consulta")+'</strong><small>/ usuário / mês</small><div class="enterprise-total-row"><span>Total mensal · '+userCount+' '+(userCount===1?"usuário":"usuários")+'</span><strong>'+(Number.isFinite(total)?money(total):"Sob consulta")+'</strong></div></div>':"")+(isEnterprise&&Number.isFinite(commercial)&&commercial!==perUser?'<div class="plan-commercial-reference"><span>Preço comercial por usuário</span><b>'+money(commercial)+'/usuário/mês</b></div>':"")+'<ul class="feature-list">'+(Array.isArray(pl.features)?pl.features.map(f=>'<li>'+esc(f)+'</li>').join(""):"")+'</ul><a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(selectedProduct.id)+'&plano='+encodeURIComponent(pl.id)+(effectiveModuleIds?'&modulos='+encodeURIComponent(effectiveModuleIds):'')+'&audiencia='+group+'&usuarios='+userCount+'">Escolher plano '+icon("arrow")+'</a></article>';
   }).join("");
 
   const tabs=hasTabs?'<div class="plan-audience-switch subscription-audience-switch" role="tablist" aria-label="Tipo de plano"><a class="plan-audience-tab '+(selectedGroup==="personal"?"is-active":"")+'" data-subscription-tab="personal" role="tab" aria-selected="'+(selectedGroup==="personal"?"true":"false")+'" href="#/assinatura?produto='+encodeURIComponent(selectedProduct.id)+'&audiencia=personal">Pessoal</a>'+(commercial.length?'<a class="plan-audience-tab '+(selectedGroup==="business"?"is-active":"")+'" data-subscription-tab="business" role="tab" aria-selected="'+(selectedGroup==="business"?"true":"false")+'" href="#/assinatura?produto='+encodeURIComponent(selectedProduct.id)+'&audiencia=business">Comercial</a>':"")+(enterprise.length?'<a class="plan-audience-tab '+(selectedGroup==="enterprise"?"is-active":"")+'" data-subscription-tab="enterprise" role="tab" aria-selected="'+(selectedGroup==="enterprise"?"true":"false")+'" href="#/assinatura?produto='+encodeURIComponent(selectedProduct.id)+'&audiencia=enterprise&usuarios='+userCount+'">Empresarial</a>':"")+'</div>':"";
@@ -527,8 +528,9 @@ function subscriptionPage(){
   const groupCards='<section class="subscription-plan-group workspace-subscription-group"><div class="section-heading"><span class="eyebrow">WORKSPACE · ASSINATURAS</span><h3>Planos de '+esc(workspaceName)+'</h3><p class="muted">Escolha um plano '+(hasTabs?groupLabel+" de ":"de ")+esc(workspaceName)+' para avançar.</p></div>'+tabs+(selectedGroup==="enterprise"?usersControl:"")+'<div class="workspace-plan-grid subscription-plan-grid" data-subscription-plan-grid>'+renderPlans(selectedPlans,selectedGroup)+'</div></section>';
 
   const implementation=mods.reduce((n,x)=>n+(Number.isFinite(Number(x.preSalePrice))?Number(x.preSalePrice):Math.round(Number(x.price||0)*.85)),0);
-  const perUserMonthly=selectedPlan?(Number.isFinite(Number(selectedPlan.preSaleMonthly))?Number(selectedPlan.preSaleMonthly):Number.isFinite(Number(selectedPlan.preSalePrice))?Number(selectedPlan.preSalePrice):Number.isFinite(Number(selectedPlan.monthly))?Number(selectedPlan.monthly):0):0;
-  const monthly=selectedPlan&&selectedGroup==="enterprise"?perUserMonthly*userCount:perUserMonthly;
+  const selectedPrice=selectedPlan?(selectedPlan.preSalePrice!==null&&selectedPlan.preSalePrice!==undefined&&selectedPlan.preSalePrice!==""?Number(selectedPlan.preSalePrice):selectedPlan.price!==null&&selectedPlan.price!==undefined&&selectedPlan.price!==""?Number(selectedPlan.price):null):null;
+  const perUserMonthly=selectedPlan?(selectedPlan.preSaleMonthly!==null&&selectedPlan.preSaleMonthly!==undefined&&selectedPlan.preSaleMonthly!==""&&Number.isFinite(Number(selectedPlan.preSaleMonthly))?Number(selectedPlan.preSaleMonthly):selectedPrice):null;
+  const monthly=selectedPlan&&selectedGroup==="enterprise"&&Number.isFinite(perUserMonthly)?perUserMonthly*userCount:perUserMonthly;
   const hasSelection=!!selectedPlan;
   const setup=implementation>0;
   const summaryName=selectedPlan?workspaceName+" · "+selectedPlan.name:workspaceName;
