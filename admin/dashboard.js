@@ -59,8 +59,28 @@ async function analytics(){
  const xlabels=labelIndexes.map(i=>'<text x="'+coords[i].x+'" y="'+(H-8)+'" text-anchor="'+(i===0?"start":i===views.length-1?"end":"middle")+'" class="chart-axis">'+esc(shortDate(views[i]._id))+'</text>').join("");
  const dots=coords.map((p,i)=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="'+(i===coords.length-1?"5":"3")+'" class="chart-dot"><title>'+esc(views[i]._id)+' · '+p.v+' eventos</title></circle>').join("");
  E("grafico").innerHTML=views.length
-  ? '<div class="chart-canvas"><svg class="stock-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Eventos por dia no período selecionado"><defs><linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9b8cff" stop-opacity=".34"/><stop offset="100%" stop-color="#9b8cff" stop-opacity=".015"/></linearGradient><linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9b8cff"/><stop offset="100%" stop-color="#c5baff"/></linearGradient></defs>'+grid+'<path d="'+area+'" class="chart-area"/><path d="'+line+'" class="chart-line"/>'+dots+xlabels+'</svg></div><div class="stock-labels"><span>Início · '+esc(first)+'</span><span>Fim · '+esc(last)+'</span></div>'
+  ? '<div class="chart-canvas"><svg class="stock-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Eventos por dia no período selecionado"><defs><linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9b8cff" stop-opacity=".34"/><stop offset="100%" stop-color="#9b8cff" stop-opacity=".015"/></linearGradient><linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9b8cff"/><stop offset="100%" stop-color="#c5baff"/></linearGradient></defs>'+grid+'<line id="chartHoverLine" x1="0" y1="'+top+'" x2="0" y2="'+(top+plotH)+'" class="chart-hover-line" visibility="hidden"/><path d="'+area+'" class="chart-area"/><path d="'+line+'" class="chart-line"/>'+dots+xlabels+'</svg><div id="chartTooltip" class="chart-tooltip" role="status" aria-live="polite" hidden></div></div><div class="stock-labels"><span>Início · '+esc(first)+'</span><span>Fim · '+esc(last)+'</span></div>'
   : '<p class="vazio">Ainda não há dados.</p>';
+ if(views.length){
+  const svg=E("grafico").querySelector(".stock-svg"),canvas=E("grafico").querySelector(".chart-canvas"),tip=E("chartTooltip"),guide=E("chartHoverLine");
+  const showPoint=event=>{
+   const rect=svg.getBoundingClientRect(),box=canvas.getBoundingClientRect();
+   const px=(event.clientX-rect.left)/rect.width*W;
+   let idx=0;for(let i=1;i<coords.length;i++)if(Math.abs(coords[i].x-px)<Math.abs(coords[idx].x-px))idx=i;
+   const p=coords[idx],raw=String(views[idx]._id??"");
+   guide.setAttribute("x1",p.x);guide.setAttribute("x2",p.x);guide.setAttribute("visibility","visible");
+   svg.querySelectorAll(".chart-dot").forEach((dot,i)=>dot.classList.toggle("chart-dot-active",i===idx));
+   const date=raw.match(/^\\d{4}-\\d{2}-\\d{2}/)?new Date(raw.slice(0,10)+"T12:00:00").toLocaleDateString("pt-BR",{dateStyle:"full"}):raw;
+   tip.innerHTML='<strong>'+esc(date)+'</strong><span>'+esc(p.v)+' '+(p.v===1?'evento':'eventos')+'</span>';
+   tip.hidden=false;
+   const tx=event.clientX-box.left+14,ty=event.clientY-box.top-16;
+   tip.style.left=Math.max(8,Math.min(tx,box.width-tip.offsetWidth-8))+"px";
+   tip.style.top=Math.max(8,Math.min(ty,box.height-tip.offsetHeight-8))+"px";
+  };
+  svg.addEventListener("pointermove",showPoint);
+  svg.addEventListener("pointerdown",showPoint);
+  svg.addEventListener("pointerleave",()=>{guide.setAttribute("visibility","hidden");tip.hidden=true;svg.querySelectorAll(".chart-dot-active").forEach(dot=>dot.classList.remove("chart-dot-active"));});
+ }
  const visitors=Number(x.visitantes)||0;
  E("kpis").innerHTML=[["Eventos",x.total,"Todas as atividades"],["Visitantes",visitors,"Identificadores únicos"],["Cadastros",(x.subcategorias||[]).filter(a=>a._id?.subcategoria==="cadastros").reduce((n,a)=>n+a.total,0),"Contas criadas"],["Comercial",(x.categorias||[]).find(a=>a._id==="comercial")?.total||0,"Atividade comercial"],["Período",diasAnalytics+" dias","Janela analisada"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+esc(a[1])+'</strong><small>'+a[2]+'</small></div>').join("");
  barras(x.categorias,"categorias","cat");
