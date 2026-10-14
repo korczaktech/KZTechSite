@@ -261,7 +261,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -280,7 +280,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -299,7 +299,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -318,7 +318,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -337,7 +337,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -356,7 +356,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -542,7 +542,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -561,7 +561,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -580,7 +580,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -599,7 +599,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -618,7 +618,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -637,7 +637,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -711,7 +711,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -730,7 +730,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -749,7 +749,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -768,7 +768,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -787,7 +787,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -806,7 +806,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -880,7 +880,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -899,7 +899,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -918,7 +918,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -937,7 +937,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -956,7 +956,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -975,7 +975,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1049,7 +1049,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1068,7 +1068,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1087,7 +1087,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1106,7 +1106,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1125,7 +1125,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1144,7 +1144,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1218,7 +1218,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1237,7 +1237,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1256,7 +1256,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1275,7 +1275,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1294,7 +1294,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1313,7 +1313,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1387,7 +1387,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1406,7 +1406,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1425,7 +1425,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1444,7 +1444,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1463,7 +1463,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1482,7 +1482,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1556,7 +1556,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1575,7 +1575,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1594,7 +1594,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1613,7 +1613,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1632,7 +1632,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1651,7 +1651,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1725,7 +1725,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1744,7 +1744,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1763,7 +1763,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1782,7 +1782,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1801,7 +1801,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1820,7 +1820,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -1894,7 +1894,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -1913,7 +1913,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -1932,7 +1932,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -1951,7 +1951,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -1970,7 +1970,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -1989,7 +1989,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2063,7 +2063,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -2082,7 +2082,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -2101,7 +2101,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -2120,7 +2120,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -2139,7 +2139,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -2158,7 +2158,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2232,7 +2232,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -2251,7 +2251,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -2270,7 +2270,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -2289,7 +2289,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -2308,7 +2308,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -2327,7 +2327,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2401,7 +2401,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -2420,7 +2420,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -2439,7 +2439,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -2458,7 +2458,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -2477,7 +2477,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -2496,7 +2496,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2570,7 +2570,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -2589,7 +2589,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -2608,7 +2608,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -2627,7 +2627,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -2646,7 +2646,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -2665,7 +2665,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2739,7 +2739,7 @@
           "Pré-venda disponível"
         ],
         "price": 50,
-        "preSalePrice": 43,
+        "preSalePrice": null,
         "maxUsers": 25
       },
       {
@@ -2758,7 +2758,7 @@
           "Pré-venda disponível"
         ],
         "price": 75,
-        "preSalePrice": 64,
+        "preSalePrice": null,
         "maxUsers": 50
       },
       {
@@ -2777,7 +2777,7 @@
           "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85,
+        "preSalePrice": null,
         "maxUsers": 100
       },
       {
@@ -2796,7 +2796,7 @@
           "Pré-venda disponível"
         ],
         "price": 125,
-        "preSalePrice": 106,
+        "preSalePrice": null,
         "maxUsers": 250
       },
       {
@@ -2815,7 +2815,7 @@
           "Pré-venda disponível"
         ],
         "price": 150,
-        "preSalePrice": 128,
+        "preSalePrice": null,
         "maxUsers": 500
       },
       {
@@ -2834,7 +2834,7 @@
           "Pré-venda disponível"
         ],
         "price": 200,
-        "preSalePrice": 170,
+        "preSalePrice": null,
         "maxUsers": 1000
       },
       {
@@ -2993,8 +2993,8 @@
         "name": "Apollo",
         "billing": "usuário/mês",
         "maxUsers": 100,
-        "price": 160,
-        "preSalePrice": 136
+        "price": 75,
+        "preSalePrice": null
       },
       {
         "id": "athena",
@@ -3009,16 +3009,16 @@
         "name": "Zeus",
         "billing": "usuário/mês",
         "maxUsers": 500,
-        "price": 160,
-        "preSalePrice": 136
+        "price": 150,
+        "preSalePrice": null
       },
       {
         "id": "veles",
         "name": "Veles",
         "billing": "usuário/mês",
         "maxUsers": 1000,
-        "price": 160,
-        "preSalePrice": 136
+        "price": 100,
+        "preSalePrice": null
       },
       {
         "id": "marzanna",
