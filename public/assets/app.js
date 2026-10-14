@@ -351,7 +351,7 @@ function products(){
  const hubTitle=catalog.hubTitle||"Aplicativos do HUB";
  const hubNote=catalog.hubNote||"Produtividade, documentos e colaboração em um único ecossistema.";
  const kosTitle=catalog.kosTitle||"Produtos operacionais";
- const hubCards=ws.length?ws.map((p,i)=>'<article class="hub-app '+(p.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Status não informado")+'</span><h3>'+esc(p.name||p.id)+'</h3><p class="muted">'+esc(p.description||"Produto do ecossistema Korczak Technologies.")+'</p>'+(p.id==="nexus"?'<div class="actions product-card-actions"><a class="btn" href="#/produto/nexus">Conhecer Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar</a></div>':p.status==="Planejado"?'<a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda</a>':"")+'</article>').join(""):'<div class="empty-state"><h3>Catálogo temporariamente indisponível.</h3><p class="muted">Não foi possível carregar os produtos agora. Recarregue a página para tentar novamente.</p><button class="btn ghost" type="button" data-action="reload">Recarregar</button></div>';
+ const hubCards=ws.length?ws.map((p,i)=>'<article class="hub-app '+(p.status==="Em construção"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Status não informado")+'</span><h3>'+esc(p.name||p.id)+'</h3><p class="muted">'+esc(p.description||"Produto do ecossistema Korczak Technologies.")+'</p>'+(p.id==="nexus"?'<div class="actions product-card-actions"><a class="btn" href="#/produto/nexus">Conhecer Nexus '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar</a></div>':p.status==="Planejado"?'<a class="btn ghost" href="#/assinatura?produto='+encodeURIComponent(p.type==="HUB"?"hub":p.id)+'">Assinar pré-venda</a>':"")+'</article>').join(""):'<div class="empty-state"><h3>Catálogo temporariamente indisponível.</h3><p class="muted">Não foi possível carregar os produtos agora. Recarregue a página para tentar novamente.</p><button class="btn ghost" type="button" data-action="reload">Recarregar</button></div>';
  const kosCards=kos.length?kos.map(card).join(""):'<div class="empty-state"><h3>Produtos indisponíveis no momento.</h3><p class="muted">O catálogo operacional não pôde ser carregado.</p></div>';
  return '<main id="main-content" class="section shell"><div class="portfolio-hero"><span class="eyebrow">'+esc(catalog.eyebrow||"Produtos · Catálogo")+'</span><h2>'+esc(title)+'</h2><p class="section-lead">'+esc(lead)+'</p></div><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">HUB</span><h3>'+esc(hubTitle)+'</h3></div><span class="muted">'+esc(hubNote)+'</span></div><div class="product-hub-grid">'+hubCards+'</div></section><section class="section-group product-catalog-section"><div class="split-head"><div><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h3>'+esc(kosTitle)+'</h3></div><span class="muted">'+kos.length+' produtos</span></div><div class="product-kos-grid">'+kosCards+'</div></section></main>';
 }
@@ -365,7 +365,7 @@ function kos(){
  const items=ids.map(id=>state.products.find(p=>p.id===id)).filter(Boolean);
  return '<main id="main-content" class="section shell hub-page"><div class="portfolio-hero"><span class="eyebrow">KOS · KORCZAK OPERATIONS SYSTEM</span><h2>Operação e produtos Korczak.</h2><p class="section-lead">Os únicos produtos iniciados no KOS são KORCZAK AI, Korczak IDE, MOROK e KORCZAK ERP. Os demais permanecem planejados.</p></div><section class="hub-grid">'+items.map((p,i)=>'<article class="hub-app '+(p.status==="Iniciado"?"active":"planned")+'"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status)+'</span><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description)+'</p>'+(p.status==="Iniciado"?'<span class="plan-note">Compra + mensalidade · condições em definição</span>':'<span class="plan-note">Assinar pré-venda</span>')+'</article>').join("")+'</section></main>';
 }
-function planKeyForProduct(id){return id;}
+function planKeyForProduct(id){const p=(state.products||[]).find(x=>x.id===id);return p?.type==="HUB"||["hub","vault","nexus","nexa","veya","formly","korvo","chrona","meet","pulse","acta","memo","people","web","klash"].includes(id)?"hub":id;}
 function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
@@ -485,7 +485,8 @@ function subscriptionPage(){
   const qs=new URLSearchParams((location.hash.split("?")[1]||""));
   const requestedProductId=qs.get("produto")||"",planId=qs.get("plano")||"",moduleIds=qs.get("modulos")||"",audience=qs.get("audiencia")||"personal";
   const userCount=Math.max(1,parseInt(qs.get("usuarios")||"1",10)||1);
-  const requestedProduct=state.products.find(x=>x.id===requestedProductId);
+  const requestedProductRaw=state.products.find(x=>x.id===requestedProductId);
+  const requestedProduct=requestedProductRaw?.type==="HUB"?(state.products.find(x=>x.id==="hub")||requestedProductRaw):requestedProductRaw;
   const catalog=state.content?.plans||PLAN_CATALOG||{};
   const mergedPlans={};
   for(const [key,list] of Object.entries(catalog))if(Array.isArray(list)&&list.length)mergedPlans[key]=list;
@@ -535,7 +536,9 @@ function subscriptionPage(){
 function presalePage(){
   const cms=state.content?.presale||{};
   const qs=new URLSearchParams((location.hash.split("?")[1]||""));
-  const selectedId=qs.get("produto")||"";
+  const requestedId=qs.get("produto")||"";
+  const requestedProduct=state.products.find(p=>p.id===requestedId);
+  const selectedId=requestedProduct?.type==="HUB"?"hub":requestedId;
   const selectedPlan=qs.get("plano")||"";
   const selectedModules=qs.get("modulos")||"";
   const all=Array.isArray(state.products)?state.products:[];
