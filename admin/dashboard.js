@@ -43,14 +43,23 @@ async function analytics(){
  const views=x.diarios||x.mercado||[];
  const vals=views.map(v=>Number(v.total)||0);
  const max=Math.max(...vals,1);
- const W=900,H=300,pad=28;
- const step=vals.length>1?(W-pad*2)/(vals.length-1):0;
- const points=vals.map((v,i)=>((pad+i*step).toFixed(1))+","+(H-pad-(v/max)*(H-pad*2)).toFixed(1)).join(" ");
+ const W=900,H=300,left=48,right=18,top=22,bottom=34;
+ const plotW=W-left-right,plotH=H-top-bottom;
+ const step=vals.length>1?plotW/(vals.length-1):0;
+ const y=v=>top+plotH-(v/max)*plotH;
+ const coords=vals.map((v,i)=>({x:vals.length===1?left+plotW/2:left+i*step+left,y:y(v),v}));
+ const line=coords.map((p,i)=>(i?"L":"M")+p.x.toFixed(1)+" "+p.y.toFixed(1)).join(" ");
+ const area=line+" L "+coords[coords.length-1].x.toFixed(1)+" "+(top+plotH)+" L "+coords[0].x.toFixed(1)+" "+(top+plotH)+" Z";
  const first=views.length?views[0]._id:"";
  const middle=views.length?views[Math.floor(views.length/2)]._id:"";
  const last=views.length?views[views.length-1]._id:"";
+ const shortDate=v=>{const s=String(v??"");const m=s.match(/^(\\d{4})-(\\d{2})-(\\d{2})/);return m?m[3]+"/"+m[2]:s.slice(-5)};
+ const grid=[0,.25,.5,.75,1].map(f=>{const yy=top+plotH*(1-f);return '<line x1="'+left+'" y1="'+yy+'" x2="'+(W-right)+'" y2="'+yy+'" class="chart-grid"/><text x="'+(left-10)+'" y="'+(yy+4)+'" text-anchor="end" class="chart-axis">'+Math.round(max*f)+'</text>'}).join("");
+ const labelIndexes=[0,Math.floor((views.length-1)/2),views.length-1].filter((v,i,a)=>a.indexOf(v)===i);
+ const xlabels=labelIndexes.map(i=>'<text x="'+coords[i].x+'" y="'+(H-8)+'" text-anchor="'+(i===0?"start":i===views.length-1?"end":"middle")+'" class="chart-axis">'+esc(shortDate(views[i]._id))+'</text>').join("");
+ const dots=coords.map((p,i)=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="'+(i===coords.length-1?"5":"3")+'" class="chart-dot"><title>'+esc(views[i]._id)+' · '+p.v+' eventos</title></circle>').join("");
  E("grafico").innerHTML=views.length
-  ? '<svg class="stock-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><path d="M'+points.replace(/ /g," L")+'" fill="none" stroke="currentColor" stroke-width="2.5" vector-effect="non-scaling-stroke"/><polyline points="'+points+'" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="10" vector-effect="non-scaling-stroke"/></svg><div class="stock-labels"><span>'+esc(first)+'</span><span>'+esc(middle)+'</span><span>'+esc(last)+'</span></div>'
+  ? '<div class="chart-canvas"><svg class="stock-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Eventos por dia no período selecionado"><defs><linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9b8cff" stop-opacity=".34"/><stop offset="100%" stop-color="#9b8cff" stop-opacity=".015"/></linearGradient><linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9b8cff"/><stop offset="100%" stop-color="#c5baff"/></linearGradient></defs>'+grid+'<path d="'+area+'" class="chart-area"/><path d="'+line+'" class="chart-line"/>'+dots+xlabels+'</svg></div><div class="stock-labels"><span>Início · '+esc(first)+'</span><span>Fim · '+esc(last)+'</span></div>'
   : '<p class="vazio">Ainda não há dados.</p>';
  const visitors=Number(x.visitantes)||0;
  E("kpis").innerHTML=[["Eventos",x.total,"Todas as atividades"],["Visitantes",visitors,"Identificadores únicos"],["Cadastros",(x.subcategorias||[]).filter(a=>a._id?.subcategoria==="cadastros").reduce((n,a)=>n+a.total,0),"Contas criadas"],["Comercial",(x.categorias||[]).find(a=>a._id==="comercial")?.total||0,"Atividade comercial"],["Período",diasAnalytics+" dias","Janela analisada"]].map(a=>'<div class="kpi"><span>'+a[0]+'</span><strong>'+esc(a[1])+'</strong><small>'+a[2]+'</small></div>').join("");
