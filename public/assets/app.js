@@ -1,7 +1,7 @@
 const API_URL="https://kztechsite.onrender.com";
 const API_TIMEOUT_MS=30000;
 window.addEventListener("DOMContentLoaded",()=>{if(!document.querySelector("#app")?.innerHTML.trim()){try{render()}catch{document.querySelector("#app").innerHTML="<main style=\"min-height:100vh;display:grid;place-items:center;padding:40px;color:#fff;font:16px system-ui;background:#050505\"><div><h1>KORCZAK TECHNOLOGIES</h1><p>Carregando a interface…</p></div></main>"}}});
-const APP_VERSION="2026.10.14.2";
+const APP_VERSION="2026.10.14.3";
 const root=document.querySelector("#app");
 const FALLBACK_PRODUCTS=[];
 const PLAN_CATALOG={};
@@ -370,7 +370,7 @@ function planSectionFor(id){
   const key=planKeyForProduct(id),plans=state.plans?.[key]||PLAN_CATALOG[key]||[];
   if(!plans.length)return "";
   const title=key==="hub"?"Planos do HUB":id==="korczak-ai"?"Planos do Korczak AI":id==="ide"?"Planos do Korczak IDE":"Planos do "+(state.products.find(x=>x.id===id)?.name||id);
-  const personalIds=key==="morok"?new Set(["free","starter","basic","business","professional"]):new Set(["free","starter","standard","plus"]);
+  const personalIds=key==="morok"?new Set(["free","starter","basic","standard","plus"]):new Set(["free","starter","standard","plus"]);
   const businessIds=new Set(["business","dimitri","zeus"]);
   const personal=plans.filter(p=>personalIds.has(p.id));
   const business=plans.filter(p=>businessIds.has(p.id));
@@ -497,7 +497,7 @@ function subscriptionPage(){
   const plans=Array.isArray(mergedPlans[requestedPlanKey])?mergedPlans[requestedPlanKey]:[];
   if(!selectedProduct||!plans.length)return '<main id="main-content" class="section shell subscription-page"><div class="portfolio-hero"><span class="eyebrow">PRÉ-VENDA · ASSINATURA</span><h2>Nenhum plano disponível.</h2><p class="section-lead">O catálogo de planos deste produto ainda não está disponível.</p><a class="btn" href="#/produtos">Voltar aos produtos '+icon("arrow")+'</a></div></main>';
 
-  const personalIds=requestedPlanKey==="morok"?new Set(["free","starter","basic"]):new Set(["free","starter"]);
+  const personalIds=requestedPlanKey==="morok"?new Set(["free","starter","basic","standard","plus"]):new Set(["free","starter","standard","plus"]);
   const commercialIds=new Set(["business","professional","dimitri","zeus"]);
   const personal=plans.filter(x=>personalIds.has(x.id));
   const commercial=plans.filter(x=>commercialIds.has(x.id));
