@@ -48,7 +48,7 @@ async function analytics(){
  const step=vals.length>1?plotW/(vals.length-1):0;
  const y=v=>top+plotH-(v/max)*plotH;
  const coords=vals.map((v,i)=>({x:vals.length===1?left+plotW/2:left+i*step+left,y:y(v),v}));
- const line=coords.length<3?coords.map((p,i)=>(i?"L":"M")+p.x.toFixed(1)+" "+p.y.toFixed(1)).join(" "):coords.reduce((d,p,i,a)=>{if(i===0)return "M "+p.x.toFixed(1)+" "+p.y.toFixed(1);const prev=a[i-1],before=a[Math.max(0,i-2)],next=a[Math.min(a.length-1,i+1)],t=.32,c1x=prev.x+(p.x-before.x)*t,c1y=prev.y+(p.y-before.y)*t,c2x=p.x-(next.x-prev.x)*t,c2y=p.y-(next.y-prev.y)*t;return d+" C "+c1x.toFixed(1)+" "+c1y.toFixed(1)+", "+c2x.toFixed(1)+" "+c2y.toFixed(1)+", "+p.x.toFixed(1)+" "+p.y.toFixed(1)},"");
+ const line=coords.length<3?coords.map((p,i)=>(i?"L":"M")+p.x.toFixed(1)+" "+p.y.toFixed(1)).join(" "):coords.slice(1).reduce((d,p,i)=>{const prev=coords[i],before=coords[Math.max(0,i-1)],next=coords[Math.min(coords.length-1,i+2)],dx=p.x-prev.x,lo=Math.min(prev.y,p.y),hi=Math.max(prev.y,p.y),t=.28;const tangentPrev=(p.y-before.y)/(i===0?1:2),tangentNext=(next.y-prev.y)/(i===coords.length-2?1:2);const c1x=prev.x+dx/3,c2x=p.x-dx/3,c1y=Math.max(lo,Math.min(hi,prev.y+tangentPrev*t)),c2y=Math.max(lo,Math.min(hi,p.y-tangentNext*t));return d+" C "+c1x.toFixed(1)+" "+c1y.toFixed(1)+", "+c2x.toFixed(1)+" "+c2y.toFixed(1)+", "+p.x.toFixed(1)+" "+p.y.toFixed(1)},"M "+coords[0].x.toFixed(1)+" "+coords[0].y.toFixed(1));
  const area=line+" L "+coords[coords.length-1].x.toFixed(1)+" "+(top+plotH)+" L "+coords[0].x.toFixed(1)+" "+(top+plotH)+" Z";
  const first=views.length?views[0]._id:"";
  const middle=views.length?views[Math.floor(views.length/2)]._id:"";
