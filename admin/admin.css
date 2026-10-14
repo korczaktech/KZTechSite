@@ -111,3 +111,8 @@ button,.button,input,textarea,select{max-width:100%}
 #grafico .chart-tooltip strong{font-weight:650;color:#d8d0ff;margin-bottom:4px;text-transform:capitalize}
 #grafico .chart-tooltip span{color:#fff;font-size:14px;font-weight:750}
 #grafico .chart-dot-active{r:6;fill:#c5baff;stroke:#fff;stroke-width:2.5}
+
+/* Curva mais orgânica no gráfico de analytics */
+#grafico .chart-line{stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;}
+#grafico .chart-area{stroke:none;}
+#grafico .chart-dot{stroke-linecap:round;}
