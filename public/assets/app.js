@@ -408,7 +408,7 @@ function product(id){
   if(p.id==="korczak-ai") action='<a class="btn" href="#/interesse/korczak-ai">Entrar na lista de interessados '+icon("arrow")+'</a>';
   else if(p.id==="ide") action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Ver planos '+icon("arrow")+'</a>';
   else if(isHubApp&&p.id==="nexus") action='<a class="btn" href="#/planos/nexus">Ver planos '+icon("arrow")+'</a><a class="btn ghost" href="#/download/nexus">Baixar Nexus '+icon("arrow")+'</a>';
-  else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
+  else if(isHubApp&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.type==="HUB"?"hub":p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
   else if(isKOS&&isModular) action='<a class="btn" href="#/planos/'+encodeURIComponent(p.id)+'">Montar por módulos '+icon("arrow")+'</a>';
   else if(isKOS&&p.status==="Em desenvolvimento") action='<span class="plan-note">Em desenvolvimento · comercialização futura</span>';
   else if(isKOS&&p.status==="Planejado") action='<a class="btn" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a>';
