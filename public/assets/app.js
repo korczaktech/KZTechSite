@@ -555,7 +555,7 @@ function presalePage(){
     }
     return "Condição especial de pré-venda";
   };
-  const card=(p,i)=>'<article class="presale-card '+(p.id===selectedId?"selected":"")+'"><div class="presale-card-top"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Produto")+'</span></div><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description||"")+'</p><strong class="presale-card-price">'+esc(priceLabel(p))+'</strong><a class="btn '+(p.id===selectedId?"":"ghost")+'" href="#/assinatura?produto='+encodeURIComponent(p.id)+'">Assinar pré-venda '+icon("arrow")+'</a></article>';
+  const card=(p,i)=>'<article class="presale-card '+(p.id===selectedId?"selected":"")+'"><div class="presale-card-top"><span class="card-index">'+String(i+1).padStart(2,"0")+'</span><span class="status">'+esc(p.status||"Produto")+'</span></div><h3>'+esc(p.name)+'</h3><p class="muted">'+esc(p.description||"")+'</p><strong class="presale-card-price">'+esc(priceLabel(p))+'</strong><a class="btn '+(p.id===selectedId?"":"ghost")+'" href="#/assinatura?produto='+encodeURIComponent(p.type==="HUB"?"hub":p.id)+'">Assinar pré-venda '+icon("arrow")+'</a></article>';
   const productRows=(items)=>items.map((p,i)=>card(p,i)).join("");
   const selected=all.find(p=>p.id===selectedId);
   const selectedPlans=selected?(state.plans?.[planKeyForProduct(selected.id)]||PLAN_CATALOG[planKeyForProduct(selected.id)]||[]):[];
