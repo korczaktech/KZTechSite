@@ -99,3 +99,15 @@ button,.button,input,textarea,select{max-width:100%}
 #grafico .stock-labels{display:flex;justify-content:space-between;gap:12px;padding:9px 2px 0;color:#777782;font-size:11px;opacity:1}
 #grafico .stock-labels span{overflow-wrap:anywhere}
 @media(max-width:700px){#grafico .stock-svg{aspect-ratio:1.7/1}#grafico .chart-axis{font-size:14px}#grafico .stock-labels{font-size:10px}}
+
+
+/* Tooltip interativo que acompanha o ponteiro no gráfico */
+#grafico .chart-canvas{position:relative}
+#grafico .chart-canvas .stock-svg{touch-action:pan-y;cursor:crosshair}
+#grafico .chart-hover-line{stroke:rgba(220,213,255,.72);stroke-width:1.2;stroke-dasharray:4 4;pointer-events:none;vector-effect:non-scaling-stroke}
+#grafico .chart-tooltip{position:absolute;z-index:5;min-width:124px;max-width:min(230px,75%);padding:10px 12px;border:1px solid rgba(197,186,255,.4);border-radius:10px;background:rgba(13,13,18,.96);box-shadow:0 10px 30px rgba(0,0,0,.4);backdrop-filter:blur(12px);pointer-events:none;color:#fff;font-size:12px;line-height:1.4}
+#grafico .chart-tooltip[hidden]{display:none}
+#grafico .chart-tooltip strong,#grafico .chart-tooltip span{display:block}
+#grafico .chart-tooltip strong{font-weight:650;color:#d8d0ff;margin-bottom:4px;text-transform:capitalize}
+#grafico .chart-tooltip span{color:#fff;font-size:14px;font-weight:750}
+#grafico .chart-dot-active{r:6;fill:#c5baff;stroke:#fff;stroke-width:2.5}
