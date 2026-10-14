@@ -84,3 +84,18 @@ button,.button,input,textarea,select{max-width:100%}
   .hero{padding:15px}
   main{padding:12px 10px}
 }
+
+
+/* Gráfico de analytics: traçado limpo, escala legível e área suave */
+#grafico.grafico{height:auto;display:block;align-items:initial;gap:0;border:0;padding:8px 0 0;background:none;overflow:hidden}
+#grafico .chart-canvas{width:100%;min-width:0}
+#grafico .stock-svg{width:100%;height:auto;aspect-ratio:3/1;display:block;overflow:visible;background:none;color:inherit}
+#grafico .chart-grid{stroke:rgba(255,255,255,.085);stroke-width:1;stroke-dasharray:3 6}
+#grafico .chart-axis{fill:#777782;font-size:12px;font-family:inherit}
+#grafico .chart-area{fill:url(#chartArea);stroke:none}
+#grafico .chart-line{fill:none;stroke:url(#chartLine);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 2px 5px rgba(155,140,255,.18))}
+#grafico .chart-dot{fill:#0d0d10;stroke:#c5baff;stroke-width:2;vector-effect:non-scaling-stroke}
+#grafico .chart-dot:last-of-type{fill:#c5baff;stroke:#fff;stroke-width:2.5}
+#grafico .stock-labels{display:flex;justify-content:space-between;gap:12px;padding:9px 2px 0;color:#777782;font-size:11px;opacity:1}
+#grafico .stock-labels span{overflow-wrap:anywhere}
+@media(max-width:700px){#grafico .stock-svg{aspect-ratio:1.7/1}#grafico .chart-axis{font-size:14px}#grafico .stock-labels{font-size:10px}}
