@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.04.6-hub-business-tabs",
+  "version": "2026.10.14.1-hub-plans",
   "products": [
     {
       "id": "korczak-ai",
@@ -213,87 +213,170 @@
     "hub": [
       {
         "id": "free",
-        "name": "Korczak Free",
-        "billing": "mês",
+        "name": "Free",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Acesso gratuito para começar a usar o ecossistema Korczak HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Korczak Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Produtividade e colaboração essenciais em todos os aplicativos do HUB.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Acesso aos aplicativos integrados do HUB",
-          "30 GB por usuário",
-          "Uma única assinatura para Vault, Nexa, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Korczak Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento em todo o HUB.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Korczak Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração em todo o HUB.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Korczak Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Colaboração, administração e recursos ampliados para equipes.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Korczak Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "erp": [
@@ -412,1204 +495,2366 @@
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "nexus": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "nexa": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "veya": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "formly": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "korvo": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "chrona": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "meet": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "pulse": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "acta": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "memo": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "people": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "web": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "klash": [
       {
         "id": "free",
         "name": "Free",
-        "billing": "mês",
+        "billing": "usuário/mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito ao essencial do Korczak HUB para organizações de até 5 usuários.",
         "features": [
-          "Acesso gratuito",
-          "Recursos essenciais",
-          "Sem mensalidade"
+          "Ferramentas básicas do HUB",
+          "Motor Kortex",
+          "Sem mensalidade",
+          "Limite de 5 usuários por organização",
+          "Sem acesso antecipado, nuvem dedicada ou Morok AI"
         ],
         "price": 0,
-        "preSalePrice": 0
+        "preSalePrice": null,
+        "maxUsers": 5
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Zagryd",
         "billing": "usuário/mês",
-        "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "tag": "Pessoal",
+        "description": "Produtividade e colaboração para pequenos grupos de até 10 usuários.",
         "features": [
-          "Email profissional",
-          "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Ferramentas básicas do HUB",
+          "Integração com Google Workspace e Microsoft 365",
+          "Extensões Korczak (.nsx, .nex, .vlt e outras)",
+          "Motor Kortex",
+          "Limite de 10 usuários por organização",
+          "Sem nuvem dedicada ou Morok AI",
+          "Pré-venda indisponível"
         ],
-        "price": 27,
-        "preSalePrice": 23
+        "price": 25,
+        "preSalePrice": null,
+        "maxUsers": 10
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Hermes",
         "billing": "usuário/mês",
-        "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "tag": "Pessoal",
+        "description": "Mais integração e organização para equipes de até 25 usuários.",
         "features": [
-          "Tudo do Starter",
-          "2 TB por usuário",
-          "Recursos avançados de colaboração e IA"
+          "Tudo do Zagryd",
+          "Integração entre aplicativos do HUB",
+          "Administração básica",
+          "Limite de 25 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 55,
-        "preSalePrice": 47
+        "price": 50,
+        "preSalePrice": 43,
+        "maxUsers": 25
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Apollo",
         "billing": "usuário/mês",
-        "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "tag": "Pessoal",
+        "description": "Mais colaboração, automação e inteligência para equipes em crescimento.",
         "features": [
-          "Tudo do Standard",
-          "5 TB por usuário",
-          "Segurança e administração avançadas"
+          "Tudo do Hermes",
+          "Acesso ao Morok AI",
+          "Integração ampliada entre aplicativos",
+          "Acesso antecipado a novidades",
+          "Colaboração e administração aprimoradas",
+          "Limite de 50 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 86,
-        "preSalePrice": 73
+        "price": 75,
+        "preSalePrice": 64,
+        "maxUsers": 50
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Veles",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "tag": "Business",
+        "description": "Recursos empresariais e controle para organizações de até 100 usuários.",
         "features": [
-          "Tudo do Plus",
-          "Recursos para equipes",
-          "Administração e colaboração empresarial"
+          "Tudo do Apollo",
+          "Nuvem dedicada",
+          "Gestão de usuários e permissões",
+          "Recursos empresariais",
+          "Suporte prioritário básico",
+          "Limite de 100 usuários por organização",
+          "Pré-venda disponível"
         ],
         "price": 100,
-        "preSalePrice": 85
+        "preSalePrice": 85,
+        "maxUsers": 100
       },
       {
-        "id": "enterprise",
-        "name": "Enterprise",
+        "id": "dimitri",
+        "name": "Dimitri",
         "billing": "usuário/mês",
-        "tag": "Empresarial",
-        "description": "Configuração para organizações com necessidades corporativas específicas.",
+        "tag": "Business",
+        "description": "Administração avançada e colaboração ampliada para equipes maiores.",
         "features": [
-          "Cobrança por usuário",
-          "Recursos empresariais",
-          "Gestão e suporte para organizações"
+          "Tudo do Veles",
+          "Administração avançada",
+          "Configurações adicionais",
+          "Colaboração ampliada",
+          "Suporte prioritário",
+          "Limite de 250 usuários por organização",
+          "Pré-venda disponível"
         ],
-        "price": 129,
-        "preSalePrice": 110
+        "price": 125,
+        "preSalePrice": 106,
+        "maxUsers": 250
+      },
+      {
+        "id": "zeus",
+        "name": "Zeus",
+        "billing": "usuário/mês",
+        "tag": "Business",
+        "description": "Controles empresariais avançados para organizações de até 500 usuários.",
+        "features": [
+          "Tudo do Dimitri",
+          "Recursos empresariais avançados",
+          "Configurações ampliadas",
+          "Controles de segurança reforçados",
+          "Suporte prioritário",
+          "Limite de 500 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 150,
+        "preSalePrice": 128,
+        "maxUsers": 500
+      },
+      {
+        "id": "morok",
+        "name": "Morok",
+        "billing": "usuário/mês",
+        "tag": "Enterprise",
+        "description": "Uma experiência corporativa ampliada, com administração em escala e suporte dedicado.",
+        "features": [
+          "Tudo do Zeus",
+          "Configurações personalizadas",
+          "Administração em escala",
+          "Segurança e governança corporativa",
+          "Suporte dedicado",
+          "Limite de 1.000 usuários por organização",
+          "Pré-venda disponível"
+        ],
+        "price": 200,
+        "preSalePrice": 170,
+        "maxUsers": 1000
+      },
+      {
+        "id": "marzanna",
+        "name": "Marzanna",
+        "billing": "sob consulta",
+        "tag": "Enterprise · Sob consulta",
+        "description": "Plano corporativo personalizado para organizações com necessidades específicas.",
+        "features": [
+          "Tudo do Morok",
+          "Capacidade e infraestrutura dimensionadas sob medida",
+          "Recursos e governança corporativa personalizados",
+          "Suporte dedicado",
+          "Usuários ilimitados",
+          "Condições comerciais personalizadas",
+          "Preço sob consulta"
+        ],
+        "price": null,
+        "preSalePrice": null,
+        "maxUsers": null
       }
     ],
     "morok": [
@@ -4096,10 +5341,10 @@
   "presale": {
     "eyebrow": "PRÉ-VENDA · ECOSSISTEMA KORCZAK",
     "title": "Garanta seu acesso antecipado.",
-    "lead": "O HUB reúne todos os aplicativos em uma única assinatura. Escolha o plano Korczak que combina com sua equipe e use os aplicativos integrados do ecossistema, sem assinaturas separadas por aplicativo.",
+    "lead": "O HUB reúne todos os aplicativos em uma única assinatura. Compare os nove planos por usuário/mês e escolha o que combina com sua equipe, sem assinaturas separadas por aplicativo.",
     "introEyebrow": "01 · TODOS OS APLICATIVOS",
     "introTitle": "Um plano. Todo o HUB.",
-    "introText": "Vault, Nexa e os demais aplicativos do HUB fazem parte do mesmo ecossistema. Os planos são Korczak Free, Korczak Starter, Korczak Standard, Korczak Plus, Korczak Business e Korczak Enterprise.",
+    "introText": "Vault, Nexa, Veya, Formly, Korvo, Chrona, Pulse, Meet, Acta, Memo, People, Web, Klash e os demais aplicativos do HUB fazem parte de uma única assinatura. Escolha entre Free, Zagryd, Hermes, Apollo, Veles, Dimitri, Zeus, Morok e Marzanna.",
     "catalogButton": "Ver catálogo",
     "kosTitle": "Produtos operacionais",
     "hubTitle": "HUB · aplicativos integrados",
