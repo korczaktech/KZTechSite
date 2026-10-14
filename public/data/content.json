@@ -213,10 +213,10 @@
     "hub": [
       {
         "id": "free",
-        "name": "Free",
+        "name": "Korczak Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar HUB.",
+        "description": "Acesso gratuito para começar a usar o ecossistema Korczak HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -227,24 +227,24 @@
       },
       {
         "id": "starter",
-        "name": "Starter",
+        "name": "Korczak Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Ferramentas essenciais de produtividade e colaboração.",
+        "description": "Produtividade e colaboração essenciais em todos os aplicativos do HUB.",
         "features": [
-          "Email profissional",
+          "Acesso aos aplicativos integrados do HUB",
           "30 GB por usuário",
-          "Docs, Nexa, Vault, Meet e mais"
+          "Uma única assinatura para Vault, Nexa, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Standard",
+        "name": "Korczak Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Mais armazenamento e recursos para equipes em crescimento.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento em todo o HUB.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
@@ -255,10 +255,10 @@
       },
       {
         "id": "plus",
-        "name": "Plus",
+        "name": "Korczak Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Mais armazenamento, segurança e administração.",
+        "description": "Mais armazenamento, segurança e administração em todo o HUB.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
@@ -269,10 +269,10 @@
       },
       {
         "id": "business",
-        "name": "Business",
+        "name": "Korczak Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "description": "Colaboração, administração e recursos ampliados para equipes.",
         "features": [
           "Tudo do Plus",
           "Recursos para equipes",
@@ -283,7 +283,7 @@
       },
       {
         "id": "enterprise",
-        "name": "Enterprise",
+        "name": "Korczak Enterprise",
         "billing": "usuário/mês",
         "tag": "Empresarial",
         "description": "Configuração para organizações com necessidades corporativas específicas.",
@@ -414,7 +414,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Vault.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -425,52 +425,66 @@
       },
       {
         "id": "starter",
-        "name": "Vault Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Vault.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Vault",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Vault"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Vault Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Vault.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Vault"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Vault Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Vault.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Vault"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Vault Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Vault para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -486,7 +500,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Nexus.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -497,52 +511,66 @@
       },
       {
         "id": "starter",
-        "name": "Nexus Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Nexus.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Nexus",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Nexus"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Nexus Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Nexus.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Nexus"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Nexus Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Nexus.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Nexus"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Nexus Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Nexus para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -558,7 +586,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Nexa.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -569,52 +597,66 @@
       },
       {
         "id": "starter",
-        "name": "Nexa Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Nexa.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Nexa",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Nexa"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Nexa Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Nexa.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Nexa"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Nexa Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Nexa.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Nexa"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Nexa Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Nexa para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -630,7 +672,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Veya.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -641,52 +683,66 @@
       },
       {
         "id": "starter",
-        "name": "Veya Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Veya.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Veya",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Veya"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Veya Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Veya.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Veya"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Veya Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Veya.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Veya"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Veya Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Veya para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -702,7 +758,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Formly.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -713,52 +769,66 @@
       },
       {
         "id": "starter",
-        "name": "Formly Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Formly.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Formly",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Formly"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Formly Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Formly.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Formly"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Formly Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Formly.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Formly"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Formly Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Formly para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -774,7 +844,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Korvo.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -785,52 +855,66 @@
       },
       {
         "id": "starter",
-        "name": "Korvo Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Korvo.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Korvo",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Korvo"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Korvo Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Korvo.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Korvo"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Korvo Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Korvo.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Korvo"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Korvo Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Korvo para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -846,7 +930,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Chrona.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -857,52 +941,66 @@
       },
       {
         "id": "starter",
-        "name": "Chrona Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Chrona.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Chrona",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Chrona"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Chrona Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Chrona.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Chrona"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Chrona Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Chrona.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Chrona"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Chrona Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Chrona para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -918,7 +1016,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Meet.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -929,52 +1027,66 @@
       },
       {
         "id": "starter",
-        "name": "Meet Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Meet.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Meet",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Meet"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Meet Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Meet.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Meet"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Meet Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Meet.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Meet"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Meet Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Meet para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -990,7 +1102,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Pulse.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1001,52 +1113,66 @@
       },
       {
         "id": "starter",
-        "name": "Pulse Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Pulse.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Pulse",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Pulse"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Pulse Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Pulse.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Pulse"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Pulse Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Pulse.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Pulse"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Pulse Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Pulse para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -1062,7 +1188,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Acta.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1073,52 +1199,66 @@
       },
       {
         "id": "starter",
-        "name": "Acta Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Acta.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Acta",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Acta"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Acta Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Acta.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Acta"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Acta Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Acta.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Acta"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Acta Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Acta para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -1134,7 +1274,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Memo.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1145,52 +1285,66 @@
       },
       {
         "id": "starter",
-        "name": "Memo Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Memo.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Memo",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Memo"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Memo Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Memo.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Memo"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Memo Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Memo.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Memo"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Memo Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Memo para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -1206,7 +1360,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar People.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1217,52 +1371,66 @@
       },
       {
         "id": "starter",
-        "name": "People Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para People.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de People",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de People"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "People Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para People.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de People"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "People Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para People.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de People"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "People Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de People para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -1278,7 +1446,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Web.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1289,52 +1457,66 @@
       },
       {
         "id": "starter",
-        "name": "Web Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Web.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Web",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Web"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Web Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Web.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Web"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Web Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Web.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Web"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Web Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Web para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -1350,7 +1532,7 @@
         "name": "Free",
         "billing": "mês",
         "tag": "Grátis",
-        "description": "Plano gratuito para começar a usar Klash.",
+        "description": "Plano gratuito para começar a usar HUB.",
         "features": [
           "Acesso gratuito",
           "Recursos essenciais",
@@ -1361,52 +1543,66 @@
       },
       {
         "id": "starter",
-        "name": "Klash Starter",
+        "name": "Starter",
         "billing": "usuário/mês",
         "tag": "Entrada",
-        "description": "Plano Starter para Klash.",
+        "description": "Ferramentas essenciais de produtividade e colaboração.",
         "features": [
-          "Recursos de Klash",
+          "Email profissional",
           "30 GB por usuário",
-          "Recursos de Klash"
+          "Docs, Nexa, Vault, Meet e mais"
         ],
         "price": 27,
         "preSalePrice": 23
       },
       {
         "id": "standard",
-        "name": "Klash Standard",
+        "name": "Standard",
         "billing": "usuário/mês",
         "tag": "Mais usado",
-        "description": "Plano Standard para Klash.",
+        "description": "Mais armazenamento e recursos para equipes em crescimento.",
         "features": [
           "Tudo do Starter",
           "2 TB por usuário",
-          "Recursos de Klash"
+          "Recursos avançados de colaboração e IA"
         ],
         "price": 55,
         "preSalePrice": 47
       },
       {
         "id": "plus",
-        "name": "Klash Plus",
+        "name": "Plus",
         "billing": "usuário/mês",
         "tag": "Avançado",
-        "description": "Plano Plus para Klash.",
+        "description": "Mais armazenamento, segurança e administração.",
         "features": [
           "Tudo do Standard",
           "5 TB por usuário",
-          "Recursos de Klash"
+          "Segurança e administração avançadas"
         ],
         "price": 86,
         "preSalePrice": 73
       },
       {
-        "id": "enterprise",
-        "name": "Klash Enterprise",
+        "id": "business",
+        "name": "Business",
         "billing": "usuário/mês",
         "tag": "Empresarial",
-        "description": "Plano Enterprise de Klash para organizações e equipes.",
+        "description": "Plano Business para empresas e equipes que precisam de colaboração, administração e recursos ampliados.",
+        "features": [
+          "Tudo do Plus",
+          "Recursos para equipes",
+          "Administração e colaboração empresarial"
+        ],
+        "price": 100,
+        "preSalePrice": 85
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "billing": "usuário/mês",
+        "tag": "Empresarial",
+        "description": "Configuração para organizações com necessidades corporativas específicas.",
         "features": [
           "Cobrança por usuário",
           "Recursos empresariais",
@@ -3900,14 +4096,14 @@
   "presale": {
     "eyebrow": "PRÉ-VENDA · ECOSSISTEMA KORCZAK",
     "title": "Garanta seu acesso antecipado.",
-    "lead": "A pré-venda reúne todos os aplicativos do catálogo, inclusive produtos em desenvolvimento e planejados. Escolha um produto, confira a condição antecipada e registre sua intenção de compra.",
+    "lead": "O HUB reúne todos os aplicativos em uma única assinatura. Escolha o plano Korczak que combina com sua equipe e use os aplicativos integrados do ecossistema, sem assinaturas separadas por aplicativo.",
     "introEyebrow": "01 · TODOS OS APLICATIVOS",
-    "introTitle": "Escolha o que você quer receber primeiro.",
-    "introText": "A condição de pré-venda é registrada separadamente de um orçamento. Ela não substitui propostas para serviços personalizados.",
+    "introTitle": "Um plano. Todo o HUB.",
+    "introText": "Vault, Nexa e os demais aplicativos do HUB fazem parte do mesmo ecossistema. Os planos são Korczak Free, Korczak Starter, Korczak Standard, Korczak Plus, Korczak Business e Korczak Enterprise.",
     "catalogButton": "Ver catálogo",
     "kosTitle": "Produtos operacionais",
-    "hubTitle": "Aplicativos do HUB",
-    "selectedEyebrow": "02 · PRODUTO SELECIONADO",
+    "hubTitle": "HUB · aplicativos integrados",
+    "selectedEyebrow": "02 · PLANO DO HUB",
     "confirmButton": "Confirmar pré-venda",
     "successMessage": "Pré-venda registrada. A equipe enviará as instruções de pagamento quando a oferta estiver disponível.",
     "pendingPrice": "Definida no lançamento"
