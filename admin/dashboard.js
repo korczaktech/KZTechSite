@@ -141,7 +141,34 @@ async function load(){try{await analytics()}catch(e){const el=E("atualizado");if
 async function atualizarTudo(){const b=E("atualizarTudo");if(!b)return;b.disabled=true;b.textContent="↻ Atualizando…";try{await load();b.textContent="✓ Atualizado";setTimeout(()=>b.textContent="↻ Atualizar informações",1600)}catch{b.textContent="⚠ Erro";setTimeout(()=>b.textContent="↻ Atualizar informações",2200)}finally{b.disabled=false}}
 E("atualizarTudo")?.addEventListener("click",atualizarTudo);E("out").onclick=()=>{sessionStorage.removeItem("adm");localStorage.removeItem("kz_admin_session");location.href=new URL("./",location.href).href};
 function mostrarSupercategoria(tipo){const analyticsAtivo=tipo==="analytics";E("analyticsSuper").hidden=!analyticsAtivo;E("administracao").hidden=analyticsAtivo;document.querySelectorAll(".aba").forEach(x=>x.hidden=true);document.querySelectorAll("[data-a]").forEach(x=>x.classList.remove("ativo"));if(analyticsAtivo){E("analytics").hidden=false;document.querySelector('[data-a="analytics"]')?.classList.add("ativo");}}
-document.querySelectorAll("[data-super]").forEach(b=>b.onclick=async()=>{document.querySelectorAll("[data-super]").forEach(x=>x.classList.toggle("super-ativo",x===b));mostrarSupercategoria(b.dataset.super);if(b.dataset.super==="analytics")await analytics();});
+async function abrirAba(nome){
+ const allowed=["analytics","planos","contas","comercial","interacoes","conteudo","midias","admins","auditoria"];
+ if(!allowed.includes(nome))return;
+ document.querySelectorAll(".aba").forEach(el=>el.hidden=el.id!==nome);
+ document.querySelectorAll("[data-a]").forEach(el=>el.classList.toggle("ativo",el.dataset.a===nome));
+ E("analyticsSuper").hidden=false;E("administracao").hidden=true;
+ document.querySelectorAll("[data-super]").forEach(el=>el.classList.toggle("super-ativo",el.dataset.super==="analytics"));
+ try{
+  if(nome==="analytics")await analytics();
+  else if(nome==="planos")await planosAdmin();
+  else if(nome==="contas")await contas();
+  else if(nome==="comercial")await comercial();
+  else if(nome==="interacoes")await interacoes();
+  else if(nome==="conteudo")await rules();
+  else if(nome==="midias")await media();
+  else if(nome==="admins")await admins();
+  else if(nome==="auditoria")await logs();
+ }catch(err){
+  const el=E(nome==="planos"?"planosAdmin":nome==="contas"?"contasLista":nome==="comercial"?"comercialKpis":nome==="interacoes"?"interacoesLista":nome==="conteudo"?"lista":nome==="midias"?"media":nome==="admins"?"adminLista":nome==="auditoria"?"logs":"atualizado");
+  if(el)el.innerHTML='<p class="vazio">Não foi possível carregar esta seção: '+esc(err?.message||"erro inesperado")+'</p>';
+ }
+}
+document.querySelectorAll("[data-a]").forEach(b=>b.addEventListener("click",()=>abrirAba(b.dataset.a)));
+document.querySelectorAll("[data-super]").forEach(b=>b.onclick=async()=>{
+ document.querySelectorAll("[data-super]").forEach(x=>x.classList.toggle("super-ativo",x===b));
+ mostrarSupercategoria(b.dataset.super);
+ if(b.dataset.super==="analytics")await abrirAba("analytics");
+});
 document.querySelectorAll(".periodos [data-dias]").forEach(b=>b.addEventListener("click",async()=>{const dias=Math.max(1,Math.min(365,Number(b.dataset.dias)||30));diasAnalytics=dias;document.querySelectorAll(".periodos [data-dias]").forEach(x=>x.classList.toggle("selecionado",x===b));await analytics();}));E("atualizarAnalytics").onclick=analytics;E("salvarPlanos").onclick=salvarPlanosAdmin;E("atualizarContas").onclick=contas;E("atualizarInteracoes").onclick=interacoes;
 E("novo").onclick=()=>{fill();E("dlg").showModal()};E("cancel").onclick=()=>E("dlg").close();E("rf").onsubmit=async e=>{e.preventDefault();const b={pagina:E("pg").value,seletor:E("sel").value,tipo:E("tipo").value,atributo:E("atr").value,propriedade:E("prop").value,valor:E("val").value,publicado:E("pub").checked},id=E("id").value;await api(id?"/admin/conteudo/"+id:"/admin/conteudo",{method:id?"PUT":"POST",body:JSON.stringify(b)});E("dlg").close();rules()};
 E("file").onchange=e=>{const f=e.target.files[0];if(!f||f.size>8388608)return alert("Imagem máxima: 8 MB");const q=new FileReader();q.onload=async()=>{try{await api("/admin/midias",{method:"POST",body:JSON.stringify({nome:f.name,tipo:f.type,tamanho:f.size,dados:q.result})});media()}catch(x){alert(x.message)}};q.readAsDataURL(f)};
