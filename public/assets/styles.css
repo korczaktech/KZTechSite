@@ -1389,3 +1389,177 @@ img,svg,video,canvas,iframe{max-width:100%}
   .workspace-subscription-group .subscription-audience-switch{width:min(100%,360px);margin-bottom:20px}
   .workspace-subscription-group .subscription-audience-switch .plan-audience-tab{padding:11px 8px;font-size:12px}
 }
+
+
+/* Design consistency pass — 2026-10-15 */
+:root{
+  --surface-card:#0b0b0d;
+  --surface-card-hover:#111114;
+  --border-card:#2a2a2e;
+  --radius-card:16px;
+  --space-card:24px;
+  --control-height:44px;
+  --focus-ring:2px solid #f4f4f2;
+}
+/* Shared card foundation; product/HUB cards may retain their intentional accents. */
+.card,
+.info-card,
+.gateway-card,
+.service-card,
+.price-card,
+.detail-panel,
+.mentor-track-card,
+.mentor-level-card,
+.presale-card,
+.presale-choice,
+.nexus-download-card,
+.workspace-plan-card,
+.subscription-summary,
+.subscription-form,
+.interest-copy,
+.interest-form,
+.quote-form{
+  box-sizing:border-box;
+  border:1px solid var(--border-card);
+  border-radius:var(--radius-card);
+}
+.card,
+.info-card,
+.gateway-card,
+.service-card,
+.price-card,
+.detail-panel,
+.mentor-track-card,
+.mentor-level-card,
+.presale-card,
+.presale-choice,
+.nexus-download-card{
+  padding:var(--space-card);
+}
+.card,
+.info-card,
+.gateway-card,
+.service-card,
+.price-card,
+.detail-panel,
+.mentor-track-card,
+.mentor-level-card,
+.presale-card,
+.presale-choice,
+.nexus-download-card{
+  min-width:0;
+}
+.card h3,
+.info-card h3,
+.gateway-card h3,
+.service-card h3,
+.price-card h3,
+.detail-panel h3,
+.mentor-track-card h3,
+.mentor-level-card h3,
+.presale-card h3,
+.presale-choice h3,
+.nexus-download-card h3{
+  line-height:1.2;
+  overflow-wrap:anywhere;
+}
+.card p,
+.info-card p,
+.gateway-card p,
+.service-card p,
+.price-card p,
+.detail-panel p,
+.mentor-track-card p,
+.mentor-level-card p,
+.presale-card p,
+.presale-choice p,
+.nexus-download-card p{
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+/* Unified interactive controls */
+.btn{
+  min-height:var(--control-height);
+  font-weight:600;
+  line-height:1.2;
+  text-align:center;
+  text-decoration:none;
+}
+.btn:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:var(--focus-ring);
+  outline-offset:3px;
+}
+.field,
+.interest-form input,
+.interest-form textarea,
+.interest-form select,
+.enterprise-users-control input{
+  min-height:var(--control-height);
+  border-radius:10px;
+}
+.footer{
+  gap:24px;
+  overflow-wrap:anywhere;
+}
+.footer-links{
+  row-gap:10px;
+}
+@media(max-width:800px){
+  .card,
+  .info-card,
+  .gateway-card,
+  .service-card,
+  .price-card,
+  .detail-panel,
+  .mentor-track-card,
+  .mentor-level-card,
+  .presale-card,
+  .presale-choice,
+  .nexus-download-card{
+    padding:20px;
+    border-radius:14px;
+  }
+}
+@media(max-width:520px){
+  .card,
+  .info-card,
+  .gateway-card,
+  .service-card,
+  .price-card,
+  .detail-panel,
+  .mentor-track-card,
+  .mentor-level-card,
+  .presale-card,
+  .presale-choice,
+  .nexus-download-card{
+    padding:17px;
+  }
+  .footer{
+    gap:20px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .card,
+  .info-card,
+  .gateway-card,
+  .service-card,
+  .price-card,
+  .detail-panel,
+  .mentor-track-card,
+  .mentor-level-card,
+  .presale-card,
+  .presale-choice,
+  .nexus-download-card,
+  .workspace-plan-card,
+  .btn{
+    scroll-behavior:auto;
+    transition-duration:0.01ms!important;
+    animation-duration:0.01ms!important;
+    animation-iteration-count:1!important;
+  }
+}
