@@ -1,26 +1,26 @@
 (() => {
   const site = "https://site.korczaktech.com.br/";
-  const brand = "Korczak Technologies";
+  const brand = "Korczak Tecnologies";
   const image = site + "assets/mark.svg";
   const fallback = {
-    title: "Korczak Technologies | Software e soluções digitais",
-    description: "Conheça a Korczak Technologies: software, sistemas empresariais e produtos digitais."
+    title: "Korczak Tecnologies | Software e soluções digitais",
+    description: "Conheça a Korczak Tecnologies: software, sistemas empresariais e produtos digitais."
   };
   const pages = {
     "/": fallback,
-    "/mentoria": { title: "Mentoria em tecnologia | Korczak Technologies", description: "Conheça a mentoria da Korczak Technologies para orientação tecnológica, planejamento e desenvolvimento de soluções digitais." },
-    "/comercial": { title: "Soluções comerciais | Korczak Technologies", description: "Conheça as soluções comerciais e os serviços de tecnologia da Korczak Technologies e entre em contato para discutir seu projeto." },
-    "/pre-venda": { title: "Pré-venda de produtos | Korczak Technologies", description: "Consulte informações e manifeste interesse nos produtos e soluções digitais da Korczak Technologies." },
-    "/institucional": { title: "Sobre a Korczak Technologies", description: "Conheça a Korczak Technologies, sua atuação em software, sistemas empresariais e produtos digitais." },
-    "/produtos": { title: "Produtos de tecnologia | Korczak Technologies", description: "Explore os produtos, softwares e sistemas digitais da Korczak Technologies e conheça o ecossistema de soluções." },
-    "/historia": { title: "Nossa história | Korczak Technologies", description: "Conheça a trajetória e o desenvolvimento da Korczak Technologies e de seu ecossistema de produtos digitais." },
-    "/visao": { title: "Visão da empresa | Korczak Technologies", description: "Conheça a visão e os objetivos de longo prazo da Korczak Technologies no desenvolvimento de tecnologia e software." },
-    "/valores": { title: "Valores institucionais | Korczak Technologies", description: "Conheça os valores e princípios institucionais da Korczak Technologies." },
-    "/parcerias": { title: "Parcerias | Korczak Technologies", description: "Conheça oportunidades de parceria com a Korczak Technologies para iniciativas, produtos e soluções de tecnologia." },
-    "/carreiras": { title: "Carreiras e oportunidades | Korczak Technologies", description: "Consulte informações sobre carreiras e possibilidades de colaboração com a Korczak Technologies." },
-    "/faq": { title: "Perguntas frequentes | Korczak Technologies", description: "Encontre respostas para dúvidas frequentes sobre a Korczak Technologies, seus produtos e suas soluções digitais." },
-    "/contato": { title: "Contato | Korczak Technologies", description: "Entre em contato com a Korczak Technologies para dúvidas, informações sobre produtos e propostas comerciais." },
-    "/conta": { title: "Minha conta | Korczak Technologies", description: "Acesse sua conta na plataforma Korczak Technologies." }
+    "/mentoria": { title: "Mentoria em tecnologia | Korczak Tecnologies", description: "Conheça a mentoria da Korczak Tecnologies para orientação tecnológica, planejamento e desenvolvimento de soluções digitais." },
+    "/comercial": { title: "Soluções comerciais | Korczak Tecnologies", description: "Conheça as soluções comerciais e os serviços de tecnologia da Korczak Tecnologies e entre em contato para discutir seu projeto." },
+    "/pre-venda": { title: "Pré-venda de produtos | Korczak Tecnologies", description: "Consulte informações e manifeste interesse nos produtos e soluções digitais da Korczak Tecnologies." },
+    "/institucional": { title: "Sobre a Korczak Tecnologies", description: "Conheça a Korczak Tecnologies, sua atuação em software, sistemas empresariais e produtos digitais." },
+    "/produtos": { title: "Produtos de tecnologia | Korczak Tecnologies", description: "Explore os produtos, softwares e sistemas digitais da Korczak Tecnologies e conheça o ecossistema de soluções." },
+    "/historia": { title: "Nossa história | Korczak Tecnologies", description: "Conheça a trajetória e o desenvolvimento da Korczak Tecnologies e de seu ecossistema de produtos digitais." },
+    "/visao": { title: "Visão da empresa | Korczak Tecnologies", description: "Conheça a visão e os objetivos de longo prazo da Korczak Tecnologies no desenvolvimento de tecnologia e software." },
+    "/valores": { title: "Valores institucionais | Korczak Tecnologies", description: "Conheça os valores e princípios institucionais da Korczak Tecnologies." },
+    "/parcerias": { title: "Parcerias | Korczak Tecnologies", description: "Conheça oportunidades de parceria com a Korczak Tecnologies para iniciativas, produtos e soluções de tecnologia." },
+    "/carreiras": { title: "Carreiras e oportunidades | Korczak Tecnologies", description: "Consulte informações sobre carreiras e possibilidades de colaboração com a Korczak Tecnologies." },
+    "/faq": { title: "Perguntas frequentes | Korczak Tecnologies", description: "Encontre respostas para dúvidas frequentes sobre a Korczak Tecnologies, seus produtos e suas soluções digitais." },
+    "/contato": { title: "Contato | Korczak Tecnologies", description: "Entre em contato com a Korczak Tecnologies para dúvidas, informações sobre produtos e propostas comerciais." },
+    "/conta": { title: "Minha conta | Korczak Tecnologies", description: "Acesse sua conta na plataforma Korczak Tecnologies." }
   };
   function meta(name, content, property = false) {
     const selector = property ? 'meta[property="' + name + '"]' : 'meta[name="' + name + '"]';
@@ -36,8 +36,8 @@
     const raw = location.hash.startsWith("#/") ? location.hash.slice(1).split("?")[0] : "/";
     const path = raw.startsWith("/produto/") ? "/produto/" : raw;
     const data = pages[path] || (path === "/produto/" ? {
-      title: "Produtos de tecnologia | Korczak Technologies",
-      description: "Conheça os produtos e soluções digitais da Korczak Technologies."
+      title: "Produtos de tecnologia | Korczak Tecnologies",
+      description: "Conheça os produtos e soluções digitais da Korczak Tecnologies."
     } : fallback);
     document.title = data.title;
     meta("description", data.description);
